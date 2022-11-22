@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @import url("https://fonts.googleapis.com/css2?family=Amiri&display=swap");
+}
+
+@layer components {
+  .input-label {
+    @apply mb-1 text-sm leading-5 font-medium text-gray-700;
+  }
+  .input-field {
+    @apply shadow-sm block  w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md py-3 px-3 text-sm leading-5 font-normal text-gray-500;
+  }
+  .icon {
+    @apply h-4 w-4 flex items-center justify-center text-black;
+  }
+
+  .btn {
+    @apply cursor-pointer inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow text-sm leading-5 font-medium hover:shadow-md hover:opacity-80 active:opacity-80;
+  }
+
+  .btn-blue {
+    @apply bg-al-massira-blue text-white;
+  }
+}
+
+:root {
+  --arabic-font-family: "Amiri", serif;
+  --rtl-font-size: 20px;
+}
+
+/* Overide CodeMirror styles */
+.cm-s-ar .CodeMirror-rtl {
+  font-family: var(--arabic-font-family);
+  font-size: var(--rtl-font-size);
+}
+.cm-s-fa .CodeMirror-rtl {
+  font-family: var(--arabic-font-family);
+  font-size: var(--rtl-font-size);
+}
+
+.rtl {
+  direction: rtl;
+}
