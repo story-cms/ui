@@ -1,6 +1,6 @@
 <template>
   <Story title="Markdown Field">
-    <Variant title="Empty">
+    <Variant title="With model">
       <MarkdownField
         :field="{
           name: 'name',
@@ -8,12 +8,11 @@
           widget: 'markdown',
           isReadonly: false,
         }"
-        modelValue=""
-        @update:modelValue="modelValue = $event"
+        v-model="notes"
       />
     </Variant>
 
-    <Variant title="Populated">
+    <Variant title="Unbound">
       <MarkdownField
         :field="{
           name: 'name',
@@ -21,8 +20,6 @@
           widget: 'markdown',
           isReadonly: false,
         }"
-        modelValue="Johannes Kerkorrel"
-        @update:modelValue="modelValue = $event"
       />
     </Variant>
 
@@ -34,9 +31,7 @@
           widget: 'markdown',
           isReadonly: false,
         }"
-        modelValue=""
-        error="blah"
-        @update:modelValue="modelValue = $event"
+        :error="{ message: 'No way!' }"
       />
     </Variant>
 
@@ -48,13 +43,16 @@
           widget: 'markdown',
           isReadonly: true,
         }"
-        modelValue="Johannes Kerkorrel"
-        @update:modelValue="modelValue = $event"
       />
     </Variant>
   </Story>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ref } from "vue";
+
 import MarkdownField from "./MarkdownField.vue";
+const notes = ref(
+  "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",
+);
 </script>
