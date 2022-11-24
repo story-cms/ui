@@ -16,7 +16,9 @@
         :readonly="field.isReadonly"
         autocomplete="given-name"
         :value="modelValue"
-        @input="$emit('update:modelValue', $event!.target!.value)"
+        @input="
+          $emit('update:modelValue', ($event!.target as HTMLInputElement).value)
+        "
         class="input-field"
         :class="{ 'border-red-300': error, 'opacity-50': field.isReadonly }"
       />

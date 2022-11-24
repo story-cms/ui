@@ -1,11 +1,11 @@
 <template>
-  <Story title="String Field">
+  <Story title="Markdown Field">
     <Variant title="Empty">
-      <StringField
+      <MarkdownField
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'markdown',
           isReadonly: false,
         }"
         modelValue=""
@@ -14,11 +14,11 @@
     </Variant>
 
     <Variant title="Populated">
-      <StringField
+      <MarkdownField
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'markdown',
           isReadonly: false,
         }"
         modelValue="Johannes Kerkorrel"
@@ -27,11 +27,11 @@
     </Variant>
 
     <Variant title="Error">
-      <StringField
+      <MarkdownField
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'markdown',
           isReadonly: false,
         }"
         modelValue=""
@@ -41,11 +41,11 @@
     </Variant>
 
     <Variant title="Readonly">
-      <StringField
+      <MarkdownField
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'markdown',
           isReadonly: true,
         }"
         modelValue="Johannes Kerkorrel"
@@ -56,5 +56,5 @@
 </template>
 
 <script setup>
-import StringField from "./StringField.vue";
+import MarkdownField from "./MarkdownField.vue";
 </script>
