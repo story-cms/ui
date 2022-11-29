@@ -3,29 +3,31 @@
     <Variant title="Empty">
       <ImageField
         :field="{
-          name: 'name',
-          label: 'Name',
-          widget: 'markdown',
+          name: 'graphic',
+          label: 'Cover Image',
+          widget: 'image',
           isReadonly: false,
         }"
-        modelValue=""
-        @update:modelValue="modelValue = $event"
+        v-model="drawing"
       />
     </Variant>
     <Variant title="Error">
       <ImageField
         :field="{
           name: 'name',
-          widget: 'markdown',
+          label: 'Error image',
+          widget: 'image',
           isReadonly: false,
         }"
-        error="blah"
-        modelValue=""
-        @update:modelValue="modelValue = $event"
+        :error="{}"
+        v-model="drawing"
       />
     </Variant>
   </Story>
 </template>
-<script setup>
+<script setup lang="ts">
+import { ref } from "vue";
+
 import ImageField from "./ImageField.vue";
+const drawing = ref("");
 </script>

@@ -66,31 +66,34 @@ export default {
     const onDragLeave = () => (isHovering.value = false);
     const onDragOver = () => (isHovering.value = true);
 
-    const onDrop = (e) => {
+    const onDrop = (e: DragEvent) => {
       feedback.value = "";
       isHovering.value = false;
       e.stopPropagation();
       e.preventDefault();
-      let files = e.dataTransfer.files;
+      let files = e.dataTransfer?.files;
+      if (!files) return;
       const file = files[0];
+
       try {
         validateFile(file);
         emit("file", file);
       } catch (e) {
-        feedback.value = e;
+        feedback.value = JSON.stringify(e);
       }
     };
 
-    const onSelect = (e) => {
+    const onSelect = (e: Event) => {
       feedback.value = "";
       isHovering.value = false;
-      let files = e.target.files;
-      const file = files[0];
+      const target = e.target as HTMLInputElement;
+      if (!target.files) return;
+      const file = target.files[0];
       try {
         validateFile(file);
         emit("file", file);
       } catch (e) {
-        feedback.value = e;
+        feedback.value = JSON.stringify(e);
       }
     };
 
