@@ -1,0 +1,77 @@
+<template>
+  <div class="bg-white relative py-4" :class="{ rtl: isRtl }">
+    <label class="input-label" :class="{ 'text-red-500': error }">
+      {{ field.label }}
+    </label>
+    <div
+      class="mt-[2px] border-2 border-gray-300 border-dashed rounded-md relative"
+    >
+      <file-upload @file="uploadImage" class="w-full"></file-upload>
+      <p class="text-sm text-red-500" v-if="error">
+        {{ field.label }} cannot be empty
+      </p>
+      <div
+        class="bg-gray-400 h-full absolute top-0 left-0 rounded-md w-full bg-opacity-30"
+        v-if="uploading"
+      >
+        <div
+          class="bg-al-massira-blue h-full opacity-30"
+          :style="progress"
+        ></div>
+      </div>
+    </div>
+    <img
+      v-if="modelValue != ''"
+      :src="modelValue"
+      class="mt-1 w-auto h-48 rounded-md"
+    />
+  </div>
+</template>
+
+<script lang="ts">
+import { ref, PropType, onMounted, inject } from "vue";
+import { FieldSpec } from "../Interfaces";
+import FileUpload from "../Helpers/FileUpload.vue";
+
+export default {
+  props: {
+    field: {
+      type: Object as PropType<FieldSpec>,
+      required: true,
+    },
+    modelValue: {
+      type: String,
+      default: "",
+    },
+    error: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props, { emit }) {
+    // This can be replaced with a fancier progress bar. This is updated in onFileProgress, which hooks to the requestObj onFileProgress event.
+    const progress = ref("width:0%");
+    const uploading = ref(false);
+    const encryptedSecret = ref("");
+    const timestamp = Math.round(new Date().getTime() / 1000);
+
+    const uploadImage = () => {
+      uploading.value = true;
+    };
+
+    const store = inject<any>("store");
+
+    const isRtl = store.state.languageDirection == "rtl" ? true : false;
+
+    return {
+      uploadImage,
+      progress,
+      uploading,
+      isRtl,
+    };
+  },
+  components: { FileUpload },
+};
+</script>
+
+<style></style>
