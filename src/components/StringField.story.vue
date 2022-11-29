@@ -1,28 +1,25 @@
 <template>
   <Story title="String Field">
-    <Variant title="Empty">
+    <Variant title="With model">
       <StringField
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'string',
           isReadonly: false,
         }"
-        modelValue=""
-        @update:modelValue="modelValue = $event"
+        v-model="season"
       />
     </Variant>
 
-    <Variant title="Populated">
+    <Variant title="Unbound">
       <StringField
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'string',
           isReadonly: false,
         }"
-        modelValue="Johannes Kerkorrel"
-        @update:modelValue="modelValue = $event"
       />
     </Variant>
 
@@ -31,12 +28,10 @@
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'string',
           isReadonly: false,
         }"
-        modelValue=""
-        error="blah"
-        @update:modelValue="modelValue = $event"
+        :error="{}"
       />
     </Variant>
 
@@ -45,11 +40,10 @@
         :field="{
           name: 'name',
           label: 'Name',
-          type: 'string',
+          widget: 'string',
           isReadonly: true,
         }"
-        modelValue="Johannes Kerkorrel"
-        @update:modelValue="modelValue = $event"
+        v-model="season"
       />
     </Variant>
   </Story>
@@ -84,6 +78,8 @@ default: false,
 
 modelValue is emited on string field input
 </docs>
-<script setup>
+<script setup lang="ts">
+import { ref } from "vue";
 import StringField from "./StringField.vue";
+const season = ref("Spring");
 </script>

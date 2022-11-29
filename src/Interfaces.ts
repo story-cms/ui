@@ -40,9 +40,9 @@ export interface FieldSpec {
   widget: string;
   isReadonly: boolean;
   // specialized
-  fields: FieldSpec[] | Object;
-  uploadPreset: string;
-  provider: ImageProvider;
+  fields?: FieldSpec[] | Object;
+  uploadPreset?: string;
+  provider?: ImageProvider;
 }
 
 export interface ImageProvider {
