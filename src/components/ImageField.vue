@@ -89,11 +89,11 @@ export default {
           .join("");
       });
     };
+
     const uploadImage = (files: File) => {
-      console.log(files);
       if (!provider) return;
       uploading.value = true;
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append("file", files);
       formData.append("upload_preset", props.field["uploadPreset"] ?? "");
       formData.append("tags", "browser-upload");
@@ -122,6 +122,7 @@ export default {
           console.log(error);
         });
     };
+
     onMounted(encryptSecret);
 
     const store = inject<any>("store");

@@ -2,6 +2,12 @@
 
 Catalogue of Story CMS widgets and components
 
+## Setup
+
+```
+cp secrets.example secrets.ts
+```
+
 ## Development
 
 ```
