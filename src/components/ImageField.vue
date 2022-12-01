@@ -32,7 +32,7 @@
 <script lang="ts">
 import FileUpload from "./FileUpload.vue";
 import { ref, PropType, onMounted, inject } from "vue";
-import { FieldSpec, ImageProvider } from "../Interfaces";
+import { FieldSpec, ImageProvider } from "../interfaces";
 import axios from "axios";
 
 export default {

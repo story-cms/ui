@@ -1,5 +1,5 @@
 <template>
-  <Story title="String Field">
+  <Story title="String Field" group="widgets">
     <Variant title="With model">
       <StringField
         :field="{

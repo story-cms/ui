@@ -1,5 +1,5 @@
 <template>
-  <Story title="Markdown Field">
+  <Story title="Markdown Field" group="widgets">
     <Variant title="With model">
       <MarkdownField
         :field="{

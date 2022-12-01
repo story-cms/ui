@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { PropType, inject } from "vue";
-import { FieldSpec } from "../Interfaces";
+import { FieldSpec } from "../interfaces";
 
 export default {
   props: {

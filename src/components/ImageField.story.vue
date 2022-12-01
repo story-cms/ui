@@ -1,5 +1,5 @@
 <template>
-  <Story title="Image Field" id="image-field">
+  <Story title="Image Field" id="image-field" group="widgets">
     <Variant title="Empty">
       <ImageField
         :field="{
