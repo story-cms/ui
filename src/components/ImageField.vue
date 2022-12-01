@@ -4,6 +4,7 @@
       field.label
     }}</label>
     <div
+      v-if="!field.isReadonly"
       class="mt-[2px] border-2 border-gray-300 border-dashed rounded-md relative"
     >
       <file-upload @file="uploadImage" class="w-full"></file-upload>
@@ -88,12 +89,12 @@ export default {
           .join("");
       });
     };
-
-    const uploadImage = (files: FileList) => {
+    const uploadImage = (files: File) => {
+      console.log(files);
       if (!provider) return;
       uploading.value = true;
       let formData = new FormData();
-      formData.append("file", files[0]);
+      formData.append("file", files);
       formData.append("upload_preset", props.field["uploadPreset"] ?? "");
       formData.append("tags", "browser-upload");
       formData.append("api_key", provider["apiKey"]);
