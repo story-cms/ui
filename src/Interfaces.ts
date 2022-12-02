@@ -40,7 +40,7 @@ export interface FieldSpec {
   widget: string;
   isReadonly: boolean;
   // specialized
-  fields?: FieldSpec[] | Object;
+  fields?: FieldSpec[] | FieldMap;
   uploadPreset?: string;
   provider?: ImageProvider;
 }
@@ -50,4 +50,8 @@ export interface ImageProvider {
   apiKey: string;
   uploadPreset: string;
   cloudName: string;
+}
+
+export interface FieldMap {
+  [key: string]: FieldSpec;
 }

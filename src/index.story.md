@@ -80,34 +80,6 @@ example:
 }
 ```
 
-### list
-
-Suitable for a collection of sets of primitive fields.
-Has one specialised field called `fields` which is a list with primitive fields that define a set.
-The first field in the set will be used in the widget as an identifier.
-
-example:
-
-```ts
-{
-  label: 'Sections',
-  name: 'sections',
-  widget: 'list',
-  fields: [
-    {
-      label: 'Title',
-      name: 'title',
-      widget: 'string',
-    },
-    {
-      label: 'Intro',
-      name: 'intro',
-      widget: 'markdown',
-    }
-  ]
-}
-```
-
 ### panel
 
 Suitable to group several primitive fields visually together.  
@@ -137,4 +109,32 @@ example:
     },
   ],
 },
+```
+
+### list
+
+Suitable for a collection of sets of primitive fields.
+Has one specialised field called `fields` which is a list with primitive fields that define a set.
+The first field in the set will be used in the widget as an identifier.
+
+example:
+
+```ts
+{
+  label: 'Sections',
+  name: 'sections',
+  widget: 'list',
+  fields: [
+    {
+      label: 'Title',
+      name: 'title',
+      widget: 'string',
+    },
+    {
+      label: 'Intro',
+      name: 'intro',
+      widget: 'markdown',
+    }
+  ]
+}
 ```

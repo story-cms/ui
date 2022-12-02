@@ -48,6 +48,7 @@
     </Variant>
   </Story>
 </template>
+
 <docs lang="md">
 # String Field
 
@@ -78,6 +79,7 @@ default: false,
 
 modelValue is emited on string field input
 </docs>
+
 <script setup lang="ts">
 import { ref } from "vue";
 import StringField from "./StringField.vue";
