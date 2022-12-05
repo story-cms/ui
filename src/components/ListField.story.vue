@@ -1,34 +1,40 @@
 <template>
   <Story title="ListField">
     <Variant title="Default">
-      <ListField :field="spec" :form="model" :errors="{}" />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ListField
+        :field="spec"
+        :form="model"
+        :errors="{}"
+        @addFieldToForm="addFieldToForm"
+        @removeFieldFromForm="removeFieldFromForm"
+      />
+      <ModelInspector :model="model" />
     </Variant>
+
     <Variant title="Readonly Reference">
       <ListField
         :field="{ ...spec, fields: readOnlyReferenceFields }"
         :form="model"
         :errors="{}"
+        @addFieldToForm="addFieldToForm"
+        @removeFieldFromForm="removeFieldFromForm"
       />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ModelInspector :model="model" />
     </Variant>
+
     <Variant title="Error">
       <ListField :field="spec" :form="errorModel" :errors="errors" />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ModelInspector :model="errorModel" />
     </Variant>
   </Story>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { reactive } from "vue";
 import ListField from "./ListField.vue";
 import { FieldSpec } from "../interfaces";
+import ModelInspector from "../helpers/ModelInspector.vue";
+import { addField, removeField } from "../helpers/formHelpers";
 
 const fields: FieldSpec[] = [
   {
@@ -70,7 +76,7 @@ const spec = {
 
 const errors = { "bundle.sections.0.reference": ["bad!"] };
 
-const model = ref({
+const model = reactive({
   sections: [
     {
       reference: "John 1:14",
@@ -80,7 +86,15 @@ const model = ref({
   ],
 });
 
-const errorModel = ref({
+const addFieldToForm = (event: Event, key: string) => {
+  addField(event, model, key);
+};
+
+const removeFieldFromForm = (event: Event, key: string, index: number) => {
+  removeField(event, model, key, index);
+};
+
+const errorModel = reactive({
   sections: [
     {
       reference: "",

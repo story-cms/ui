@@ -2,24 +2,18 @@
   <Story title="PanelField">
     <Variant title="Default">
       <PanelField :field="spec" :form="model" />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ModelInspector :model="model" />
     </Variant>
     <Variant title="Readonly Reference">
       <PanelField
         :field="{ ...spec, fields: readOnlyReferenceFields }"
         :form="model"
       />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ModelInspector :model="model" />
     </Variant>
     <Variant title="Error">
       <PanelField :field="spec" :form="errorModel" :errors="errors" />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ModelInspector :model="errorModel" />
     </Variant>
   </Story>
 </template>
@@ -27,6 +21,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import PanelField from "./PanelField.vue";
+import ModelInspector from "../helpers/ModelInspector.vue";
 import { FieldSpec } from "../interfaces";
 
 const fields: FieldSpec[] = [
