@@ -8,6 +8,11 @@ export const dynamicPrimitive = (widget: string): string => {
   return `${up}Field`;
 };
 
+export const dynamicWidget = (widget: string): string => {
+  const up = widget[0].toUpperCase() + widget.substring(1);
+  return `${up}Field`;
+};
+
 export const addField = (
   event: Event,
   form: Record<string, any>,
@@ -15,6 +20,19 @@ export const addField = (
 ) => {
   event.preventDefault();
   form[key].push({});
+};
+
+// https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-and-arrays-by-string-path
+const resolvePath = (
+  object: Record<string | number, any>,
+  path: string,
+  defaultValue: Object = {},
+): Object =>
+  path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object);
+
+export const addDeepField = (model: Record<string, any>, path: string) => {
+  const list = resolvePath(model, path) as Array<any>;
+  list.push({});
 };
 
 export const removeField = (

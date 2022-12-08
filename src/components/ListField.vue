@@ -13,25 +13,7 @@
           <button
             @click="toggle(index)"
             type="button"
-            class="
-              inline-flex
-              items-center
-              rounded-full
-              border border-gray-300
-              bg-white
-              px-4
-              py-1.5
-              text-sm
-              font-medium
-              leading-5
-              text-gray-700
-              shadow-sm
-              hover:bg-gray-50
-              focus:outline-none
-              focus:ring-2
-              focus:ring-indigo-500
-              focus:ring-offset-2
-            "
+            class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <icon
               v-if="!isExpanded(index)"
@@ -74,31 +56,27 @@
       </div>
       <div
         v-if="!isExpanded(index)"
-        class="
-          relative
-          mt-[32px]
-          space-y-[24px]
-          rounded
-          border border-gray-100
-          bg-white
-          p-[32px]
-          shadow-sm
-        "
+        class="relative mt-[32px] space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
       >
         <div
           v-for="(listField, i) in field.fields"
           :key="field.name + `${i.toString()}`"
         >
+          <ListField
+            v-if="listField.widget === 'list'"
+            :field="listField"
+            :form="{
+              [listField.name]: form[field.name][index][listField.name],
+            }"
+            :errors="errors"
+            :rootPath="itemPath(index)"
+          />
           <component
-            :is="dynamicPrimitive(listField.widget)"
+            v-if="listField.widget != 'list'"
+            :is="dynamicWidget(listField.widget)"
             :field="listField"
             v-model="form[field.name][index][listField.name]"
-            :error="
-              errors &&
-              errors[
-                `bundle.${field.name}.${index.toString()}.${listField.name}`
-              ]
-            "
+            :error="itemError(index, listField)"
             :isNested="true"
           />
         </div>
@@ -113,44 +91,31 @@
         <button
           @click="addSet"
           type="button"
-          class="
-            inline-flex
-            items-center
-            rounded-full
-            border border-gray-300
-            bg-white
-            px-4
-            py-1.5
-            text-sm
-            font-medium
-            leading-5
-            text-gray-700
-            shadow-sm
-            hover:bg-gray-50
-            focus:outline-none
-            focus:ring-2
-            focus:ring-indigo-500
-            focus:ring-offset-2
-          "
+          class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           <icon name="plus" class="icon mr-1" aria-hidden="true" />
           <span>{{ "Add New " + field.label.slice(0, -1) }}</span>
         </button>
+      </div>
+      <div>
+        <div>Path: {{ fieldPath }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, PropType } from "vue";
-import { isPrimitive, dynamicPrimitive } from "../helpers/formHelpers";
+import { ref, PropType, computed } from "vue";
+import { dynamicWidget } from "../helpers/formHelpers";
 import { FieldSpec } from "../interfaces";
 import MarkdownField from "./MarkdownField.vue";
 import StringField from "./StringField.vue";
 import ImageField from "./ImageField.vue";
+import NullField from "./NullField.vue";
 import Icon from "../shared/Icon.vue";
 
 export default {
+  name: "ListField",
   props: {
     field: {
       type: Object as PropType<FieldSpec>,
@@ -164,6 +129,11 @@ export default {
       type: Object,
       required: true,
     },
+    rootPath: {
+      type: String,
+      required: false,
+      default: "",
+    },
   },
 
   emits: ["toggleList", "addFieldToForm", "removeFieldFromForm"],
@@ -172,6 +142,24 @@ export default {
     const defaultToggleList = (): boolean[] => {
       if (!props.form[props.field.name]) return [];
       return props.form[props.field.name].map(() => true);
+    };
+
+    const fieldPath = computed(() => {
+      if (props.rootPath === "") return props.field.name;
+      return `${props.rootPath}.${props.field.name}`;
+    });
+
+    const itemPath = (index: number): string => {
+      return `${fieldPath.value}.${index.toString()}`;
+    };
+
+    const errorPath = (index: number): string => {
+      return `bundle.${itemPath(index)}`;
+    };
+
+    const itemError = (index: number, item: FieldSpec): Object => {
+      if (!props.errors) return {};
+      return props.errors[`${errorPath(index)}.${item.name}`];
     };
 
     const fields = props.field.fields as FieldSpec[];
@@ -196,10 +184,10 @@ export default {
       emit("addFieldToForm", event, props.field.name);
     };
 
-    const hasError = (index: Number): boolean => {
+    const hasError = (index: number): boolean => {
       if (!props.errors) return false;
-      for (const prop in props.errors) {
-        if (prop.startsWith(`bundle.${props.field.name}.${index}`)) return true;
+      for (const error in props.errors) {
+        if (error.startsWith(errorPath(index))) return true;
       }
       return false;
     };
@@ -209,8 +197,10 @@ export default {
       toggle,
       title,
       addSet,
-      dynamicPrimitive,
-      isPrimitive,
+      dynamicWidget,
+      itemError,
+      fieldPath,
+      itemPath,
       hasError,
     };
   },
@@ -219,6 +209,7 @@ export default {
     MarkdownField,
     StringField,
     ImageField,
+    NullField,
     Icon,
   },
 };

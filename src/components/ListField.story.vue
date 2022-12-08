@@ -26,6 +26,15 @@
       <ListField :field="spec" :form="errorModel" :errors="errors" />
       <ModelInspector :model="errorModel" />
     </Variant>
+
+    <Variant title="Nested">
+      <ListField
+        :field="nestedSpec"
+        :form="nestedModel"
+        :errors="listInListErrors"
+      />
+      <ModelInspector :model="nestedModel" />
+    </Variant>
   </Story>
 </template>
 
@@ -34,7 +43,12 @@ import { reactive } from "vue";
 import ListField from "./ListField.vue";
 import { FieldSpec } from "../interfaces";
 import ModelInspector from "../helpers/ModelInspector.vue";
-import { addField, removeField } from "../helpers/formHelpers";
+import { addDeepField, removeField } from "../helpers/formHelpers";
+import {
+  listInListModel,
+  listInListSpec,
+  listInListErrors,
+} from "../helpers/nestedModels";
 
 const fields: FieldSpec[] = [
   {
@@ -50,6 +64,9 @@ const fields: FieldSpec[] = [
     isReadonly: false,
   },
 ];
+
+const nestedSpec: FieldSpec = <FieldSpec>listInListSpec;
+const nestedModel = reactive(listInListModel);
 
 const readOnlyReferenceFields: FieldSpec[] = [
   {
@@ -86,8 +103,9 @@ const model = reactive({
   ],
 });
 
-const addFieldToForm = (event: Event, key: string) => {
-  addField(event, model, key);
+const addFieldToForm = (event: Event, path: string) => {
+  event.preventDefault();
+  addDeepField(model, path);
 };
 
 const removeFieldFromForm = (event: Event, key: string, index: number) => {
