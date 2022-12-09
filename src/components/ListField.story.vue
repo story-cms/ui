@@ -5,8 +5,8 @@
         :field="spec"
         :form="model"
         :errors="{}"
-        @addFieldToForm="addFieldToForm"
-        @removeFieldFromForm="removeFieldFromForm"
+        @add-item="addFieldToForm"
+        @remove-item="removeFieldFromForm"
       />
       <ModelInspector :model="model" />
     </Variant>
@@ -16,8 +16,8 @@
         :field="{ ...spec, fields: readOnlyReferenceFields }"
         :form="model"
         :errors="{}"
-        @addFieldToForm="addFieldToForm"
-        @removeFieldFromForm="removeFieldFromForm"
+        @add-item="addFieldToForm"
+        @remove-item="removeFieldFromForm"
       />
       <ModelInspector :model="model" />
     </Variant>
@@ -39,11 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, provide } from "vue";
 import ListField from "./ListField.vue";
 import { FieldSpec } from "../interfaces";
 import ModelInspector from "../helpers/ModelInspector.vue";
-import { addDeepField, removeField } from "../helpers/formHelpers";
 import {
   listInListModel,
   listInListSpec,
@@ -103,13 +102,14 @@ const model = reactive({
   ],
 });
 
-const addFieldToForm = (event: Event, path: string) => {
-  event.preventDefault();
-  addDeepField(model, path);
+const addFieldToForm = (path: string) => {
+  console.log("! addFieldToForm");
+
+  // addDeepField(model, path);
 };
 
 const removeFieldFromForm = (event: Event, key: string, index: number) => {
-  removeField(event, model, key, index);
+  // removeField(event, model, key, index);
 };
 
 const errorModel = reactive({

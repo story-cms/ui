@@ -44,8 +44,7 @@
           <div
             class="absolute right-0 cursor-pointer text-red-500"
             @click="
-              $emit('removeFieldFromForm', $event, field.name, index),
-                toggle(index)
+              $emit('removeItem', $event, field.name, index), toggle(index)
             "
           >
             <div class="rounded-full border bg-white p-2">
@@ -116,6 +115,8 @@ import Icon from "../shared/Icon.vue";
 
 export default {
   name: "ListField",
+  emits: ["toggleList", "addItem", "removeItem"],
+
   props: {
     field: {
       type: Object as PropType<FieldSpec>,
@@ -135,8 +136,6 @@ export default {
       default: "",
     },
   },
-
-  emits: ["toggleList", "addFieldToForm", "removeFieldFromForm"],
 
   setup(props, { emit }) {
     const defaultToggleList = (): boolean[] => {
@@ -180,8 +179,9 @@ export default {
       return title.length > 20 ? `${title.substring(0, 20)}...` : title;
     };
 
-    const addSet = (event: Event) => {
-      emit("addFieldToForm", event, props.field.name);
+    const addSet = () => {
+      console.log("! addSet: ", fieldPath.value);
+      emit("addItem", fieldPath.value);
     };
 
     const hasError = (index: number): boolean => {

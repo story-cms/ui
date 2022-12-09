@@ -33,6 +33,8 @@ const resolvePath = (
 export const addDeepField = (model: Record<string, any>, path: string) => {
   const list = resolvePath(model, path) as Array<any>;
   list.push({});
+  console.log(list);
+  console.log(model);
 };
 
 export const removeField = (
