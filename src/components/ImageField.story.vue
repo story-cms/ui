@@ -17,7 +17,10 @@
         }"
         v-model="drawing"
       />
+
+      <LanguageToggle />
     </Variant>
+
     <Variant title="Error">
       <ImageField
         :field="{
@@ -47,6 +50,8 @@
 import { ref } from "vue";
 import config from "../../secrets";
 import ImageField from "./ImageField.vue";
+import LanguageToggle from "../helpers/LanguageToggle.vue";
+
 const drawing = ref("");
 const existing = ref(
   "https://res.cloudinary.com/onesheep/image/upload/v1669793982/cld-sample-2.jpg",

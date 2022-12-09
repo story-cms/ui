@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white relative py-4" :class="{ rtl: isRtl }">
+  <div class="bg-white relative py-4" :class="{ rtl: store.isRtl }">
     <label class="input-label" :class="{ 'text-red-500': error }">{{
       field.label
     }}</label>
@@ -33,6 +33,8 @@
 import FileUpload from "./FileUpload.vue";
 import { ref, PropType, onMounted, inject } from "vue";
 import { FieldSpec, ImageProvider } from "../interfaces";
+import { useLanguageStore } from "../store";
+
 import axios from "axios";
 
 export default {
@@ -125,16 +127,14 @@ export default {
 
     onMounted(encryptSecret);
 
-    const store = inject<any>("store");
-
-    const isRtl = store.state.languageDirection == "rtl" ? true : false;
+    const store = useLanguageStore();
 
     return {
       uploadImage,
       onFileProgress,
       progress,
       uploading,
-      isRtl,
+      store,
     };
   },
   components: { FileUpload },

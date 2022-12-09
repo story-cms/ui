@@ -12,7 +12,7 @@
       />
     </Variant>
 
-    <Variant title="Unbound">
+    <Variant title="RTL">
       <StringField
         :field="{
           name: 'name',
@@ -21,6 +21,7 @@
           isReadonly: false,
         }"
       />
+      <LanguageToggle />
     </Variant>
 
     <Variant title="Error">
@@ -48,6 +49,13 @@
     </Variant>
   </Story>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import StringField from "./StringField.vue";
+import LanguageToggle from "../helpers/LanguageToggle.vue";
+const season = ref("Spring");
+</script>
 
 <docs lang="md">
 # String Field
@@ -79,9 +87,3 @@ default: false,
 
 modelValue is emited on string field input
 </docs>
-
-<script setup lang="ts">
-import { ref } from "vue";
-import StringField from "./StringField.vue";
-const season = ref("Spring");
-</script>

@@ -12,7 +12,7 @@
       />
     </Variant>
 
-    <Variant title="Unbound">
+    <Variant title="RTL">
       <MarkdownField
         :field="{
           name: 'name',
@@ -21,6 +21,7 @@
           isReadonly: false,
         }"
       />
+      <LanguageToggle />
     </Variant>
 
     <Variant title="Error">
@@ -47,6 +48,17 @@
     </Variant>
   </Story>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import MarkdownField from "./MarkdownField.vue";
+import LanguageToggle from "../helpers/LanguageToggle.vue";
+
+const notes = ref(
+  "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",
+);
+</script>
+
 <docs lang="md">
 # Markdown Field
 
@@ -77,11 +89,3 @@ default: false,
 
 modelValue is emited on the Easy Markdown Editor change
 </docs>
-
-<script setup lang="ts">
-import { ref } from "vue";
-import MarkdownField from "./MarkdownField.vue";
-const notes = ref(
-  "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",
-);
-</script>

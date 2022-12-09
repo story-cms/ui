@@ -8,7 +8,7 @@
     <label
       for="first-name"
       class="block text-sm font-medium text-gray-700"
-      :class="{ rtl: isRtl }"
+      :class="{ rtl: store.isRtl }"
       >{{ field.label }}</label
     >
     <div class="mt-1">
@@ -25,6 +25,7 @@
 <script lang="ts">
 import { PropType, ref, onMounted, inject } from "vue";
 import { FieldSpec } from "../interfaces";
+import { useLanguageStore } from "../store";
 
 import EasyMDE from "easymde";
 
@@ -51,9 +52,7 @@ export default {
   emits: ["update:modelValue"],
 
   setup(_, { emit }) {
-    const store = inject<any>("store");
-
-    const isRtl = store.state.languageDirection == "rtl" ? true : false;
+    const store = useLanguageStore();
 
     const textArea = ref(undefined);
     let editor: EasyMDE;
@@ -63,6 +62,8 @@ export default {
     };
 
     onMounted(() => {
+      const store = useLanguageStore();
+
       editor = new EasyMDE({
         element: textArea.value,
         spellChecker: false,
@@ -95,13 +96,13 @@ export default {
           "guide",
         ],
       });
-      editor.codemirror.setOption("direction", store.state.languageDirection);
-      editor.codemirror.setOption("rtlMoveVisually", isRtl);
+      editor.codemirror.setOption("direction", store.languageDirection);
+      editor.codemirror.setOption("rtlMoveVisually", store.isRtl);
       editor.codemirror.on("change", update);
-      editor.codemirror.setOption("theme", store.state.locale);
+      editor.codemirror.setOption("theme", store.locale);
     });
 
-    return { textArea, isRtl };
+    return { textArea, store };
   },
 };
 </script>

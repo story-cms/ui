@@ -55,3 +55,9 @@ export interface ImageProvider {
 export interface FieldMap {
   [key: string]: FieldSpec;
 }
+
+export interface LanguageSpecification {
+  language: string;
+  languageDirection: "rtl" | "ltr";
+  locale: string;
+}

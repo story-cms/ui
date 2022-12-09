@@ -2,7 +2,7 @@
   <div
     :class="{
       'bg-white px-8 py-6 rounded-bl-lg rounded-br-lg shadow-sm': !isNested,
-      rtl: isRtl,
+      rtl: store.isRtl,
     }"
   >
     <label :for="field.label" class="input-label">
@@ -32,6 +32,7 @@
 <script lang="ts">
 import { PropType, inject } from "vue";
 import { FieldSpec } from "../interfaces";
+import { useLanguageStore } from "../store";
 
 export default {
   props: {
@@ -53,11 +54,9 @@ export default {
     },
   },
   setup() {
-    const store = inject<any>("store");
+    const store = useLanguageStore();
 
-    const isRtl = store.state.languageDirection == "rtl" ? true : false;
-
-    return { isRtl };
+    return { store };
   },
 };
 </script>
