@@ -21,7 +21,7 @@
           isReadonly: false,
         }"
       />
-      <LanguageToggle />
+      <LangaugeControl />
     </Variant>
 
     <Variant title="Error">
@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import MarkdownField from "./MarkdownField.vue";
-import LanguageToggle from "../helpers/LanguageToggle.vue";
+import LangaugeControl from "../helpers/LanguageControl.vue";
 
 const notes = ref(
   "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",

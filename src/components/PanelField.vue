@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { PropType } from "vue";
-import { dynamicPrimitive } from "../helpers/formHelpers";
+import { dynamicPrimitive } from "../helpers/form-helpers";
 import { FieldSpec } from "../interfaces";
 import StringField from "./StringField.vue";
 import MarkdownField from "./MarkdownField.vue";

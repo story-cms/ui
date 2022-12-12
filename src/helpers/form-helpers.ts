@@ -1,3 +1,6 @@
+import { PropType } from "vue";
+import { FieldSpec } from "../interfaces";
+
 export const isPrimitive = (widget: string): boolean =>
   ["string", "markdown", "image"].some((val) => val === widget);
 
@@ -13,6 +16,23 @@ export const dynamicWidget = (widget: string): string => {
   return `${up}Field`;
 };
 
+export const commonProps = {
+  field: {
+    type: Object as PropType<FieldSpec>,
+    required: true,
+  },
+
+  rootPath: {
+    type: String,
+    required: false,
+  },
+
+  isNested: {
+    type: Boolean,
+    default: false,
+  },
+};
+
 export const addField = (
   event: Event,
   form: Record<string, any>,
@@ -20,21 +40,6 @@ export const addField = (
 ) => {
   event.preventDefault();
   form[key].push({});
-};
-
-// https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-and-arrays-by-string-path
-const resolvePath = (
-  object: Record<string | number, any>,
-  path: string,
-  defaultValue: Object = {},
-): Object =>
-  path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object);
-
-export const addDeepField = (model: Record<string, any>, path: string) => {
-  const list = resolvePath(model, path) as Array<any>;
-  list.push({});
-  console.log(list);
-  console.log(model);
 };
 
 export const removeField = (

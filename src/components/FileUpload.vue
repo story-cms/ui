@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { validateFile } from "../helpers/formHelpers";
+import { validateFile } from "../helpers/form-helpers";
 import { ref } from "vue";
 
 export default {

@@ -8,7 +8,7 @@
         @add-item="addFieldToForm"
         @remove-item="removeFieldFromForm"
       />
-      <ModelInspector :model="model" />
+      <ModelControl :model="model" />
     </Variant>
 
     <Variant title="Readonly Reference">
@@ -19,12 +19,12 @@
         @add-item="addFieldToForm"
         @remove-item="removeFieldFromForm"
       />
-      <ModelInspector :model="model" />
+      <ModelControl :model="model" />
     </Variant>
 
     <Variant title="Error">
       <ListField :field="spec" :form="errorModel" :errors="errors" />
-      <ModelInspector :model="errorModel" />
+      <ModelControl :model="errorModel" />
     </Variant>
 
     <Variant title="Nested">
@@ -33,7 +33,7 @@
         :form="nestedModel"
         :errors="listInListErrors"
       />
-      <ModelInspector :model="nestedModel" />
+      <ModelControl :model="nestedModel" />
     </Variant>
   </Story>
 </template>
@@ -42,12 +42,12 @@
 import { reactive, provide } from "vue";
 import ListField from "./ListField.vue";
 import { FieldSpec } from "../interfaces";
-import ModelInspector from "../helpers/ModelInspector.vue";
+import ModelControl from "../helpers/ModelControl.vue";
 import {
   listInListModel,
   listInListSpec,
   listInListErrors,
-} from "../helpers/nestedModels";
+} from "../helpers/mocks";
 
 const fields: FieldSpec[] = [
   {

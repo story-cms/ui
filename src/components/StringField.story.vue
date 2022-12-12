@@ -8,8 +8,8 @@
           widget: 'string',
           isReadonly: false,
         }"
-        v-model="season"
       />
+      <ModelControl :model="simpleModel" />
     </Variant>
 
     <Variant title="RTL">
@@ -21,7 +21,7 @@
           isReadonly: false,
         }"
       />
-      <LanguageToggle />
+      <LanguageControl />
     </Variant>
 
     <Variant title="Error">
@@ -34,6 +34,7 @@
         }"
         :error="{}"
       />
+      <ErrorControl :errors="simpleErrors" />
     </Variant>
 
     <Variant title="Readonly">
@@ -44,17 +45,17 @@
           widget: 'string',
           isReadonly: true,
         }"
-        v-model="season"
       />
     </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import StringField from "./StringField.vue";
-import LanguageToggle from "../helpers/LanguageToggle.vue";
-const season = ref("Spring");
+import LanguageControl from "../helpers/LanguageControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
+import ModelControl from "../helpers/ModelControl.vue";
+import { simpleErrors, simpleModel } from "../helpers/mocks";
 </script>
 
 <docs lang="md">

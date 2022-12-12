@@ -105,7 +105,7 @@
 
 <script lang="ts">
 import { ref, PropType, computed } from "vue";
-import { dynamicWidget } from "../helpers/formHelpers";
+import { dynamicWidget } from "../helpers/form-helpers";
 import { FieldSpec } from "../interfaces";
 import MarkdownField from "./MarkdownField.vue";
 import StringField from "./StringField.vue";

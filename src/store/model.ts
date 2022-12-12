@@ -1,14 +1,11 @@
 import { defineStore } from "pinia";
 import { ref, reactive, computed } from "vue";
+import type { Ref } from "vue";
 
 export const useModelStore = defineStore("model", () => {
-  let model = reactive({});
-  const formModel = computed(() => model);
-  const setFormModel = (fresh: Object) => {
-    model = fresh;
-  };
+  let model = ref({});
+  let errors: Ref<Record<string, string[]>> = ref({});
 
-  // https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-and-arrays-by-string-path
   const resolvePath = (
     object: Record<string | number, any>,
     path: string,
@@ -16,8 +13,8 @@ export const useModelStore = defineStore("model", () => {
   ): Object =>
     path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object);
 
-  const setPath = (path: string, value: any) => {
-    let object = JSON.parse(JSON.stringify(model));
+  const setField = (path: string, value: any) => {
+    let object = JSON.parse(JSON.stringify(model.value));
     path
       .split(".")
       .reduce(
@@ -25,18 +22,23 @@ export const useModelStore = defineStore("model", () => {
           (o[p] = path.split(".").length === ++i ? value : o[p] || {}),
         object,
       );
-    model = object;
+    model.value = object;
   };
 
   const addListItem = (path: string) => {
-    const list = resolvePath(model, path) as Array<any>;
+    const list = resolvePath(model.value, path, {}) as Array<any>;
     list.push({});
-    setPath(path, list);
+    setField(path, list);
   };
 
+  const getField = (path: string, defaultValue: Object = {}) =>
+    resolvePath(model.value, path, defaultValue);
+
   return {
-    formModel,
-    setFormModel,
+    model,
+    getField,
+    setField,
     addListItem,
+    errors,
   };
 });

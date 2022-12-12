@@ -2,7 +2,7 @@
   <div
     :class="{
       'bg-white px-8 py-6 rounded-bl-lg rounded-br-lg shadow-sm': !isNested,
-      rtl: store.isRtl,
+      rtl: language.isRtl,
     }"
   >
     <label :for="field.label" class="input-label">
@@ -12,51 +12,48 @@
       <input
         type="text"
         :name="field.label"
-        :id="field.name"
         :readonly="field.isReadonly"
         autocomplete="given-name"
         :value="modelValue"
-        @input="
-          $emit('update:modelValue', ($event!.target as HTMLInputElement).value)
-        "
+        @input="update"
         class="input-field"
-        :class="{ 'border-red-300': error, 'opacity-50': field.isReadonly }"
+        :class="{ 'border-red-300': hasError, 'opacity-50': field.isReadonly }"
       />
-      <p class="text-sm text-red-500" v-if="error"
+      <p class="text-sm text-red-500" v-if="hasError"
         >This field cannot be empty</p
       >
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { PropType, inject } from "vue";
+<script setup lang="ts">
+import { computed, ref, nextTick } from "vue";
 import { FieldSpec } from "../interfaces";
-import { useLanguageStore } from "../store";
+import { useLanguageStore, useModelStore } from "../store";
+import { commonProps } from "../helpers/form-helpers";
 
-export default {
-  props: {
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    modelValue: {
-      type: String,
-      default: "",
-    },
-    error: {
-      type: Object,
-      required: false,
-    },
-    isNested: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup() {
-    const store = useLanguageStore();
+const props = defineProps({
+  ...commonProps,
+});
 
-    return { store };
-  },
+const field = computed(() => props.field as FieldSpec);
+const fieldPath = computed(() => {
+  if (props.rootPath === undefined) return field.value.name;
+  return `${props.rootPath}.${field.value.name}`;
+});
+
+const model = useModelStore();
+const modelValue = ref(model.getField(fieldPath.value, ""));
+const update = (event: Event) => {
+  model.setField(fieldPath.value, (event.target as HTMLInputElement).value);
 };
+
+model.$subscribe(() => {
+  nextTick().then(() => {
+    modelValue.value = model.getField(fieldPath.value, "");
+  });
+});
+
+const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const language = useLanguageStore();
 </script>

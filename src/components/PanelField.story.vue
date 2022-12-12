@@ -2,18 +2,18 @@
   <Story title="PanelField">
     <Variant title="Default">
       <PanelField :field="spec" :form="model" />
-      <ModelInspector :model="model" />
+      <ModelControl :model="model" />
     </Variant>
     <Variant title="Readonly Reference">
       <PanelField
         :field="{ ...spec, fields: readOnlyReferenceFields }"
         :form="model"
       />
-      <ModelInspector :model="model" />
+      <ModelControl :model="model" />
     </Variant>
     <Variant title="Error">
       <PanelField :field="spec" :form="errorModel" :errors="errors" />
-      <ModelInspector :model="errorModel" />
+      <ModelControl :model="errorModel" />
     </Variant>
   </Story>
 </template>
@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import PanelField from "./PanelField.vue";
-import ModelInspector from "../helpers/ModelInspector.vue";
+import ModelControl from "../helpers/ModelControl.vue";
 import { FieldSpec } from "../interfaces";
 
 const fields: FieldSpec[] = [

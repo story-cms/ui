@@ -1,5 +1,21 @@
 import { FieldSpec } from "../interfaces";
 
+export const simpleModel = {
+  name: "John",
+  age: 30,
+  address: {
+    street: "123 Main St",
+    city: "New York",
+    state: "NY",
+    zip: "10001",
+  },
+};
+
+export const simpleErrors = {
+  "bundle.name": ["required validation failed"],
+  "bundle.address.state": ["required validation failed"],
+};
+
 export const listInListModel = {
   spreads: [
     {

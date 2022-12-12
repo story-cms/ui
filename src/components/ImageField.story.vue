@@ -18,7 +18,7 @@
         v-model="drawing"
       />
 
-      <LanguageToggle />
+      <LangaugeControl />
     </Variant>
 
     <Variant title="Error">
@@ -50,7 +50,7 @@
 import { ref } from "vue";
 import config from "../../secrets";
 import ImageField from "./ImageField.vue";
-import LanguageToggle from "../helpers/LanguageToggle.vue";
+import LangaugeControl from "../helpers/LanguageControl.vue";
 
 const drawing = ref("");
 const existing = ref(
