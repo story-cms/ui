@@ -29,7 +29,6 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onMounted } from "vue";
-import type { Ref } from "vue";
 import { FieldSpec } from "../interfaces";
 import { useLanguageStore, useModelStore } from "../store";
 import { commonProps } from "../helpers/form-helpers";

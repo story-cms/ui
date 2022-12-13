@@ -60,30 +60,51 @@ import { simpleErrors, simpleModel } from "../helpers/mocks";
 <docs lang="md">
 # Markdown Field
 
-## Props
+WYSIWIG markdown editor powered by the amazing CodeMirror engine.
 
-**modelValue**
-This is the model value
+- [CodeMirror - Engine](https://codemirror.net/)
+- [EasyMDE - Wrapper](https://github.com/Ionaru/easy-markdown-editor)
 
-type: String,
-required: true
+## Toolbar customization
 
-**field**
-Data for this field
-type: Object as PropType<FieldSpec>
-required: true,
+You can customize the toolbar by passing a `toolbar` option in the config:
 
-**error**
-The error message
-type: Object,
-required: false,
+```js
+{
 
-**isNested**
-Indicates whether this is a nested widget or not
-type: Boolean,
-default: false,
+  ...
 
-## Emits
+  toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "quote",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      {
+        name: "footnote",
+        action: (editor) => {
+          const selection = editor.codemirror.getSelection();
+          const newValue = `[${selection}](^${selection})`;
+          return editor.codemirror.replaceSelection(newValue);
+        },
+        className: "fa fa-asterisk",
+        title: "Footnote Button",
+      },
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen",
+      "guide",
+    ],
 
-modelValue is emited on the Easy Markdown Editor change
+  ...
+
+}
+```
+
+See the docs: https://github.com/Ionaru/easy-markdown-editor#toolbar-customization
 </docs>
