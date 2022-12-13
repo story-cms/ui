@@ -4,7 +4,7 @@ group: "top"
 icon: "carbon:bookmark"
 ---
 
-# Chapter Configuration_
+# Chapter Configuration
 
 The shape of a story chapter in Story CMS can be configured in the `config/story.ts` file. The chapter configuration is composed of different widgets and it determines two things:
 
