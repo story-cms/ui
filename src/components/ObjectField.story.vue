@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import ObjectField from "./ObjectField.vue";
-import { FieldMap } from "../interfaces";
+import { FieldMap } from "@/Interfaces";
 
 const fields: FieldMap = {
   reference: {

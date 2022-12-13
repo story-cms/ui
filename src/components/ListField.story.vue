@@ -32,9 +32,9 @@
 <script lang="ts" setup>
 import { reactive } from "vue";
 import ListField from "./ListField.vue";
-import { FieldSpec } from "../interfaces";
-import ModelInspector from "../helpers/ModelInspector.vue";
-import { addField, removeField } from "../helpers/formHelpers";
+import { FieldSpec } from "@/Interfaces";
+import ModelInspector from "@/Helpers/ModelInspector.vue";
+import { addField, removeField } from "@/Helpers/formHelpers";
 
 const fields: FieldSpec[] = [
   {

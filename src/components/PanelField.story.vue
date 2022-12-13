@@ -21,8 +21,8 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import PanelField from "./PanelField.vue";
-import ModelInspector from "../helpers/ModelInspector.vue";
-import { FieldSpec } from "../interfaces";
+import ModelInspector from "@/Helpers/ModelInspector.vue";
+import { FieldSpec } from "@/Interfaces";
 
 const fields: FieldSpec[] = [
   {

@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { PropType, ref, onMounted, inject } from "vue";
-import { FieldSpec } from "../interfaces";
+import { FieldSpec } from "@/Interfaces";
 
 import EasyMDE from "easymde";
 
