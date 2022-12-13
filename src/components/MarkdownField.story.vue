@@ -45,6 +45,7 @@
           isReadonly: true,
         }"
       />
+      <ModelControl :model="simpleModel" />
     </Variant>
   </Story>
 </template>

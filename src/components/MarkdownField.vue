@@ -15,7 +15,7 @@
       <div
         :class="{
           'rounded border border-red-300': hasError,
-          'opacity-40': field.isReadonly,
+          'opacity-50': field.isReadonly,
         }"
       >
         <textarea :readonly="field.isReadonly" ref="textArea"></textarea>
@@ -82,32 +82,34 @@ onMounted(() => {
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
-    toolbar: [
-      "bold",
-      "italic",
-      "heading",
-      "|",
-      "quote",
-      "unordered-list",
-      "ordered-list",
-      "|",
-      "link",
-      {
-        name: "footnote",
-        action: (editor) => {
-          const selection = editor.codemirror.getSelection();
-          const newValue = `[${selection}](^${selection})`;
-          return editor.codemirror.replaceSelection(newValue);
-        },
-        className: "fa fa-asterisk",
-        title: "Footnote Button",
-      },
-      "|",
-      "preview",
-      "side-by-side",
-      "fullscreen",
-      "guide",
-    ],
+    toolbar: field.value.isReadonly
+      ? []
+      : [
+          "bold",
+          "italic",
+          "heading",
+          "|",
+          "quote",
+          "unordered-list",
+          "ordered-list",
+          "|",
+          "link",
+          {
+            name: "footnote",
+            action: (editor) => {
+              const selection = editor.codemirror.getSelection();
+              const newValue = `[${selection}](^${selection})`;
+              return editor.codemirror.replaceSelection(newValue);
+            },
+            className: "fa fa-asterisk",
+            title: "Footnote Button",
+          },
+          "|",
+          "preview",
+          "side-by-side",
+          "fullscreen",
+          "guide",
+        ],
   });
   editor.codemirror.setOption("readOnly", field.value.isReadonly);
   editor.codemirror.on("change", update);
