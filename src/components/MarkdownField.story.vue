@@ -3,44 +3,44 @@
     <Variant title="With model">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
           isReadonly: false,
         }"
-        v-model="notes"
       />
+      <ModelControl :model="simpleModel" />
     </Variant>
 
     <Variant title="RTL">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
           isReadonly: false,
         }"
       />
-      <LangaugeControl />
+      <LanguageControl />
     </Variant>
 
     <Variant title="Error">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
           isReadonly: false,
         }"
-        :error="{ message: 'No way!' }"
       />
+      <ErrorControl :errors="simpleErrors" />
     </Variant>
 
     <Variant title="Readonly">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
           isReadonly: true,
         }"
@@ -50,13 +50,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import MarkdownField from "./MarkdownField.vue";
-import LangaugeControl from "../helpers/LanguageControl.vue";
-
-const notes = ref(
-  "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",
-);
+import LanguageControl from "../helpers/LanguageControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
+import ModelControl from "../helpers/ModelControl.vue";
+import { simpleErrors, simpleModel } from "../helpers/mocks";
 </script>
 
 <docs lang="md">

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, reactive, computed } from "vue";
+import { ref } from "vue";
 import type { Ref } from "vue";
 
 export const useModelStore = defineStore("model", () => {

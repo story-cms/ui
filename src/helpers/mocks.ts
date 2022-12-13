@@ -3,6 +3,7 @@ import { FieldSpec } from "../interfaces";
 export const simpleModel = {
   name: "John",
   age: 30,
+  notes: "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",
   address: {
     street: "123 Main St",
     city: "New York",
@@ -13,6 +14,7 @@ export const simpleModel = {
 
 export const simpleErrors = {
   "bundle.name": ["required validation failed"],
+  "bundle.notes": ["required validation failed"],
   "bundle.address.state": ["required validation failed"],
 };
 

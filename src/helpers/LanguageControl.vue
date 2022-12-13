@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { useLanguageStore } from "../store";
+
 const store = useLanguageStore();
 const toggle = () => {
   if (store.isRtl) {

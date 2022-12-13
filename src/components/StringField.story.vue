@@ -32,7 +32,6 @@
           widget: 'string',
           isReadonly: false,
         }"
-        :error="{}"
       />
       <ErrorControl :errors="simpleErrors" />
     </Variant>
