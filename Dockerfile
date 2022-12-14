@@ -8,5 +8,5 @@ COPY . .
 RUN npm run build
 
 FROM nginx:1.23.2 as server
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./ops/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/.histoire/dist /usr/share/nginx/html
