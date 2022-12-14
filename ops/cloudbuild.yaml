@@ -1,6 +1,13 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
-    id: Build
+  - id: test
+    name: 'gcr.io/cloud-builders/npm'
+    entrypoint: sh
+    args:
+    - echo $VITE_CLOUDINARY_API_KEY
+    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
+    
+  - id: Build
+    name: gcr.io/cloud-builders/docker
     args:
       - build
       - "--no-cache"
@@ -11,13 +18,14 @@ steps:
       - Dockerfile
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
 
-  - name: gcr.io/cloud-builders/docker
+  - id: Push
+    name: gcr.io/cloud-builders/docker
     args:
       - push
       - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
-    id: Push
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
+  - id: Deploy
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk:slim"
     args:
       - run
       - services
@@ -29,18 +37,11 @@ steps:
         --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
       - "--region=$_DEPLOY_REGION"
       - "--quiet"
-    id: Deploy
     entrypoint: gcloud
 images:
   - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
 options:
   substitutionOption: ALLOW_LOOSE
-availableSecrets:
-  secretManager:
-    - env: 'VITE_CLOUDINARY_API_KEY'
-      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_API_KEY/versions/1
-    - env: 'VITE_CLOUDINARY_SECRET'
-      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1
 substitutions:
   _GCR_HOSTNAME: eu.gcr.io
   _PLATFORM: managed
@@ -52,3 +53,9 @@ tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
   - playground
+availableSecrets:
+  secretManager:
+    - env: 'VITE_CLOUDINARY_API_KEY'
+      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_API_KEY/versions/1
+    - env: 'VITE_CLOUDINARY_SECRET'
+      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1
