@@ -1,9 +1,9 @@
 steps:
   - id: test
-    name: 'gcr.io/cloud-builders/npm'
-    entrypoint: sh
-    args:
-    - echo $VITE_CLOUDINARY_API_KEY
+    name: bash
+    script: |
+      #!/usr/bin/env bash
+      echo $VITE_CLOUDINARY_API_KEY
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
     
   - id: Build
