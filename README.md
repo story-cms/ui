@@ -5,7 +5,7 @@ Catalogue of Story CMS widgets and components
 ## Setup
 
 ```
-cp secrets.example secrets.ts
+cp .env.example .env
 ```
 
 and then populate from [the password vault](https://start.1password.com/open/i?a=GKKQJPOIFBB2PM5RSLXR6WMYIA&v=c53xvr3gsew3pncvx2fx7vsxzu&i=cejuxu74obe7flkdhf5dw2yhqi&h=onesheep.1password.com)

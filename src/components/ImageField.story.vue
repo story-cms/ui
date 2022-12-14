@@ -45,10 +45,10 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import config from "../../secrets";
+import { config } from "../../secrets.js";
 import ImageField from "./ImageField.vue";
 const drawing = ref("");
 const existing = ref(
-  "https://res.cloudinary.com/onesheep/image/upload/v1669793982/cld-sample-2.jpg",
+  "https://res.cloudinary.com/onesheep/image/upload/v1669793982/cld-sample-2.jpg"
 );
 </script>
