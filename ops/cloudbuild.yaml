@@ -1,11 +1,4 @@
 steps:
-  - id: test
-    name: bash
-    script: |
-      #!/usr/bin/env bash
-      echo $VITE_CLOUDINARY_API_KEY
-    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
-    
   - id: Build
     name: gcr.io/cloud-builders/docker
     args:
@@ -13,6 +6,8 @@ steps:
       - "--no-cache"
       - "-t"
       - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+      - "--build-arg=VITE_CLOUDINARY_API_KEY=$VITE_CLOUDINARY_API_KEY"
+      - "--build-arg=VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET"
       - .
       - "-f"
       - Dockerfile
