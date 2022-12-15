@@ -6,7 +6,8 @@ steps:
       - "--no-cache"
       - "-t"
       - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
-      - "--build-arg VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY"
+      - "--build-arg"
+      - VITE_CLOUDINARY_API_KEY=${VITE_CLOUDINARY_API_KEY}
       - "--build-arg VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET"
       - .
       - "-f"
