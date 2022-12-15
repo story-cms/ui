@@ -45,7 +45,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { config } from "../../secrets.js";
+import { config } from "../../secrets";
 import ImageField from "./ImageField.vue";
 const drawing = ref("");
 const existing = ref(
