@@ -12,16 +12,16 @@
       <input
         type="text"
         :name="field.label"
-        :readonly="field.isReadonly"
+        :readonly="field.isReadOnly"
         autocomplete="given-name"
         :value="modelValue"
         @input="update"
         class="input-field"
-        :class="{ 'border-red-300': hasError, 'opacity-50': field.isReadonly }"
+        :class="{ 'border-red-300': hasError, 'opacity-50': field.isReadOnly }"
       />
-      <p class="text-sm text-red-500" v-if="hasError"
-        >This field cannot be empty</p
-      >
+      <p class="text-sm text-red-500" v-if="hasError">
+        This field cannot be empty
+      </p>
     </div>
   </div>
 </template>

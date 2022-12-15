@@ -4,7 +4,7 @@
       field.label
     }}</label>
     <div
-      v-if="!field.isReadonly"
+      v-if="!field.isReadOnly"
       class="mt-[2px] border-2 border-gray-300 border-dashed rounded-md relative"
     >
       <FileUpload @file="uploadImage" class="w-full" />

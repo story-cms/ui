@@ -78,13 +78,13 @@ const fields: FieldMap = {
     label: "Reference",
     name: "reference",
     widget: "string",
-    isReadonly: false,
+    isReadOnly: false,
   },
   quote: {
     label: "NIV",
     name: "quote",
     widget: "markdown",
-    isReadonly: false,
+    isReadOnly: false,
   },
 };
 const errors = { "bundle.nt.reference": ["bad!"] };

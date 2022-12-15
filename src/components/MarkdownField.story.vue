@@ -6,7 +6,7 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
       <ModelControl :model="simpleModel" />
@@ -18,7 +18,7 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
       <LanguageControl />
@@ -30,7 +30,7 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
       <ErrorControl :errors="simpleErrors" />
@@ -42,7 +42,7 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
-          isReadonly: true,
+          isReadOnly: true,
         }"
       />
       <ModelControl :model="simpleModel" />

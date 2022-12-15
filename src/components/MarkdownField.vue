@@ -15,14 +15,14 @@
       <div
         :class="{
           'rounded border border-red-300': hasError,
-          'opacity-50': field.isReadonly,
+          'opacity-50': field.isReadOnly,
         }"
       >
-        <textarea :readonly="field.isReadonly" ref="textArea"></textarea>
+        <textarea :readonly="field.isReadOnly" ref="textArea"></textarea>
       </div>
-      <p class="mt-[8px] text-sm text-red-500" v-if="hasError"
-        >This field cannot be empty</p
-      >
+      <p class="mt-[8px] text-sm text-red-500" v-if="hasError">
+        This field cannot be empty
+      </p>
     </div>
   </div>
 </template>
@@ -82,7 +82,7 @@ onMounted(() => {
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
-    toolbar: field.value.isReadonly
+    toolbar: field.value.isReadOnly
       ? []
       : [
           "bold",
@@ -111,7 +111,7 @@ onMounted(() => {
           "guide",
         ],
   });
-  editor.codemirror.setOption("readOnly", field.value.isReadonly);
+  editor.codemirror.setOption("readOnly", field.value.isReadOnly);
   editor.codemirror.on("change", update);
 });
 </script>

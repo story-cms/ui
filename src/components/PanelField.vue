@@ -1,47 +1,32 @@
 <template>
   <div class="bg-white p-[32px] rounded border border-gray-100 shadow-sm">
-    <div v-for="(listField, index) in field.fields" :key="index">
+    <div v-for="(item, index) in fields" :key="index">
       <component
-        :is="dynamicPrimitive(listField.widget)"
-        :field="listField"
-        v-model="form[listField.name]"
-        :error="errors && errors[`bundle.${listField.name}`]"
+        :is="widgetFor(index)"
+        :field="item"
+        :root-path="rootPath"
         :isNested="true"
       />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { PropType } from "vue";
-import { dynamicPrimitive } from "../helpers/form-helpers";
-import { FieldSpec } from "../interfaces";
-import StringField from "./StringField.vue";
-import MarkdownField from "./MarkdownField.vue";
-import ImageField from "./ImageField.vue";
+<script setup lang="ts">
+import { computed, ref, nextTick } from "vue";
+import { commonProps } from "../helpers/form-helpers";
+import { FieldSpec, FieldMap } from "../interfaces";
+import { widgetField } from "../helpers/widget-fields";
 
-export default {
-  props: {
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    form: {
-      type: Object,
-      required: true,
-    },
-    errors: {
-      type: Object,
-      default: {},
-    },
-  },
+const props = defineProps({
+  ...commonProps,
+});
 
-  setup() {
-    return {
-      dynamicPrimitive,
-    };
-  },
+const field = computed(() => props.field as FieldSpec);
 
-  components: { StringField, MarkdownField, ImageField },
+const fields = field.value.fields as FieldSpec[];
+
+const widgetFor = (key: number) => {
+  const widget = (field.value.fields! as FieldSpec[])[key].widget;
+  return widgetField(widget);
 };
 </script>

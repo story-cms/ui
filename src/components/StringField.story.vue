@@ -6,7 +6,7 @@
           name: 'name',
           label: 'Name',
           widget: 'string',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
       <ModelControl :model="simpleModel" />
@@ -18,7 +18,7 @@
           name: 'name',
           label: 'Name',
           widget: 'string',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
       <LanguageControl />
@@ -30,7 +30,7 @@
           name: 'name',
           label: 'Name',
           widget: 'string',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
       <ErrorControl :errors="simpleErrors" />
@@ -42,8 +42,20 @@
           name: 'name',
           label: 'Name',
           widget: 'string',
-          isReadonly: true,
+          isReadOnly: true,
         }"
+      />
+    </Variant>
+
+    <Variant title="Nested">
+      <StringField
+        :field="{
+          name: 'name',
+          label: 'Name',
+          widget: 'string',
+          isReadOnly: true,
+        }"
+        :isNested="true"
       />
     </Variant>
   </Story>

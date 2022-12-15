@@ -54,13 +54,13 @@ const fields: FieldSpec[] = [
     label: "Reference",
     name: "reference",
     widget: "string",
-    isReadonly: false,
+    isReadOnly: false,
   },
   {
     label: "NIV",
     name: "quote",
     widget: "markdown",
-    isReadonly: false,
+    isReadOnly: false,
   },
 ];
 
@@ -72,13 +72,13 @@ const readOnlyReferenceFields: FieldSpec[] = [
     label: "Reference",
     name: "reference",
     widget: "string",
-    isReadonly: true,
+    isReadOnly: true,
   },
   {
     label: "NIV",
     name: "quote",
     widget: "markdown",
-    isReadonly: false,
+    isReadOnly: false,
   },
 ];
 
@@ -86,7 +86,7 @@ const spec = {
   label: "Sections",
   name: "sections",
   widget: "list",
-  isReadonly: false,
+  isReadOnly: false,
   fields: fields,
 };
 

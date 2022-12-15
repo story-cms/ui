@@ -37,7 +37,7 @@
           name: 'profile',
           label: 'Profile Image',
           widget: 'image',
-          isReadonly: true,
+          isReadOnly: true,
         }"
       />
       <ModelControl :model="simpleModel" />
