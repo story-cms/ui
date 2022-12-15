@@ -4,6 +4,9 @@ FROM $NODE_IMAGE as build
 WORKDIR /app
 COPY package.json .
 RUN npm install
+RUN echo "------"
+RUN echo $VITE_CLOUDINARY_API_KEY
+RUN echo "------"
 COPY . .
 RUN npm run build
 
