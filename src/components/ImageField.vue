@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-white relative py-4" :class="{ rtl: store.isRtl }">
-    <label class="input-label" :class="{ 'text-red-500': error }">{{
+  <div class="bg-white relative py-4" :class="{ rtl: language.isRtl }">
+    <label class="input-label" :class="{ 'text-red-500': hasError }">{{
       field.label
     }}</label>
     <div
       v-if="!field.isReadonly"
       class="mt-[2px] border-2 border-gray-300 border-dashed rounded-md relative"
     >
-      <file-upload @file="uploadImage" class="w-full"></file-upload>
-      <p class="text-sm text-red-500" v-if="error">
+      <FileUpload @file="uploadImage" class="w-full" />
+      <p class="text-sm text-red-500" v-if="hasError">
         {{ field.label }} cannot be empty
       </p>
       <div
@@ -29,116 +29,100 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { computed, ref, nextTick, onMounted } from "vue";
+import type { Ref } from "vue";
+import { FieldSpec } from "../interfaces";
+import { useLanguageStore, useModelStore } from "../store";
+import { commonProps } from "../helpers/form-helpers";
 import FileUpload from "./FileUpload.vue";
-import { ref, PropType, onMounted, inject } from "vue";
-import { FieldSpec, ImageProvider } from "../interfaces";
-import { useLanguageStore } from "../store";
-
 import axios from "axios";
 
-export default {
-  emits: ["update:modelValue"],
+const props = defineProps({
+  ...commonProps,
+});
 
-  props: {
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    modelValue: {
-      type: String,
-      default: "",
-    },
-    error: {
-      type: Object,
-      required: false,
-    },
-    isNested: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
-  setup(props, { emit }) {
-    // This can be replaced with a fancier progress bar. This is updated in onFileProgress, which hooks to the requestObj onFileProgress event.
-    const progress = ref("width:0%");
-    const provider = props.field["provider"];
-    const uploading = ref(false);
-    const encryptedSecret = ref("");
-    const timestamp = Math.round(new Date().getTime() / 1000);
+const field = computed(() => props.field as FieldSpec);
+const fieldPath = computed(() => {
+  if (props.rootPath === undefined) return field.value.name;
+  return `${props.rootPath}.${field.value.name}`;
+});
 
-    // This hooks to the requestObj onFileProgress event so that we can indicate upload progress.
+const model = useModelStore();
+const modelValue = ref(model.getField(fieldPath.value, "") as string);
 
-    const onFileProgress = (event: any) => {
-      progress.value =
-        "width:" + Math.round((event.loaded * 100.0) / event.total) + "%";
-    };
+model.$subscribe(() => {
+  nextTick().then(() => {
+    modelValue.value = model.getField(fieldPath.value, "") as string;
+  });
+});
 
-    const secret: string = provider?.secret ?? "";
-    //Create the string to sign for cloudinary signed uploads
-    const secretToSign =
-      "tags=browser-upload&timestamp=" +
-      timestamp +
-      "&upload_preset=" +
-      props.field["uploadPreset"] +
-      secret;
-    const buffer = new TextEncoder().encode(secretToSign);
+const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const language = useLanguageStore();
 
-    const encryptSecret = () => {
-      crypto.subtle.digest("SHA-1", buffer).then((value) => {
-        encryptedSecret.value = Array.from(new Uint8Array(value))
-          .map((x) => x.toString(16).padStart(2, "0"))
-          .join("");
-      });
-    };
+const progress = ref("width:0%");
+const provider = field.value.provider;
+const uploading = ref(false);
+const encryptedSecret = ref("");
+const timestamp = Math.round(new Date().getTime() / 1000);
 
-    const uploadImage = (files: File) => {
-      if (!provider) return;
-      uploading.value = true;
-      const formData = new FormData();
-      formData.append("file", files);
-      formData.append("upload_preset", props.field["uploadPreset"] ?? "");
-      formData.append("tags", "browser-upload");
-      formData.append("api_key", provider["apiKey"]);
-      formData.append("api_secret", provider["secret"]);
-      formData.append("timestamp", timestamp.toString());
-      formData.append("signature", encryptedSecret.value);
+// This hooks to the requestObj onFileProgress event so that we can indicate upload progress.
 
-      const requestObj = {
-        url:
-          "https://api.cloudinary.com/v1_1/" +
-          provider["cloudName"] +
-          "/image/upload",
-        method: "POST",
-        onUploadProgress: onFileProgress,
-        data: formData,
-      };
-
-      axios(requestObj)
-        .then((response) => {
-          progress.value = "width:0%";
-          emit("update:modelValue", response.data.url);
-          uploading.value = false;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    onMounted(encryptSecret);
-
-    const store = useLanguageStore();
-
-    return {
-      uploadImage,
-      onFileProgress,
-      progress,
-      uploading,
-      store,
-    };
-  },
-  components: { FileUpload },
+const onFileProgress = (event: any) => {
+  progress.value =
+    "width:" + Math.round((event.loaded * 100.0) / event.total) + "%";
 };
-</script>
 
-<style></style>
+const secret: string = provider?.secret ?? "";
+//Create the string to sign for cloudinary signed uploads
+const secretToSign =
+  "tags=browser-upload&timestamp=" +
+  timestamp +
+  "&upload_preset=" +
+  field.value.uploadPreset +
+  secret;
+const buffer = new TextEncoder().encode(secretToSign);
+
+const encryptSecret = () => {
+  crypto.subtle.digest("SHA-1", buffer).then((value) => {
+    encryptedSecret.value = Array.from(new Uint8Array(value))
+      .map((x) => x.toString(16).padStart(2, "0"))
+      .join("");
+  });
+};
+
+const uploadImage = (files: File) => {
+  if (!provider) return;
+  uploading.value = true;
+  const formData = new FormData();
+  formData.append("file", files);
+  formData.append("upload_preset", field.value.uploadPreset ?? "");
+  formData.append("tags", "browser-upload");
+  formData.append("api_key", provider["apiKey"]);
+  formData.append("api_secret", provider["secret"]);
+  formData.append("timestamp", timestamp.toString());
+  formData.append("signature", encryptedSecret.value);
+
+  const requestObj = {
+    url:
+      "https://api.cloudinary.com/v1_1/" +
+      provider["cloudName"] +
+      "/image/upload",
+    method: "POST",
+    onUploadProgress: onFileProgress,
+    data: formData,
+  };
+
+  axios(requestObj)
+    .then((response) => {
+      progress.value = "width:0%";
+      model.setField(fieldPath.value, response.data.url);
+      uploading.value = false;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+onMounted(encryptSecret);
+</script>

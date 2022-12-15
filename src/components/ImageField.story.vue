@@ -1,12 +1,11 @@
 <template>
   <Story title="Image Field" id="image-field" group="widgets">
-    <Variant title="Empty">
+    <Variant title="With model">
       <ImageField
         :field="{
-          name: 'graphic',
-          label: 'Cover Image',
+          name: 'profile',
+          label: 'Profile Image',
           widget: 'image',
-          isReadonly: false,
           uploadPreset: 'cmsplayground',
           provider: {
             uploadPreset: 'cmsplayground',
@@ -15,45 +14,42 @@
             secret: config.secret,
           },
         }"
-        v-model="drawing"
       />
 
-      <LangaugeControl />
+      <ModelControl :model="simpleModel" />
     </Variant>
 
     <Variant title="Error">
       <ImageField
         :field="{
-          name: 'name',
-          label: 'Error image',
+          name: 'profile',
+          label: 'Profile Image',
           widget: 'image',
-          isReadonly: false,
         }"
-        :error="{}"
-        v-model="drawing"
       />
+
+      <ErrorControl :errors="simpleErrors" />
     </Variant>
+
     <Variant title="Read Only">
       <ImageField
         :field="{
-          name: 'name',
-          label: 'Read only Image',
+          name: 'profile',
+          label: 'Profile Image',
           widget: 'image',
           isReadonly: true,
         }"
-        v-model="existing"
       />
+      <ModelControl :model="simpleModel" />
     </Variant>
   </Story>
 </template>
-<script setup lang="ts">
-import { ref } from "vue";
-import config from "../../secrets";
-import ImageField from "./ImageField.vue";
-import LangaugeControl from "../helpers/LanguageControl.vue";
 
-const drawing = ref("");
-const existing = ref(
-  "https://res.cloudinary.com/onesheep/image/upload/v1669793982/cld-sample-2.jpg",
-);
+<script setup lang="ts">
+import ImageField from "./ImageField.vue";
+import LanguageControl from "../helpers/LanguageControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
+import config from "../../secrets";
+import ModelControl from "../helpers/ModelControl.vue";
+import { simpleErrors, simpleModel } from "../helpers/mocks";
 </script>
