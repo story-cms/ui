@@ -1,10 +1,6 @@
 <template>
   <div class="space-y-[32px] bg-transparent py-8">
-    <div
-      v-for="(_listItem, index) in form[field.name]"
-      :key="index"
-      class="relative"
-    >
+    <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
       <div class="relative">
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
           <div class="w-full border-t border-gray-300" />
@@ -16,7 +12,7 @@
             class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <icon
-              v-if="!isExpanded(index)"
+              v-if="isExpanded(index)"
               name="chevron-down"
               class="icon mr-1"
               aria-hidden="true"
@@ -27,56 +23,37 @@
               class="icon mr-1"
               aria-hidden="true"
             />
-            <span>
-              {{ field.label }} :
-              {{ title(index) === "undefined" ? "New Section" : title(index) }}
-            </span>
+            <span>{{ sectionTitle(index) }}</span>
           </button>
           <div
-            v-if="hasError(index)"
+            v-if="itemHasError(index)"
             class="absolute left-0 cursor-pointer text-accent-one"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
-              <icon name="exclamation" class="h-10 w-10" />
+              <Icon name="exclamation" class="h-10 w-10" />
             </div>
           </div>
           <div
             class="absolute right-0 cursor-pointer text-red-500"
-            @click="
-              $emit('removeItem', $event, field.name, index), toggle(index)
-            "
+            @click="removeSet(index)"
           >
             <div class="rounded-full border bg-white p-2">
-              <icon name="trash" class="h-10 w-10" />
+              <Icon name="trash" class="h-10 w-10" />
             </div>
           </div>
         </div>
       </div>
       <div
-        v-if="!isExpanded(index)"
+        v-if="isExpanded(index)"
         class="relative mt-[32px] space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
       >
-        <div
-          v-for="(listField, i) in field.fields"
-          :key="field.name + `${i.toString()}`"
-        >
-          <ListField
-            v-if="listField.widget === 'list'"
-            :field="listField"
-            :form="{
-              [listField.name]: form[field.name][index][listField.name],
-            }"
-            :errors="errors"
-            :rootPath="itemPath(index)"
-          />
+        <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
-            v-if="listField.widget != 'list'"
-            :is="dynamicWidget(listField.widget)"
-            :field="listField"
-            v-model="form[field.name][index][listField.name]"
-            :error="itemError(index, listField)"
-            :isNested="true"
+            :is="widgetField(item.widget)"
+            :field="item"
+            :root-path="`${fieldPath}.${index}`"
+            :is-nested="true"
           />
         </div>
       </div>
@@ -96,121 +73,80 @@
           <span>{{ "Add New " + field.label.slice(0, -1) }}</span>
         </button>
       </div>
-      <div>
-        <div>Path: {{ fieldPath }}</div>
-      </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { ref, PropType, computed } from "vue";
-import { dynamicWidget } from "../helpers/form-helpers";
+<script setup lang="ts">
+import { ref, computed, nextTick } from "vue";
+import { commonProps } from "../helpers/form-helpers";
+import { widgetField } from "../helpers/widget-fields";
 import { FieldSpec } from "../interfaces";
-import MarkdownField from "./MarkdownField.vue";
-import StringField from "./StringField.vue";
-import ImageField from "./ImageField.vue";
-import NullField from "./NullField.vue";
 import Icon from "../shared/Icon.vue";
+import { useModelStore } from "../store";
 
-export default {
-  name: "ListField",
-  emits: ["toggleList", "addItem", "removeItem"],
+// name: "ListField",
 
-  props: {
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    form: {
-      type: Object,
-      required: true,
-    },
-    errors: {
-      type: Object,
-      required: true,
-    },
-    rootPath: {
-      type: String,
-      required: false,
-      default: "",
-    },
-  },
+const props = defineProps({
+  ...commonProps,
+});
 
-  setup(props, { emit }) {
-    const defaultToggleList = (): boolean[] => {
-      if (!props.form[props.field.name]) return [];
-      return props.form[props.field.name].map(() => true);
-    };
+const field = computed(() => props.field as FieldSpec);
+const fieldPath = computed(() => {
+  if (props.rootPath === undefined) return field.value.name;
+  return `${props.rootPath}.${field.value.name}`;
+});
 
-    const fieldPath = computed(() => {
-      if (props.rootPath === "") return props.field.name;
-      return `${props.rootPath}.${props.field.name}`;
-    });
+const fields = field.value.fields as FieldSpec[];
 
-    const itemPath = (index: number): string => {
-      return `${fieldPath.value}.${index.toString()}`;
-    };
+const toggleState = ref([false, false, false, false]);
 
-    const errorPath = (index: number): string => {
-      return `bundle.${itemPath(index)}`;
-    };
+const isExpanded = (index: number): boolean => {
+  return toggleState.value[index];
+};
 
-    const itemError = (index: number, item: FieldSpec): Object => {
-      if (!props.errors) return {};
-      return props.errors[`${errorPath(index)}.${item.name}`];
-    };
+const toggle = (index: number) => {
+  toggleState.value[index] = !toggleState.value[index];
+};
 
-    const fields = props.field.fields as FieldSpec[];
-    const titleFieldName = fields[0].name;
+const sectionTitle = (index: number): string => {
+  const peek = title(index);
+  return `${field.value.label} : ${peek}`;
+};
 
-    const toggleState = ref([...defaultToggleList()]);
+const title = (index: number): string => {
+  const titleFieldName = fields[0].name;
+  const item = listItems.value[index];
+  const title = item[titleFieldName];
+  if (title === undefined) return "New Section";
+  return title.length > 20 ? `${title.substring(0, 20)}...` : title;
+};
 
-    const isExpanded = (index: number): boolean => {
-      return toggleState.value[index];
-    };
+const addSet = () => {
+  model.addListItem(fieldPath.value);
+};
 
-    const toggle = (index: number) => {
-      toggleState.value[index] = !toggleState.value[index];
-    };
+const removeSet = (index: number) => {
+  model.removeListItem(fieldPath.value, index);
+};
 
-    const title = (index: number): string => {
-      const title = `${props.form[props.field.name][index][titleFieldName]}`;
-      return title.length > 20 ? `${title.substring(0, 20)}...` : title;
-    };
+const model = useModelStore();
+const listItems = ref(model.getField(fieldPath.value, []) as any[]);
 
-    const addSet = () => {
-      console.log("! addSet: ", fieldPath.value);
-      emit("addItem", fieldPath.value);
-    };
+model.$subscribe(() => {
+  const isFirstLoad = listItems.value === undefined;
+  nextTick().then(() => {
+    listItems.value = model.getField(fieldPath.value, []) as any[];
+    if (!isFirstLoad) return;
+    toggleState.value = listItems.value.map(() => false);
+  });
+});
 
-    const hasError = (index: number): boolean => {
-      if (!props.errors) return false;
-      for (const error in props.errors) {
-        if (error.startsWith(errorPath(index))) return true;
-      }
-      return false;
-    };
-
-    return {
-      isExpanded,
-      toggle,
-      title,
-      addSet,
-      dynamicWidget,
-      itemError,
-      fieldPath,
-      itemPath,
-      hasError,
-    };
-  },
-
-  components: {
-    MarkdownField,
-    StringField,
-    ImageField,
-    NullField,
-    Icon,
-  },
+const itemHasError = (index: number): boolean => {
+  for (const key in model.errors) {
+    const needle = `bundle.${fieldPath.value}.${index}`;
+    if (key.startsWith(needle)) return true;
+  }
+  return false;
 };
 </script>

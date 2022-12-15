@@ -1,30 +1,18 @@
 <template>
   <Story title="ListField">
-    <Variant title="Default">
-      <ListField
-        :field="spec"
-        :form="model"
-        :errors="{}"
-        @add-item="addFieldToForm"
-        @remove-item="removeFieldFromForm"
-      />
-      <ModelControl :model="model" />
+    <Variant title="Default" :setup-app="loadData">
+      <ListField :field="listSpec" />
+      <ModelControl :model="listModel" :is-inspect-only="true" />
     </Variant>
 
-    <Variant title="Readonly Reference">
-      <ListField
-        :field="{ ...spec, fields: readOnlyReferenceFields }"
-        :form="model"
-        :errors="{}"
-        @add-item="addFieldToForm"
-        @remove-item="removeFieldFromForm"
-      />
-      <ModelControl :model="model" />
+    <Variant title="Load data">
+      <ListField :field="listSpec" />
+      <ModelControl :model="listModel" />
     </Variant>
 
-    <Variant title="Error">
+    <Variant title="Error" :setup-app="loadData">
       <ListField :field="spec" :form="errorModel" :errors="errors" />
-      <ModelControl :model="errorModel" />
+      <ErrorControl :errors="listErrors" />
     </Variant>
 
     <Variant title="Nested">
@@ -39,15 +27,27 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, provide } from "vue";
+import { reactive } from "vue";
+import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
+import { useModelStore } from "../store";
+
 import ListField from "./ListField.vue";
 import { FieldSpec } from "../interfaces";
 import ModelControl from "../helpers/ModelControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
 import {
+  listSpec,
+  listModel,
+  listErrors,
   listInListModel,
   listInListSpec,
   listInListErrors,
 } from "../helpers/mocks";
+
+const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  store.model = listModel;
+};
 
 const fields: FieldSpec[] = [
   {
@@ -66,21 +66,6 @@ const fields: FieldSpec[] = [
 
 const nestedSpec: FieldSpec = <FieldSpec>listInListSpec;
 const nestedModel = reactive(listInListModel);
-
-const readOnlyReferenceFields: FieldSpec[] = [
-  {
-    label: "Reference",
-    name: "reference",
-    widget: "string",
-    isReadOnly: true,
-  },
-  {
-    label: "NIV",
-    name: "quote",
-    widget: "markdown",
-    isReadOnly: false,
-  },
-];
 
 const spec = {
   label: "Sections",
@@ -101,16 +86,6 @@ const model = reactive({
     },
   ],
 });
-
-const addFieldToForm = (path: string) => {
-  console.log("! addFieldToForm");
-
-  // addDeepField(model, path);
-};
-
-const removeFieldFromForm = (event: Event, key: string, index: number) => {
-  // removeField(event, model, key, index);
-};
 
 const errorModel = reactive({
   sections: [

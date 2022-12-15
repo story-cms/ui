@@ -47,20 +47,20 @@ const fieldPath = computed(() => {
 
 const model = useModelStore();
 const update = (e: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
-  console.log("change", change.origin);
   if (change.origin === "setValue") return;
   model.setField(fieldPath.value, e.getValue());
 };
 
-model.$subscribe(() => {
+const load = () => {
   nextTick().then(() => {
     const fresh = model.getField(fieldPath.value, "") as string;
     if (fresh === editor.value()) return;
 
-    console.log("fresh", fresh);
     editor.codemirror.setValue(fresh);
   });
-});
+};
+
+model.$subscribe(load);
 
 const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
 
@@ -75,8 +75,6 @@ let editor: EasyMDE;
 const textArea = ref(undefined);
 
 onMounted(() => {
-  console.log("mounting");
-
   editor = new EasyMDE({
     element: textArea.value,
     spellChecker: false,
@@ -113,6 +111,7 @@ onMounted(() => {
   });
   editor.codemirror.setOption("readOnly", field.value.isReadOnly);
   editor.codemirror.on("change", update);
+  load();
 });
 </script>
 

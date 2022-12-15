@@ -16,11 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import PanelField from "./PanelField.vue";
 import ModelControl from "../helpers/ModelControl.vue";
 import ErrorControl from "../helpers/ErrorControl.vue";
-import { FieldSpec } from "../interfaces";
 import { panelErrors, panelModel } from "../helpers/mocks";
 
 const spec = {

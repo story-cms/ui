@@ -25,8 +25,14 @@ export const useModelStore = defineStore("model", () => {
     model.value = object;
   };
 
+  const removeListItem = (path: string, index: number) => {
+    const list = resolvePath(model.value, path, []) as any[];
+    list.splice(index, 1);
+    setField(path, list);
+  };
+
   const addListItem = (path: string) => {
-    const list = resolvePath(model.value, path, {}) as Array<any>;
+    const list = resolvePath(model.value, path, []) as any[];
     list.push({});
     setField(path, list);
   };
@@ -39,6 +45,7 @@ export const useModelStore = defineStore("model", () => {
     getField,
     setField,
     addListItem,
+    removeListItem,
     errors,
   };
 });
