@@ -18,7 +18,7 @@ export const simpleErrors = {
   "bundle.name": ["required validation failed"],
   "bundle.notes": ["required validation failed"],
   "bundle.profile": ["required validation failed"],
-  "bundle.address.state": ["required validation failed"],
+  "bundle.address.zip": ["required validation failed"],
 };
 
 export const listInListModel = {

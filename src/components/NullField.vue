@@ -1,21 +1,15 @@
 <template>
   <p>Field: {{ field.name }}</p>
-  <p>Model: <pre>{{ JSON.stringify(model, null, 2) }}</pre></p>
+  <p>Widget: {{ field.widget }}</p>
 </template>
-<script lang="ts">
-import { PropType } from "vue";
-import { FieldSpec } from "../interfaces";
 
-export default {
-  props: {
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    model: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+<script setup lang="ts">
+import { computed } from "vue";
+import { FieldSpec } from "../interfaces";
+import { commonProps } from "../helpers/form-helpers";
+const props = defineProps({
+  ...commonProps,
+});
+
+const field = computed(() => props.field as FieldSpec);
 </script>

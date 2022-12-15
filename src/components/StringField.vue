@@ -42,6 +42,8 @@ const fieldPath = computed(() => {
   return `${props.rootPath}.${field.value.name}`;
 });
 
+console.log(fieldPath.value);
+
 const model = useModelStore();
 const modelValue = ref(model.getField(fieldPath.value, ""));
 const update = (event: Event) => {

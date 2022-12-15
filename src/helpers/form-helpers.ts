@@ -7,11 +7,6 @@ export const isPrimitive = (widget: string): boolean =>
 export const dynamicPrimitive = (widget: string): string => {
   if (!isPrimitive(widget)) return "NullField";
 
-  const up = widget[0].toUpperCase() + widget.substr(1);
-  return `${up}Field`;
-};
-
-export const dynamicWidget = (widget: string): string => {
   const up = widget[0].toUpperCase() + widget.substring(1);
   return `${up}Field`;
 };

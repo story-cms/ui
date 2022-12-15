@@ -11,49 +11,34 @@
     <div class="space-y-[24px]">
       <div v-for="key in Object.keys(field.fields!)" :key="key" class="">
         <component
-          :is="dynamicPrimitive((field.fields! as FieldMap)[key].widget)"
+          :is="widgetFor(key)"
           :field="(field.fields! as FieldMap)[key]"
-          v-model="form[field.name][key]"
-          :error="errors && errors[`bundle.${field.name}.${key}`]"
-          :isNested="true"
+          :root-path="fieldPath"
+          :is-nested="true"
         />
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { PropType } from "vue";
-import { dynamicPrimitive } from "../helpers/form-helpers";
+<script setup lang="ts">
+import { computed, ref, nextTick } from "vue";
+import { commonProps } from "../helpers/form-helpers";
 import { FieldSpec, FieldMap } from "../interfaces";
-import Icon from "../shared/Icon.vue";
-import StringField from "./StringField.vue";
-import MarkdownField from "./MarkdownField.vue";
+import { widgetField } from "../helpers/widget-fields";
 
-export default {
-  props: {
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    form: {
-      type: Object,
-      required: true,
-    },
-    errors: {
-      type: Object,
-      default: {},
-    },
-  },
-  setup() {
-    // const fields = computed(() =>);
-    return { dynamicPrimitive };
-  },
+const props = defineProps({
+  ...commonProps,
+});
 
-  components: {
-    MarkdownField,
-    StringField,
-    Icon,
-  },
+const field = computed(() => props.field as FieldSpec);
+const fieldPath = computed(() => {
+  if (props.rootPath === undefined) return field.value.name;
+  return `${props.rootPath}.${field.value.name}`;
+});
+
+const widgetFor = (key: string) => {
+  const widget = (field.value.fields! as FieldMap)[key].widget;
+  return widgetField(widget);
 };
 </script>
