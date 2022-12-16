@@ -9,7 +9,25 @@
           <button
             @click="toggle(index)"
             type="button"
-            class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="
+              inline-flex
+              items-center
+              rounded-full
+              border border-gray-300
+              bg-white
+              px-4
+              py-1.5
+              text-sm
+              font-medium
+              leading-5
+              text-gray-700
+              shadow-sm
+              hover:bg-gray-50
+              focus:outline-none
+              focus:ring-2
+              focus:ring-indigo-500
+              focus:ring-offset-2
+            "
           >
             <icon
               v-if="isExpanded(index)"
@@ -46,7 +64,16 @@
       </div>
       <div
         v-if="isExpanded(index)"
-        class="relative mt-[32px] space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
+        class="
+          relative
+          mt-[32px]
+          space-y-[24px]
+          rounded
+          border border-gray-100
+          bg-white
+          p-[32px]
+          shadow-sm
+        "
       >
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
@@ -67,7 +94,25 @@
         <button
           @click="addSet"
           type="button"
-          class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          class="
+            inline-flex
+            items-center
+            rounded-full
+            border border-gray-300
+            bg-white
+            px-4
+            py-1.5
+            text-sm
+            font-medium
+            leading-5
+            text-gray-700
+            shadow-sm
+            hover:bg-gray-50
+            focus:outline-none
+            focus:ring-2
+            focus:ring-indigo-500
+            focus:ring-offset-2
+          "
         >
           <icon name="plus" class="icon mr-1" aria-hidden="true" />
           <span>{{ "Add New " + field.label.slice(0, -1) }}</span>

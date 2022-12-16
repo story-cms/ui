@@ -11,17 +11,17 @@
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
-      <ListField :field="spec" :form="errorModel" :errors="errors" />
+      <ListField :field="spec" />
       <ErrorControl :errors="listErrors" />
     </Variant>
 
-    <Variant title="Nested">
-      <ListField
-        :field="nestedSpec"
-        :form="nestedModel"
-        :errors="listInListErrors"
-      />
+    <Variant title="Nested" :setup-app="loadNestedData">
+      <ListField :field="nestedSpec" />
       <ModelControl :model="nestedModel" />
+    </Variant>
+    <Variant title="Nested Error" :setup-app="loadNestedData">
+      <ListField :field="nestedSpec" />
+      <ErrorControl :errors="listInListErrors" />
     </Variant>
   </Story>
 </template>
@@ -47,6 +47,11 @@ import {
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
   store.model = listModel;
+};
+
+const loadNestedData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  store.model = listInListModel;
 };
 
 const fields: FieldSpec[] = [

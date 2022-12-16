@@ -3,6 +3,7 @@ import MarkdownField from "../components/MarkdownField.vue";
 import ImageField from "../components/ImageField.vue";
 import NullField from "../components/NullField.vue";
 import PanelField from "../components/PanelField.vue";
+import ListField from "../components/ListField.vue";
 
 export const widgetField = (widget: string) => {
   const up = widget[0].toUpperCase() + widget.substring(1);
@@ -16,6 +17,8 @@ export const widgetField = (widget: string) => {
       return MarkdownField;
     case "PanelField":
       return PanelField;
+    case "ListField":
+      return ListField;
 
     default:
       return NullField;
