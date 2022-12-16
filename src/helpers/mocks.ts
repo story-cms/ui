@@ -185,3 +185,73 @@ export const listInListModel = {
 export const listInListErrors = {
   'bundle.spreads.0.notes.1.content': ['bad!'],
 };
+
+export const objectInListInObjectSpec: FieldSpec = {
+  name: 'episode',
+  label: 'Episode',
+  widget: 'object',
+  fields: [
+    {
+      name: 'title',
+      label: 'Title',
+      widget: 'string',
+    },
+    {
+      name: 'spreads',
+      label: 'Spreads',
+      widget: 'list',
+      fields: [
+        {
+          name: 'scriptureReference',
+          label: 'Scripture Reference',
+          widget: 'string',
+        },
+        {
+          label: 'Scripture',
+          name: 'scripture',
+          widget: 'object',
+          fields: [
+            {
+              label: 'Verse',
+              name: 'verse',
+              widget: 'markdown',
+            },
+            {
+              label: 'Callout',
+              name: 'callout',
+              widget: 'string',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const objectInListInObjectModel = {
+  episode: {
+    title: 'The Outing',
+    spreads: [
+      {
+        scriptureReference: 'John 1:1',
+        scripture: {
+          verse:
+            'In the beginning was the **Word**, and the Word was with God, and the Word was God.',
+          callout: 'The Word',
+        },
+      },
+      {
+        scriptureReference: 'John 1:2',
+        scripture: {
+          verse: 'He was with God in the beginning.',
+          callout: 'He',
+        },
+      },
+    ],
+  },
+};
+
+export const objectInListInObjectErrors = {
+  'bundle.episode.spreads.0.scripture.callout': ['required validation failed'],
+  'bundle.episode.spreads.1.scripture.verse': ['required validation failed'],
+};

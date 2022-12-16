@@ -24,6 +24,27 @@
       <ObjectField :field="listInObjectSpec" />
       <ErrorControl :errors="listInObjectError" />
     </Variant>
+
+    <Variant
+      title="Object in List in Object"
+      :setup-app="loadObjectInListInObject"
+    >
+      <ObjectField :field="objectInListInObjectSpec" />
+      <ModelControl :model="objectInListInObjectModel" />
+    </Variant>
+
+    <Variant title="Object in List in Object Empty">
+      <ObjectField :field="objectInListInObjectSpec" />
+      <ModelControl :model="objectInListInObjectModel" />
+    </Variant>
+
+    <Variant
+      title="Object in List in Object Error"
+      :setup-app="loadObjectInListInObject"
+    >
+      <ObjectField :field="objectInListInObjectSpec" />
+      <ErrorControl :errors="objectInListInObjectErrors" />
+    </Variant>
   </Story>
 </template>
 
@@ -43,40 +64,22 @@ import {
   listInObjectSpec,
   listInObjectModel,
   listInObjectError,
+  objectInListInObjectSpec,
+  objectInListInObjectModel,
+  objectInListInObjectErrors,
 } from "../helpers/mocks";
 
 const loadListInObject: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
   store.model = listInObjectModel;
 };
-</script>
 
-<!-- 
-<script lang="ts" setup>
-import { ref } from "vue";
-import ObjectField from "./ObjectField.vue";
-import { FieldMap } from "../interfaces";
-
-const fields: FieldMap = {
-  reference: {
-    label: "Reference",
-    name: "reference",
-    widget: "string",
-    isReadOnly: false,
-  },
-  quote: {
-    label: "NIV",
-    name: "quote",
-    widget: "markdown",
-    isReadOnly: false,
-  },
+const loadObjectInListInObject: Vue3StorySetupHandler = ({
+  app,
+  story,
+  variant,
+}) => {
+  const store = useModelStore();
+  store.model = objectInListInObjectModel;
 };
-const errors = { "bundle.nt.reference": ["bad!"] };
-const model = ref({
-  nt: {
-    reference: "John 1:14",
-    quote:
-      "We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth.",
-  },
-});
-</script> -->
+</script>
