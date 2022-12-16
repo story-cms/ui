@@ -15,11 +15,15 @@
       <ErrorControl :errors="listErrors" />
     </Variant>
 
-    <Variant title="Nested" :setup-app="loadNestedData">
+    <Variant title="List in List" :setup-app="loadNestedData">
       <ListField :field="nestedSpec" />
       <ModelControl :model="nestedModel" />
     </Variant>
-    <Variant title="Nested Error" :setup-app="loadNestedData">
+    <Variant title="List in List Empty">
+      <ListField :field="nestedSpec" />
+      <ModelControl :model="nestedModel" />
+    </Variant>
+    <Variant title="List in List Error" :setup-app="loadNestedData">
       <ListField :field="nestedSpec" />
       <ErrorControl :errors="listInListErrors" />
     </Variant>
@@ -79,26 +83,4 @@ const spec = {
   isReadOnly: false,
   fields: fields,
 };
-
-const errors = { "bundle.sections.0.reference": ["bad!"] };
-
-const model = reactive({
-  sections: [
-    {
-      reference: "John 1:14",
-      quote:
-        "We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth.",
-    },
-  ],
-});
-
-const errorModel = reactive({
-  sections: [
-    {
-      reference: "",
-      quote:
-        "We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth.",
-    },
-  ],
-});
 </script>

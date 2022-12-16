@@ -1,70 +1,54 @@
 <template>
   <Story title="ObjectField">
     <Variant title="Default">
-      <ObjectField
-        :field="{
-          name: 'address',
-          label: '',
-          widget: 'object',
-          fields: [
-            {
-              name: 'street',
-              label: 'Street',
-              widget: 'string',
-            },
-            {
-              name: 'city',
-              label: 'City',
-              widget: 'string',
-            },
-            {
-              name: 'zip',
-              label: 'Zip',
-              widget: 'string',
-            },
-          ],
-        }"
-      />
-      <ModelControl :model="simpleModel" />
+      <ObjectField :field="objectSpec" />
+      <ModelControl :model="objectModel" />
     </Variant>
 
     <Variant title="Error">
-      <ObjectField
-        :field="{
-          name: 'address',
-          label: '',
-          widget: 'object',
-          fields: [
-            {
-              name: 'street',
-              label: 'Street',
-              widget: 'string',
-            },
-            {
-              name: 'city',
-              label: 'City',
-              widget: 'string',
-            },
-            {
-              name: 'zip',
-              label: 'Zip',
-              widget: 'string',
-            },
-          ],
-        }"
-      />
-      <ErrorControl :errors="simpleErrors" />
+      <ObjectField :field="objectSpec" />
+      <ErrorControl :errors="objectErrors" />
+    </Variant>
+
+    <Variant title="List in Object" :setup-app="loadListInObject">
+      <ObjectField :field="listInObjectSpec" />
+      <ModelControl :model="listInObjectModel" />
+    </Variant>
+
+    <Variant title="List in Object Empty">
+      <ObjectField :field="listInObjectSpec" />
+      <ModelControl :model="listInObjectModel" />
+    </Variant>
+
+    <Variant title="List in Object Error" :setup-app="loadListInObject">
+      <ObjectField :field="listInObjectSpec" />
+      <ErrorControl :errors="listInObjectError" />
     </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
+import { reactive } from "vue";
+import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
+import { useModelStore } from "../store";
 import ObjectField from "./ObjectField.vue";
 import StringField from "./StringField.vue";
 import LanguageControl from "../helpers/LanguageControl.vue";
 import ErrorControl from "../helpers/ErrorControl.vue";
 import ModelControl from "../helpers/ModelControl.vue";
-import { simpleErrors, simpleModel } from "../helpers/mocks";
+import {
+  objectErrors,
+  objectModel,
+  objectSpec,
+  listInObjectSpec,
+  listInObjectModel,
+  listInObjectError,
+} from "../helpers/mocks";
+
+const loadListInObject: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  store.model = listInObjectModel;
+};
 </script>
 
 <!-- 
