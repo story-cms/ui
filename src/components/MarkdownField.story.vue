@@ -1,42 +1,21 @@
 <template>
   <Story title="Markdown Field" group="widgets">
-    <Variant title="With model">
-      <MarkdownField
-        :field="{
-          name: 'notes',
-          label: 'Notes',
-          widget: 'markdown',
-          isReadOnly: false,
-        }"
-      />
+    <Variant title="With model" :setup-app="loadData">
+      <MarkdownField :field="spec" />
       <ModelControl :model="objectModel" />
     </Variant>
 
-    <Variant title="RTL">
-      <MarkdownField
-        :field="{
-          name: 'notes',
-          label: 'Notes',
-          widget: 'markdown',
-          isReadOnly: false,
-        }"
-      />
-      <LanguageControl />
-    </Variant>
-
-    <Variant title="Error">
-      <MarkdownField
-        :field="{
-          name: 'notes',
-          label: 'Notes',
-          widget: 'markdown',
-          isReadOnly: false,
-        }"
-      />
+    <Variant title="Error" :setup-app="loadData">
+      <MarkdownField :field="spec" />
       <ErrorControl :errors="objectErrors" />
     </Variant>
 
-    <Variant title="Readonly">
+    <Variant title="RTL" :setup-app="loadData">
+      <MarkdownField :field="spec" />
+      <LanguageControl />
+    </Variant>
+
+    <Variant title="Readonly" :setup-app="loadData">
       <MarkdownField
         :field="{
           name: 'notes',
@@ -45,7 +24,6 @@
           isReadOnly: true,
         }"
       />
-      <ModelControl :model="objectModel" />
     </Variant>
   </Story>
 </template>
@@ -56,6 +34,23 @@ import LanguageControl from "../helpers/LanguageControl.vue";
 import ErrorControl from "../helpers/ErrorControl.vue";
 import ModelControl from "../helpers/ModelControl.vue";
 import { objectErrors, objectModel } from "../helpers/mocks";
+import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
+import { useModelStore } from "../store";
+
+const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  store.model = objectModel;
+  if (variant?.title == "Error") {
+    store.errors = objectErrors;
+  }
+};
+
+const spec = {
+  name: "notes",
+  label: "Notes",
+  widget: "markdown",
+  isReadOnly: false,
+};
 </script>
 
 <docs lang="md">

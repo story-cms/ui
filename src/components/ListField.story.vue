@@ -2,30 +2,36 @@
   <Story title="ListField">
     <Variant title="Default" :setup-app="loadData">
       <ListField :field="listSpec" />
-      <ModelControl :model="listModel" :is-inspect-only="true" />
+      <ModelControl :model="listModel" />
     </Variant>
 
     <Variant title="Load data">
       <ListField :field="listSpec" />
-      <ModelControl :model="listModel" />
+      <ModelControl :model="listModel" :is-inspect-only="false" />
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
-      <ListField :field="spec" />
-      <ErrorControl :errors="listErrors" />
+      <ListField :field="listSpec" />
+      <template #controls>
+        <ErrorControl :errors="listErrors" />
+      </template>
     </Variant>
 
-    <Variant title="List in List" :setup-app="loadNestedData">
-      <ListField :field="nestedSpec" />
-      <ModelControl :model="nestedModel" />
+    <Variant title="List in List" :setup-app="loadData">
+      <ListField :field="listInListSpec" />
+      <ModelControl :model="listInListModel" />
     </Variant>
+
     <Variant title="List in List Empty">
-      <ListField :field="nestedSpec" />
-      <ModelControl :model="nestedModel" />
+      <ListField :field="listInListSpec" />
+      <ModelControl :model="listInListModel" :is-inspect-only="false" />
     </Variant>
-    <Variant title="List in List Error" :setup-app="loadNestedData">
-      <ListField :field="nestedSpec" />
-      <ErrorControl :errors="listInListErrors" />
+
+    <Variant title="List in List Error" :setup-app="loadData">
+      <ListField :field="listInListSpec" />
+      <template #controls>
+        <ErrorControl :errors="listInListErrors" />
+      </template>
     </Variant>
   </Story>
 </template>
@@ -50,37 +56,21 @@ import {
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
-  store.model = listModel;
-};
+  switch (variant?.title) {
+    case "Error":
+      store.errors = listErrors;
+    case "Default":
+      store.model = listModel;
+      break;
 
-const loadNestedData: Vue3StorySetupHandler = ({ app, story, variant }) => {
-  const store = useModelStore();
-  store.model = listInListModel;
-};
+    case "List in List Error":
+      store.errors = listInListErrors;
+    case "List in List":
+      store.model = listInListModel;
+      break;
 
-const fields: FieldSpec[] = [
-  {
-    label: "Reference",
-    name: "reference",
-    widget: "string",
-    isReadOnly: false,
-  },
-  {
-    label: "NIV",
-    name: "quote",
-    widget: "markdown",
-    isReadOnly: false,
-  },
-];
-
-const nestedSpec: FieldSpec = <FieldSpec>listInListSpec;
-const nestedModel = reactive(listInListModel);
-
-const spec = {
-  label: "Sections",
-  name: "sections",
-  widget: "list",
-  isReadOnly: false,
-  fields: fields,
+    default:
+      break;
+  }
 };
 </script>

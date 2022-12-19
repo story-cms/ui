@@ -1,25 +1,12 @@
 <template>
   <Story title="Image Field" id="image-field" group="widgets">
     <Variant title="With model">
-      <ImageField
-        :field="{
-          name: 'profile',
-          label: 'Profile Image',
-          widget: 'image',
-          uploadPreset: 'cmsplayground',
-          provider: {
-            uploadPreset: 'cmsplayground',
-            cloudName: 'onesheep',
-            apiKey: config.apiKey,
-            secret: config.secret,
-          },
-        }"
-      />
+      <ImageField :field="spec" />
 
-      <ModelControl :model="simpleModel" />
+      <ModelControl :model="objectModel" />
     </Variant>
 
-    <Variant title="Error">
+    <Variant title="Error" :setup-app="loadData">
       <ImageField
         :field="{
           name: 'profile',
@@ -27,11 +14,12 @@
           widget: 'image',
         }"
       />
-
-      <ErrorControl :errors="simpleErrors" />
+      <template #controls>
+        <ErrorControl :errors="objectErrors" />
+      </template>
     </Variant>
 
-    <Variant title="Read Only">
+    <Variant title="Read Only" :setup-app="loadData">
       <ImageField
         :field="{
           name: 'profile',
@@ -40,16 +28,38 @@
           isReadOnly: true,
         }"
       />
-      <ModelControl :model="simpleModel" />
     </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
 import ImageField from "./ImageField.vue";
-import LanguageControl from "../helpers/LanguageControl.vue";
 import ErrorControl from "../helpers/ErrorControl.vue";
-import config from "../../secrets";
 import ModelControl from "../helpers/ModelControl.vue";
-import { simpleErrors, simpleModel } from "../helpers/mocks";
+import { objectErrors, objectModel } from "../helpers/mocks";
+import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
+import { useModelStore } from "../store";
+
+const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  if (variant?.title == "Read Only") {
+    store.model = objectModel;
+  }
+  if (variant?.title == "Error") {
+    store.errors = objectErrors;
+  }
+};
+
+const spec = {
+  name: "profile",
+  label: "Profile Image",
+  widget: "image",
+  uploadPreset: "cmsplayground",
+  provider: {
+    uploadPreset: "cmsplayground",
+    cloudName: "onesheep",
+    apiKey: "config.apiKey",
+    secret: "config.secret",
+  },
+};
 </script>
