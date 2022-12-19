@@ -1,62 +1,85 @@
 <template>
   <Story title="ObjectField">
     <Variant title="Default">
-      <ObjectField
-        :field="{
-          name: 'nt',
-          label: '',
-          widget: 'object',
-          isReadonly: false,
-          fields: fields,
-        }"
-        :form="model"
-      />
-      <code>
-        <pre class="text-gray-600">{{ JSON.stringify(model, null, 2) }}</pre>
-      </code>
+      <ObjectField :field="objectSpec" />
+      <ModelControl :model="objectModel" />
     </Variant>
 
     <Variant title="Error">
-      <ObjectField
-        :field="{
-          name: 'nt',
-          label: '',
-          widget: 'object',
-          isReadonly: false,
-          fields: fields,
-        }"
-        :form="model"
-        :errors="errors"
-      />
+      <ObjectField :field="objectSpec" />
+      <ErrorControl :errors="objectErrors" />
+    </Variant>
+
+    <Variant title="List in Object" :setup-app="loadListInObject">
+      <ObjectField :field="listInObjectSpec" />
+      <ModelControl :model="listInObjectModel" />
+    </Variant>
+
+    <Variant title="List in Object Empty">
+      <ObjectField :field="listInObjectSpec" />
+      <ModelControl :model="listInObjectModel" />
+    </Variant>
+
+    <Variant title="List in Object Error" :setup-app="loadListInObject">
+      <ObjectField :field="listInObjectSpec" />
+      <ErrorControl :errors="listInObjectError" />
+    </Variant>
+
+    <Variant
+      title="Object in List in Object"
+      :setup-app="loadObjectInListInObject"
+    >
+      <ObjectField :field="objectInListInObjectSpec" />
+      <ModelControl :model="objectInListInObjectModel" />
+    </Variant>
+
+    <Variant title="Object in List in Object Empty">
+      <ObjectField :field="objectInListInObjectSpec" />
+      <ModelControl :model="objectInListInObjectModel" />
+    </Variant>
+
+    <Variant
+      title="Object in List in Object Error"
+      :setup-app="loadObjectInListInObject"
+    >
+      <ObjectField :field="objectInListInObjectSpec" />
+      <ErrorControl :errors="objectInListInObjectErrors" />
     </Variant>
   </Story>
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { reactive } from "vue";
+import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
+import { useModelStore } from "../store";
 import ObjectField from "./ObjectField.vue";
-import { FieldMap } from "@/Interfaces";
+import StringField from "./StringField.vue";
+import LanguageControl from "../helpers/LanguageControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
+import ModelControl from "../helpers/ModelControl.vue";
+import {
+  objectErrors,
+  objectModel,
+  objectSpec,
+  listInObjectSpec,
+  listInObjectModel,
+  listInObjectError,
+  objectInListInObjectSpec,
+  objectInListInObjectModel,
+  objectInListInObjectErrors,
+} from "../helpers/mocks";
 
-const fields: FieldMap = {
-  reference: {
-    label: "Reference",
-    name: "reference",
-    widget: "string",
-    isReadonly: false,
-  },
-  quote: {
-    label: "NIV",
-    name: "quote",
-    widget: "markdown",
-    isReadonly: false,
-  },
+const loadListInObject: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  store.model = listInObjectModel;
 };
-const errors = { "bundle.nt.reference": ["bad!"] };
-const model = ref({
-  nt: {
-    reference: "John 1:14",
-    quote:
-      "We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth.",
-  },
-});
+
+const loadObjectInListInObject: Vue3StorySetupHandler = ({
+  app,
+  story,
+  variant,
+}) => {
+  const store = useModelStore();
+  store.model = objectInListInObjectModel;
+};
 </script>

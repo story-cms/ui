@@ -3,85 +3,109 @@
     <Variant title="With model">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
-          isReadonly: false,
+          isReadOnly: false,
         }"
-        v-model="notes"
       />
+      <ModelControl :model="objectModel" />
     </Variant>
 
-    <Variant title="Unbound">
+    <Variant title="RTL">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
-          isReadonly: false,
+          isReadOnly: false,
         }"
       />
+      <LanguageControl />
     </Variant>
 
     <Variant title="Error">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
-          isReadonly: false,
+          isReadOnly: false,
         }"
-        :error="{ message: 'No way!' }"
       />
+      <ErrorControl :errors="objectErrors" />
     </Variant>
 
     <Variant title="Readonly">
       <MarkdownField
         :field="{
-          name: 'name',
-          label: 'Name',
+          name: 'notes',
+          label: 'Notes',
           widget: 'markdown',
-          isReadonly: true,
+          isReadOnly: true,
         }"
       />
+      <ModelControl :model="objectModel" />
     </Variant>
   </Story>
 </template>
+
+<script setup lang="ts">
+import MarkdownField from "./MarkdownField.vue";
+import LanguageControl from "../helpers/LanguageControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
+import ModelControl from "../helpers/ModelControl.vue";
+import { objectErrors, objectModel } from "../helpers/mocks";
+</script>
+
 <docs lang="md">
 # Markdown Field
 
-## Props
+WYSIWIG markdown editor powered by the amazing CodeMirror engine.
 
-**modelValue**
-This is the model value
+- [CodeMirror - Engine](https://codemirror.net/)
+- [EasyMDE - Wrapper](https://github.com/Ionaru/easy-markdown-editor)
 
-type: String,
-required: true
+## Toolbar customization
 
-**field**
-Data for this field
-type: Object as PropType<FieldSpec>
-required: true,
+You can customize the toolbar by passing a `toolbar` option in the config:
 
-**error**
-The error message
-type: Object,
-required: false,
+```js
+{
 
-**isNested**
-Indicates whether this is a nested widget or not
-type: Boolean,
-default: false,
+  ...
 
-## Emits
+  toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "quote",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      {
+        name: "footnote",
+        action: (editor) => {
+          const selection = editor.codemirror.getSelection();
+          const newValue = `[${selection}](^${selection})`;
+          return editor.codemirror.replaceSelection(newValue);
+        },
+        className: "fa fa-asterisk",
+        title: "Footnote Button",
+      },
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen",
+      "guide",
+    ],
 
-modelValue is emited on the Easy Markdown Editor change
+  ...
+
+}
+```
+
+See the docs: https://github.com/Ionaru/easy-markdown-editor#toolbar-customization
 </docs>
-
-<script setup lang="ts">
-import { ref } from "vue";
-import MarkdownField from "./MarkdownField.vue";
-const notes = ref(
-  "# The Outing\nWe went to the park at *09h00* on a **sunny** day.",
-);
-</script>

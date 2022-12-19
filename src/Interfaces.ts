@@ -38,7 +38,7 @@ export interface FieldSpec {
   name: string;
   label: string;
   widget: string;
-  isReadonly: boolean;
+  isReadOnly?: boolean;
   // specialized
   fields?: FieldSpec[] | FieldMap;
   uploadPreset?: string;
@@ -54,4 +54,10 @@ export interface ImageProvider {
 
 export interface FieldMap {
   [key: string]: FieldSpec;
+}
+
+export interface LanguageSpecification {
+  language: string;
+  languageDirection: "rtl" | "ltr";
+  locale: string;
 }

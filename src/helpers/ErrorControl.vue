@@ -1,0 +1,45 @@
+<template>
+  <div>
+    <h3 class="mt-6">Error state</h3>
+    <code>
+      <pre class="my-4 text-emerald-500">{{ pretty }}</pre>
+    </code>
+    <HstJson v-model="formErrors" title="Desired state" />
+    <div class="my-4">
+      <HstButton
+        color="primary"
+        class="bg-emerald-500 htw-p-2"
+        @click="setError"
+      >
+        Set Error
+      </HstButton>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useModelStore } from "../store";
+import { computed, ref } from "vue";
+
+const props = defineProps({
+  errors: {
+    type: Object,
+    required: false,
+  },
+});
+
+const startErrors = props.errors || {
+  "bundle.name": ["required validation failed"],
+  "bundle.spreads.0.title": ["required validation failed"],
+};
+
+const formErrors = ref(startErrors);
+
+const store = useModelStore();
+
+const setError = () => {
+  store.errors = formErrors.value;
+};
+
+const pretty = computed(() => JSON.stringify(store.errors, null, 2));
+</script>

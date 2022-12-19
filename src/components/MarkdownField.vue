@@ -8,67 +8,81 @@
     <label
       for="first-name"
       class="block text-sm font-medium text-gray-700"
-      :class="{ rtl: isRtl }"
+      :class="{ rtl: language.isRtl }"
       >{{ field.label }}</label
     >
     <div class="mt-1">
-      <div :class="{ 'rounded border border-red-300': error }">
-        <textarea :value="modelValue" ref="textArea"></textarea>
-      </div>
-      <p class="mt-[8px] text-sm text-red-500" v-if="error"
-        >This field cannot be empty</p
+      <div
+        :class="{
+          'rounded border border-red-300': hasError,
+          'opacity-50': field.isReadOnly,
+        }"
       >
+        <textarea :readonly="field.isReadOnly" ref="textArea"></textarea>
+      </div>
+      <p class="mt-[8px] text-sm text-red-500" v-if="hasError">
+        This field cannot be empty
+      </p>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { PropType, ref, onMounted, inject } from "vue";
-import { FieldSpec } from "@/Interfaces";
-
+<script setup lang="ts">
+import { computed, ref, nextTick, onMounted } from "vue";
+import { FieldSpec } from "../interfaces";
+import { useLanguageStore, useModelStore } from "../store";
+import { commonProps } from "../helpers/form-helpers";
 import EasyMDE from "easymde";
+import CodeMirror from "codemirror";
 
-export default {
-  props: {
-    modelValue: {
-      type: String,
-      default: "",
-    },
-    field: {
-      type: Object as PropType<FieldSpec>,
-      required: true,
-    },
-    error: {
-      type: Object,
-      required: false,
-    },
-    isNested: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const props = defineProps({
+  ...commonProps,
+});
 
-  emits: ["update:modelValue"],
+const field = computed(() => props.field as FieldSpec);
+const fieldPath = computed(() => {
+  if (props.rootPath === undefined) return field.value.name;
+  return `${props.rootPath}.${field.value.name}`;
+});
 
-  setup(_, { emit }) {
-    const store = inject<any>("store");
+const model = useModelStore();
+const update = (e: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
+  if (change.origin === "setValue") return;
+  model.setField(fieldPath.value, e.getValue());
+};
 
-    const isRtl = store.state.languageDirection == "rtl" ? true : false;
+const load = () => {
+  nextTick().then(() => {
+    const fresh = model.getField(fieldPath.value, "") as string;
+    if (fresh === editor.value()) return;
 
-    const textArea = ref(undefined);
-    let editor: EasyMDE;
+    editor.codemirror.setValue(fresh);
+  });
+};
 
-    const update = () => {
-      emit("update:modelValue", editor.value());
-    };
+model.$subscribe(load);
 
-    onMounted(() => {
-      editor = new EasyMDE({
-        element: textArea.value,
-        spellChecker: false,
-        nativeSpellcheck: false,
-        status: false,
-        toolbar: [
+const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+
+const language = useLanguageStore();
+language.$subscribe(() => {
+  editor.codemirror.setOption("direction", language.languageDirection);
+  editor.codemirror.setOption("rtlMoveVisually", language.isRtl);
+  editor.codemirror.setOption("theme", language.locale);
+});
+
+let editor: EasyMDE;
+const textArea = ref(undefined);
+
+onMounted(() => {
+  editor = new EasyMDE({
+    element: textArea.value,
+    spellChecker: false,
+    nativeSpellcheck: false,
+    status: false,
+    toolbar: field.value.isReadOnly
+      ? []
+      : [
           "bold",
           "italic",
           "heading",
@@ -94,17 +108,13 @@ export default {
           "fullscreen",
           "guide",
         ],
-      });
-      editor.codemirror.setOption("direction", store.state.languageDirection);
-      editor.codemirror.setOption("rtlMoveVisually", isRtl);
-      editor.codemirror.on("change", update);
-      editor.codemirror.setOption("theme", store.state.locale);
-    });
-
-    return { textArea, isRtl };
-  },
-};
+  });
+  editor.codemirror.setOption("readOnly", field.value.isReadOnly);
+  editor.codemirror.on("change", update);
+  load();
+});
 </script>
+
 <style>
 @import "easymde/dist/easymde.min.css";
 </style>

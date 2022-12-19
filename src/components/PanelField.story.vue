@@ -1,78 +1,55 @@
 <template>
   <Story title="PanelField">
     <Variant title="Default">
-      <PanelField :field="spec" :form="model" />
-      <ModelInspector :model="model" />
+      <PanelField :field="spec" />
+      <ModelControl :model="panelModel" />
     </Variant>
     <Variant title="Readonly Reference">
-      <PanelField
-        :field="{ ...spec, fields: readOnlyReferenceFields }"
-        :form="model"
-      />
-      <ModelInspector :model="model" />
+      <PanelField :field="{ ...spec, fields: readOnlyTitle }" />
+      <ModelControl :model="panelModel" />
     </Variant>
     <Variant title="Error">
-      <PanelField :field="spec" :form="errorModel" :errors="errors" />
-      <ModelInspector :model="errorModel" />
+      <PanelField :field="spec" />
+      <ErrorControl :errors="panelErrors" />
     </Variant>
   </Story>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import PanelField from "./PanelField.vue";
-import ModelInspector from "@/Helpers/ModelInspector.vue";
-import { FieldSpec } from "@/Interfaces";
-
-const fields: FieldSpec[] = [
-  {
-    label: "Reference",
-    name: "reference",
-    widget: "string",
-    isReadonly: false,
-  },
-  {
-    label: "NIV",
-    name: "quote",
-    widget: "markdown",
-    isReadonly: false,
-  },
-];
-
-const readOnlyReferenceFields: FieldSpec[] = [
-  {
-    label: "Reference",
-    name: "reference",
-    widget: "string",
-    isReadonly: true,
-  },
-  {
-    label: "NIV",
-    name: "quote",
-    widget: "markdown",
-    isReadonly: false,
-  },
-];
+import ModelControl from "../helpers/ModelControl.vue";
+import ErrorControl from "../helpers/ErrorControl.vue";
+import { panelErrors, panelModel } from "../helpers/mocks";
 
 const spec = {
-  label: "Sections",
-  name: "sections",
+  label: "Note",
+  name: "note",
   widget: "panel",
-  isReadonly: false,
-  fields: fields,
+  fields: [
+    {
+      label: "Title",
+      name: "title",
+      widget: "string",
+    },
+    {
+      label: "Description",
+      name: "description",
+      widget: "markdown",
+    },
+  ],
 };
 
-const errors = { "bundle.reference": ["bad!"] };
-
-const model = ref({
-  reference: "John 1:14",
-  quote:
-    "We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth.",
-});
-
-const errorModel = ref({
-  reference: "",
-  quote:
-    "We have seen his glory, the glory of the one and only Son, who came from the Father, full of grace and truth.",
-});
+const readOnlyTitle = [
+  {
+    label: "Title",
+    name: "title",
+    widget: "string",
+    isReadOnly: true,
+  },
+  {
+    label: "Description",
+    name: "description",
+    widget: "markdown",
+  },
+];
 </script>
