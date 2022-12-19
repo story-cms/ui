@@ -39,6 +39,7 @@ import ModelControl from "../helpers/ModelControl.vue";
 import { objectErrors, objectModel } from "../helpers/mocks";
 import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
 import { useModelStore } from "../store";
+import config from "../../secrets";
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
@@ -58,8 +59,8 @@ const spec = {
   provider: {
     uploadPreset: "cmsplayground",
     cloudName: "onesheep",
-    apiKey: "config.apiKey",
-    secret: "config.secret",
+    apiKey: config.apiKey,
+    secret: config.secret,
   },
 };
 </script>
