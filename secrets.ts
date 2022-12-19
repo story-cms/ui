@@ -1,4 +1,6 @@
 export const config = {
-  apiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,
-  secret: import.meta.env.VITE_CLOUDINARY_SECRET,
+  cloudinaryApiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,
+  cloudinarySecret: import.meta.env.VITE_CLOUDINARY_SECRET,
+  cloudinaryCloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+  cloudinaryUploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
 };

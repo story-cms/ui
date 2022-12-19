@@ -46,10 +46,10 @@ export interface FieldSpec {
 }
 
 export interface ImageProvider {
-  secret: string;
-  apiKey: string;
-  uploadPreset: string;
-  cloudName: string;
+  cloudinarySecret: string;
+  cloudinaryApiKey: string;
+  cloudinaryUploadPreset: string;
+  cloudinaryCloudName: string;
 }
 
 export interface FieldMap {

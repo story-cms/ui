@@ -8,10 +8,10 @@
           widget: 'image',
           uploadPreset: 'cmsplayground',
           provider: {
-            uploadPreset: 'cmsplayground',
-            cloudName: 'onesheep',
-            apiKey: config.apiKey,
-            secret: config.secret,
+            cloudinaryUploadPreset: 'cmsplayground',
+            cloudinaryCloudName: 'onesheep',
+            cloudinaryApiKey: config.apiKey,
+            cloudinarySecret: config.secret,
           },
         }"
       />
