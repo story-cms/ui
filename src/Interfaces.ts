@@ -52,6 +52,11 @@ export interface ImageProvider {
   cloudName: string;
 }
 
+export interface Scripture {
+  reference: string;
+  verse: string;
+}
+
 export interface FieldMap {
   [key: string]: FieldSpec;
 }

@@ -68,7 +68,6 @@ const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
     case "List in List":
       store.model = listInListModel;
       break;
-
     default:
       break;
   }

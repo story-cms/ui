@@ -59,8 +59,8 @@ const spec = {
   provider: {
     uploadPreset: "cmsplayground",
     cloudName: "onesheep",
-    apiKey: config.apiKey,
-    secret: config.secret,
+    apiKey: config.cloudinaryApiKey,
+    secret: config.cloudinarySecret,
   },
 };
 </script>
