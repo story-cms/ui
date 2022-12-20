@@ -1,8 +1,9 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import type { Ref } from "vue";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+import { config } from '../../secrets';
 
-export const useModelStore = defineStore("model", () => {
+export const useModelStore = defineStore('model', () => {
   let model = ref({});
   let errors: Ref<Record<string, string[]>> = ref({});
 
@@ -12,7 +13,7 @@ export const useModelStore = defineStore("model", () => {
     defaultValue: Object = {}
   ): Object =>
     path
-      .split(".")
+      .split('.')
       .reduce(
         (o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue),
         object
@@ -21,10 +22,10 @@ export const useModelStore = defineStore("model", () => {
   const setField = (path: string, value: any) => {
     let object = JSON.parse(JSON.stringify(model.value));
     path
-      .split(".")
+      .split('.')
       .reduce(
         (o, p, i) =>
-          (o[p] = path.split(".").length === ++i ? value : o[p] || {}),
+          (o[p] = path.split('.').length === ++i ? value : o[p] || {}),
         object
       );
     model.value = object;
@@ -45,10 +46,43 @@ export const useModelStore = defineStore("model", () => {
   const getField = (path: string, defaultValue: Object = {}) =>
     resolvePath(model.value, path, defaultValue);
 
+  const updateVerse = (path: string, verse: string) => {
+    const scripture = getField(path, {});
+    scripture.verse = verse;
+    setField(path, scripture);
+  };
+
+  const setScripture = async (path: string, reference: string) => {
+    const response = await fetch(
+      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${reference}?content-type=text`,
+      {
+        headers: {
+          accept: 'application/json',
+          'api-key': config.bibleApiKey,
+        },
+      }
+    );
+
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    const verse = data.data.content.trim().replace(/\[(\d+)\]/g, '`$1`').replaceAll('¶ ', '');
+
+    setField(path, {
+      reference,
+      verse,
+    });
+  };
+
   return {
     model,
     getField,
     setField,
+    setScripture,
+    updateVerse,
     addListItem,
     removeListItem,
     errors,

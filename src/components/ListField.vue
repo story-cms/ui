@@ -159,11 +159,15 @@ const sectionTitle = (index: number): string => {
   return `${field.value.label} : ${peek}`;
 };
 
-const title = (index: number): string => {
+const title = (index: number): string | object => {
   const titleFieldName = fields[0].name;
   const item = listItems.value[index];
-  const title = item[titleFieldName];
+  let title = item[titleFieldName];
   if (title === undefined) return "New Section";
+  // if the title is an object, title is the first key's value
+  if (title instanceof Object) {
+    title = title[Object.keys(title)[0]];
+  }
   return title.length > 20 ? `${title.substring(0, 20)}...` : title;
 };
 

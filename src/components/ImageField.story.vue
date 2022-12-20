@@ -10,8 +10,8 @@
           provider: {
             cloudinaryUploadPreset: 'cmsplayground',
             cloudinaryCloudName: 'onesheep',
-            cloudinaryApiKey: config.apiKey,
-            cloudinarySecret: config.secret,
+            cloudinaryApiKey: config.cloudinaryApiKey,
+            cloudinarySecret: config.cloudinarySecret,
           },
         }"
       />

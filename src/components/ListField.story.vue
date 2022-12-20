@@ -11,7 +11,7 @@
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
-      <ListField :field="spec" />
+      <ListField :field="listSpec" />
       <ErrorControl :errors="listErrors" />
     </Variant>
 
@@ -75,12 +75,4 @@ const fields: FieldSpec[] = [
 
 const nestedSpec: FieldSpec = <FieldSpec>listInListSpec;
 const nestedModel = reactive(listInListModel);
-
-const spec = {
-  label: "Sections",
-  name: "sections",
-  widget: "list",
-  isReadOnly: false,
-  fields: fields,
-};
 </script>

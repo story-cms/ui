@@ -11,6 +11,11 @@ export const objectModel = {
     city: 'New York',
     state: 'NY',
     zip: '10001',
+    favoriteScripture: {
+      reference: 'JHN.3.16',
+      verse:
+        '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
+    },
   },
 };
 
@@ -34,6 +39,11 @@ export const objectSpec = {
       label: 'Zip',
       widget: 'string',
     },
+    {
+      name: 'favoriteScripture',
+      label: 'Favorite Scripture',
+      widget: 'scripture',
+    },
   ],
 };
 
@@ -42,6 +52,7 @@ export const objectErrors = {
   'bundle.notes': ['required validation failed'],
   'bundle.profile': ['required validation failed'],
   'bundle.address.zip': ['required validation failed'],
+  'bundle.address.favoriteScripture': ['required validation failed'],
 };
 
 export const listInObjectSpec: FieldSpec = {
@@ -107,14 +118,14 @@ export const listSpec = {
   isReadOnly: false,
   fields: [
     {
-      label: 'Reference',
-      name: 'reference',
-      widget: 'string',
+      label: 'Scripture',
+      name: 'scripture',
+      widget: 'scripture',
       isReadOnly: false,
     },
     {
-      label: 'NIV',
-      name: 'quote',
+      label: 'Commentary',
+      name: 'commentary',
       widget: 'markdown',
       isReadOnly: false,
     },
@@ -124,16 +135,26 @@ export const listSpec = {
 export const listModel = {
   sections: [
     {
-      reference: 'John 1:1',
-      quote:
+      scripture: {
+        reference: 'JHN.1.1',
+        verse:
+          '`1` In the beginning was the Word, and the Word was with God, and the Word was God.',
+      },
+      commentary:
         'In the beginning was the **Word**, and the Word was with God, and the Word was God.',
     },
-    { reference: 'John 1:2', quote: 'He was with God in the beginning.' },
+    {
+      scripture: {
+        reference: 'JHN.1.2',
+        verse: '`2` He was with God in the beginning.',
+      },
+      commentary: 'He was with God in the beginning.',
+    },
   ],
 };
 
 export const listErrors = {
-  'bundle.sections.1.reference': ['required validation failed'],
+  'bundle.sections.1.scripture': ['required validation failed'],
 };
 
 export const listInListSpec: FieldSpec = {
@@ -254,4 +275,59 @@ export const objectInListInObjectModel = {
 export const objectInListInObjectErrors = {
   'bundle.episode.spreads.0.scripture.callout': ['required validation failed'],
   'bundle.episode.spreads.1.scripture.verse': ['required validation failed'],
+};
+
+export const scriptureSpec: FieldSpec = {
+  name: 'scripture',
+  label: 'Scripture',
+  widget: 'scripture',
+  isReadOnly: false,
+};
+
+export const scriptureModel = {
+  scripture: {
+    reference: 'JHN.3.16-JHN.3.17',
+    verse:
+      '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.  `17` For God sent not his Son into the world to condemn the world; but that the world through him might be saved.',
+  },
+};
+
+export const scriptureError = {
+  'bundle.scripture': ['required validation failed'],
+};
+
+export const scriptureInListSpec: FieldSpec = {
+  name: 'scriptures',
+  label: 'Scriptures',
+  widget: 'list',
+  fields: [
+    {
+      name: 'scripture',
+      label: 'Scripture',
+      widget: 'scripture',
+    },
+  ],
+};
+
+export const scriptureInListModel = {
+  scriptures: [
+    {
+      scripture: {
+        reference: 'JHN.3.16',
+        verse:
+          '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
+      },
+    },
+    {
+      scripture: {
+        reference: 'JHN.3.17',
+        verse:
+          '`17` For God sent not his Son into the world to condemn the world; but that the world through him might be saved.',
+      },
+    },
+  ],
+};
+
+export const scriptureInListError = {
+  'bundle.scriptures.0.scripture': ['required validation failed'],
 };
