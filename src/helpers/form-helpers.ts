@@ -1,5 +1,5 @@
 import { PropType } from "vue";
-import { FieldSpec } from "../interfaces";
+import { FieldSpec, ImageProvider } from "../interfaces";
 
 export const commonProps = {
   field: {
@@ -17,6 +17,12 @@ export const commonProps = {
     default: false,
   },
 };
+
+export const imageProvider = {
+  provider: {
+    type: Object as PropType<ImageProvider>
+  }
+}
 
 export const padZero = (value: number): string =>
   value > 9 ? `${value}` : `0${value}`;

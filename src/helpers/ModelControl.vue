@@ -32,7 +32,7 @@ const props = defineProps({
   isInspectOnly: {
     type: Boolean,
     required: false,
-    default: false,
+    default: true,
   },
 });
 

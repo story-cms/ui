@@ -34,12 +34,13 @@ import { computed, ref, nextTick, onMounted } from "vue";
 import type { Ref } from "vue";
 import { FieldSpec } from "../interfaces";
 import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../helpers/form-helpers";
+import { commonProps, imageProvider } from "../helpers/form-helpers";
 import FileUpload from "./FileUpload.vue";
 import axios from "axios";
 
 const props = defineProps({
   ...commonProps,
+  ...imageProvider,
 });
 
 const field = computed(() => props.field as FieldSpec);

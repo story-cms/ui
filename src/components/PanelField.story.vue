@@ -1,16 +1,20 @@
 <template>
   <Story title="PanelField">
-    <Variant title="Default">
+    <Variant title="Default" :setup-app="loadData">
       <PanelField :field="spec" />
       <ModelControl :model="panelModel" />
     </Variant>
-    <Variant title="Readonly Reference">
+
+    <Variant title="Error" :setup-app="loadData">
+      <PanelField :field="spec" />
+      <template #controls>
+        <ErrorControl :errors="panelErrors" />
+      </template>
+    </Variant>
+
+    <Variant title="Readonly Title" :setup-app="loadData">
       <PanelField :field="{ ...spec, fields: readOnlyTitle }" />
       <ModelControl :model="panelModel" />
-    </Variant>
-    <Variant title="Error">
-      <PanelField :field="spec" />
-      <ErrorControl :errors="panelErrors" />
     </Variant>
   </Story>
 </template>
@@ -20,6 +24,16 @@ import PanelField from "./PanelField.vue";
 import ModelControl from "../helpers/ModelControl.vue";
 import ErrorControl from "../helpers/ErrorControl.vue";
 import { panelErrors, panelModel } from "../helpers/mocks";
+import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
+import { useModelStore } from "../store";
+
+const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+  const store = useModelStore();
+  store.model = panelModel;
+  if (variant?.title == "Error") {
+    store.errors = panelErrors;
+  }
+};
 
 const spec = {
   label: "Note",

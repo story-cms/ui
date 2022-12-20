@@ -4,15 +4,17 @@
     <code>
       <pre class="my-4 text-emerald-500">{{ pretty }}</pre>
     </code>
-    <HstJson v-model="formErrors" title="Desired state" />
-    <div class="my-4">
-      <HstButton
-        color="primary"
-        class="bg-emerald-500 htw-p-2"
-        @click="setError"
-      >
-        Set Error
-      </HstButton>
+    <div v-if="!isInspectOnly">
+      <HstJson v-model="formErrors" title="Desired state" />
+      <div class="my-4">
+        <HstButton
+          color="primary"
+          class="bg-emerald-500 htw-p-2"
+          @click="setError"
+        >
+          Set Error
+        </HstButton>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +27,11 @@ const props = defineProps({
   errors: {
     type: Object,
     required: false,
+  },
+  isInspectOnly: {
+    type: Boolean,
+    required: false,
+    default: true,
   },
 });
 
