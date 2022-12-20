@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Ref } from "vue";
+import config from "../../secrets";
+import type { Scripture } from "../Interfaces";
 
 export const useModelStore = defineStore("model", () => {
   let model = ref({});
@@ -9,13 +11,13 @@ export const useModelStore = defineStore("model", () => {
   const resolvePath = (
     object: Record<string | number, any>,
     path: string,
-    defaultValue: Object = {}
+    defaultValue: Object = {},
   ): Object =>
     path
       .split(".")
       .reduce(
         (o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue),
-        object
+        object,
       );
 
   const setField = (path: string, value: any) => {
@@ -25,7 +27,7 @@ export const useModelStore = defineStore("model", () => {
       .reduce(
         (o, p, i) =>
           (o[p] = path.split(".").length === ++i ? value : o[p] || {}),
-        object
+        object,
       );
     model.value = object;
   };
@@ -45,10 +47,46 @@ export const useModelStore = defineStore("model", () => {
   const getField = (path: string, defaultValue: Object = {}) =>
     resolvePath(model.value, path, defaultValue);
 
+  const updateVerse = (path: string, verse: string) => {
+    const scripture = getField(path, { verse: "" }) as Scripture;
+    scripture.verse = verse;
+    setField(path, scripture);
+  };
+
+  const setScripture = async (path: string, reference: string) => {
+    const response = await fetch(
+      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${reference}?content-type=text`,
+      {
+        headers: {
+          accept: "application/json",
+          "api-key": config.bibleApiKey,
+        },
+      },
+    );
+
+    if (response.status !== 200) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    const verse = data.data.content
+      .trim()
+      .replace(/\[(\d+)\]/g, "`$1`")
+      .replaceAll("¶ ", "");
+
+    setField(path, {
+      reference,
+      verse,
+    });
+  };
+
   return {
     model,
     getField,
     setField,
+    setScripture,
+    updateVerse,
     addListItem,
     removeListItem,
     errors,

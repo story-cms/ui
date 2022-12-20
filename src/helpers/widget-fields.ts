@@ -5,6 +5,7 @@ import NullField from '../components/NullField.vue';
 import PanelField from '../components/PanelField.vue';
 import ListField from '../components/ListField.vue';
 import ObjectField from '../components/ObjectField.vue';
+import ScriptureField from '../components/ScriptureField.vue';
 
 export const widgetField = (widget: string) => {
   const up = widget[0].toUpperCase() + widget.substring(1);
@@ -22,6 +23,8 @@ export const widgetField = (widget: string) => {
       return ListField;
     case 'ObjectField':
       return ObjectField;
+    case 'ScriptureField':
+      return ScriptureField;
 
     default:
       return NullField;
