@@ -48,7 +48,7 @@ export const useModelStore = defineStore("model", () => {
     resolvePath(model.value, path, defaultValue);
 
   const updateVerse = (path: string, verse: string) => {
-    const scripture = getField(path, { verse: "" }) as Scripture;
+    const scripture = getField(path, {}) as Scripture;
     scripture.verse = verse;
     setField(path, scripture);
   };
