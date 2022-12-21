@@ -14,13 +14,13 @@
     <div class="mt-1">
       <div
         :class="{
-          'rounded border border-red-300': hasError,
+          'rounded border border-error': hasError,
           'opacity-50': field.isReadOnly,
         }"
       >
         <textarea :readonly="field.isReadOnly" ref="textArea"></textarea>
       </div>
-      <p class="mt-[8px] text-sm text-red-500" v-if="hasError">
+      <p class="mt-[8px] text-sm text-error" v-if="hasError">
         This field cannot be empty
       </p>
     </div>

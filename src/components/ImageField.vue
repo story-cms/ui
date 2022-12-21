@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white relative py-4" :class="{ rtl: language.isRtl }">
-    <label class="input-label" :class="{ 'text-red-500': hasError }">{{
+    <label class="input-label" :class="{ 'text-error': hasError }">{{
       field.label
     }}</label>
     <div
@@ -8,7 +8,7 @@
       class="mt-[2px] border-2 border-gray-300 border-dashed rounded-md relative"
     >
       <FileUpload @file="uploadImage" class="w-full" />
-      <p class="text-sm text-red-500" v-if="hasError">
+      <p class="text-sm text-error" v-if="hasError">
         {{ field.label }} cannot be empty
       </p>
       <div
@@ -16,7 +16,7 @@
         v-if="uploading"
       >
         <div
-          class="bg-al-massira-blue h-full opacity-30"
+          class="bg-blue-400 h-full opacity-30"
           :style="progress"
         ></div>
       </div>

@@ -22,7 +22,7 @@
   }
 
   .btn-blue {
-    @apply bg-al-massira-blue text-white;
+    @apply bg-blue-400 text-white;
   }
 }
 

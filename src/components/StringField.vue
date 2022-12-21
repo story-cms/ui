@@ -17,9 +17,9 @@
         :value="modelValue"
         @input="update"
         class="input-field"
-        :class="{ 'border-red-300': hasError, 'opacity-50': field.isReadOnly }"
+        :class="{ 'border-error': hasError, 'opacity-50': field.isReadOnly }"
       />
-      <p class="text-sm text-red-500" v-if="hasError">
+      <p class="text-sm text-error" v-if="hasError">
         This field cannot be empty
       </p>
     </div>
