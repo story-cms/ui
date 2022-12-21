@@ -4,6 +4,7 @@
       <ScriptureField :field="scriptureSpec" />
       <ModelControl :model="scriptureModel" />
     </Variant>
+    
     <Variant title="Error">
       <ScriptureField :field="scriptureSpec" />
       <ErrorControl :errors="scriptureError" />

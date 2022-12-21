@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from "vue";
-import { FieldSpec } from "../interfaces";
+import { FieldSpec, Scripture } from "../interfaces";
 import { useLanguageStore, useModelStore } from "../store";
 import { commonProps } from "../helpers/form-helpers";
 
@@ -56,8 +56,9 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const reference = ref(model.getField(fieldPath.value, "").reference);
-const verse = ref(model.getField(fieldPath.value, "").verse);
+const startValue = model.getField(fieldPath.value, "") as Scripture;
+const reference = ref(startValue.reference);
+const verse = ref(startValue.verse);
 
 const update = (event: Event) => {
   model.setScripture(fieldPath.value, (event.target as HTMLInputElement).value);
@@ -69,8 +70,9 @@ const updateVerse = (event: Event) => {
 
 model.$subscribe(() => {
   nextTick().then(() => {
-    reference.value = model.getField(fieldPath.value, "").reference;
-    verse.value = model.getField(fieldPath.value, "").verse;
+    const fresh = model.getField(fieldPath.value, "") as Scripture;
+    reference.value = fresh.reference;
+    verse.value = fresh.verse;
   });
 });
 
