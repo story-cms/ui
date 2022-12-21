@@ -9,25 +9,7 @@
           <button
             @click="toggle(index)"
             type="button"
-            class="
-              inline-flex
-              items-center
-              rounded-full
-              border border-gray-300
-              bg-white
-              px-4
-              py-1.5
-              text-sm
-              font-medium
-              leading-5
-              text-gray-700
-              shadow-sm
-              hover:bg-gray-50
-              focus:outline-none
-              focus:ring-2
-              focus:ring-indigo-500
-              focus:ring-offset-2
-            "
+            class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <icon
               v-if="isExpanded(index)"
@@ -41,11 +23,11 @@
               class="icon mr-1"
               aria-hidden="true"
             />
-            <span>{{ sectionTitle(index) }}</span>
+            <span>{{ String(sectionTitle(index)) }}</span>
           </button>
           <div
             v-if="itemHasError(index)"
-            class="absolute left-0 cursor-pointer text-error-400"
+            class="text-accent-one absolute left-0 cursor-pointer"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
@@ -53,7 +35,7 @@
             </div>
           </div>
           <div
-            class="absolute right-0 cursor-pointer text-error"
+            class="absolute right-0 cursor-pointer text-red-500"
             @click="removeSet(index)"
           >
             <div class="rounded-full border bg-white p-2">
@@ -64,22 +46,13 @@
       </div>
       <div
         v-if="isExpanded(index)"
-        class="
-          relative
-          mt-[32px]
-          space-y-[24px]
-          rounded
-          border border-gray-100
-          bg-white
-          p-[32px]
-          shadow-sm
-        "
+        class="relative mt-[32px] space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
       >
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
             :is="widgetField(item.widget)"
             :field="item"
-            :root-path="`${fieldPath}.${index}`"
+            :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
           />
         </div>
@@ -94,25 +67,7 @@
         <button
           @click="addSet"
           type="button"
-          class="
-            inline-flex
-            items-center
-            rounded-full
-            border border-gray-300
-            bg-white
-            px-4
-            py-1.5
-            text-sm
-            font-medium
-            leading-5
-            text-gray-700
-            shadow-sm
-            hover:bg-gray-50
-            focus:outline-none
-            focus:ring-2
-            focus:ring-indigo-500
-            focus:ring-offset-2
-          "
+          class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           <icon name="plus" class="icon mr-1" aria-hidden="true" />
           <span>{{ "Add New " + field.label.slice(0, -1) }}</span>
@@ -124,10 +79,10 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick } from "vue";
-import { commonProps } from "../helpers/form-helpers";
-import { widgetField } from "../helpers/widget-fields";
-import { FieldSpec } from "../interfaces";
-import Icon from "../shared/Icon.vue";
+import { commonProps } from "../Shared/helpers";
+import { widgetField } from "./widget-fields";
+import type { FieldSpec } from "App/Models/Interfaces";
+import Icon from "../Shared/Icon.vue";
 import { useModelStore } from "../store";
 
 // name: "ListField",
@@ -137,7 +92,7 @@ const props = defineProps({
 });
 
 const field = computed(() => props.field as FieldSpec);
-const fieldPath = computed(() => {
+const fieldPath = computed((): string => {
   if (props.rootPath === undefined) return field.value.name;
   return `${props.rootPath}.${field.value.name}`;
 });
@@ -159,16 +114,12 @@ const sectionTitle = (index: number): string => {
   return `${field.value.label} : ${peek}`;
 };
 
-const title = (index: number): string | object => {
+const title = (index: number): string => {
   const titleFieldName = fields[0].name;
   const item = listItems.value[index];
-  let title = item[titleFieldName];
-  if (title === undefined) return "New Section";
-  // if the title is an object, title is the first key's value
-  if (title instanceof Object) {
-    title = title[Object.keys(title)[0]];
-  }
-  return title.length > 20 ? `${title.substring(0, 20)}...` : title;
+  const itemTitle = item[titleFieldName];
+  if (itemTitle === undefined) return "New Section";
+  return itemTitle.length > 20 ? `${itemTitle.substring(0, 20)}...` : itemTitle;
 };
 
 const addSet = () => {

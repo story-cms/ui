@@ -1,14 +1,14 @@
 <template>
   <div
     :class="{
-      'bg-white px-8 py-6 rounded-bl-lg rounded-br-lg shadow-sm': !isNested,
+      'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
       rtl: language.isRtl,
     }"
   >
     <label :for="field.label" class="input-label">
       {{ field.label }}
     </label>
-    <div class="mt-[2px] sm:mt-0 sm:col-span-2 pt-1">
+    <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
       <input
         type="text"
         :name="field.label"
@@ -41,9 +41,9 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from "vue";
-import { FieldSpec, Scripture } from "../interfaces";
+import { FieldSpec, Scripture } from "App/Models/Interfaces";
 import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../helpers/form-helpers";
+import { commonProps } from "../Shared/helpers";
 
 const props = defineProps({
   ...commonProps,

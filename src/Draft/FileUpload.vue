@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white w-full p-[36px] relative"
+    class="relative w-full bg-white p-[36px]"
     :class="{ 'bg-gray-400 bg-opacity-30': isHovering }"
     @dragover.prevent="onDragOver"
     @dragenter="onDragEnter"
@@ -8,7 +8,7 @@
     @drop.prevent="onDrop"
   >
     <div v-if="feedback" class="absolute inset-0">
-      <p class="rounded-t-md text-center bg-error text-white py-1 text-sm">
+      <p class="rounded-t-md bg-red-500 py-1 text-center text-sm text-white">
         {{ feedback }}
       </p>
     </div>
@@ -29,9 +29,9 @@
           stroke-linejoin="round"
         />
       </svg>
-      <div class="flex text-sm text-gray-600 leading-5 font-medium">
+      <div class="flex text-sm font-medium leading-5 text-gray-600">
         <label
-          class="relative cursor-pointer bg-white rounded-md font-medium text-blue-400 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+          class="text-al-massira-blue relative cursor-pointer rounded-md bg-white font-medium focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
         >
           <span>Upload a file</span>
           <input
@@ -44,15 +44,14 @@
         </label>
         <p class="pl-1">or drag and drop</p>
       </div>
-      <p class="text-xs text-gray-500 leading-4 font-normal">
-        PNG, JPG, GIF up to 5MB
-      </p>
+      <p class="text-xs font-normal leading-4 text-gray-500"
+        >PNG, JPG, GIF up to 5MB</p
+      >
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { validateFile } from "../helpers/form-helpers";
 import { ref } from "vue";
 
 export default {
@@ -95,6 +94,17 @@ export default {
       } catch (e) {
         feedback.value = JSON.stringify(e);
       }
+    };
+
+    const validateFile = (file: File) => {
+      const allowedExtensions = [".jpeg", ".jpg", ".png", ".svg"];
+
+      if (
+        !allowedExtensions.some((extension) => file["name"].endsWith(extension))
+      )
+        throw new Error(`Invalid file! Use an image instead.`);
+
+      if (file["size"] > 5662310) throw new Error(`File size is too large.`);
     };
 
     return {
