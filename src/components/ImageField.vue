@@ -1,6 +1,6 @@
 <template>
   <div class="relative bg-white py-4" :class="{ rtl: language.isRtl }">
-    <label class="input-label" :class="{ 'text-error': hasError }">{{
+    <label class="input-label" :class="{ 'text-red-500': hasError }">{{
       field.label
     }}</label>
     <div
@@ -8,14 +8,17 @@
       class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
     >
       <FileUpload @file="uploadImage" class="w-full" />
-      <p class="text-sm text-error" v-if="hasError">
-        {{ field.label }} cannot be empty
-      </p>
+      <p class="text-red/50 text-sm" v-if="hasError"
+        >{{ field.label }} cannot be empty</p
+      >
       <div
         class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
         v-if="uploading"
       >
-        <div class="h-full bg-blue-400 opacity-30" :style="progress"></div>
+        <div
+          class="bg-al-massira-blue h-full opacity-30"
+          :style="progress"
+        ></div>
       </div>
     </div>
     <img
@@ -28,12 +31,11 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onMounted } from "vue";
-import type { Ref } from "vue";
-import { FieldSpec } from "../interfaces";
+import { FieldSpec } from "App/Models/Interfaces";
 import { useLanguageStore, useModelStore } from "../store";
 import { commonProps } from "../Shared/helpers";
 import FileUpload from "./FileUpload.vue";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const props = defineProps({
   ...commonProps,
@@ -100,7 +102,7 @@ const uploadImage = (files: File) => {
   formData.append("timestamp", timestamp.toString());
   formData.append("signature", encryptedSecret.value);
 
-  const requestObj = {
+  const requestObj: AxiosRequestConfig = {
     url:
       "https://api.cloudinary.com/v1_1/" +
       provider["cloudName"] +
