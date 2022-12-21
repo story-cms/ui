@@ -26,15 +26,15 @@ Following are the widgets that are currently implemented:
 
 ### string
 
-Suitable for short, single line plain text strings. It has only the common properties and renders a [StringField](./components/StringField.story.vue)
+Suitable for short, single line plain text strings. It has only the common properties and renders a [StringField](./Draft/StringField.story.vue)
 
 ### markdown
 
-Suitable for longer, multi-line rich text which allows markup in markdown format and renders a [MarkdownField](./components/MarkdownField.story.vue).
+Suitable for longer, multi-line rich text which allows markup in markdown format and renders a [MarkdownField](./Draft/MarkdownField.story.vue).
 
 ### image
 
-Holds a url to a hosted image file. Suitable for allowing content editors to upload image files and renders a [ImageField](./components/ImageField.story.vue).  
+Holds a url to a hosted image file. Suitable for allowing content editors to upload image files and renders a [ImageField](./Draft/ImageField.story.vue).  
 Has one special key called `uploadPreset` which expects a string specifying the Cloudinary upload preset for this image.
 
 example:
