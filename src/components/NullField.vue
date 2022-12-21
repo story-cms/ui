@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { FieldSpec } from "../interfaces";
+import { FieldSpec } from "App/Models/Interfaces";
 import { commonProps } from "../Shared/helpers";
 const props = defineProps({
   ...commonProps,

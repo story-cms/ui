@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from "vue";
-import { FieldSpec } from "../interfaces";
+import { FieldSpec } from "App/Models/Interfaces";
 import { useLanguageStore, useModelStore } from "../store";
 import { commonProps } from "../Shared/helpers";
 

@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick } from "vue";
+import { computed } from "vue";
 import { commonProps } from "../Shared/helpers";
-import { FieldSpec, FieldMap } from "../interfaces";
+import { FieldSpec } from "App/Models/Interfaces";
 import { widgetField } from "./widget-fields";
 
 const props = defineProps({
