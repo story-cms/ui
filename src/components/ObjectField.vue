@@ -1,6 +1,6 @@
 <template>
   <div
-    class="my-[32px] bg-white p-[32px] rounded border border-gray-100 shadow-sm"
+    class="my-[32px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
   >
     <div v-if="field.label">
       <label class="input-label mb-3">
@@ -23,9 +23,9 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from "vue";
-import { commonProps } from "../helpers/form-helpers";
+import { commonProps } from "../Shared/helpers";
 import { FieldSpec, FieldMap } from "../interfaces";
-import { widgetField } from "../helpers/widget-fields";
+import { widgetField } from "./widget-fields";
 const props = defineProps({
   ...commonProps,
 });

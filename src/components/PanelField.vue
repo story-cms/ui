@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-[32px] rounded border border-gray-100 shadow-sm">
+  <div class="rounded border border-gray-100 bg-white p-[32px] shadow-sm">
     <div v-for="(item, index) in fields" :key="index">
       <component
         :is="widgetFor(index)"
@@ -13,9 +13,9 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from "vue";
-import { commonProps } from "../helpers/form-helpers";
+import { commonProps } from "../Shared/helpers";
 import { FieldSpec, FieldMap } from "../interfaces";
-import { widgetField } from "../helpers/widget-fields";
+import { widgetField } from "./widget-fields";
 
 const props = defineProps({
   ...commonProps,

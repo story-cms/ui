@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white w-full p-[36px] relative"
+    class="relative w-full bg-white p-[36px]"
     :class="{ 'bg-gray-400 bg-opacity-30': isHovering }"
     @dragover.prevent="onDragOver"
     @dragenter="onDragEnter"
@@ -8,7 +8,7 @@
     @drop.prevent="onDrop"
   >
     <div v-if="feedback" class="absolute inset-0">
-      <p class="rounded-t-md text-center bg-error text-white py-1 text-sm">
+      <p class="rounded-t-md bg-error py-1 text-center text-sm text-white">
         {{ feedback }}
       </p>
     </div>
@@ -29,9 +29,9 @@
           stroke-linejoin="round"
         />
       </svg>
-      <div class="flex text-sm text-gray-600 leading-5 font-medium">
+      <div class="flex text-sm font-medium leading-5 text-gray-600">
         <label
-          class="relative cursor-pointer bg-white rounded-md font-medium text-blue-400 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+          class="relative cursor-pointer rounded-md bg-white font-medium text-blue-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
         >
           <span>Upload a file</span>
           <input
@@ -44,7 +44,7 @@
         </label>
         <p class="pl-1">or drag and drop</p>
       </div>
-      <p class="text-xs text-gray-500 leading-4 font-normal">
+      <p class="text-xs font-normal leading-4 text-gray-500">
         PNG, JPG, GIF up to 5MB
       </p>
     </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { validateFile } from "../helpers/form-helpers";
+import { validateFile } from "../Shared/helpers";
 import { ref } from "vue";
 
 export default {

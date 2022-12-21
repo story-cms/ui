@@ -1,30 +1,27 @@
 <template>
-  <div class="bg-white relative py-4" :class="{ rtl: language.isRtl }">
+  <div class="relative bg-white py-4" :class="{ rtl: language.isRtl }">
     <label class="input-label" :class="{ 'text-error': hasError }">{{
       field.label
     }}</label>
     <div
       v-if="!field.isReadOnly"
-      class="mt-[2px] border-2 border-gray-300 border-dashed rounded-md relative"
+      class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
     >
       <FileUpload @file="uploadImage" class="w-full" />
       <p class="text-sm text-error" v-if="hasError">
         {{ field.label }} cannot be empty
       </p>
       <div
-        class="bg-gray-400 h-full absolute top-0 left-0 rounded-md w-full bg-opacity-30"
+        class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
         v-if="uploading"
       >
-        <div
-          class="bg-blue-400 h-full opacity-30"
-          :style="progress"
-        ></div>
+        <div class="h-full bg-blue-400 opacity-30" :style="progress"></div>
       </div>
     </div>
     <img
       v-if="modelValue != ''"
       :src="modelValue"
-      class="mt-1 w-auto h-48 rounded-md"
+      class="mt-1 h-48 w-auto rounded-md"
     />
   </div>
 </template>
@@ -34,7 +31,7 @@ import { computed, ref, nextTick, onMounted } from "vue";
 import type { Ref } from "vue";
 import { FieldSpec } from "../interfaces";
 import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../helpers/form-helpers";
+import { commonProps } from "../Shared/helpers";
 import FileUpload from "./FileUpload.vue";
 import axios from "axios";
 

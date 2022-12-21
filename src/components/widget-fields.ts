@@ -1,11 +1,11 @@
-import StringField from '../components/StringField.vue';
-import MarkdownField from '../components/MarkdownField.vue';
-import ImageField from '../components/ImageField.vue';
-import NullField from '../components/NullField.vue';
-import PanelField from '../components/PanelField.vue';
-import ListField from '../components/ListField.vue';
-import ObjectField from '../components/ObjectField.vue';
-import ScriptureField from '../components/ScriptureField.vue';
+import StringField from './StringField.vue';
+import MarkdownField from './MarkdownField.vue';
+import ImageField from './ImageField.vue';
+import NullField from './NullField.vue';
+import PanelField from './PanelField.vue';
+import ListField from './ListField.vue';
+import ObjectField from './ObjectField.vue';
+import ScriptureField from './ScriptureField.vue';
 
 export const widgetField = (widget: string) => {
   const up = widget[0].toUpperCase() + widget.substring(1);

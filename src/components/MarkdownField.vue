@@ -31,7 +31,7 @@
 import { computed, ref, nextTick, onMounted } from "vue";
 import { FieldSpec } from "../interfaces";
 import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../helpers/form-helpers";
+import { commonProps } from "../Shared/helpers";
 import EasyMDE from "easymde";
 import CodeMirror from "codemirror";
 
