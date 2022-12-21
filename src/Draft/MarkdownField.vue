@@ -32,8 +32,8 @@ import { computed, ref, nextTick, onMounted } from "vue";
 import { FieldSpec } from "App/Models/Interfaces";
 import { useLanguageStore, useModelStore } from "../store";
 import { commonProps } from "../Shared/helpers";
-import EasyMDE from "easymde";
-import CodeMirror from "codemirror";
+import type { Editor, EditorChange } from "codemirror";
+import type EasyMDE from "easymde";
 
 const props = defineProps({
   ...commonProps,
@@ -46,7 +46,7 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const update = (e: CodeMirror.Editor, change: CodeMirror.EditorChange) => {
+const update = (e: Editor, change: EditorChange) => {
   if (change.origin === "setValue") return;
   model.setField(fieldPath.value, e.getValue());
 };
@@ -74,7 +74,10 @@ language.$subscribe(() => {
 let editor: EasyMDE;
 const textArea = ref(undefined);
 
-onMounted(() => {
+onMounted(async () => {
+  // needed for SSR of Codemirror
+  const easymdeModule = await import("easymde");
+  const EasyMDE = easymdeModule.default;
   editor = new EasyMDE({
     element: textArea.value,
     spellChecker: false,
