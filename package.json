@@ -19,10 +19,13 @@
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.11.9",
+    "@onesheep/prettier-config": "^0.0.11",
     "@vitejs/plugin-vue": "^3.2.0",
     "autoprefixer": "^10.4.13",
     "histoire": "^0.11.7",
     "postcss": "^8.4.19",
+    "prettier": "^2.8.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.6.4",
     "vite": "^3.2.5",

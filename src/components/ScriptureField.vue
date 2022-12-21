@@ -18,9 +18,9 @@
         :value="reference"
         @blur="update"
         class="input-field"
-        :class="{ 'border-red-300': hasError, 'opacity-50': field.isReadOnly }"
+        :class="{ 'border-error': hasError, 'opacity-50': field.isReadOnly }"
       />
-      <p class="text-sm text-red-500" v-if="hasError">
+      <p class="text-sm text-error" v-if="hasError">
         This field cannot be empty
       </p>
       <textarea
@@ -30,9 +30,9 @@
         :value="verse"
         @input="updateVerse"
         class="input-field mt-2 h-64"
-        :class="{ 'border-red-300': hasError, 'opacity-50': field.isReadOnly }"
+        :class="{ 'border-error': hasError, 'opacity-50': field.isReadOnly }"
       ></textarea>
-      <p class="text-sm text-red-500" v-if="hasError">
+      <p class="text-sm text-error" v-if="hasError">
         This field cannot be empty
       </p>
     </div>

@@ -8,7 +8,7 @@
     @drop.prevent="onDrop"
   >
     <div v-if="feedback" class="absolute inset-0">
-      <p class="rounded-t-md text-center bg-red-500 text-white py-1 text-sm">
+      <p class="rounded-t-md text-center bg-error text-white py-1 text-sm">
         {{ feedback }}
       </p>
     </div>
@@ -31,7 +31,7 @@
       </svg>
       <div class="flex text-sm text-gray-600 leading-5 font-medium">
         <label
-          class="relative cursor-pointer bg-white rounded-md font-medium text-al-massira-blue hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+          class="relative cursor-pointer bg-white rounded-md font-medium text-blue-400 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
         >
           <span>Upload a file</span>
           <input

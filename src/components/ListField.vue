@@ -45,7 +45,7 @@
           </button>
           <div
             v-if="itemHasError(index)"
-            class="absolute left-0 cursor-pointer text-accent-one"
+            class="absolute left-0 cursor-pointer text-error-400"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div
-            class="absolute right-0 cursor-pointer text-red-500"
+            class="absolute right-0 cursor-pointer text-error"
             @click="removeSet(index)"
           >
             <div class="rounded-full border bg-white p-2">
