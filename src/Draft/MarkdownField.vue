@@ -97,10 +97,10 @@ onMounted(async () => {
           "link",
           {
             name: "footnote",
-            action: (editor) => {
-              const selection = editor.codemirror.getSelection();
+            action: (instance) => {
+              const selection = instance.codemirror.getSelection();
               const newValue = `[${selection}](^${selection})`;
-              return editor.codemirror.replaceSelection(newValue);
+              return instance.codemirror.replaceSelection(newValue);
             },
             className: "fa fa-asterisk",
             title: "Footnote Button",
