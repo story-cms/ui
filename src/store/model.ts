@@ -1,10 +1,11 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import type { Ref } from "vue";
-import config from "../../secrets";
-import type { Scripture } from "../Interfaces";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+import config from '../../secrets';
+import type { Scripture } from '../Interfaces';
+import { parseReference } from '@/Shared/helpers';
 
-export const useModelStore = defineStore("model", () => {
+export const useModelStore = defineStore('model', () => {
   let model = ref({});
   let errors: Ref<Record<string, string[]>> = ref({});
 
@@ -14,19 +15,15 @@ export const useModelStore = defineStore("model", () => {
     defaultValue: Object = {},
   ): Object =>
     path
-      .split(".")
-      .reduce(
-        (o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue),
-        object,
-      );
+      .split('.')
+      .reduce((o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue), object);
 
   const setField = (path: string, value: any) => {
     let object = JSON.parse(JSON.stringify(model.value));
     path
-      .split(".")
+      .split('.')
       .reduce(
-        (o, p, i) =>
-          (o[p] = path.split(".").length === ++i ? value : o[p] || {}),
+        (o, p, i) => (o[p] = path.split('.').length === ++i ? value : o[p] || {}),
         object,
       );
     model.value = object;
@@ -55,11 +52,13 @@ export const useModelStore = defineStore("model", () => {
 
   const setScripture = async (path: string, reference: string) => {
     const response = await fetch(
-      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${reference}?content-type=text`,
+      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${parseReference(
+        reference,
+      )}?content-type=text`,
       {
         headers: {
-          accept: "application/json",
-          "api-key": config.bibleApiKey,
+          accept: 'application/json',
+          'api-key': config.bibleApiKey,
         },
       },
     );
@@ -72,8 +71,9 @@ export const useModelStore = defineStore("model", () => {
 
     const verse = data.data.content
       .trim()
-      .replace(/\[(\d+)\]/g, "`$1`")
-      .replaceAll("¶ ", "");
+      .replace(/\[(\d+)\]/g, '\n`$1`')
+      .replace(/¶\s/g, '')
+      .replace(/^\n/, '');
 
     setField(path, {
       reference,
