@@ -7,7 +7,7 @@ steps:
   - id: Test2
     name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['ops/script.sh', '$$VITE_CLOUDINARY_API_KEY', '$$VITE_CLOUDINARY_SECRET']
+    args: ['-c', "./ops/script.sh $$VITE_CLOUDINARY_API_KEY $$VITE_CLOUDINARY_SECRET"]
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
   # - id: Build
   #   name: gcr.io/cloud-builders/docker 
