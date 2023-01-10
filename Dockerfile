@@ -4,9 +4,8 @@ ENV VITE_CLOUDINARY_API_KEY=$VITE_CLOUDINARY_API_KEY
 
 WORKDIR /app
 COPY package*.json ./
-# RUN npm install
+RUN npm install
 COPY . .
-RUN npm run some
 RUN npm run build
 
 FROM nginx:1.23.2 as server
