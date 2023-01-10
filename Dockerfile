@@ -3,6 +3,7 @@ ARG VITE_CLOUDINARY_API_KEY
 
 FROM $NODE_IMAGE as build
 
+RUN echo $VITE_CLOUDINARY_API_KEY
 WORKDIR /app
 COPY package*.json ./
 RUN npm install

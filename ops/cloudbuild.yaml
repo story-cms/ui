@@ -1,28 +1,30 @@
 steps:
-  - id: Test
-    name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', 'echo VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY && echo VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET']
-    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
-  - id: Test2
-    name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args: ['-c', "./ops/script.sh $$VITE_CLOUDINARY_API_KEY $$VITE_CLOUDINARY_SECRET"]
-    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
-  # - id: Build
-  #   name: gcr.io/cloud-builders/docker 
-  #   args:
-  #     - build
-  #     - "--no-cache"
-  #     - "-t"
-  #     - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
-  #     - "--build-arg"
-  #     - "VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY"
-  #     - .
-  #     - "-f"
-  #     - Dockerfile
+  # - id: Test
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   entrypoint: 'bash'
+  #   args: ['-c', 'echo VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY && echo VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET']
   #   secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
-
+  # - id: Test2
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   entrypoint: 'bash'
+  #   args: ['-c', "./ops/script.sh $$VITE_CLOUDINARY_API_KEY $$VITE_CLOUDINARY_SECRET"]
+  #   secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
+  
+  - id: Build
+    name: gcr.io/cloud-builders/docker 
+    entrypoint: bash
+    # args:
+    #   - build
+    #   - "--no-cache"
+    #   - "-t"
+    #   - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+    #   - "--build-arg"
+    #   - "VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY"
+    #   - .
+    #   - "-f"
+    #   - Dockerfile
+    args: ['-c', 'docker build -t $_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA --build-arg VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET -f Dockerfile'] 
+    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
   # - id: Push
   #   name: gcr.io/cloud-builders/docker
   #   args:
