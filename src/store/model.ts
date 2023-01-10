@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import type { Ref } from 'vue';
 import config from '../../secrets';
 import type { Scripture } from '../Interfaces';
-import { parseReference } from '@/Shared/helpers';
+import { parseReference } from '@/shared/helpers';
 
 export const useModelStore = defineStore('model', () => {
   let model = ref({});

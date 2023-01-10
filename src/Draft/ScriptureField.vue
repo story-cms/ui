@@ -40,7 +40,7 @@ import { computed, ref, nextTick, watch } from 'vue';
 import type { Ref } from 'vue';
 import { FieldSpec, Scripture } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore } from '../store';
-import { commonProps } from '../Shared/helpers';
+import { commonProps } from '../shared/helpers';
 
 const props = defineProps({
   ...commonProps,

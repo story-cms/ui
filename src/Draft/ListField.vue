@@ -79,10 +79,10 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick } from "vue";
-import { commonProps } from "../Shared/helpers";
+import { commonProps } from "../shared/helpers";
 import { widgetField } from "./widget-fields";
 import type { FieldSpec } from "App/Models/Interfaces";
-import Icon from "../Shared/Icon.vue";
+import Icon from "../shared/Icon.vue";
 import { useModelStore } from "../store";
 
 // name: "ListField",
