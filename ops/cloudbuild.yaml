@@ -1,15 +1,16 @@
 steps:
   - id: Build
     name: gcr.io/cloud-builders/docker 
-    # entrypoint: bash
+    entrypoint: bash
     args:
+      - "-c"
+      - "docker"
       - build
       - "--no-cache"
       - "-t"
       - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
       - "--build-arg"
-      - "VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY"
-      - .
+      - "$$VITE_CLOUDINARY_API_KEY"
       - "-f"
       - Dockerfile
     # args: ['-c', 'docker build -t $_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA --build-arg VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY --build-arg VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET .'] 
