@@ -1,20 +1,18 @@
 steps:
   - id: Build
-    name: gcr.io/cloud-builders/docker 
-    entrypoint: bash
-    # args:
-    #   - "-c"
-    #   - "docker"
-    #   - build
-    #   - "--no-cache"
-    #   - "-t"
-    #   - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
-    #   - "--build-arg"
-    #   - "$$VITE_CLOUDINARY_API_KEY"
-    #   - "-f"
-    #   - Dockerfile
-    args: ['-c', 'docker build -t $_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA --build-arg VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY --build-arg VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET .'] 
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - "--no-cache"
+      - "-t"
+      - "$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+      - "--build-arg"
+      - "VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY"
+      - .
+      - "-f"
+      - Dockerfile
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
+
   - id: Push
     name: gcr.io/cloud-builders/docker
     args:
@@ -52,9 +50,7 @@ tags:
   - playground
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_API_KEY/versions/1
-      env: 'VITE_CLOUDINARY_API_KEY'
-    - versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1
-      env: 'VITE_CLOUDINARY_SECRET'
-
-# ["build","--no-cache","-t","$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA","--build-arg","VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY",".","-f","Dockerfile"] 
+    - env: 'VITE_CLOUDINARY_API_KEY'
+      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_API_KEY/versions/1
+    - env: 'VITE_CLOUDINARY_SECRET'
+      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1

@@ -10,7 +10,8 @@
     "site:dev": "vite",
     "site:build": "vue-tsc && vite build",
     "site:preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "some": "echo \"Cloudinary secret is $VITE_CLOUDINARY_API_KEY\" && exit 1"
   },
   "dependencies": {
     "axios": "^0.27.2",
