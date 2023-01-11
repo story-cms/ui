@@ -12,6 +12,7 @@
       class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       role="switch"
       aria-checked="false"
+      :disabled="field.isReadOnly"
       @click="toggle"
     >
       <span class="sr-only">{{ field.label }}</span>
@@ -23,13 +24,15 @@
       ></span>
     </button>
 
-    <label :for="field.label" class="input-label">
+    <label
+      :for="field.label"
+      class="input-label"
+      :class="{ rtl: language.isRtl }"
+    >
       {{ field.label }}
     </label>
 
-    <p class="text-sm text-error" v-if="hasError">
-      This field cannot be empty
-    </p>
+    <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
   </div>
 </template>
 
@@ -64,5 +67,6 @@ model.$subscribe(() => {
 });
 
 const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+
 const language = useLanguageStore();
 </script>
