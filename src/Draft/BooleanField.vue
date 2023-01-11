@@ -6,7 +6,10 @@
     }"
   >
     <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
-    <div class="flex items-center space-x-2">
+    <div
+      class="flex items-center space-x-2"
+      :class="{ 'space-x-reverse': language.isRtl }"
+    >
       <button
         type="button"
         :class="{ 'bg-indigo-600': isOn, 'bg-gray-200': !isOn }"
@@ -34,7 +37,9 @@
       </label>
     </div>
 
-    <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
+    <p class="mt-1 text-sm text-error" v-if="hasError">
+      This field cannot be empty
+    </p>
   </div>
 </template>
 
