@@ -6,31 +6,33 @@
     }"
   >
     <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
-    <button
-      type="button"
-      :class="{ 'bg-indigo-600': isOn, 'bg-gray-200': !isOn }"
-      class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      role="switch"
-      aria-checked="false"
-      :disabled="field.isReadOnly"
-      @click="toggle"
-    >
-      <span class="sr-only">{{ field.label }}</span>
-      <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
-      <span
-        aria-hidden="true"
-        :class="{ 'translate-x-5': isOn, 'translate-x-0': !isOn }"
-        class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-      ></span>
-    </button>
+    <div class="flex items-center space-x-2">
+      <button
+        type="button"
+        :class="{ 'bg-indigo-600': isOn, 'bg-gray-200': !isOn }"
+        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        role="switch"
+        aria-checked="false"
+        :disabled="field.isReadOnly"
+        @click="toggle"
+      >
+        <span class="sr-only">{{ field.label }}</span>
+        <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+        <span
+          aria-hidden="true"
+          :class="{ 'translate-x-5': isOn, 'translate-x-0': !isOn }"
+          class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+        ></span>
+      </button>
 
-    <label
-      :for="field.label"
-      class="input-label"
-      :class="{ rtl: language.isRtl }"
-    >
-      {{ field.label }}
-    </label>
+      <label
+        :for="field.label"
+        class="input-label mt-1"
+        :class="{ rtl: language.isRtl }"
+      >
+        {{ field.label }}
+      </label>
+    </div>
 
     <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
   </div>
