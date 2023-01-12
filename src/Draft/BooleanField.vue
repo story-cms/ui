@@ -28,26 +28,20 @@
         ></span>
       </button>
 
-      <label
-        :for="field.label"
-        class="input-label mt-1"
-        :class="{ rtl: language.isRtl }"
-      >
+      <label :for="field.label" class="input-label mt-1" :class="{ rtl: language.isRtl }">
         {{ field.label }}
       </label>
     </div>
 
-    <p class="mt-1 text-sm text-error" v-if="hasError">
-      This field cannot be empty
-    </p>
+    <p class="mt-1 text-sm text-error" v-if="hasError">This field cannot be empty</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick } from "vue";
-import { FieldSpec } from "App/Models/Interfaces";
-import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../Shared/helpers";
+import { computed, ref, nextTick } from 'vue';
+import { FieldSpec } from 'App/Models/Interfaces';
+import { useLanguageStore, useModelStore } from '../store';
+import { commonProps } from '../shared/helpers';
 
 const props = defineProps({
   ...commonProps,
