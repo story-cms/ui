@@ -43,6 +43,7 @@ export interface FieldSpec {
   fields?: FieldSpec[] | FieldMap;
   uploadPreset?: string;
   provider?: ImageProvider;
+  options?: Array<object>;
   default?: any;
 }
 
@@ -64,6 +65,6 @@ export interface FieldMap {
 
 export interface LanguageSpecification {
   language: string;
-  languageDirection: "rtl" | "ltr";
+  languageDirection: 'rtl' | 'ltr';
   locale: string;
 }
