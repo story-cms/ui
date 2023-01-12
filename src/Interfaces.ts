@@ -43,6 +43,7 @@ export interface FieldSpec {
   fields?: FieldSpec[] | FieldMap;
   uploadPreset?: string;
   provider?: ImageProvider;
+  default?: any;
 }
 
 export interface ImageProvider {
