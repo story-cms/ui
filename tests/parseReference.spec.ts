@@ -21,4 +21,16 @@ describe('Parse Bible references', () => {
   test('Parse Mats 2:3-7', () => {
     expect(parseReference('Mats 2:3-7')).toBe('');
   });
+  test('Parse Psalm 1', () => {
+    expect(parseReference('Psalm 1')).toBe('PSA.1');
+  });
+  test('Parse Psalms 1', () => {
+    expect(parseReference('Psalms 1')).toBe('');
+  });
+  test('Parse Proverbs 1:8', () => {
+    expect(parseReference('Proverbs 1:8')).toBe('PRO.1.8');
+  });
+  test('Parse Nahum 3:8', () => {
+    expect(parseReference('Nahum 3:8')).toBe('NAM.3.8');
+  });
 });
