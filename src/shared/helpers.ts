@@ -31,16 +31,23 @@ export const validateFile = (file: File) => {
 };
 
 export const parseReference = (reference: string): string => {
-  const match = reference.match(/(\w+)\s*(\d+)(?:\s*:\s*(\d+))?(?:\s*-\s*(\d+))?/i);
+  const match = reference.match(
+    /(\d+)?\s*(\w+)\s*(\d+)(?:\s*:\s*(\d+))?(?:\s*-\s*(\d+))?/i,
+  );
 
   if (!match) {
     return '';
   }
 
-  const book = match[1];
-  const chapter = match[2];
-  const verse = match[3];
-  const endVerse = match[4];
+  const bookNum = match[1];
+  let book = match[2];
+  const chapter = match[3];
+  const verse = match[4];
+  const endVerse = match[5];
+
+  if (bookNum) {
+    book = `${bookNum} ${book}`;
+  }
 
   let abbreviation = BibleBooksMap[book.toLowerCase()];
 
@@ -48,12 +55,12 @@ export const parseReference = (reference: string): string => {
     return '';
   }
 
-  let referenceString = `${abbreviation}.${chapter}`;
+  let referenceString = abbreviation;
 
+  referenceString += `.${chapter}`;
   if (verse) {
     referenceString += `.${verse}`;
   }
-
   if (endVerse) {
     referenceString += `-${abbreviation}.${chapter}.${endVerse}`;
   }

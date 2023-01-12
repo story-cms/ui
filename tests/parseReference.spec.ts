@@ -33,4 +33,22 @@ describe('Parse Bible references', () => {
   test('Parse Nahum 3:8', () => {
     expect(parseReference('Nahum 3:8')).toBe('NAM.3.8');
   });
+  test('Parse 1 Samuel 3:8', () => {
+    expect(parseReference('1 samuel 3:8')).toBe('1SA.3.8');
+  });
+  test('Parse 1 Samuel 1:4-5', () => {
+    expect(parseReference('1 Samuel 1:4-5')).toBe('1SA.1.4-1SA.1.5');
+  });
+  test('Parse Psalm 1', () => {
+    expect(parseReference('Psalm 1')).toBe('PSA.1');
+  });
+  test('Parse Psalms 1', () => {
+    expect(parseReference('Psalms 1')).toBe('');
+  });
+  test('Parse Proverbs 1:8', () => {
+    expect(parseReference('Proverbs 1:8')).toBe('PRO.1.8');
+  });
+  test('Parse Nahum 3:8', () => {
+    expect(parseReference('Nahum 3:8')).toBe('NAM.3.8');
+  });
 });
