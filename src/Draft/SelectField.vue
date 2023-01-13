@@ -14,7 +14,9 @@
       class="w-half mr-2 rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
       :class="{ 'border-red-500': hasError }"
     >
-      <option v-for="selectObjects in field.options!">{{ selectObjects.label }}</option>
+      <option v-for="selectObject in field.options">
+        {{ selectObject.label }}
+      </option>
     </select>
 
     <label :for="field.label" class="input-label mt-1" :class="{ rtl: language.isRtl }">
@@ -51,13 +53,10 @@ model.$subscribe(() => {
 });
 
 onMounted(async () => {
-  console.log('MOUNTED');
-  console.log(`${props.rootPath}.${field.value.name}`);
+  model.setField(fieldPath.value, field.value.default);
 });
 
 const update = (event: Event) => {
-  console.log(fieldPath.value);
-  console.log(hasError);
   model.setField(fieldPath.value, (event.target as HTMLInputElement).value);
 };
 
