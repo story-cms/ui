@@ -67,7 +67,29 @@ example:
   name: 'isFeatured',
   widget: 'boolean',
   default: false,
-},
+}
+```
+
+### select
+
+A dropdown menu that renders a [SelectField](./Draft/SelectField.story.vue). Has two
+special required keys called `options` and `default` which expects an array of objects
+with `label` and `value` keys and a string value respectively.
+
+example:
+
+```ts
+{
+  name: 'airport',
+  label: 'City',
+  widget: 'select',
+  options: [
+    { label: 'Chicago', value: 'CHG' },
+    { label: 'Paris', value: 'PRS' },
+    { label: 'Tokyo', value: 'TKY' },
+  ],
+  default: 'PRS',
+}
 ```
 
 ## Compound widget types
