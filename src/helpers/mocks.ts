@@ -115,6 +115,7 @@ export const listSpec = {
   label: 'Sections',
   name: 'sections',
   widget: 'list',
+  index: 'scripture.reference',
   isReadOnly: false,
   fields: [
     {
@@ -175,7 +176,12 @@ export const listInListSpec: FieldSpec = {
         {
           label: 'Frame type',
           name: 'type',
-          widget: 'string',
+          widget: 'select',
+          options: [
+            { label: 'Definition', value: 'definition' },
+            { label: 'Comment', value: 'comment' },
+          ],
+          default: 'definition',
         },
         {
           label: 'Frame content',

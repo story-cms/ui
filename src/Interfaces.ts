@@ -40,6 +40,7 @@ export interface FieldSpec {
   widget: string;
   isReadOnly?: boolean;
   // specialized
+  index?: string;
   fields?: FieldSpec[] | FieldMap;
   uploadPreset?: string;
   provider?: ImageProvider;

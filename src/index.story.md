@@ -160,9 +160,11 @@ example:
 
 ### list
 
-Suitable for a collection of sets of primitive fields. Has one specialised field called
-`fields` which is a list with primitive fields that define a set. The first field in the
-set will be used in the widget as an identifier.
+A compound widget that renders a [ListField](./Draft/ListField.story.vue). A list is
+suitable for a collection of sets of other fields. The list has two specialised keys. A
+required key called `fields` which is a list with primitive fields that define a set. The
+first field in the set will be used in the widget as an identifier. Unless you specify an
+optional `index` key so you can use a different field as an identifier.
 
 example:
 
@@ -171,6 +173,7 @@ example:
   label: 'Sections',
   name: 'sections',
   widget: 'list',
+  index: 'passage.reference',
   fields: [
     {
       label: 'Title',
@@ -181,7 +184,12 @@ example:
       label: 'Intro',
       name: 'intro',
       widget: 'markdown',
-    }
+    },
+    {
+      label: 'Passage',
+      name: 'paxssage',
+      widget: 'scripture',
+    },
   ]
 }
 ```
