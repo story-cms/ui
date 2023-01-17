@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { commonProps } from '../shared/helpers';
+import { commonProps } from '../Shared/helpers';
 import { FieldSpec } from 'App/Models/Interfaces';
 import { widgetField } from './widget-fields';
 

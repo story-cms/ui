@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="my-[32px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
-  >
+  <div class="my-[32px] rounded border border-gray-100 bg-white p-[32px] shadow-sm">
     <div v-if="field.label">
       <label class="input-label mb-3">
         {{ field.label }}
@@ -22,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { commonProps } from "../shared/helpers";
-import type { FieldSpec } from "App/Models/Interfaces";
-import { widgetField } from "./widget-fields";
+import { computed } from 'vue';
+import { commonProps } from '../Shared/helpers';
+import type { FieldSpec } from 'App/Models/Interfaces';
+import { widgetField } from './widget-fields';
 
 interface FieldMap {
   [key: string]: FieldSpec;

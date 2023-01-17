@@ -19,18 +19,16 @@
         class="input-field"
         :class="{ 'border-error': hasError, 'opacity-50': field.isReadOnly }"
       />
-      <p class="text-sm text-error" v-if="hasError">
-        This field cannot be empty
-      </p>
+      <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick } from "vue";
-import { FieldSpec } from "App/Models/Interfaces";
-import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../shared/helpers";
+import { computed, ref, nextTick } from 'vue';
+import { FieldSpec } from 'App/Models/Interfaces';
+import { useLanguageStore, useModelStore } from '../store';
+import { commonProps } from '../Shared/helpers';
 
 const props = defineProps({
   ...commonProps,
@@ -43,14 +41,14 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const modelValue = ref(model.getField(fieldPath.value, ""));
+const modelValue = ref(model.getField(fieldPath.value, ''));
 const update = (event: Event) => {
   model.setField(fieldPath.value, (event.target as HTMLInputElement).value);
 };
 
 model.$subscribe(() => {
   nextTick().then(() => {
-    modelValue.value = model.getField(fieldPath.value, "");
+    modelValue.value = model.getField(fieldPath.value, '');
   });
 });
 

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { parseReference } from '@/shared/helpers';
+import { parseReference } from '@/Shared/helpers';
 
 describe('Parse Bible references', () => {
   test('Parse John 1', () => {
