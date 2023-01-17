@@ -43,7 +43,7 @@ export interface FieldSpec {
   fields?: FieldSpec[] | FieldMap;
   uploadPreset?: string;
   provider?: ImageProvider;
-  options?: Array<object>;
+  options?: Array<SelectOption>;
   default?: any;
 }
 
@@ -73,4 +73,9 @@ export interface SecretKeys {
   cloudinaryApiKey: string;
   cloudinarySecret: string;
   bibleApiKey: string;
+}
+
+export interface SelectOption {
+  label: string;
+  value: string;
 }
