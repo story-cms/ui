@@ -68,3 +68,9 @@ export interface LanguageSpecification {
   languageDirection: 'rtl' | 'ltr';
   locale: string;
 }
+
+export interface SecretKeys {
+  cloudinaryApiKey: string;
+  cloudinarySecret: string;
+  bibleApiKey: string;
+}

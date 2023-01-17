@@ -2,12 +2,17 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import config from '../../secrets';
-import type { Scripture } from '../Interfaces';
-import { parseReference } from '@/shared/helpers';
+import type { Scripture, SecretKeys } from 'App/Models/Interfaces';
+import { parseReference } from '../Shared/helpers';
 
 export const useModelStore = defineStore('model', () => {
   let model = ref({});
   let errors: Ref<Record<string, string[]>> = ref({});
+  let secrets: Ref<SecretKeys> = ref({
+    cloudinaryApiKey: '',
+    cloudinarySecret: '',
+    bibleApiKey: '',
+  });
 
   const resolvePath = (
     object: Record<string | number, any>,
@@ -50,6 +55,18 @@ export const useModelStore = defineStore('model', () => {
 
   const getField = (path: string, defaultValue: Object = {}) =>
     resolvePath(model.value, path, defaultValue);
+
+  const setModel = (fresh: object) => {
+    model.value = fresh;
+  };
+
+  const setErrors = (fresh: any) => {
+    errors.value = fresh;
+  };
+
+  const setSecrets = (fresh: any) => {
+    secrets.value = fresh;
+  };
 
   const isPopulated = (path: string): boolean => readPath(path) !== undefined;
 
@@ -98,7 +115,11 @@ export const useModelStore = defineStore('model', () => {
     updateVerse,
     addListItem,
     removeListItem,
+    setModel,
+    setErrors,
+    setSecrets,
     isPopulated,
     errors,
+    secrets,
   };
 });
