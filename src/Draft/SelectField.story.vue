@@ -5,18 +5,15 @@
       <ModelControl :model="objectModel" :is-inspect-only="true" />
     </Variant>
 
+    <Variant title="No model data">
+      <SelectField :field="spec" />
+      <ModelControl :model="objectModel" :is-inspect-only="true" />
+    </Variant>
+
     <Variant title="Readonly" :setup-app="loadData">
       <SelectField
         :field="{
-          name: 'airport-code',
-          label: 'City',
-          widget: 'select',
-          options: [
-            { label: 'Chicago', value: 'ORD' },
-            { label: 'Paris', value: 'CDG' },
-            { label: 'Tokyo', value: 'HND' },
-          ],
-          default: 'ORD',
+          ...spec,
           isReadOnly: true,
         }"
       />
@@ -45,19 +42,12 @@ import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 
 const objectModel = {
-  label: 'City',
-  name: 'airport-code',
-  widget: 'select',
-  options: [
-    { label: 'Chicago', value: 'ORD' },
-    { label: 'Paris', value: 'CDG' },
-    { label: 'Tokyo', value: 'HND' },
-  ],
-  default: 'ORD',
+  name: 'Neil Shenvi',
+  airport: 'TKY',
 };
 
 const objectErrors = {
-  'bundle.airport-code': ['required validation failed'],
+  'bundle.airport': ['required validation failed'],
 };
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
@@ -69,15 +59,15 @@ const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
 };
 
 const spec = {
-  name: 'airport-code',
+  name: 'airport',
   label: 'City',
   widget: 'select',
   options: [
-    { label: 'Chicago', value: 'ORD' },
-    { label: 'Paris', value: 'CDG' },
-    { label: 'Tokyo', value: 'HND' },
+    { label: 'Chicago', value: 'CHG' },
+    { label: 'Paris', value: 'PRS' },
+    { label: 'Tokyo', value: 'TKY' },
   ],
-  default: 'ORD',
+  default: 'PRS',
 };
 </script>
 
