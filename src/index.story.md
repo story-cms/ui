@@ -185,3 +185,19 @@ example:
   ]
 }
 ```
+
+### scripture
+
+A compound widget that renders a [ScriptureField](./Draft/ScriptureField.story.vue). It
+has a Bible reference field that can take a scripture reference and a markdown field for
+the scripture text. It has no special keys.
+
+example:
+
+```ts
+{
+  label: 'NT Passage',
+  name: 'nt',
+  widget: 'scripture',
+}
+```
