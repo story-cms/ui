@@ -1,17 +1,19 @@
 ---
-title: "Story CMS"
-group: "top"
-icon: "carbon:bookmark"
+title: 'Story CMS'
+group: 'top'
+icon: 'carbon:bookmark'
 ---
 
 # Chapter Configuration
 
-The shape of a story chapter in Story CMS can be configured in the `config/story.ts` file. The chapter configuration is composed of different widgets and it determines two things:
+The shape of a story chapter in Story CMS can be configured in the `config/story.ts` file.
+The chapter configuration is composed of different widgets and it determines two things:
 
 1. the structure of the chapter bundles that will we delivered via the api
 2. the presentation of the input form that editors will use to create and edit chapters
 
-The chapter configuration is highly inspired by [Netlify CMS Widgets](https://www.netlifycms.org/docs/widgets/)
+The chapter configuration is highly inspired by
+[Netlify CMS Widgets](https://www.netlifycms.org/docs/widgets/)
 
 ## Common widget properties:
 
@@ -26,16 +28,20 @@ Following are the widgets that are currently implemented:
 
 ### string
 
-Suitable for short, single line plain text strings. It has only the common properties and renders a [StringField](./Draft/StringField.story.vue)
+Suitable for short, single line plain text strings. It has only the common properties and
+renders a [StringField](./Draft/StringField.story.vue)
 
 ### markdown
 
-Suitable for longer, multi-line rich text which allows markup in markdown format and renders a [MarkdownField](./Draft/MarkdownField.story.vue).
+Suitable for longer, multi-line rich text which allows markup in markdown format and
+renders a [MarkdownField](./Draft/MarkdownField.story.vue).
 
 ### image
 
-Holds a url to a hosted image file. Suitable for allowing content editors to upload image files and renders a [ImageField](./Draft/ImageField.story.vue).  
-Has one special key called `uploadPreset` which expects a string specifying the Cloudinary upload preset for this image.
+Holds a url to a hosted image file. Suitable for allowing content editors to upload image
+files and renders a [ImageField](./Draft/ImageField.story.vue).  
+Has one special key called `uploadPreset` which expects a string specifying the Cloudinary
+upload preset for this image.
 
 example:
 
@@ -48,6 +54,22 @@ example:
 },
 ```
 
+### boolean
+
+A boolean toggle switch that renders a [BooleanField](./Draft/BooleanField.story.vue). Has
+one required special key called `default` which has to have a value of true or false.
+
+example:
+
+```ts
+{
+  label: 'Is Featured',
+  name: 'isFeatured',
+  widget: 'boolean',
+  default: false,
+},
+```
+
 ## Compound widget types
 
 ### object
@@ -55,7 +77,8 @@ example:
 Suitable for composing primitive widgets into a logical unit.  
 Has one specialised field called `fields` which is an object with key / value pairs.  
 A primitive field key should correspond to the field's name.  
-The object label can't be omitted, but can be left blank to achieve a non-hierarchical look when rendered.  
+The object label can't be omitted, but can be left blank to achieve a non-hierarchical
+look when rendered.  
 When using an object widget, the data bundle will also be nested.
 
 example:
@@ -83,8 +106,10 @@ example:
 ### panel
 
 Suitable to group several primitive fields visually together.  
-Has one specialised field called `fields` which is a list with primitive fields that should be grouped together visually.  
-Note: The same visual effect can be achieved by wrapping primitive fields in an `object` widget, but the data bundle shape would not be nested.
+Has one specialised field called `fields` which is a list with primitive fields that
+should be grouped together visually.  
+Note: The same visual effect can be achieved by wrapping primitive fields in an `object`
+widget, but the data bundle shape would not be nested.
 
 example:
 
@@ -113,9 +138,9 @@ example:
 
 ### list
 
-Suitable for a collection of sets of primitive fields.
-Has one specialised field called `fields` which is a list with primitive fields that define a set.
-The first field in the set will be used in the widget as an identifier.
+Suitable for a collection of sets of primitive fields. Has one specialised field called
+`fields` which is a list with primitive fields that define a set. The first field in the
+set will be used in the widget as an identifier.
 
 example:
 

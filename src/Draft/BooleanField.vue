@@ -54,7 +54,10 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const isOn = ref(model.getField(fieldPath.value, field.value.default || false));
+if (!model.isPopulated(fieldPath.value)) {
+  model.setField(fieldPath.value, field.value.default);
+}
+const isOn = ref(model.getField(fieldPath.value, field.value.default));
 
 const toggle = () => {
   isOn.value = !isOn.value;
@@ -63,7 +66,7 @@ const toggle = () => {
 
 model.$subscribe(() => {
   nextTick().then(() => {
-    isOn.value = model.getField(fieldPath.value, field.value.default || false);
+    isOn.value = model.getField(fieldPath.value, field.value.default);
   });
 });
 

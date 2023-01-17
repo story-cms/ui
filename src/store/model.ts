@@ -18,6 +18,13 @@ export const useModelStore = defineStore('model', () => {
       .split('.')
       .reduce((o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue), object);
 
+  const readPath = (path: string): any =>
+    path.split('.').reduce((o: Record<string, any>, p) => {
+      if (o === undefined) return undefined;
+      if (!Object.hasOwn(o, p)) return undefined;
+      return o[p];
+    }, model.value);
+
   const setField = (path: string, value: any) => {
     let object = JSON.parse(JSON.stringify(model.value));
     path
@@ -43,6 +50,8 @@ export const useModelStore = defineStore('model', () => {
 
   const getField = (path: string, defaultValue: Object = {}) =>
     resolvePath(model.value, path, defaultValue);
+
+  const isPopulated = (path: string): boolean => readPath(path) !== undefined;
 
   const updateVerse = (path: string, verse: string) => {
     const scripture = getField(path, {}) as Scripture;
@@ -89,6 +98,7 @@ export const useModelStore = defineStore('model', () => {
     updateVerse,
     addListItem,
     removeListItem,
+    isPopulated,
     errors,
   };
 });
