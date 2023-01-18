@@ -115,11 +115,21 @@ onMounted(async () => {
   editor.codemirror.setOption('readOnly', field.value.isReadOnly);
   editor.codemirror.on('change', update);
   if (field.value.minimal) {
-    const collection = document.getElementsByClassName(
-      'CodeMirror-scroll',
+    editor.codemirror.setOption('theme', 'minimal');
+    const HTMLCollection = document.getElementsByClassName(
+      'cm-s-minimal',
     ) as HTMLCollectionOf<HTMLElement>;
-    let firstElement = collection[0];
-    firstElement.style.removeProperty('min-height');
+
+    Array.from(HTMLCollection).forEach((element) => {
+      let nodeList = Array.from(
+        element.getElementsByClassName(
+          'CodeMirror-scroll',
+        ) as HTMLCollectionOf<HTMLElement>,
+      );
+      nodeList.forEach((node) => {
+        node.style.removeProperty('min-height');
+      });
+    });
   }
   load();
 });
