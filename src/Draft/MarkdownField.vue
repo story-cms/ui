@@ -116,11 +116,11 @@ onMounted(async () => {
   editor.codemirror.on('change', update);
   if (field.value.minimal) {
     editor.codemirror.setOption('theme', 'minimal');
-    const HTMLCollection = document.getElementsByClassName(
+    const collection = document.getElementsByClassName(
       'cm-s-minimal',
     ) as HTMLCollectionOf<HTMLElement>;
 
-    Array.from(HTMLCollection).forEach((element) => {
+    Array.from(collection).forEach((element) => {
       let nodeList = Array.from(
         element.getElementsByClassName(
           'CodeMirror-scroll',
