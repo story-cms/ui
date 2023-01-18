@@ -78,7 +78,14 @@ onMounted(async () => {
   // needed for SSR of Codemirror
   const easymdeModule = await import('easymde');
   const EasyMDE = easymdeModule.default;
+
+  let minHeight;
+
+  if (field.value.minimal) {
+    minHeight = 'auto';
+  }
   editor = new EasyMDE({
+    minHeight: minHeight,
     element: textArea.value,
     spellChecker: false,
     nativeSpellcheck: false,
@@ -114,23 +121,7 @@ onMounted(async () => {
   });
   editor.codemirror.setOption('readOnly', field.value.isReadOnly);
   editor.codemirror.on('change', update);
-  if (field.value.minimal) {
-    editor.codemirror.setOption('theme', 'minimal');
-    const collection = document.getElementsByClassName(
-      'cm-s-minimal',
-    ) as HTMLCollectionOf<HTMLElement>;
 
-    Array.from(collection).forEach((element) => {
-      let nodeList = Array.from(
-        element.getElementsByClassName(
-          'CodeMirror-scroll',
-        ) as HTMLCollectionOf<HTMLElement>,
-      );
-      nodeList.forEach((node) => {
-        node.style.removeProperty('min-height');
-      });
-    });
-  }
   load();
 });
 </script>
