@@ -10,6 +10,10 @@
       <ErrorControl :errors="objectErrors" />
     </Variant>
 
+    <Variant title="Minimal" :setup-app="loadData">
+      <MarkdownField :field="{ ...spec, minimal: true }" />
+    </Variant>
+
     <Variant title="RTL" :setup-app="loadData">
       <MarkdownField :field="spec" />
       <LanguageControl />
@@ -29,26 +33,26 @@
 </template>
 
 <script setup lang="ts">
-import MarkdownField from "./MarkdownField.vue";
-import LanguageControl from "../helpers/LanguageControl.vue";
-import ErrorControl from "../helpers/ErrorControl.vue";
-import ModelControl from "../helpers/ModelControl.vue";
-import { objectErrors, objectModel } from "../helpers/mocks";
-import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
-import { useModelStore } from "../store";
+import MarkdownField from './MarkdownField.vue';
+import LanguageControl from '../helpers/LanguageControl.vue';
+import ErrorControl from '../helpers/ErrorControl.vue';
+import ModelControl from '../helpers/ModelControl.vue';
+import { objectErrors, objectModel } from '../helpers/mocks';
+import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
+import { useModelStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
   store.model = objectModel;
-  if (variant?.title == "Error") {
+  if (variant?.title == 'Error') {
     store.errors = objectErrors;
   }
 };
 
 const spec = {
-  name: "notes",
-  label: "Notes",
-  widget: "markdown",
+  name: 'notes',
+  label: 'Notes',
+  widget: 'markdown',
   isReadOnly: false,
 };
 </script>

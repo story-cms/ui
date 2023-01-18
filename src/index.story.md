@@ -34,7 +34,7 @@ renders a [StringField](./Draft/StringField.story.vue)
 ### markdown
 
 Suitable for longer, multi-line rich text which allows markup in markdown format and
-renders a [MarkdownField](./Draft/MarkdownField.story.vue).
+renders a [MarkdownField](./Draft/MarkdownField.story.vue). Has one special key called `minimal` which accepts a boolean value, false by default. Sets the widget height to minimum possible
 
 ### image
 

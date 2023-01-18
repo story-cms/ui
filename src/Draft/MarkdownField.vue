@@ -114,6 +114,13 @@ onMounted(async () => {
   });
   editor.codemirror.setOption('readOnly', field.value.isReadOnly);
   editor.codemirror.on('change', update);
+  if (field.value.minimal) {
+    const collection = document.getElementsByClassName(
+      'CodeMirror-scroll',
+    ) as HTMLCollectionOf<HTMLElement>;
+    let firstElement = collection[0];
+    firstElement.style.removeProperty('min-height');
+  }
   load();
 });
 </script>
