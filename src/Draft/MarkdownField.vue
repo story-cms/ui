@@ -76,22 +76,20 @@ const textArea = ref(undefined);
 
 onMounted(async () => {
   // needed for SSR of Codemirror
+
   const easymdeModule = await import('easymde');
   const EasyMDE = easymdeModule.default;
 
-  let minHeight;
-
-  if (field.value.minimal) {
-    minHeight = 'auto';
-  }
   editor = new EasyMDE({
-    minHeight: minHeight,
+    minHeight: field.value.minimal ? 'auto' : '300px',
     element: textArea.value,
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
     toolbar: field.value.isReadOnly
       ? []
+      : field.value.buttons
+      ? (field.value.buttons as any[])
       : [
           'bold',
           'italic',

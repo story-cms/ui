@@ -34,7 +34,33 @@ renders a [StringField](./Draft/StringField.story.vue)
 ### markdown
 
 Suitable for longer, multi-line rich text which allows markup in markdown format and
-renders a [MarkdownField](./Draft/MarkdownField.story.vue). Has one special key called `minimal` which accepts a boolean value, false by default. Sets the widget height to minimum possible
+renders a [MarkdownField](./Draft/MarkdownField.story.vue). The `minimal` key accepts a
+boolean value which is `false` by default. `minimal` sets the widget to the minimal height
+possible. The `buttons` key accepts an array of strings representing the formatting
+buttons to display (all shown by default).
+
+Minimal and buttons example:
+
+```ts
+{
+  label: 'Excerpt',
+  name: 'excerpt',
+  widget: 'markdown',
+  minimal: true,
+  buttons: [ 'bold', 'italic', 'heading', 'quote', '|','unordered-list']
+},
+```
+Remove the toolbar by passing an empty buttons array. Example:
+
+```ts
+{
+  label: 'Excerpt',
+  name: 'excerpt',
+  widget: 'markdown',
+  minimal: true,
+  buttons: []
+},
+```
 
 ### image
 
