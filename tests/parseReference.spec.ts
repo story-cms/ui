@@ -42,6 +42,7 @@ describe('Parse exactly spelled and punctuated references', () => {
     expect(parseReference('1SA 3:8')).toBe('1SA.3.8');
     expect(parseReference('3 jn 1:5')).toBe('3JN.1.5');
     expect(parseReference('3 JOH 1:5')).toBe('3JN.1.5');
+    expect(parseReference('Psalms 1')).toBe('PSA.1');
   });
 
   test.skip('Non-standard punctuation', () => {
@@ -52,6 +53,7 @@ describe('Parse exactly spelled and punctuated references', () => {
     expect(parseReference('Jn 1:1')).toBe('JHN.1.1');
     expect(parseReference('Jn 1: 1')).toBe('JHN.1.1');
     expect(parseReference('1 Sam 1.4-5')).toBe('1SA.1.4-1SA.1.5');
+    expect(parseReference('1 Sam 1:4-5')).toBe('1SA.1.4-1SA.1.5');
     expect(parseReference(' 1 Sam 1 . 4 - 5  ')).toBe('1SA.1.4-1SA.1.5');
     expect(parseReference(' 1SA 1 .  4   -    5  ')).toBe('1SA.1.4-1SA.1.5');
   });
