@@ -50,6 +50,7 @@ Minimal and buttons example:
   buttons: [ 'bold', 'italic', 'heading', 'quote', '|','unordered-list']
 },
 ```
+
 Remove the toolbar by passing an empty buttons array. Example:
 
 ```ts
