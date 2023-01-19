@@ -47,6 +47,7 @@ export interface FieldSpec {
   options?: Array<SelectOption>;
   default?: any;
   minimal?: boolean;
+  buttons?: string[];
 }
 
 export interface ImageProvider {

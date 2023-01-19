@@ -49,11 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
-import { useModelStore } from "../store";
-import ObjectField from "./ObjectField.vue";
-import ErrorControl from "../helpers/ErrorControl.vue";
-import ModelControl from "../helpers/ModelControl.vue";
+import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
+import { useModelStore } from '../store';
+import ObjectField from './ObjectField.vue';
+import ErrorControl from '../helpers/ErrorControl.vue';
+import ModelControl from '../helpers/ModelControl.vue';
 import {
   objectErrors,
   objectModel,
@@ -64,26 +64,26 @@ import {
   objectInListInObjectSpec,
   objectInListInObjectModel,
   objectInListInObjectErrors,
-} from "../helpers/mocks";
+} from '../helpers/mocks';
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
   switch (variant?.title) {
-    case "Error":
+    case 'Error':
       store.errors = objectErrors;
-    case "Default":
+    case 'Default':
       store.model = objectModel;
       break;
 
-    case "List in Object Error":
+    case 'List in Object Error':
       store.errors = listInObjectError;
-    case "List in Object":
+    case 'List in Object':
       store.model = listInObjectModel;
       break;
 
-    case "Object in List in Object Error":
+    case 'Object in List in Object Error':
       store.errors = objectInListInObjectErrors;
-    case "Object in List in Object":
+    case 'Object in List in Object':
       store.model = objectInListInObjectModel;
       break;
 
