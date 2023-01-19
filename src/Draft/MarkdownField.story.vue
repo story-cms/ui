@@ -14,6 +14,33 @@
       <MarkdownField :field="{ ...spec, minimal: true }" />
     </Variant>
 
+    <Variant title="Toolbar buttons" :setup-app="loadData">
+      <MarkdownField
+        :field="{
+          ...spec,
+          buttons: [
+            'bold',
+            'italic',
+            'heading',
+            'quote',
+            'unordered-list',
+            'ordered-list',
+            'link',
+          ],
+        }"
+      />
+    </Variant>
+
+    <Variant title="Without Toolbar buttons" :setup-app="loadData">
+      <MarkdownField
+        :field="{
+          ...spec,
+          minimal: true,
+          buttons: [],
+        }"
+      />
+    </Variant>
+
     <Variant title="RTL" :setup-app="loadData">
       <MarkdownField :field="spec" />
       <LanguageControl />

@@ -76,15 +76,20 @@ const textArea = ref(undefined);
 
 onMounted(async () => {
   // needed for SSR of Codemirror
+
   const easymdeModule = await import('easymde');
   const EasyMDE = easymdeModule.default;
+
   editor = new EasyMDE({
+    minHeight: field.value.minimal ? 'auto' : '300px',
     element: textArea.value,
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
     toolbar: field.value.isReadOnly
       ? []
+      : field.value.buttons
+      ? (field.value.buttons as any[])
       : [
           'bold',
           'italic',
@@ -106,31 +111,30 @@ onMounted(async () => {
             title: 'Footnote Button',
           },
           '|',
+          'strikethrough',
+          'heading-smaller',
+          'heading-bigger',
+          'heading-1',
+          'heading-2',
+          'heading-3',
+          '|',
+          'code',
+          'clean-block',
+          'image',
+          'upload-image',
+          'table',
+          'horizontal-rule',
           'preview',
           'side-by-side',
           'fullscreen',
           'guide',
+          'undo',
+          'redo',
         ],
   });
   editor.codemirror.setOption('readOnly', field.value.isReadOnly);
   editor.codemirror.on('change', update);
-  if (field.value.minimal) {
-    editor.codemirror.setOption('theme', 'minimal');
-    const collection = document.getElementsByClassName(
-      'cm-s-minimal',
-    ) as HTMLCollectionOf<HTMLElement>;
 
-    Array.from(collection).forEach((element) => {
-      let nodeList = Array.from(
-        element.getElementsByClassName(
-          'CodeMirror-scroll',
-        ) as HTMLCollectionOf<HTMLElement>,
-      );
-      nodeList.forEach((node) => {
-        node.style.removeProperty('min-height');
-      });
-    });
-  }
   load();
 });
 </script>

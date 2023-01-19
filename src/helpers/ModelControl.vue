@@ -7,11 +7,7 @@
     <div v-if="!isInspectOnly">
       <HstJson v-model="formState" title="Desired data" />
       <div class="my-4">
-        <HstButton
-          color="primary"
-          class="bg-emerald-500 htw-p-2"
-          @click="setModel"
-        >
+        <HstButton color="primary" class="htw-p-2 bg-emerald-500" @click="setModel">
           Set Data
         </HstButton>
       </div>
@@ -20,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { useModelStore } from "../store";
-import { computed, ref } from "vue";
-import { objectModel } from "./mocks";
+import { useModelStore } from '../store';
+import { computed, ref } from 'vue';
+import { objectModel } from './mocks';
 
 const props = defineProps({
   model: {

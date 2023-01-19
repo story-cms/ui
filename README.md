@@ -21,6 +21,7 @@ npm run dev
 
 - [VS Code](https://code.visualstudio.com/) +
   [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [Prettier Code Formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
 ## Type Support For `.vue` Imports in TS
 

@@ -33,32 +33,32 @@
 </template>
 
 <script setup lang="ts">
-import ImageField from "./ImageField.vue";
-import ErrorControl from "../helpers/ErrorControl.vue";
-import ModelControl from "../helpers/ModelControl.vue";
-import { objectErrors, objectModel } from "../helpers/mocks";
-import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
-import { useModelStore } from "../store";
-import config from "../../secrets";
+import ImageField from './ImageField.vue';
+import ErrorControl from '../helpers/ErrorControl.vue';
+import ModelControl from '../helpers/ModelControl.vue';
+import { objectErrors, objectModel } from '../helpers/mocks';
+import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
+import { useModelStore } from '../store';
+import config from '../../secrets';
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
-  if (variant?.title == "Read Only") {
+  if (variant?.title == 'Read Only') {
     store.model = objectModel;
   }
-  if (variant?.title == "Error") {
+  if (variant?.title == 'Error') {
     store.errors = objectErrors;
   }
 };
 
 const spec = {
-  name: "profile",
-  label: "Profile Image",
-  widget: "image",
-  uploadPreset: "cmsplayground",
+  name: 'profile',
+  label: 'Profile Image',
+  widget: 'image',
+  uploadPreset: 'cmsplayground',
   provider: {
-    uploadPreset: "cmsplayground",
-    cloudName: "onesheep",
+    uploadPreset: 'cmsplayground',
+    cloudName: 'onesheep',
     apiKey: config.cloudinaryApiKey,
     secret: config.cloudinarySecret,
   },
