@@ -36,8 +36,9 @@ renders a [StringField](./Draft/StringField.story.vue)
 Suitable for longer, multi-line rich text which allows markup in markdown format and
 renders a [MarkdownField](./Draft/MarkdownField.story.vue). The `minimal` key accepts a
 boolean value which is `false` by default. `minimal` sets the widget to the minimal height
-possible. The `buttons` key accepts an array of strings representing the formatting
-buttons to display (all shown by default).
+possible. The `buttons` key accepts an array of strings
+`['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
+representing the formatting buttons to display (all shown by default).
 
 Minimal and buttons example:
 
@@ -50,6 +51,7 @@ Minimal and buttons example:
   buttons: [ 'bold', 'italic', 'heading', 'quote', '|','unordered-list']
 },
 ```
+
 Remove the toolbar by passing an empty buttons array. Example:
 
 ```ts
