@@ -1,3 +1,5 @@
+// Description: This file contains the list of all the books of the bible and their abbreviations
+// the first item in each array is the most common abbreviation and is the one used by API.Bible
 export const BibleBooksMap: { [key: string]: Array<string> } = {
   genesis: ['gen', 'gn', 'ge'],
   exodus: ['exo', 'ex', 'exod'],
