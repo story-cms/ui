@@ -38,8 +38,8 @@
             type="file"
             accept="image/*"
             name="upload"
-            @change="onSelect"
             class="sr-only"
+            @change="onSelect"
           />
         </label>
         <p class="pl-1">or drag and drop</p>

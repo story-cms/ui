@@ -1,5 +1,5 @@
 <template>
-  <Story title="Image Field" id="image-field" group="widgets">
+  <Story id="image-field" title="Image Field" group="widgets">
     <Variant title="With model">
       <ImageField :field="spec" />
 
