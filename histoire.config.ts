@@ -1,23 +1,23 @@
-import { defineConfig } from "histoire";
-import { HstVue } from "@histoire/plugin-vue";
+import { defineConfig } from 'histoire';
+import { HstVue } from '@histoire/plugin-vue';
 
 export default defineConfig({
-  setupFile: "/src/histoire.setup.ts",
+  setupFile: '/src/histoire.setup.ts',
   plugins: [HstVue()],
   tree: {
     groups: [
       {
-        id: "top",
-        title: "", // No toggle
+        id: 'top',
+        title: '', // No toggle
       },
       {
-        id: "widgets",
-        title: "Chapter Widgets",
+        id: 'widgets',
+        title: 'Chapter Widgets',
       },
     ],
   },
   theme: {
-    title: "Story CMS",
+    title: 'Story CMS',
     //   logo: {
     //     square: "./img/square.png",
     //     light: "./img/light.png",

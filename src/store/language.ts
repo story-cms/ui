@@ -1,28 +1,28 @@
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-import { LanguageSpecification } from "../interfaces";
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
+import { LanguageSpecification } from '../interfaces';
 
 // this will be imported from the StoryCMS config
 // hardcoding it for the playground
 const languages: Array<LanguageSpecification> = [
   {
-    locale: "en",
-    language: "English",
-    languageDirection: "ltr",
+    locale: 'en',
+    language: 'English',
+    languageDirection: 'ltr',
   },
   {
-    locale: "ar",
-    language: "عربى",
-    languageDirection: "rtl",
+    locale: 'ar',
+    language: 'عربى',
+    languageDirection: 'rtl',
   },
   {
-    locale: "de",
-    language: "Deutsch",
-    languageDirection: "ltr",
+    locale: 'de',
+    language: 'Deutsch',
+    languageDirection: 'ltr',
   },
 ];
 
-export const useLanguageStore = defineStore("language", () => {
+export const useLanguageStore = defineStore('language', () => {
   const language = ref(languages[0].language);
   const languageDirection = ref(languages[0].languageDirection);
   const locale = ref(languages[0].locale);
@@ -35,9 +35,7 @@ export const useLanguageStore = defineStore("language", () => {
     locale.value = found.locale;
   };
 
-  const isRtl = computed(() =>
-    languageDirection.value == "rtl" ? true : false,
-  );
+  const isRtl = computed(() => (languageDirection.value == 'rtl' ? true : false));
 
   return {
     languages,

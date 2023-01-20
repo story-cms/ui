@@ -28,12 +28,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onMounted } from "vue";
-import { FieldSpec } from "App/Models/Interfaces";
-import { useLanguageStore, useModelStore } from "../store";
-import { commonProps } from "../shared/helpers";
-import type { Editor, EditorChange } from "codemirror";
-import type EasyMDE from "easymde";
+import { computed, ref, nextTick, onMounted } from 'vue';
+import { FieldSpec } from 'App/Models/Interfaces';
+import { useLanguageStore, useModelStore } from '../store';
+import { commonProps } from '../Shared/helpers';
+import type { Editor, EditorChange } from 'codemirror';
+import type EasyMDE from 'easymde';
 
 const props = defineProps({
   ...commonProps,
@@ -47,13 +47,13 @@ const fieldPath = computed(() => {
 
 const model = useModelStore();
 const update = (e: Editor, change: EditorChange) => {
-  if (change.origin === "setValue") return;
+  if (change.origin === 'setValue') return;
   model.setField(fieldPath.value, e.getValue());
 };
 
 const load = () => {
   nextTick().then(() => {
-    const fresh = model.getField(fieldPath.value, "") as string;
+    const fresh = model.getField(fieldPath.value, '') as string;
     if (fresh === editor.value()) return;
 
     editor.codemirror.setValue(fresh);
@@ -66,9 +66,9 @@ const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
 
 const language = useLanguageStore();
 language.$subscribe(() => {
-  editor.codemirror.setOption("direction", language.languageDirection);
-  editor.codemirror.setOption("rtlMoveVisually", language.isRtl);
-  editor.codemirror.setOption("theme", language.locale);
+  editor.codemirror.setOption('direction', language.languageDirection);
+  editor.codemirror.setOption('rtlMoveVisually', language.isRtl);
+  editor.codemirror.setOption('theme', language.locale);
 });
 
 let editor: EasyMDE;
@@ -76,48 +76,69 @@ const textArea = ref(undefined);
 
 onMounted(async () => {
   // needed for SSR of Codemirror
-  const easymdeModule = await import("easymde");
+
+  const easymdeModule = await import('easymde');
   const EasyMDE = easymdeModule.default;
+
   editor = new EasyMDE({
+    minHeight: field.value.minimal ? 'auto' : '300px',
     element: textArea.value,
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
     toolbar: field.value.isReadOnly
       ? []
+      : field.value.buttons
+      ? (field.value.buttons as any[])
       : [
-          "bold",
-          "italic",
-          "heading",
-          "|",
-          "quote",
-          "unordered-list",
-          "ordered-list",
-          "|",
-          "link",
+          'bold',
+          'italic',
+          'heading',
+          '|',
+          'quote',
+          'unordered-list',
+          'ordered-list',
+          '|',
+          'link',
           {
-            name: "footnote",
+            name: 'footnote',
             action: (instance) => {
               const selection = instance.codemirror.getSelection();
               const newValue = `[${selection}](^${selection})`;
               return instance.codemirror.replaceSelection(newValue);
             },
-            className: "fa fa-asterisk",
-            title: "Footnote Button",
+            className: 'fa fa-asterisk',
+            title: 'Footnote Button',
           },
-          "|",
-          "preview",
-          "side-by-side",
-          "fullscreen",
-          "guide",
+          '|',
+          'strikethrough',
+          'heading-smaller',
+          'heading-bigger',
+          'heading-1',
+          'heading-2',
+          'heading-3',
+          '|',
+          'code',
+          'clean-block',
+          'image',
+          'upload-image',
+          'table',
+          'horizontal-rule',
+          'preview',
+          'side-by-side',
+          'fullscreen',
+          'guide',
+          'undo',
+          'redo',
         ],
   });
-  editor.codemirror.setOption("readOnly", field.value.isReadOnly);
-  editor.codemirror.on("change", update);
+  editor.codemirror.setOption('readOnly', field.value.isReadOnly);
+  editor.codemirror.on('change', update);
+
   load();
 });
 </script>
 
 <style>
-@import "easymde/dist/easymde.min.css";
+@import 'easymde/dist/easymde.min.css';
 </style>

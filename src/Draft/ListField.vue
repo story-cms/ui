@@ -77,7 +77,7 @@ import { ref, computed, nextTick } from 'vue';
 import { commonProps } from '../shared/helpers';
 import { widgetField } from './widget-fields';
 import type { FieldSpec } from 'App/Models/Interfaces';
-import Icon from '../shared/Icon.vue';
+import Icon from '../Shared/Icon.vue';
 import { useModelStore } from '../store';
 
 // name: "ListField",
@@ -110,10 +110,14 @@ const sectionTitle = (index: number): string => {
 };
 
 const title = (index: number): string => {
-  const titleFieldName = fields[0].name;
-  const item = listItems.value[index];
-  const itemTitle = item[titleFieldName];
-  if (itemTitle === undefined) return 'New Section';
+  let path = `${fieldPath.value}.${index.toString()}`;
+  if (field.value.index) {
+    path = `${path}.${field.value.index}`;
+  } else {
+    path = `${path}.${fields[0].name}`;
+  }
+  const itemTitle = model.getField(path, 'New Section') as string;
+
   return itemTitle.length > 20 ? `${itemTitle.substring(0, 20)}...` : itemTitle;
 };
 

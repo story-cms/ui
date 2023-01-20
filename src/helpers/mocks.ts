@@ -12,7 +12,7 @@ export const objectModel = {
     state: 'NY',
     zip: '10001',
     favoriteScripture: {
-      reference: 'JHN.3.16',
+      reference: 'John 3:16',
       verse:
         '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
     },
@@ -115,6 +115,7 @@ export const listSpec = {
   label: 'Sections',
   name: 'sections',
   widget: 'list',
+  index: 'scripture.reference',
   isReadOnly: false,
   fields: [
     {
@@ -136,7 +137,7 @@ export const listModel = {
   sections: [
     {
       scripture: {
-        reference: 'JHN.1.1',
+        reference: 'John 1:1',
         verse:
           '`1` In the beginning was the Word, and the Word was with God, and the Word was God.',
       },
@@ -145,7 +146,7 @@ export const listModel = {
     },
     {
       scripture: {
-        reference: 'JHN.1.2',
+        reference: 'John 1:2',
         verse: '`2` He was with God in the beginning.',
       },
       commentary: 'He was with God in the beginning.',
@@ -175,7 +176,12 @@ export const listInListSpec: FieldSpec = {
         {
           label: 'Frame type',
           name: 'type',
-          widget: 'string',
+          widget: 'select',
+          options: [
+            { label: 'Definition', value: 'definition' },
+            { label: 'Comment', value: 'comment' },
+          ],
+          default: 'definition',
         },
         {
           label: 'Frame content',
@@ -286,14 +292,10 @@ export const scriptureSpec: FieldSpec = {
 
 export const scriptureModel = {
   scripture: {
-    reference: 'JHN.3.16-JHN.3.17',
+    reference: 'John 3:16-17',
     verse:
       '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.  `17` For God sent not his Son into the world to condemn the world; but that the world through him might be saved.',
   },
-};
-
-export const scriptureError = {
-  'bundle.scripture': ['required validation failed'],
 };
 
 export const scriptureInListSpec: FieldSpec = {
@@ -313,14 +315,14 @@ export const scriptureInListModel = {
   scriptures: [
     {
       scripture: {
-        reference: 'JHN.3.16',
+        reference: 'John 3:16',
         verse:
           '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
       },
     },
     {
       scripture: {
-        reference: 'JHN.3.17',
+        reference: 'John 3:17',
         verse:
           '`17` For God sent not his Son into the world to condemn the world; but that the world through him might be saved.',
       },

@@ -34,7 +34,35 @@ renders a [StringField](./Draft/StringField.story.vue)
 ### markdown
 
 Suitable for longer, multi-line rich text which allows markup in markdown format and
-renders a [MarkdownField](./Draft/MarkdownField.story.vue).
+renders a [MarkdownField](./Draft/MarkdownField.story.vue). The `minimal` key accepts a
+boolean value which is `false` by default. `minimal` sets the widget to the minimal height
+possible. The `buttons` key accepts an array of strings
+`['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
+representing the formatting buttons to display (all shown by default).
+
+Minimal and buttons example:
+
+```ts
+{
+  label: 'Excerpt',
+  name: 'excerpt',
+  widget: 'markdown',
+  minimal: true,
+  buttons: [ 'bold', 'italic', 'heading', 'quote', '|','unordered-list']
+},
+```
+
+Remove the toolbar by passing an empty buttons array. Example:
+
+```ts
+{
+  label: 'Excerpt',
+  name: 'excerpt',
+  widget: 'markdown',
+  minimal: true,
+  buttons: []
+},
+```
 
 ### image
 
@@ -67,7 +95,29 @@ example:
   name: 'isFeatured',
   widget: 'boolean',
   default: false,
-},
+}
+```
+
+### select
+
+A dropdown menu that renders a [SelectField](./Draft/SelectField.story.vue). Has two
+special required keys called `options` and `default` which expects an array of objects
+with `label` and `value` keys and a string value respectively.
+
+example:
+
+```ts
+{
+  name: 'airport',
+  label: 'City',
+  widget: 'select',
+  options: [
+    { label: 'Chicago', value: 'CHG' },
+    { label: 'Paris', value: 'PRS' },
+    { label: 'Tokyo', value: 'TKY' },
+  ],
+  default: 'PRS',
+}
 ```
 
 ## Compound widget types
@@ -138,9 +188,11 @@ example:
 
 ### list
 
-Suitable for a collection of sets of primitive fields. Has one specialised field called
-`fields` which is a list with primitive fields that define a set. The first field in the
-set will be used in the widget as an identifier.
+A compound widget that renders a [ListField](./Draft/ListField.story.vue). A list is
+suitable for a collection of sets of other fields. The list has two specialised keys. A
+required key called `fields` which is a list with primitive fields that define a set. The
+first field in the set will be used in the widget as an identifier. Unless you specify an
+optional `index` key so you can use a different field as an identifier.
 
 example:
 
@@ -149,6 +201,7 @@ example:
   label: 'Sections',
   name: 'sections',
   widget: 'list',
+  index: 'passage.reference',
   fields: [
     {
       label: 'Title',
@@ -159,7 +212,28 @@ example:
       label: 'Intro',
       name: 'intro',
       widget: 'markdown',
-    }
+    },
+    {
+      label: 'Passage',
+      name: 'paxssage',
+      widget: 'scripture',
+    },
   ]
+}
+```
+
+### scripture
+
+A compound widget that renders a [ScriptureField](./Draft/ScriptureField.story.vue). It
+has a Bible reference field that can take a scripture reference and a markdown field for
+the scripture text. It has no special keys.
+
+example:
+
+```ts
+{
+  label: 'NT Passage',
+  name: 'nt',
+  widget: 'scripture',
 }
 ```

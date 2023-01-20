@@ -3,22 +3,22 @@
 @tailwind utilities;
 
 @layer base {
-  @import url("https://fonts.googleapis.com/css2?family=Amiri&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 }
 
 @layer components {
   .input-label {
-    @apply mb-1 text-sm leading-5 font-medium text-gray-700;
+    @apply mb-1 text-sm font-medium leading-5 text-gray-700;
   }
   .input-field {
-    @apply shadow-sm block  w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md py-3 px-3 text-sm leading-5 font-normal text-gray-500;
+    @apply block w-full  rounded-md border border-gray-300 py-3 px-3 text-sm font-normal leading-5 text-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm;
   }
   .icon {
-    @apply h-4 w-4 flex items-center justify-center text-black;
+    @apply flex h-4 w-4 items-center justify-center text-black;
   }
 
   .btn {
-    @apply cursor-pointer inline-flex items-center justify-center px-3 py-2 border border-transparent rounded-md shadow text-sm leading-5 font-medium hover:shadow-md hover:opacity-80 active:opacity-80;
+    @apply inline-flex cursor-pointer items-center justify-center rounded-md border border-transparent px-3 py-2 text-sm font-medium leading-5 shadow hover:opacity-80 hover:shadow-md active:opacity-80;
   }
 
   .btn-blue {
@@ -27,7 +27,7 @@
 }
 
 :root {
-  --arabic-font-family: "Amiri", serif;
+  --arabic-font-family: 'Amiri', serif;
   --rtl-font-size: 20px;
 }
 

@@ -31,26 +31,26 @@
 </template>
 
 <script setup lang="ts">
-import StringField from "./StringField.vue";
-import LanguageControl from "../helpers/LanguageControl.vue";
-import ErrorControl from "../helpers/ErrorControl.vue";
-import ModelControl from "../helpers/ModelControl.vue";
-import { objectErrors, objectModel } from "../helpers/mocks";
-import type { Vue3StorySetupHandler } from "@histoire/plugin-vue";
-import { useModelStore } from "../store";
+import StringField from './StringField.vue';
+import LanguageControl from '../helpers/LanguageControl.vue';
+import ErrorControl from '../helpers/ErrorControl.vue';
+import ModelControl from '../helpers/ModelControl.vue';
+import { objectErrors, objectModel } from '../helpers/mocks';
+import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
+import { useModelStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   const store = useModelStore();
   store.model = objectModel;
-  if (variant?.title == "Error") {
+  if (variant?.title == 'Error') {
     store.errors = objectErrors;
   }
 };
 
 const spec = {
-  name: "name",
-  label: "Name",
-  widget: "string",
+  name: 'name',
+  label: 'Name',
+  widget: 'string',
 };
 </script>
 

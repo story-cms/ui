@@ -1,54 +1,60 @@
 import { describe, expect, test } from 'vitest';
 
-import { parseReference } from '@/shared/helpers';
+import { parseReference } from '@/Shared/helpers';
 
-describe('Parse Bible references', () => {
-  test('Parse John 1', () => {
+describe('Parse exactly spelled and punctuated references', () => {
+  test('Identify junk', () => {
+    expect(parseReference('Dear Johnny 1')).toBe('');
+    expect(parseReference('kjhagdkjh jhsfljjsf')).toBe('');
+  });
+
+  test('Exact references to John', () => {
     expect(parseReference('John 1')).toBe('JHN.1');
-  });
-  test('Parse John 1:1', () => {
     expect(parseReference('John 1:1')).toBe('JHN.1.1');
-  });
-  test('Parse John 2:1-7', () => {
     expect(parseReference('John 2:1-7')).toBe('JHN.2.1-JHN.2.7');
+    expect(parseReference('john 1')).toBe('JHN.1');
+    expect(parseReference(' john 1     ')).toBe('JHN.1');
   });
-  test('Parse John 2:1-7', () => {
-    expect(parseReference('John 2:1-7')).toBe('JHN.2.1-JHN.2.7');
-  });
-  test('Parse Matthew 2:3-7', () => {
+
+  test('Exact references to other books', () => {
     expect(parseReference('Matthew 2:3-7')).toBe('MAT.2.3-MAT.2.7');
-  });
-  test('Parse Mats 2:3-7', () => {
-    expect(parseReference('Mats 2:3-7')).toBe('');
-  });
-  test('Parse Psalm 1', () => {
     expect(parseReference('Psalm 1')).toBe('PSA.1');
-  });
-  test('Parse Psalms 1', () => {
-    expect(parseReference('Psalms 1')).toBe('');
-  });
-  test('Parse Proverbs 1:8', () => {
     expect(parseReference('Proverbs 1:8')).toBe('PRO.1.8');
-  });
-  test('Parse Nahum 3:8', () => {
     expect(parseReference('Nahum 3:8')).toBe('NAM.3.8');
-  });
-  test('Parse 1 Samuel 3:8', () => {
-    expect(parseReference('1 samuel 3:8')).toBe('1SA.3.8');
-  });
-  test('Parse 1 Samuel 1:4-5', () => {
+    expect(parseReference('   1 samuel 3:8')).toBe('1SA.3.8');
     expect(parseReference('1 Samuel 1:4-5')).toBe('1SA.1.4-1SA.1.5');
-  });
-  test('Parse Psalm 1', () => {
-    expect(parseReference('Psalm 1')).toBe('PSA.1');
-  });
-  test('Parse Psalms 1', () => {
-    expect(parseReference('Psalms 1')).toBe('');
-  });
-  test('Parse Proverbs 1:8', () => {
-    expect(parseReference('Proverbs 1:8')).toBe('PRO.1.8');
-  });
-  test('Parse Nahum 3:8', () => {
+    expect(parseReference('1Samuel      1:4-5')).toBe('1SA.1.4-1SA.1.5');
     expect(parseReference('Nahum 3:8')).toBe('NAM.3.8');
+  });
+
+  test('Partial references to books', () => {
+    expect(parseReference('   Mat 2:3-7  ')).toBe('MAT.2.3-MAT.2.7');
+    expect(parseReference('Jo 1:1')).toBe('JHN.1.1');
+    expect(parseReference('Jn 1:1')).toBe('JHN.1.1');
+    expect(parseReference('Joh 1:1')).toBe('JHN.1.1');
+    expect(parseReference('jn 1:1')).toBe('JHN.1.1');
+    expect(parseReference('JOH 1:1')).toBe('JHN.1.1');
+    expect(parseReference('Prov 1:8')).toBe('PRO.1.8');
+    expect(parseReference('1 sam 3:8')).toBe('1SA.3.8');
+    expect(parseReference('1sam 3:8')).toBe('1SA.3.8');
+    expect(parseReference('1sam 3')).toBe('1SA.3');
+    expect(parseReference('1sa 3:8')).toBe('1SA.3.8');
+    expect(parseReference('1SA 3:8')).toBe('1SA.3.8');
+    expect(parseReference('3 jn 1:5')).toBe('3JN.1.5');
+    expect(parseReference('3 JOH 1:5')).toBe('3JN.1.5');
+    expect(parseReference('Psalms 1')).toBe('PSA.1');
+  });
+
+  test('Non-standard punctuation', () => {
+    expect(parseReference('   Mat 2.3-7  ')).toBe('MAT.2.3-MAT.2.7');
+    expect(parseReference(' Mat 2.3 - 7 ')).toBe('MAT.2.3-MAT.2.7');
+    expect(parseReference('jn 1.1')).toBe('JHN.1.1');
+    expect(parseReference('jn 1. 1')).toBe('JHN.1.1');
+    expect(parseReference('Jn 1:1')).toBe('JHN.1.1');
+    expect(parseReference('Jn 1: 1')).toBe('JHN.1.1');
+    expect(parseReference('1 Sam 1.4-5')).toBe('1SA.1.4-1SA.1.5');
+    expect(parseReference('1 Sam 1:4-5')).toBe('1SA.1.4-1SA.1.5');
+    expect(parseReference(' 1 Sam 1 . 4 - 5  ')).toBe('1SA.1.4-1SA.1.5');
+    expect(parseReference(' 1SA 1 .  4   -    5  ')).toBe('1SA.1.4-1SA.1.5');
   });
 });

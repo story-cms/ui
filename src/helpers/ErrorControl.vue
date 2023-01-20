@@ -7,11 +7,7 @@
     <div v-if="!isInspectOnly">
       <HstJson v-model="formErrors" title="Desired state" />
       <div class="my-4">
-        <HstButton
-          color="primary"
-          class="bg-emerald-500 htw-p-2"
-          @click="setError"
-        >
+        <HstButton color="primary" class="htw-p-2 bg-emerald-500" @click="setError">
           Set Error
         </HstButton>
       </div>
@@ -20,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { useModelStore } from "../store";
-import { computed, ref } from "vue";
+import { useModelStore } from '../store';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
   errors: {
@@ -36,8 +32,8 @@ const props = defineProps({
 });
 
 const startErrors = props.errors || {
-  "bundle.name": ["required validation failed"],
-  "bundle.spreads.0.title": ["required validation failed"],
+  'bundle.name': ['required validation failed'],
+  'bundle.spreads.0.title': ['required validation failed'],
 };
 
 const formErrors = ref(startErrors);

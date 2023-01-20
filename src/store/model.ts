@@ -77,10 +77,10 @@ export const useModelStore = defineStore('model', () => {
   };
 
   const setScripture = async (path: string, reference: string) => {
+    const code = parseReference(reference);
+    if (code === '') return;
     const response = await fetch(
-      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${parseReference(
-        reference,
-      )}?content-type=text`,
+      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${code}?content-type=text`,
       {
         headers: {
           accept: 'application/json',
