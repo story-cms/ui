@@ -7,11 +7,11 @@
       v-if="!field.isReadOnly"
       class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
     >
-      <FileUpload @file="uploadImage" class="w-full" />
-      <p class="text-red/50 text-sm" v-if="hasError">{{ field.label }} cannot be empty</p>
+      <FileUpload class="w-full" @file="uploadImage" />
+      <p v-if="hasError" class="text-red/50 text-sm">{{ field.label }} cannot be empty</p>
       <div
-        class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
         v-if="uploading"
+        class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
       >
         <div class="bg-al-massira-blue h-full opacity-30" :style="progress"></div>
       </div>
