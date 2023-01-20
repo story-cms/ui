@@ -31,7 +31,7 @@ export interface IndexItems {
 export interface StorySpec {
   chapterLimit: number;
   hasEditReview: boolean;
-  fields: Array<Object>;
+  fields: Array<object>;
 }
 
 export interface FieldSpec {
