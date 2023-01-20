@@ -49,7 +49,7 @@ export const parseReference = (reference: string): string => {
   if (bookNum) {
     book = `${bookNum} ${book}`;
   }
-  let abbreviation = getAbbreviation(book);
+  const abbreviation = getAbbreviation(book);
 
   if (!abbreviation) {
     return '';
@@ -69,7 +69,7 @@ export const parseReference = (reference: string): string => {
 };
 
 function getAbbreviation(inputBook: string): string {
-  for (var book in BibleBooksMap) {
+  for (const book in BibleBooksMap) {
     if (book == inputBook || BibleBooksMap[book].includes(inputBook)) {
       return BibleBooksMap[book][0].toUpperCase();
     }

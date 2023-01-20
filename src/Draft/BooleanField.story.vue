@@ -52,7 +52,7 @@ const objectErrors = {
   'bundle.isFavourite': ['required validation failed'],
 };
 
-const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   store.model = objectModel;
   if (variant?.title == 'Error') {
@@ -60,7 +60,7 @@ const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
   }
 };
 
-const loadEmptyData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadEmptyData: Vue3StorySetupHandler = () => {
   const store = useModelStore();
   store.model = { name: 'Isaac Newton' };
 };

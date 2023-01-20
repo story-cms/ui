@@ -37,12 +37,10 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 
 import ListField from './ListField.vue';
-import { FieldSpec } from '../interfaces';
 import ModelControl from '../helpers/ModelControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import {
@@ -54,17 +52,18 @@ import {
   listInListErrors,
 } from '../helpers/mocks';
 
-const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   switch (variant?.title) {
     case 'Error':
       store.errors = listErrors;
+      break;
     case 'Default':
       store.model = listModel;
       break;
-
     case 'List in List Error':
       store.errors = listInListErrors;
+      break;
     case 'List in List':
       store.model = listInListModel;
       break;

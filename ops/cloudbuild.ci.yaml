@@ -1,0 +1,12 @@
+steps:
+  - id: install
+    name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+
+  - id: lint
+    name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'lint']
+
+  - id: tests
+    name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'test']

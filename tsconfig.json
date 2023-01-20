@@ -9,14 +9,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM", "dom.iterable", "scripthost"],
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
       "App/Models/*": ["src/*"]
-    }
+    },
+    "types": ["vite/client"],
+    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }]
   },
   "include": [
     "env.d.ts",

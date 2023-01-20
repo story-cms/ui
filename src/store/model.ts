@@ -6,9 +6,9 @@ import type { Scripture, SecretKeys } from 'App/Models/Interfaces';
 import { parseReference } from '../Shared/helpers';
 
 export const useModelStore = defineStore('model', () => {
-  let model = ref({});
-  let errors: Ref<Record<string, string[]>> = ref({});
-  let secrets: Ref<SecretKeys> = ref({
+  const model = ref({});
+  const errors: Ref<Record<string, string[]>> = ref({});
+  const secrets: Ref<SecretKeys> = ref({
     cloudinaryApiKey: '',
     cloudinarySecret: '',
     bibleApiKey: '',
@@ -17,8 +17,8 @@ export const useModelStore = defineStore('model', () => {
   const resolvePath = (
     object: Record<string | number, any>,
     path: string,
-    defaultValue: Object = {},
-  ): Object =>
+    defaultValue: object = {},
+  ): object =>
     path
       .split('.')
       .reduce((o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue), object);
@@ -31,7 +31,7 @@ export const useModelStore = defineStore('model', () => {
     }, model.value);
 
   const setField = (path: string, value: any) => {
-    let object = JSON.parse(JSON.stringify(model.value));
+    const object = JSON.parse(JSON.stringify(model.value));
     path
       .split('.')
       .reduce(
@@ -53,7 +53,7 @@ export const useModelStore = defineStore('model', () => {
     setField(path, list);
   };
 
-  const getField = (path: string, defaultValue: Object = {}) =>
+  const getField = (path: string, defaultValue: object = {}) =>
     resolvePath(model.value, path, defaultValue);
 
   const setModel = (fresh: object) => {

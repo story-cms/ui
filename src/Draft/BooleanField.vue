@@ -33,7 +33,7 @@
       </label>
     </div>
 
-    <p class="mt-1 text-sm text-error" v-if="hasError">This field cannot be empty</p>
+    <p v-if="hasError" class="mt-1 text-sm text-error">This field cannot be empty</p>
   </div>
 </template>
 
@@ -57,7 +57,7 @@ const model = useModelStore();
 if (!model.isPopulated(fieldPath.value)) {
   model.setField(fieldPath.value, field.value.default);
 }
-const isOn = ref(model.getField(fieldPath.value, field.value.default));
+const isOn = ref(Boolean(model.getField(fieldPath.value, field.value.default)));
 
 const toggle = () => {
   isOn.value = !isOn.value;
@@ -66,7 +66,7 @@ const toggle = () => {
 
 model.$subscribe(() => {
   nextTick().then(() => {
-    isOn.value = model.getField(fieldPath.value, field.value.default);
+    isOn.value = Boolean(model.getField(fieldPath.value, field.value.default));
   });
 });
 
