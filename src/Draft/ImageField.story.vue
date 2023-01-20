@@ -41,7 +41,7 @@ import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 import config from '../../secrets';
 
-const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   if (variant?.title == 'Read Only') {
     store.model = objectModel;

@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import ScriptureField from './ScriptureField.vue';
-import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import { scriptureSpec, scriptureModel } from '../helpers/mocks';
@@ -31,7 +30,7 @@ import { useModelStore } from '../store';
 const scriptureError = {
   'bundle.scripture.verse': ['required validation failed'],
 };
-const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   store.model = scriptureModel;
   if (variant?.title == 'Error') {

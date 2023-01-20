@@ -14,25 +14,25 @@
     </label>
     <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
     <select
-      name="select"
       :id="fieldPath"
       v-model="selection"
-      @change="update"
+      name="select"
       :disabled="field.isReadOnly"
       class="w-half mr-2 rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
       :class="{ 'border-red-500': hasError }"
+      @change="update"
     >
-      <option v-for="item in field.options" :value="item.value">
+      <option v-for="item in field.options" :key="item.value" :value="item.value">
         {{ item.label }}
       </option>
     </select>
 
-    <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
+    <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onMounted } from 'vue';
+import { computed, ref, nextTick } from 'vue';
 import type { FieldSpec } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
@@ -59,7 +59,7 @@ model.$subscribe(() => {
   });
 });
 
-const update = (event: Event) => {
+const update = () => {
   model.setField(fieldPath.value, selection.value);
 };
 

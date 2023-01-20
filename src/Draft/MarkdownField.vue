@@ -18,9 +18,9 @@
           'opacity-50': field.isReadOnly,
         }"
       >
-        <textarea :readonly="field.isReadOnly" ref="textArea"></textarea>
+        <textarea ref="textArea" :readonly="field.isReadOnly" />
       </div>
-      <p class="mt-[8px] text-sm text-error" v-if="hasError">
+      <p v-if="hasError" class="mt-[8px] text-sm text-error">
         This field cannot be empty
       </p>
     </div>
@@ -53,7 +53,7 @@ const update = (e: Editor, change: EditorChange) => {
 
 const load = () => {
   nextTick().then(() => {
-    const fresh = model.getField(fieldPath.value, '') as string;
+    const fresh = model.getField(fieldPath.value, '') as unknown as string;
     if (fresh === editor.value()) return;
 
     editor.codemirror.setValue(fresh);

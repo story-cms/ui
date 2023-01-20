@@ -32,7 +32,7 @@ import { panelErrors, panelModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 
-const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   store.model = panelModel;
   if (variant?.title == 'Error') {

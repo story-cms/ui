@@ -68,7 +68,7 @@ export default {
       isHovering.value = false;
       e.stopPropagation();
       e.preventDefault();
-      let files = e.dataTransfer?.files;
+      const files = e.dataTransfer?.files;
       if (!files) return;
       const file = files[0];
 
