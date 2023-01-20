@@ -49,7 +49,7 @@ export const parseReference = (reference: string): string => {
     book = `${bookNum} ${book}`;
   }
 
-  let abbreviation = BibleBooksMap[book.toLowerCase()];
+  const abbreviation = BibleBooksMap[book.toLowerCase()];
 
   if (!abbreviation) {
     return '';
