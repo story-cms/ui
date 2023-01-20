@@ -49,7 +49,7 @@ export const parseReference = (reference: string): string => {
   if (bookNum) {
     book = `${bookNum} ${book}`;
   }
-  const abbreviation = getAbbreviation(book);
+  let abbreviation = getAbbreviation(book);
 
   if (!abbreviation) {
     return '';
