@@ -66,23 +66,26 @@ import {
   objectInListInObjectErrors,
 } from '../helpers/mocks';
 
-const loadData: Vue3StorySetupHandler = ({ app, story, variant }) => {
+const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   switch (variant?.title) {
     case 'Error':
       store.errors = objectErrors;
+      break;
     case 'Default':
       store.model = objectModel;
       break;
 
     case 'List in Object Error':
       store.errors = listInObjectError;
+      break;
     case 'List in Object':
       store.model = listInObjectModel;
       break;
 
     case 'Object in List in Object Error':
       store.errors = objectInListInObjectErrors;
+      break;
     case 'Object in List in Object':
       store.model = objectInListInObjectModel;
       break;
