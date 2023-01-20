@@ -65,7 +65,7 @@
           @click="addSet"
         >
           <icon name="plus" class="icon mr-1" aria-hidden="true" />
-          <span>{{ 'Add New ' + field.label.slice(0, -1) }}</span>
+          <span>{{ 'Add New ' + field.label }}</span>
         </button>
       </div>
     </div>
@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue';
-import { commonProps } from '../Shared/helpers';
+import { commonProps } from '../shared/helpers';
 import { widgetField } from './widget-fields';
 import type { FieldSpec } from 'App/Models/Interfaces';
 import Icon from '../Shared/Icon.vue';

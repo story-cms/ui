@@ -5,8 +5,8 @@
       rtl: language.isRtl,
     }"
   >
-    <label :for="fieldPath" class="input-label">
-      {{ field.label }}
+    <label :for="field.label" class="input-label">
+      {{ field.label + ' Reference' }}
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
       <input

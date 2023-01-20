@@ -159,7 +159,7 @@ export const listErrors = {
 };
 
 export const listInListSpec: FieldSpec = {
-  label: 'Spreads',
+  label: 'Spread',
   name: 'spreads',
   widget: 'list',
   fields: [
