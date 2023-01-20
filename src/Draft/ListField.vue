@@ -17,12 +17,7 @@
               class="icon mr-1"
               aria-hidden="true"
             />
-            <icon
-              v-else
-              name="chevron-right"
-              class="icon mr-1"
-              aria-hidden="true"
-            />
+            <icon v-else name="chevron-right" class="icon mr-1" aria-hidden="true" />
             <span>{{ String(sectionTitle(index)) }}</span>
           </button>
           <div
@@ -70,7 +65,7 @@
           class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
           <icon name="plus" class="icon mr-1" aria-hidden="true" />
-          <span>{{ "Add New " + field.label.slice(0, -1) }}</span>
+          <span>{{ 'Add New ' + field.label }}</span>
         </button>
       </div>
     </div>
@@ -78,12 +73,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick } from "vue";
-import { commonProps } from "../shared/helpers";
-import { widgetField } from "./widget-fields";
-import type { FieldSpec } from "App/Models/Interfaces";
-import Icon from "../shared/Icon.vue";
-import { useModelStore } from "../store";
+import { ref, computed, nextTick } from 'vue';
+import { commonProps } from '../shared/helpers';
+import { widgetField } from './widget-fields';
+import type { FieldSpec } from 'App/Models/Interfaces';
+import Icon from '../shared/Icon.vue';
+import { useModelStore } from '../store';
 
 // name: "ListField",
 
@@ -118,7 +113,7 @@ const title = (index: number): string => {
   const titleFieldName = fields[0].name;
   const item = listItems.value[index];
   const itemTitle = item[titleFieldName];
-  if (itemTitle === undefined) return "New Section";
+  if (itemTitle === undefined) return 'New Section';
   return itemTitle.length > 20 ? `${itemTitle.substring(0, 20)}...` : itemTitle;
 };
 

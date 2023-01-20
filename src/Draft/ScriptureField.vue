@@ -6,7 +6,7 @@
     }"
   >
     <label :for="field.label" class="input-label">
-      {{ field.label }}
+      {{ field.label + ' Reference' }}
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
       <input
@@ -21,6 +21,9 @@
         :class="{ 'border-error': hasError, 'opacity-50': field.isReadOnly }"
       />
       <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
+      <label :for="field.label" class="input-label mt-4 block">
+        {{ field.label + ' Passage' }}
+      </label>
       <textarea
         :readonly="field.isReadOnly"
         ref="textArea"
