@@ -35,7 +35,7 @@ const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
 
 const widgetFor = (key: number) => {
-  const widget = (field.value.fields! as FieldSpec[])[key].widget;
+  const widget = (field.value.fields as FieldSpec[])[key].widget;
   return widgetField(widget);
 };
 </script>

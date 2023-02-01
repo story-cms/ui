@@ -24,6 +24,7 @@ const props = defineProps({
   model: {
     type: Object,
     required: false,
+    default: objectModel,
   },
   isInspectOnly: {
     type: Boolean,
@@ -32,9 +33,7 @@ const props = defineProps({
   },
 });
 
-const startingState = props.model || objectModel;
-
-const formState = ref(startingState);
+const formState = ref(props.model);
 
 const store = useModelStore();
 

@@ -1,18 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
-import config from '../../secrets';
-import type { Scripture, SecretKeys } from 'App/Models/Interfaces';
-import { parseReference } from '../Shared/helpers';
+import type { Scripture } from 'App/Models/Interfaces';
 
 export const useModelStore = defineStore('model', () => {
   const model = ref({});
   const errors: Ref<Record<string, string[]>> = ref({});
-  const secrets: Ref<SecretKeys> = ref({
-    cloudinaryApiKey: '',
-    cloudinarySecret: '',
-    bibleApiKey: '',
-  });
 
   const resolvePath = (
     object: Record<string | number, any>,
@@ -64,10 +57,6 @@ export const useModelStore = defineStore('model', () => {
     errors.value = fresh;
   };
 
-  const setSecrets = (fresh: any) => {
-    secrets.value = fresh;
-  };
-
   const isPopulated = (path: string): boolean => readPath(path) !== undefined;
 
   const updateVerse = (path: string, verse: string) => {
@@ -76,50 +65,23 @@ export const useModelStore = defineStore('model', () => {
     setField(path, scripture);
   };
 
-  const setScripture = async (path: string, reference: string) => {
-    const code = parseReference(reference);
-    if (code === '') return;
-    const response = await fetch(
-      `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${code}?content-type=text`,
-      {
-        headers: {
-          accept: 'application/json',
-          'api-key': config.bibleApiKey,
-        },
-      },
-    );
-
-    if (response.status !== 200) {
-      throw new Error(response.statusText);
-    }
-
-    const data = await response.json();
-
-    const verse = data.data.content
-      .trim()
-      .replace(/\[(\d+)\]/g, '\n`$1`')
-      .replace(/¶\s/g, '')
-      .replace(/^\n/, '');
-
-    setField(path, {
-      reference,
-      verse,
-    });
+  const updateReference = (path: string, reference: string) => {
+    const scripture = getField(path, {}) as Scripture;
+    scripture.reference = reference;
+    setField(path, scripture);
   };
 
   return {
     model,
     getField,
     setField,
-    setScripture,
     updateVerse,
+    updateReference,
     addListItem,
     removeListItem,
     setModel,
     setErrors,
-    setSecrets,
     isPopulated,
     errors,
-    secrets,
   };
 });

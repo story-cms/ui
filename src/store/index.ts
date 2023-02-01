@@ -4,3 +4,4 @@ export const pinia = createPinia();
 
 export * from './language';
 export * from './model';
+export * from './secrets';
