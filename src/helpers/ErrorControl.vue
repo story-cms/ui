@@ -23,6 +23,10 @@ const props = defineProps({
   errors: {
     type: Object,
     required: false,
+    default: () => ({
+      'bundle.name': ['required validation failed'],
+      'bundle.spreads.0.title': ['required validation failed'],
+    }),
   },
   isInspectOnly: {
     type: Boolean,
@@ -31,12 +35,7 @@ const props = defineProps({
   },
 });
 
-const startErrors = props.errors || {
-  'bundle.name': ['required validation failed'],
-  'bundle.spreads.0.title': ['required validation failed'],
-};
-
-const formErrors = ref(startErrors);
+const formErrors = ref(props.errors);
 
 const store = useModelStore();
 

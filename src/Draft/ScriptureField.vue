@@ -19,11 +19,15 @@
         autocomplete="given-name"
         class="input-field"
         :class="{ 'border-error': referenceHasError, 'opacity-50': field.isReadOnly }"
+        @input="updateReference"
         @blur="lookup"
       />
       <p v-if="referenceHasError" class="text-sm text-error">
         This field cannot be empty
       </p>
+      <label class="input-label mt-4 block">
+        {{ field.label + ' Passage' }}
+      </label>
       <textarea
         v-model="verse"
         :readonly="isBusy"
@@ -40,8 +44,9 @@
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue';
 import { FieldSpec, Scripture } from 'App/Models/Interfaces';
-import { useLanguageStore, useModelStore } from '../store';
+import { useLanguageStore, useModelStore, useSecretStore } from '../store';
 import { commonProps } from '../Shared/helpers';
+import { parseReference } from '../Shared/helpers';
 
 const props = defineProps({
   ...commonProps,
@@ -65,13 +70,17 @@ const isBusy = ref(false);
 const lookup = () => {
   if (verse.value) return;
   isBusy.value = true;
-  model.setScripture(fieldPath.value, reference.value).then(() => {
+  setScripture(reference.value).then(() => {
     isBusy.value = false;
   });
 };
 
 const updateVerse = () => {
   model.updateVerse(fieldPath.value, verse.value);
+};
+
+const updateReference = () => {
+  model.updateReference(fieldPath.value, reference.value);
 };
 
 model.$subscribe(() => {
@@ -87,13 +96,36 @@ const referenceHasError = computed(
 );
 const verseHasError = computed(() => `bundle.${fieldPath.value}.verse` in model.errors);
 const language = useLanguageStore();
-</script>
+const secrets = useSecretStore();
 
-<!-- 
-{
-  label: 
-  name: 
-  widget: 'scripture'
-  isReadOnly: true | false 
-}
- -->
+const setScripture = async (reference: string) => {
+  const code = parseReference(reference);
+  if (code === '') return;
+  const response = await fetch(
+    `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${code}?content-type=text`,
+    {
+      headers: {
+        accept: 'application/json',
+        'api-key': secrets.bibleApiKey,
+      },
+    },
+  );
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  const data = await response.json();
+
+  const verse = data.data.content
+    .trim()
+    .replace(/\[(\d+)\]/g, '\n`$1`')
+    .replace(/¶\s/g, '')
+    .replace(/^\n/, '');
+
+  model.setField(fieldPath.value, {
+    reference,
+    verse,
+  });
+};
+</script>

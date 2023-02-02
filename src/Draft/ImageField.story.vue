@@ -38,8 +38,7 @@ import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import { objectErrors, objectModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
-import config from '../../secrets';
+import { useModelStore, useSecretStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
@@ -51,6 +50,8 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   }
 };
 
+const secrets = useSecretStore();
+
 const spec = {
   name: 'profile',
   label: 'Profile Image',
@@ -59,8 +60,8 @@ const spec = {
   provider: {
     uploadPreset: 'cmsplayground',
     cloudName: 'onesheep',
-    apiKey: config.cloudinaryApiKey,
-    secret: config.cloudinarySecret,
+    apiKey: secrets.cloudinaryApiKey,
+    secret: secrets.cloudinarySecret,
   },
 };
 </script>
