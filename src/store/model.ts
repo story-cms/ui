@@ -10,8 +10,8 @@ export const useModelStore = defineStore('model', () => {
   const resolvePath = (
     object: Record<string | number, any>,
     path: string,
-    defaultValue: object = {},
-  ): object =>
+    defaultValue: any = {},
+  ): any =>
     path
       .split('.')
       .reduce((o, p) => (o ? (o[p] ? o[p] : defaultValue) : defaultValue), object);
@@ -46,7 +46,7 @@ export const useModelStore = defineStore('model', () => {
     setField(path, list);
   };
 
-  const getField = (path: string, defaultValue: object = {}) =>
+  const getField = (path: string, defaultValue: any = {}) =>
     resolvePath(model.value, path, defaultValue);
 
   const setModel = (fresh: object) => {
