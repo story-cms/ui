@@ -5,13 +5,18 @@
       <ModelControl :model="listModel" />
     </Variant>
 
+    <Variant title="Foldable" :setup-app="loadData">
+      <ListField :field="{ canFold: true, ...listSpec }" />
+      <ModelControl :model="listModel" />
+    </Variant>
+
     <Variant title="Load data">
-      <ListField :field="listSpec" />
+      <ListField :field="{ canFold: true, ...listSpec }" />
       <ModelControl :model="listModel" :is-inspect-only="false" />
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
-      <ListField :field="listSpec" />
+      <ListField :field="{ canFold: true, ...listSpec }" />
       <template #controls>
         <ErrorControl :errors="listErrors" />
       </template>
@@ -57,7 +62,9 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   switch (variant?.title) {
     case 'Error':
       store.errors = listErrors;
+      store.model = listModel;
       break;
+    case 'Foldable':
     case 'Default':
       store.model = listModel;
       break;

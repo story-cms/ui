@@ -112,7 +112,7 @@ export const panelErrors = {
 };
 
 export const listSpec = {
-  label: 'Sections',
+  label: 'Section',
   name: 'sections',
   widget: 'list',
   index: 'scripture.reference',
@@ -129,6 +129,8 @@ export const listSpec = {
       name: 'commentary',
       widget: 'markdown',
       isReadOnly: false,
+      minimal: true,
+      buttons: ['bold', 'italic', 'heading', 'quote', '|', 'unordered-list'],
     },
   ],
 };

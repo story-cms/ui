@@ -189,19 +189,23 @@ example:
 ### list
 
 A compound widget that renders a [ListField](./Draft/ListField.story.vue). A list is
-suitable for a collection of sets of other fields. The list has two specialised keys. A
-required key called `fields` which is a list with primitive fields that define a set. The
-first field in the set will be used in the widget as an identifier. Unless you specify an
-optional `index` key so you can use a different field as an identifier.
+suitable for a collection of sets of other fields. The list has these specialised keys:
+
+- `fields`: required, a list with primitive fields that define a set
+- `index`: optional, a string that specifies which field in the set should be used as an
+  identifier. If left out the first field in the set will be used.
+- `canFold`: optional, a boolean that specifies whether the list items can be folded
+  (collapsed) or not. Defaults to `false`.
 
 example:
 
 ```ts
 {
-  label: 'Sections',
+  label: 'Section',
   name: 'sections',
   widget: 'list',
   index: 'passage.reference',
+  canFold: true,
   fields: [
     {
       label: 'Title',

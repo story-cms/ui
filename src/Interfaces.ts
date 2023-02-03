@@ -42,6 +42,7 @@ export interface FieldSpec {
   // specialized
   index?: string;
   fields?: FieldSpec[] | FieldMap;
+  canFold?: boolean;
   uploadPreset?: string;
   provider?: ImageProvider;
   options?: Array<SelectOption>;
