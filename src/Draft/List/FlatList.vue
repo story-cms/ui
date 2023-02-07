@@ -1,8 +1,13 @@
 <template>
   <div class="space-y-[32px] bg-transparent py-8">
     <div v-for="(_listItem, index) in listItems" :key="index">
-      <div class="mt-[32px] space-y-[24px] rounded bg-gray-100 p-[32px] shadow-sm">
-        <div class="right-0 cursor-pointer text-gray-500" @click="removeSet(index)">
+      <div
+        class="relative mt-[32px] space-y-[24px] rounded bg-gray-100 px-[32px] py-3 shadow-sm"
+      >
+        <div
+          class="absolute right-0 mr-3 cursor-pointer text-gray-500"
+          @click="removeSet(index)"
+        >
           <Icon name="trash" class="h-10 w-10" />
         </div>
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
