@@ -11,12 +11,7 @@
     </Variant>
 
     <Variant title="Readonly" :setup-app="loadData">
-      <SelectField
-        :field="{
-          ...spec,
-          isReadOnly: true,
-        }"
-      />
+      <SelectField :field="spec" :is-read-only="true" />
     </Variant>
 
     <Variant title="RTL">

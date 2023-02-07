@@ -15,10 +15,10 @@
       <div
         :class="{
           'rounded border border-error': hasError,
-          'opacity-50': field.isReadOnly,
+          'opacity-50': props.isReadOnly,
         }"
       >
-        <textarea ref="textArea" :readonly="field.isReadOnly" />
+        <textarea ref="textArea" :readonly="props.isReadOnly" />
       </div>
       <p v-if="hasError" class="mt-[8px] text-sm text-error">
         This field cannot be empty
@@ -86,7 +86,7 @@ onMounted(async () => {
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
-    toolbar: field.value.isReadOnly
+    toolbar: props.isReadOnly
       ? []
       : field.value.buttons
       ? (field.value.buttons as any[])
@@ -94,12 +94,7 @@ onMounted(async () => {
           'bold',
           'italic',
           'heading',
-          '|',
           'quote',
-          'unordered-list',
-          'ordered-list',
-          '|',
-          'link',
           {
             name: 'footnote',
             action: (instance) => {
@@ -111,28 +106,10 @@ onMounted(async () => {
             title: 'Footnote Button',
           },
           '|',
-          'strikethrough',
-          'heading-smaller',
-          'heading-bigger',
-          'heading-1',
-          'heading-2',
-          'heading-3',
-          '|',
-          'code',
-          'clean-block',
-          'image',
-          'upload-image',
-          'table',
-          'horizontal-rule',
-          'preview',
-          'side-by-side',
-          'fullscreen',
           'guide',
-          'undo',
-          'redo',
         ],
   });
-  editor.codemirror.setOption('readOnly', field.value.isReadOnly);
+  editor.codemirror.setOption('readOnly', props.isReadOnly);
   editor.codemirror.on('change', update);
 
   load();

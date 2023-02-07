@@ -8,6 +8,7 @@ import ObjectField from './ObjectField.vue';
 import ScriptureField from './ScriptureField.vue';
 import BooleanField from './BooleanField.vue';
 import SelectField from './SelectField.vue';
+import NumberField from './NumberField.vue';
 
 export const widgetField = (widget: string) => {
   const up = widget[0].toUpperCase() + widget.substring(1);
@@ -31,6 +32,8 @@ export const widgetField = (widget: string) => {
       return BooleanField;
     case 'SelectField':
       return SelectField;
+    case 'NumberField':
+      return NumberField;
 
     default:
       return NullField;

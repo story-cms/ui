@@ -12,8 +12,8 @@
       </template>
     </Variant>
 
-    <Variant title="Readonly Title" :setup-app="loadData">
-      <PanelField :field="{ ...spec, fields: readOnlyTitle }" />
+    <Variant title="Readonly" :setup-app="loadData">
+      <PanelField :field="spec" :is-read-only="true" />
       <ModelControl :model="panelModel" />
     </Variant>
 
@@ -58,19 +58,6 @@ const spec = {
   ],
 };
 
-const readOnlyTitle = [
-  {
-    label: 'Title',
-    name: 'title',
-    widget: 'string',
-    isReadOnly: true,
-  },
-  {
-    label: 'Description',
-    name: 'description',
-    widget: 'markdown',
-  },
-];
 const noLabel = {
   label: '',
   name: 'note',

@@ -10,22 +10,20 @@
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
       <input
-        type="text"
-        :name="field.label"
+        v-model="modelValue"
+        type="number"
         :readonly="props.isReadOnly"
-        autocomplete="given-name"
-        :value="modelValue"
-        class="input-field"
+        class="input-field w-24"
         :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
         @input="update"
       />
-      <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>
+      <p v-if="hasError" class="text-sm text-error">Please enter a number</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick } from 'vue';
+import { computed, ref } from 'vue';
 import { FieldSpec } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
@@ -41,17 +39,24 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const modelValue = ref(model.getField(fieldPath.value, ''));
-const update = (event: Event) => {
-  model.setField(fieldPath.value, (event.target as HTMLInputElement).value);
-};
+const modelValue = ref(model.getField(fieldPath.value, field.value.default ?? ''));
+if (!model.isPopulated(fieldPath.value)) {
+  model.setField(fieldPath.value, field.value.default ?? '');
+}
+
+const update = () => model.setField(fieldPath.value, modelValue.value);
 
 model.$subscribe(() => {
-  nextTick().then(() => {
-    modelValue.value = model.getField(fieldPath.value, '');
-  });
+  modelValue.value = model.getField(fieldPath.value, '');
 });
 
-const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const isWeird = computed((): boolean => {
+  if (typeof modelValue.value == 'string' && modelValue.value.length > 0) return true;
+  return isNaN(modelValue.value);
+});
+
+const hasError = computed(
+  () => `bundle.${fieldPath.value}` in model.errors || isWeird.value === true,
+);
 const language = useLanguageStore();
 </script>

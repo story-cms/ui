@@ -29,8 +29,8 @@
           label: 'Is Favourite',
           widget: 'boolean',
           default: false,
-          isReadOnly: true,
         }"
+        :is-read-only="true"
       />
     </Variant>
   </Story>

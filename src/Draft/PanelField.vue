@@ -16,6 +16,7 @@
         :field="item"
         :root-path="rootPath"
         :is-nested="true"
+        :is-read-only="props.isReadOnly"
       />
     </div>
   </div>

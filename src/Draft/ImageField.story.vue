@@ -25,8 +25,8 @@
           name: 'profile',
           label: 'Profile Image',
           widget: 'image',
-          isReadOnly: true,
         }"
+        :is-read-only="true"
       />
     </Variant>
   </Story>

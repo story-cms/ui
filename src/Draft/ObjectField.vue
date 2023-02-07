@@ -13,6 +13,7 @@
           :field="spec(key)"
           :root-path="fieldPath"
           :is-nested="true"
+          :is-read-only="props.isReadOnly"
         />
       </div>
     </div>

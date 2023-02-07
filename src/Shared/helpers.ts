@@ -15,6 +15,13 @@ export const commonProps = {
 
   isNested: {
     type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  isReadOnly: {
+    type: Boolean,
+    required: false,
     default: false,
   },
 };
