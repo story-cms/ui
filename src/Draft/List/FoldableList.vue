@@ -54,6 +54,15 @@
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
             :is="widgetField(item.widget)"
+            v-if="item.widget == 'list'"
+            class="ml-4"
+            :field="item"
+            :root-path="`${fieldPath}.${index.toString()}`"
+            :is-nested="true"
+          />
+          <component
+            :is="widgetField(item.widget)"
+            v-else
             :field="item"
             :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
