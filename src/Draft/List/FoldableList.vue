@@ -1,11 +1,11 @@
 <template>
-  <div class="space-y-[32px] bg-transparent py-8">
+  <div class="space-y-8 bg-transparent">
     <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
       <div class="relative">
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
-          <div class="w-full border-t border-gray-300" />
+          <div class="w-full border-t border-gray-300"></div>
         </div>
-        <div class="relative flex justify-center">
+        <div class="relative flex justify-between">
           <button
             type="button"
             class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -22,17 +22,14 @@
           </button>
           <div
             v-if="itemHasError(index)"
-            class="text-accent-one absolute left-0 cursor-pointer"
+            class="text-accent-one cursor-pointer"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
-              <Icon name="exclamation" class="h-10 w-10" />
+              <Icon name="exclamation" class="h-10 w-10 text-red-500" />
             </div>
           </div>
-          <div
-            class="absolute right-0 cursor-pointer text-red-500"
-            @click="removeSet(index)"
-          >
+          <div class="cursor-pointer text-red-500" @click="removeSet(index)">
             <div class="rounded-full border bg-white p-2">
               <Icon name="trash" class="h-10 w-10" />
             </div>
@@ -40,12 +37,34 @@
         </div>
       </div>
       <div
+        class="absolute left-4 top-0 -z-10 h-[calc(100%_-_32px)] border-l border-gray-300"
+      ></div>
+      <div v-if="isExpanded(index)" class="absolute left-1.5 bottom-8">
+        <button
+          type="button"
+          class="cursor-pointer rounded bg-white px-1.5 py-2"
+          @click="toggle(index)"
+        >
+          <Icon name="chevron-up-down" class="h-3.5 w-3.5 text-gray-700" />
+        </button>
+      </div>
+
+      <div
         v-if="isExpanded(index)"
-        class="relative mt-[32px] space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
+        class="relative mt-8 ml-8 space-y-[24px] rounded border border-gray-100 bg-white p-8 shadow-sm"
       >
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
             :is="widgetField(item.widget)"
+            v-if="item.widget == 'list'"
+            class="ml-8"
+            :field="item"
+            :root-path="`${fieldPath}.${index.toString()}`"
+            :is-nested="true"
+          />
+          <component
+            :is="widgetField(item.widget)"
+            v-else
             :field="item"
             :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
