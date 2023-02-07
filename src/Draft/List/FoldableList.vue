@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-[32px] bg-transparent py-8">
+  <div class="space-y-8 bg-transparent py-8">
     <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
       <div class="relative">
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
@@ -39,7 +39,7 @@
       <div class="absolute left-4 top-0 -z-10 h-full border-l border-gray-300"></div>
       <div
         v-if="isExpanded(index)"
-        class="relative mt-[32px] ml-8 space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
+        class="relative mt-8 ml-8 space-y-[24px] rounded border border-gray-100 bg-white p-8 shadow-sm"
       >
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
