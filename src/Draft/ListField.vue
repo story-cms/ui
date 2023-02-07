@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue';
+import { ref, computed } from 'vue';
 import { commonProps } from '../shared/helpers';
 import type { FieldSpec } from 'App/Models/Interfaces';
 import FlatList from './List/FlatList.vue';

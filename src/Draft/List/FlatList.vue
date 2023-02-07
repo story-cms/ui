@@ -16,7 +16,7 @@
       </div>
     </div>
     <div>
-      <AddItemButton :label="field.label" :onClick="addSet" />
+      <AddItemButton :label="field.label" :on-click="addSet" />
     </div>
   </div>
 </template>

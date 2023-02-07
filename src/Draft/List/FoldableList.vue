@@ -55,7 +55,7 @@
     </div>
 
     <div>
-      <AddItemButton :label="'Add ' + field.label" :onClick="addSet" />
+      <AddItemButton :label="'Add ' + field.label" :on-click="addSet" />
     </div>
   </div>
 </template>

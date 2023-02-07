@@ -27,7 +27,13 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  label: String,
-  onClick: Function,
+  label: {
+    type: String,
+    required: true,
+  },
+  onClick: {
+    type: Function,
+    required: true,
+  },
 });
 </script>
