@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8 bg-transparent py-8">
+  <div class="space-y-8 bg-transparent">
     <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
       <div class="relative">
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
@@ -26,7 +26,7 @@
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
-              <Icon name="exclamation" class="h-10 w-10" />
+              <Icon name="exclamation" class="h-10 w-10 text-red-500" />
             </div>
           </div>
           <div class="cursor-pointer text-red-500" @click="removeSet(index)">
@@ -36,8 +36,10 @@
           </div>
         </div>
       </div>
-      <div class="absolute left-4 top-0 -z-10 h-full border-l border-gray-300"></div>
-      <div v-if="isExpanded(index)" class="absolute left-1.5 bottom-0">
+      <div
+        class="absolute left-4 top-0 -z-10 h-[calc(100%_-_32px)] border-l border-gray-300"
+      ></div>
+      <div v-if="isExpanded(index)" class="absolute left-1.5 bottom-8">
         <button
           type="button"
           class="cursor-pointer rounded bg-white px-1.5 py-2"
@@ -55,7 +57,7 @@
           <component
             :is="widgetField(item.widget)"
             v-if="item.widget == 'list'"
-            class="ml-4"
+            class="ml-8"
             :field="item"
             :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
