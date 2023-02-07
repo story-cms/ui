@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8 bg-transparent py-8">
+  <div class="space-y-8 bg-transparent">
     <div v-for="(_listItem, index) in listItems" :key="index">
       <div
         class="relative mt-8 space-y-[24px] rounded bg-gray-100 px-8 pt-3 pb-8 shadow-sm"
