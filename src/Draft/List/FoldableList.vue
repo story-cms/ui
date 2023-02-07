@@ -36,9 +36,10 @@
           </div>
         </div>
       </div>
+      <div class="absolute left-4 top-0 -z-10 h-full border-l border-gray-300"></div>
       <div
         v-if="isExpanded(index)"
-        class="relative mt-[32px] space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
+        class="relative mt-[32px] ml-8 space-y-[24px] rounded border border-gray-100 bg-white p-[32px] shadow-sm"
       >
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
