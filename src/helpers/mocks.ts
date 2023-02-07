@@ -112,7 +112,7 @@ export const panelErrors = {
 };
 
 export const listSpec = {
-  label: 'Sections',
+  label: 'Section',
   name: 'sections',
   widget: 'list',
   index: 'scripture.reference',
