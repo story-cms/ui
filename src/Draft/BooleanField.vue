@@ -64,7 +64,6 @@ if (!model.isPopulated(fieldPath.value)) {
 const isOn = ref(Boolean(model.getField(fieldPath.value, field.value.default)));
 
 const toggle = () => {
-  console.log('! isReadOnly', props.isReadOnly);
   if (props.isReadOnly) return;
   isOn.value = !isOn.value;
   model.setField(fieldPath.value, isOn.value);

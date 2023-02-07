@@ -23,8 +23,8 @@ The chapter configuration is highly inspired by
 
 Following are the widgets that are currently implemented:
 
-[string](#string), [markdown](#markdown), [image](#image), [boolean](#boolean),
-[select](#select), [object](#object), [panel](#panel), [list](#list),
+[string](#string), [number](#number), [markdown](#markdown), [image](#image),
+[boolean](#boolean), [select](#select), [object](#object), [panel](#panel), [list](#list),
 [scripture](#scripture)
 
 ---
@@ -33,6 +33,24 @@ Following are the widgets that are currently implemented:
 
 Suitable for short, single line plain text strings. It has only the common properties and
 renders a [StringField](./Draft/StringField.story.vue)
+
+## number
+
+Suitable for whole or decimal numbers and renders a
+[NumberField](./Draft/NumberField.story.vue) It has one optional special property:
+
+- `default` accepts string or number value; defaults to empty string
+
+Example:
+
+```ts
+{
+  label: 'Duration',
+  name: 'duration',
+  widget: 'number',
+  default: 1,
+},
+```
 
 ## markdown
 
