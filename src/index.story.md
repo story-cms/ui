@@ -20,25 +20,31 @@ The chapter configuration is highly inspired by
 - `label`: Display Name of the widget
 - `name`: Api key of the widget
 - `widget`: Type of the widget
-- `isReadOnly`: `true` | `false`
 
 Following are the widgets that are currently implemented:
 
-## Primitive widget types
+[string](#string), [markdown](#markdown), [image](#image), [boolean](#boolean),
+[select](#select), [object](#object), [panel](#panel), [list](#list),
+[scripture](#scripture)
 
-### string
+---
+
+## string
 
 Suitable for short, single line plain text strings. It has only the common properties and
 renders a [StringField](./Draft/StringField.story.vue)
 
-### markdown
+## markdown
 
 Suitable for longer, multi-line rich text which allows markup in markdown format and
-renders a [MarkdownField](./Draft/MarkdownField.story.vue). The `minimal` key accepts a
-boolean value which is `false` by default. `minimal` sets the widget to the minimal height
-possible. The `buttons` key accepts an array of strings
-`['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
-representing the formatting buttons to display (all shown by default).
+renders a [MarkdownField](./Draft/MarkdownField.story.vue). On top of the common widget
+properties, a markdown field has these optional extra properties:
+
+- `minimal` a boolean value which is `false` by default. `minimal` sets the widget to the
+  minimal height possible.
+- `buttons` accepts an array of strings
+  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
+  representing the formatting buttons to display.
 
 Minimal and buttons example:
 
@@ -64,7 +70,7 @@ Remove the toolbar by passing an empty buttons array. Example:
 },
 ```
 
-### image
+## image
 
 Holds a url to a hosted image file. Suitable for allowing content editors to upload image
 files and renders a [ImageField](./Draft/ImageField.story.vue).  
@@ -82,7 +88,7 @@ example:
 },
 ```
 
-### boolean
+## boolean
 
 A boolean toggle switch that renders a [BooleanField](./Draft/BooleanField.story.vue). Has
 one required special key called `default` which has to have a value of true or false.
@@ -98,7 +104,7 @@ example:
 }
 ```
 
-### select
+## select
 
 A dropdown menu that renders a [SelectField](./Draft/SelectField.story.vue). Has two
 special required keys called `options` and `default` which expects an array of objects
@@ -120,9 +126,7 @@ example:
 }
 ```
 
-## Compound widget types
-
-### object
+## object
 
 Suitable for composing primitive widgets into a logical unit.  
 Has one specialised field called `fields` which is an object with key / value pairs.  
@@ -153,7 +157,7 @@ example:
 }
 ```
 
-### panel
+## panel
 
 Suitable to group several primitive fields visually together.  
 Has one specialised field called `fields` which is a list with primitive fields that
@@ -186,7 +190,7 @@ example:
 },
 ```
 
-### list
+## list
 
 A compound widget that renders a [ListField](./Draft/ListField.story.vue). A list is
 suitable for a collection of sets of other fields. The list has two specialised keys. A
@@ -222,7 +226,7 @@ example:
 }
 ```
 
-### scripture
+## scripture
 
 A compound widget that renders a [ScriptureField](./Draft/ScriptureField.story.vue). It
 has a Bible reference field that can take a scripture reference and a markdown field for

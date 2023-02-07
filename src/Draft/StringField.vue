@@ -12,11 +12,11 @@
       <input
         type="text"
         :name="field.label"
-        :readonly="field.isReadOnly"
+        :readonly="props.isReadOnly"
         autocomplete="given-name"
         :value="modelValue"
         class="input-field"
-        :class="{ 'border-error': hasError, 'opacity-50': field.isReadOnly }"
+        :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
         @input="update"
       />
       <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>

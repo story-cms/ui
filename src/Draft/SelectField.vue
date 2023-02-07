@@ -17,7 +17,7 @@
       :id="fieldPath"
       v-model="selection"
       name="select"
-      :disabled="field.isReadOnly"
+      :disabled="props.isReadOnly"
       class="w-half mr-2 rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
       :class="{ 'border-red-500': hasError }"
       @change="update"

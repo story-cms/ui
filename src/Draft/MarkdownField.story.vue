@@ -52,8 +52,8 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
-          isReadOnly: true,
         }"
+        :is-read-only="true"
       />
     </Variant>
   </Story>

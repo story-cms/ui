@@ -12,11 +12,15 @@
     >
       <button
         type="button"
-        :class="{ 'bg-indigo-600': isOn, 'bg-gray-200': !isOn }"
+        :class="{
+          'bg-indigo-600': isOn,
+          'bg-gray-200': !isOn,
+          'cursor-default': props.isReadOnly,
+        }"
         class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         role="switch"
         aria-checked="false"
-        :disabled="field.isReadOnly"
+        :disabled="props.isReadOnly"
         @click="toggle"
       >
         <span class="sr-only">{{ field.label }}</span>
@@ -60,6 +64,8 @@ if (!model.isPopulated(fieldPath.value)) {
 const isOn = ref(Boolean(model.getField(fieldPath.value, field.value.default)));
 
 const toggle = () => {
+  console.log('! isReadOnly', props.isReadOnly);
+  if (props.isReadOnly) return;
   isOn.value = !isOn.value;
   model.setField(fieldPath.value, isOn.value);
 };

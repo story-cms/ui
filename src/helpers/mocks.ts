@@ -116,19 +116,16 @@ export const listSpec = {
   name: 'sections',
   widget: 'list',
   index: 'scripture.reference',
-  isReadOnly: false,
   fields: [
     {
       label: 'Scripture',
       name: 'scripture',
       widget: 'scripture',
-      isReadOnly: false,
     },
     {
       label: 'Commentary',
       name: 'commentary',
       widget: 'markdown',
-      isReadOnly: false,
     },
   ],
 };
@@ -287,7 +284,6 @@ export const scriptureSpec: FieldSpec = {
   name: 'scripture',
   label: 'Scripture',
   widget: 'scripture',
-  isReadOnly: false,
 };
 
 export const scriptureModel = {

@@ -5,6 +5,11 @@
       <ModelControl :model="objectModel" />
     </Variant>
 
+    <Variant title="Readonly" :setup-app="loadData">
+      <ObjectField :field="objectSpec" :is-read-only="true" />
+      <ModelControl :model="objectModel" />
+    </Variant>
+
     <Variant title="Error" :setup-app="loadData">
       <ObjectField :field="objectSpec" />
       <template #controls>
@@ -72,6 +77,7 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
     case 'Error':
       store.errors = objectErrors;
       break;
+    case 'Readonly':
     case 'Default':
       store.model = objectModel;
       break;

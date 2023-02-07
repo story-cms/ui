@@ -38,7 +38,6 @@ export interface FieldSpec {
   name: string;
   label: string;
   widget: string;
-  isReadOnly?: boolean;
   // specialized
   index?: string;
   fields?: FieldSpec[] | FieldMap;

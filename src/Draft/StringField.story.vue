@@ -18,14 +18,7 @@
     </Variant>
 
     <Variant title="Readonly" :setup-app="loadData">
-      <StringField
-        :field="{
-          name: 'name',
-          label: 'Name',
-          widget: 'string',
-          isReadOnly: true,
-        }"
-      />
+      <StringField :field="spec" :is-read-only="true" />
     </Variant>
   </Story>
 </template>

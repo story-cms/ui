@@ -14,11 +14,11 @@
         v-model="reference"
         type="text"
         :name="field.label"
-        :readonly="field.isReadOnly"
+        :readonly="props.isReadOnly"
         placeholder="John 1 or John 1:3-4"
         autocomplete="given-name"
         class="input-field"
-        :class="{ 'border-error': referenceHasError, 'opacity-50': field.isReadOnly }"
+        :class="{ 'border-error': referenceHasError, 'opacity-50': props.isReadOnly }"
         @input="updateReference"
         @blur="lookup"
       />
@@ -30,10 +30,13 @@
       </label>
       <textarea
         v-model="verse"
-        :readonly="isBusy"
+        :readonly="isBusy || props.isReadOnly"
         placeholder="Verse"
         class="input-field mt-2 h-64"
-        :class="{ 'border-error': verseHasError, 'opacity-50': isBusy }"
+        :class="{
+          'border-error': verseHasError,
+          'opacity-50': isBusy || props.isReadOnly,
+        }"
         @input="updateVerse"
       ></textarea>
       <p v-if="verseHasError" class="text-sm text-error">This field cannot be empty</p>

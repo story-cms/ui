@@ -5,6 +5,11 @@
       <ModelControl :model="scriptureModel" :is-inspect-only="true" />
     </Variant>
 
+    <Variant title="ReadOnly" :setup-app="loadData">
+      <ScriptureField :field="scriptureSpec" :is-read-only="true" />
+      <ModelControl :model="scriptureModel" :is-inspect-only="true" />
+    </Variant>
+
     <Variant title="Empty">
       <ScriptureField :field="scriptureSpec" />
       <ModelControl :model="scriptureModel" :is-inspect-only="true" />
