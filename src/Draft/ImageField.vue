@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { computed, ref, nextTick, onMounted } from 'vue';
 import { FieldSpec } from 'App/Models/Interfaces';
-import { useLanguageStore, useModelStore } from '../store';
+import { useLanguageStore, useModelStore, useSecretStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import FileUpload from './FileUpload.vue';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -62,14 +62,16 @@ const onFileProgress = (event: any) => {
   progress.value = 'width:' + Math.round((event.loaded * 100.0) / event.total) + '%';
 };
 
-const secret: string = provider?.secret ?? '';
+const secrets = useSecretStore();
+const uploadPreset = field.value.uploadPreset ?? provider?.defaultPreset ?? '';
+
 //Create the string to sign for cloudinary signed uploads
 const secretToSign =
   'tags=browser-upload&timestamp=' +
   timestamp +
   '&upload_preset=' +
-  field.value.uploadPreset +
-  secret;
+  uploadPreset +
+  secrets.cloudinarySecret;
 const buffer = new TextEncoder().encode(secretToSign);
 
 const encryptSecret = () => {
@@ -85,10 +87,10 @@ const uploadImage = (files: File) => {
   uploading.value = true;
   const formData = new FormData();
   formData.append('file', files);
-  formData.append('upload_preset', field.value.uploadPreset ?? '');
+  formData.append('upload_preset', uploadPreset);
   formData.append('tags', 'browser-upload');
-  formData.append('api_key', provider['apiKey']);
-  formData.append('api_secret', provider['secret']);
+  formData.append('api_key', secrets.cloudinaryApiKey);
+  formData.append('api_secret', secrets.cloudinarySecret);
   formData.append('timestamp', timestamp.toString());
   formData.append('signature', encryptedSecret.value);
 

@@ -51,9 +51,7 @@ export interface FieldSpec {
 }
 
 export interface ImageProvider {
-  secret: string;
-  apiKey: string;
-  uploadPreset: string;
+  defaultPreset: string;
   cloudName: string;
 }
 
@@ -70,12 +68,6 @@ export interface LanguageSpecification {
   language: string;
   languageDirection: 'rtl' | 'ltr';
   locale: string;
-}
-
-export interface SecretKeys {
-  cloudinaryApiKey: string;
-  cloudinarySecret: string;
-  bibleApiKey: string;
 }
 
 export interface SelectOption {

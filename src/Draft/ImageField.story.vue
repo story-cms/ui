@@ -6,6 +6,19 @@
       <ModelControl :model="objectModel" />
     </Variant>
 
+    <Variant title="Empty with default preset">
+      <ImageField
+        :field="{
+          name: 'profile',
+          label: 'Profile Image',
+          widget: 'image',
+          provider: provider,
+        }"
+      />
+
+      <ModelControl :model="objectModel" />
+    </Variant>
+
     <Variant title="Error" :setup-app="loadData">
       <ImageField
         :field="{
@@ -38,7 +51,7 @@ import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import { objectErrors, objectModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore, useSecretStore } from '../store';
+import { useModelStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
@@ -50,18 +63,16 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   }
 };
 
-const secrets = useSecretStore();
+const provider = {
+  defaultPreset: 'cmsplayground',
+  cloudName: 'onesheep',
+};
 
 const spec = {
   name: 'profile',
   label: 'Profile Image',
   widget: 'image',
   uploadPreset: 'cmsplayground',
-  provider: {
-    uploadPreset: 'cmsplayground',
-    cloudName: 'onesheep',
-    apiKey: secrets.cloudinaryApiKey,
-    secret: secrets.cloudinarySecret,
-  },
+  provider: provider,
 };
 </script>
