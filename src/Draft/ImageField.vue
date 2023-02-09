@@ -1,10 +1,19 @@
 <template>
   <div class="relative bg-white py-4" :class="{ rtl: language.isRtl }">
-    <label class="input-label" :class="{ 'text-red-500': hasError }">{{
-      field.label
-    }}</label>
+    <div class="relative">
+      <label class="input-label" :class="{ 'text-red-500': hasError }">{{
+        field.label
+      }}</label>
+      <button
+        v-if="modelValue != '' && !props.isReadOnly"
+        class="absolute right-96"
+        @click.prevent="deleteImage"
+      >
+        <Icon name="trash" class="h-10 w-10 text-gray-500" />
+      </button>
+    </div>
     <div
-      v-if="!props.isReadOnly"
+      v-if="hasDropArea"
       class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
     >
       <FileUpload class="w-full" @file="uploadImage" />
@@ -16,7 +25,13 @@
         <div class="bg-al-massira-blue h-full opacity-30" :style="progress"></div>
       </div>
     </div>
-    <img v-if="modelValue != ''" :src="modelValue" class="mt-1 h-48 w-auto rounded-md" />
+    <div class="flex items-start">
+      <img
+        v-if="modelValue != ''"
+        :src="modelValue"
+        class="mt-1 h-48 w-auto rounded-md"
+      />
+    </div>
   </div>
 </template>
 
@@ -27,6 +42,7 @@ import { useLanguageStore, useModelStore, useSecretStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import FileUpload from './FileUpload.vue';
 import axios, { AxiosRequestConfig } from 'axios';
+import Icon from '../Shared/Icon.vue';
 
 const props = defineProps({
   ...commonProps,
@@ -48,6 +64,12 @@ model.$subscribe(() => {
 });
 
 const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const hasDropArea = computed(() => {
+  if (!props.isReadOnly && modelValue.value == '') {
+    return true;
+  }
+  return false;
+});
 const language = useLanguageStore();
 
 const progress = ref('width:0%');
@@ -79,6 +101,13 @@ const encryptSecret = () => {
     encryptedSecret.value = Array.from(new Uint8Array(value))
       .map((x) => x.toString(16).padStart(2, '0'))
       .join('');
+  });
+};
+
+const deleteImage = () => {
+  model.setField(fieldPath.value, '');
+  nextTick().then(() => {
+    modelValue.value = model.getField(fieldPath.value, '') as string;
   });
 };
 

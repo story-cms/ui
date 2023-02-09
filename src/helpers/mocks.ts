@@ -19,6 +19,24 @@ export const objectModel = {
   },
 };
 
+export const objectModelBlankImage = {
+  name: 'John',
+  age: 30,
+  notes: '# The Outing\nWe went to the park at *09h00* on a **sunny** day.',
+  profile: '',
+  address: {
+    street: '123 Main St',
+    city: 'New York',
+    state: 'NY',
+    zip: '10001',
+    favoriteScripture: {
+      reference: 'John 3:16',
+      verse:
+        '`16` For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.',
+    },
+  },
+};
+
 export const objectSpec = {
   name: 'address',
   label: '',

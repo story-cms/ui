@@ -1,22 +1,13 @@
 <template>
   <Story id="image-field" title="Image Field" group="widgets">
-    <Variant title="With model">
+    <Variant title="Model with Image" :setup-app="loadData">
       <ImageField :field="spec" />
-
       <ModelControl :model="objectModel" />
     </Variant>
 
-    <Variant title="Empty with default preset">
-      <ImageField
-        :field="{
-          name: 'profile',
-          label: 'Profile Image',
-          widget: 'image',
-          provider: provider,
-        }"
-      />
-
-      <ModelControl :model="objectModel" />
+    <Variant title="Model without image" :setup-app="loadData">
+      <ImageField :field="spec" />
+      <ModelControl :model="objectModelBlankImage" />
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
@@ -49,7 +40,7 @@
 import ImageField from './ImageField.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
-import { objectErrors, objectModel } from '../helpers/mocks';
+import { objectErrors, objectModel, objectModelBlankImage } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 
@@ -57,10 +48,17 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   if (variant?.title == 'Read Only') {
     store.model = objectModel;
+    return;
+  }
+  if (variant?.title == 'Model without image') {
+    store.model = objectModelBlankImage;
+    return;
   }
   if (variant?.title == 'Error') {
     store.errors = objectErrors;
+    return;
   }
+  store.model = objectModel;
 };
 
 const provider = {
