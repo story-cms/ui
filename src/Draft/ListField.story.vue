@@ -38,6 +38,11 @@
         <ErrorControl :errors="listInListErrors" />
       </template>
     </Variant>
+
+    <Variant title="Poke" :setup-app="loadData">
+      <ListField :field="pokeSpec" />
+      <ModelControl :model="pokeModel" />
+    </Variant>
   </Story>
 </template>
 
@@ -74,8 +79,44 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
     case 'List in List':
       store.model = listInListModel;
       break;
+    case 'Poke':
+      store.model = pokeModel;
+      break;
     default:
       break;
   }
+};
+
+const pokeSpec = {
+  label: 'Summary Statement',
+  name: 'conclusions',
+  widget: 'list',
+  fields: [
+    {
+      label: 'Summary Statement',
+      name: 'statement',
+      widget: 'string',
+    },
+    {
+      label: 'Scripture Excerpt',
+      name: 'excerpt',
+      widget: 'markdown',
+      minimal: true,
+      buttons: ['code'],
+    },
+  ],
+};
+
+const pokeModel = {
+  conclusions: [
+    {
+      statement: 'This is a summary statement',
+      excerpt: 'This is a scripture excerpt',
+    },
+    {
+      statement: 'This is another summary statement',
+      excerpt: 'This is another scripture excerpt',
+    },
+  ],
 };
 </script>

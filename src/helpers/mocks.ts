@@ -177,6 +177,7 @@ export const listInListSpec: FieldSpec = {
   label: 'Spread',
   name: 'spreads',
   widget: 'list',
+  canFold: true,
   fields: [
     {
       label: 'Title',
