@@ -178,16 +178,46 @@ example:
 ## panel
 
 Suitable to group several primitive fields visually together.  
-Has one specialised field called `fields` which is a list with primitive fields that
-should be grouped together visually.  
-Note: The same visual effect can be achieved by wrapping primitive fields in an `object`
-widget, but the data bundle shape would not be nested.
+Has two special properties
+
+- `isRow` Optional boolean to specify that the panel item should be rendered side by side
+  and not vertically aligned.
+- `fields` which is a required list with primitive fields that should be grouped together
+  visually.  
+  Note: The same visual effect can be achieved by wrapping primitive fields in an `object`
+  widget, but the data bundle shape would not be nested.
 
 example:
 
 ```ts
 {
   widget: 'panel',
+  fields: [
+    {
+      label: 'Title',
+      name: 'title',
+      widget: 'string',
+    },
+    {
+      label: 'Image',
+      name: 'imageUrl',
+      widget: 'image',
+    },
+    {
+      label: 'Video URL',
+      name: 'videoUrl',
+      widget: 'string',
+    },
+  ],
+},
+```
+
+For horizontal layouts
+
+```ts
+{
+  widget: 'panel',
+  isRow: true,
   fields: [
     {
       label: 'Title',

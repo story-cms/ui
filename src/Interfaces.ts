@@ -43,6 +43,7 @@ export interface FieldSpec {
   fields?: FieldSpec[] | FieldMap;
   canFold?: boolean;
   uploadPreset?: string;
+  isRow?: boolean
   provider?: ImageProvider;
   options?: Array<SelectOption>;
   default?: any;

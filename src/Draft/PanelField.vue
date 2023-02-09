@@ -9,15 +9,16 @@
         <span>{{ field.label }}</span>
       </button>
     </div>
-
-    <div v-for="(item, index) in fields" :key="index">
-      <component
-        :is="widgetFor(index)"
-        :field="item"
-        :root-path="rootPath"
-        :is-nested="true"
-        :is-read-only="props.isReadOnly"
-      />
+    <div :class="{ 'flex items-center justify-between space-x-4': field.isRow }">
+      <div v-for="(item, index) in fields" :key="index">
+        <component
+          :is="widgetFor(index)"
+          :field="item"
+          :root-path="rootPath"
+          :is-nested="true"
+          :is-read-only="props.isReadOnly"
+        />
+      </div>
     </div>
   </div>
 </template>

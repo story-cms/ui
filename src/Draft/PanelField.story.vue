@@ -5,6 +5,10 @@
       <ModelControl :model="panelModel" />
     </Variant>
 
+    <Variant title="Rows" :setup-app="loadData">
+      <PanelField :field="isRowWithNoLabel" />
+    </Variant>
+
     <Variant title="Error" :setup-app="loadData">
       <PanelField :field="spec" />
       <template #controls>
@@ -72,6 +76,25 @@ const noLabel = {
       label: 'Description',
       name: 'description',
       widget: 'markdown',
+    },
+  ],
+};
+
+const isRowWithNoLabel = {
+  label: '',
+  name: 'note',
+  widget: 'panel',
+  isRow: true,
+  fields: [
+    {
+      name: 'profile',
+      label: 'Profile Image',
+      widget: 'image',
+    },
+    {
+      name: 'avatar',
+      label: 'Avatar Image',
+      widget: 'image',
     },
   ],
 };
