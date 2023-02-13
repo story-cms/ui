@@ -43,17 +43,23 @@ export interface FieldSpec {
   fields?: FieldSpec[] | FieldMap;
   canFold?: boolean;
   uploadPreset?: string;
-  isRow?: boolean
+  isRow?: boolean;
   provider?: ImageProvider;
   options?: Array<SelectOption>;
   default?: any;
   minimal?: boolean;
   buttons?: string[];
+  fileAttributes?: FileAttributes;
 }
 
 export interface ImageProvider {
   defaultPreset: string;
   cloudName: string;
+}
+export interface FileAttributes {
+  description: string;
+  extensions: string[];
+  maxSize: number;
 }
 
 export interface Scripture {

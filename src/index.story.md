@@ -92,8 +92,15 @@ Remove the toolbar by passing an empty buttons array. Example:
 
 Holds a url to a hosted image file. Suitable for allowing content editors to upload image
 files and renders a [ImageField](./Draft/ImageField.story.vue).  
-Has one special key called `uploadPreset` which expects a string specifying the Cloudinary
-upload preset for this image.
+Has two special keys
+
+- `uploadPreset` which expects a string specifying the Cloudinary upload preset for this
+  image.
+- `fileAttributes` which expects an object containing
+  - `description` a message that will be displayed on the upload widget.
+  - `extensions` a list of accepted file extensions, for example
+    `['.svg', '.png', '.jpg', '.png']`
+  - `maxSize` a number in bytes that a file should not exceed.
 
 example:
 
@@ -103,6 +110,21 @@ example:
   name: 'imageUrl',
   widget: 'image',
   uploadPreset: 'session_thumbnail',
+},
+```
+
+Image with file attributes
+
+```ts
+{
+  label: 'Image',
+  name: 'imageUrl',
+  widget: 'image',
+  fileAttributes: {
+    description: 'SVG, PNG, JPG, GIF up to 2MB',
+    extensions: ['.jpeg', '.jpg'],
+    maxSize: 2000000,
+  },
 },
 ```
 

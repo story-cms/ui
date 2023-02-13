@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       colors: {
         error: colors.red['500'],
+        accent: {
+          DEFAULT: '#39CCFB',
+        },
       },
     },
   },

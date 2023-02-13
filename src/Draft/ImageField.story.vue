@@ -10,6 +10,10 @@
       <ModelControl :model="objectModelBlankImage" />
     </Variant>
 
+    <Variant title="Model with file attributes" :setup-app="loadData">
+      <ImageField :field="fileAttributesSpec" />
+    </Variant>
+
     <Variant title="Error" :setup-app="loadData">
       <ImageField
         :field="{
@@ -72,5 +76,18 @@ const spec = {
   widget: 'image',
   uploadPreset: 'cmsplayground',
   provider: provider,
+};
+
+const fileAttributesSpec = {
+  name: 'avatar',
+  label: 'Profile Image',
+  widget: 'image',
+  uploadPreset: 'cmsplayground',
+  provider: provider,
+  fileAttributes: {
+    description: 'SVG, PNG up to 2MB',
+    extensions: ['.svg', '.png'],
+    maxSize: 2000000,
+  },
 };
 </script>

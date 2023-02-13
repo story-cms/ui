@@ -8,7 +8,7 @@
     @drop.prevent="onDrop"
   >
     <div v-if="feedback" class="absolute inset-0">
-      <p class="rounded-t-md bg-red-500 py-1 text-center text-sm text-white">
+      <p class="rounded-t-md bg-error py-1 text-center text-sm text-white">
         {{ feedback }}
       </p>
     </div>
@@ -44,74 +44,95 @@
         </label>
         <p class="pl-1">or drag and drop</p>
       </div>
-      <p class="text-xs font-normal leading-4 text-gray-500">PNG, JPG, GIF up to 5MB</p>
+      <p class="text-xs font-normal leading-4 text-gray-500">{{ props.description }}</p>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue';
 
-export default {
-  emits: ['file'],
-
-  setup(_props, { emit }) {
-    const isHovering = ref(false);
-    const feedback = ref('');
-
-    const onDragEnter = () => (isHovering.value = true);
-    const onDragLeave = () => (isHovering.value = false);
-    const onDragOver = () => (isHovering.value = true);
-
-    const onDrop = (e: DragEvent) => {
-      feedback.value = '';
-      isHovering.value = false;
-      e.stopPropagation();
-      e.preventDefault();
-      const files = e.dataTransfer?.files;
-      if (!files) return;
-      const file = files[0];
-
-      try {
-        validateFile(file);
-        emit('file', file);
-      } catch (e) {
-        feedback.value = JSON.stringify(e);
-      }
-    };
-
-    const onSelect = (e: Event) => {
-      feedback.value = '';
-      isHovering.value = false;
-      const target = e.target as HTMLInputElement;
-      if (!target.files) return;
-      const file = target.files[0];
-      try {
-        validateFile(file);
-        emit('file', file);
-      } catch (e) {
-        feedback.value = JSON.stringify(e);
-      }
-    };
-
-    const validateFile = (file: File) => {
-      const allowedExtensions = ['.jpeg', '.jpg', '.png', '.svg'];
-
-      if (!allowedExtensions.some((extension) => file['name'].endsWith(extension)))
-        throw new Error(`Invalid file! Use an image instead.`);
-
-      if (file['size'] > 5662310) throw new Error(`File size is too large.`);
-    };
-
-    return {
-      onDragEnter,
-      onDragLeave,
-      onDragOver,
-      onDrop,
-      onSelect,
-      isHovering,
-      feedback,
-    };
+const props = defineProps({
+  description: {
+    type: String,
+    required: false,
+    default: 'SVG, PNG, JPG, GIF up to 5MB',
   },
+  extensions: {
+    type: Array,
+    required: false,
+    default() {
+      return ['.jpeg', '.jpg', '.png', '.svg'];
+    },
+  },
+  maxSize: {
+    type: Number,
+    required: false,
+    default: 5662310,
+  },
+});
+
+const emit = defineEmits(['file']);
+
+const isHovering = ref(false);
+const feedback = ref('');
+
+const onDragEnter = () => (isHovering.value = true);
+const onDragLeave = () => (isHovering.value = false);
+const onDragOver = () => (isHovering.value = true);
+
+const onDrop = (e: DragEvent) => {
+  feedback.value = '';
+  isHovering.value = false;
+  e.stopPropagation();
+  e.preventDefault();
+  const files = e.dataTransfer?.files;
+  if (!files) return;
+  const file = files[0];
+  processFile(file);
 };
+
+const onSelect = (e: Event) => {
+  feedback.value = '';
+  isHovering.value = false;
+  const target = e.target as HTMLInputElement;
+  if (!target.files) return;
+  const file = target.files[0];
+  processFile(file);
+};
+
+const processFile = (file: any) => {
+  try {
+    validateFile(file);
+    emit('file', file);
+  } catch (error: any) {
+    feedback.value = error.message;
+  }
+};
+
+const validateFile = (file: File) => {
+  const allowedExtensions = props.extensions as string[];
+
+  if (!allowedExtensions.some((extension) => file.name.endsWith(extension))) {
+    throw new ValidationError(
+      `Invalid file! Use an image instead with the extension ${props.extensions}.`,
+    );
+  }
+
+  if (file.size > props.maxSize) {
+    throw new ValidationError(
+      `File size is too large. Maximum allowed size is ${(
+        Math.round((props.maxSize / 1048576) * 100) / 100
+      ).toFixed(0)}MB.`,
+    );
+  }
+};
+
+class ValidationError extends Error {
+  message: string;
+  constructor(message: string) {
+    super(message);
+    this.message = message;
+  }
+}
 </script>

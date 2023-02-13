@@ -16,13 +16,13 @@
       v-if="hasDropArea"
       class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
     >
-      <FileUpload class="w-full" @file="uploadImage" />
+      <FileUpload class="w-full" v-bind="field.fileAttributes" @file="uploadImage" />
       <p v-if="hasError" class="text-red/50 text-sm">{{ field.label }} cannot be empty</p>
       <div
         v-if="uploading"
         class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
       >
-        <div class="bg-al-massira-blue h-full opacity-30" :style="progress"></div>
+        <div class="h-full bg-accent opacity-30" :style="progress"></div>
       </div>
     </div>
     <div class="flex items-start">
