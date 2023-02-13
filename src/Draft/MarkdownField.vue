@@ -77,7 +77,7 @@ const textArea = ref(undefined);
 const toolbar = computed((): any[] => {
   if (props.isReadOnly) return [];
   // NOTE: make sure to clone the field before passing it to MDE where it is mutated
-  if (field.value.buttons) return [...field.value.buttons];
+  if (field.value.toolbar) return [...field.value.toolbar];
   return ['bold', 'italic', 'unordered-list', 'ordered-list', '|', 'guide'];
 });
 

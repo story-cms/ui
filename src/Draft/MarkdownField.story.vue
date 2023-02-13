@@ -18,7 +18,7 @@
       <MarkdownField
         :field="{
           ...spec,
-          buttons: [
+          toolbar: [
             'bold',
             'italic',
             'heading',
@@ -36,7 +36,7 @@
         :field="{
           ...spec,
           minimal: true,
-          buttons: [],
+          toolbar: [],
         }"
       />
     </Variant>

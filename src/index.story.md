@@ -60,11 +60,11 @@ properties, a markdown field has these optional extra properties:
 
 - `minimal` a boolean value which is `false` by default. `minimal` sets the widget to the
   minimal height possible.
-- `buttons` accepts an array of strings
+- `toolbar` accepts an array of strings
   `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
   representing the formatting buttons to display.
 
-Minimal and buttons example:
+Minimal and toolbar example:
 
 ```ts
 {
@@ -72,11 +72,11 @@ Minimal and buttons example:
   name: 'excerpt',
   widget: 'markdown',
   minimal: true,
-  buttons: [ 'bold', 'italic', 'heading', 'quote', '|','unordered-list']
+  toolbar: [ 'bold', 'italic', 'heading', 'quote', '|','unordered-list']
 },
 ```
 
-Remove the toolbar by passing an empty buttons array. Example:
+Remove the toolbar by passing an empty toolbar array. Example:
 
 ```ts
 {
@@ -84,7 +84,7 @@ Remove the toolbar by passing an empty buttons array. Example:
   name: 'excerpt',
   widget: 'markdown',
   minimal: true,
-  buttons: []
+  toobar: []
 },
 ```
 
