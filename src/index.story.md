@@ -64,6 +64,9 @@ properties, a markdown field has these optional extra properties:
   `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
   representing the formatting buttons to display.
 
+A custom toolbar button can be used by defining it in `customEditorButtonComponent.ts` and
+adding its name in the `toolbar` property array.
+
 Minimal and toolbar example:
 
 ```ts
@@ -85,6 +88,32 @@ Remove the toolbar by passing an empty toolbar array. Example:
   widget: 'markdown',
   minimal: true,
   toobar: []
+},
+```
+
+Define the custom toolbar button in `customEditorButtonComponent.ts` and add the name of
+the component to the `toolbar` Example:
+
+```ts
+{
+  name: 'footnote',
+  className: 'fa fa-asterisk',
+  title: 'Footnote Button',
+  action: (instance: EasyMDE) => {
+    const selection = instance.codemirror.getSelection();
+    const newValue = `[${selection}](^${selection})`;
+    return instance.codemirror.replaceSelection(newValue);
+  },
+},
+```
+
+```ts
+{
+  label: 'Excerpt',
+  name: 'excerpt',
+  widget: 'markdown',
+  minimal: true,
+  toobar: ['footnote']
 },
 ```
 

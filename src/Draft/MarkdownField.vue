@@ -33,6 +33,7 @@ import { FieldSpec } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import type { Editor, EditorChange } from 'codemirror';
+import { EditorButtonComponents } from './customEditorButtonComponents';
 import EasyMDE from 'easymde';
 
 const props = defineProps({
@@ -77,7 +78,14 @@ const textArea = ref(undefined);
 const toolbar = computed((): any[] => {
   if (props.isReadOnly) return [];
   // NOTE: make sure to clone the field before passing it to MDE where it is mutated
-  if (field.value.toolbar) return [...field.value.toolbar];
+  if (field.value.toolbar)
+    return Array.from(
+      field.value.toolbar.map((item) => {
+        const obj = EditorButtonComponents.find((obj) => obj.name === item);
+        return obj ? obj : item;
+      }),
+    );
+
   return ['bold', 'italic', 'unordered-list', 'ordered-list', '|', 'guide'];
 });
 

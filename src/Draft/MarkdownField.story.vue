@@ -5,6 +5,16 @@
       <ModelControl :model="objectModel" />
     </Variant>
 
+    <Variant title="With custom toolbar buttons" :setup-app="loadData">
+      <MarkdownField
+        :field="{
+          ...spec,
+          toolbar: ['bold', 'italic', 'heading', 'footnote'],
+        }"
+      />
+      <ModelControl :model="objectModel" />
+    </Variant>
+
     <Variant title="Error" :setup-app="loadData">
       <MarkdownField :field="spec" />
       <ErrorControl :errors="objectErrors" />
