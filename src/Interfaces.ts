@@ -48,7 +48,7 @@ export interface FieldSpec {
   options?: Array<SelectOption>;
   default?: any;
   minimal?: boolean;
-  buttons?: string[];
+  toolbar?: string[];
   fileAttributes?: FileAttributes;
 }
 

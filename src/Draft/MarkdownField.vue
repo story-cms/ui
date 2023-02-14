@@ -33,7 +33,8 @@ import { FieldSpec } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import type { Editor, EditorChange } from 'codemirror';
-import type EasyMDE from 'easymde';
+import { EditorButtonComponents } from './customEditorButtonComponents';
+import EasyMDE from 'easymde';
 
 const props = defineProps({
   ...commonProps,
@@ -54,9 +55,9 @@ const update = (e: Editor, change: EditorChange) => {
 const load = () => {
   nextTick().then(() => {
     const fresh = model.getField(fieldPath.value, '') as unknown as string;
-    if (fresh === editor.value()) return;
+    if (fresh === mde?.value()) return;
 
-    editor.codemirror.setValue(fresh);
+    mde?.codemirror.setValue(fresh);
   });
 };
 
@@ -66,52 +67,39 @@ const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
 
 const language = useLanguageStore();
 language.$subscribe(() => {
-  editor.codemirror.setOption('direction', language.languageDirection);
-  editor.codemirror.setOption('rtlMoveVisually', language.isRtl);
-  editor.codemirror.setOption('theme', language.locale);
+  mde?.codemirror.setOption('direction', language.languageDirection);
+  mde?.codemirror.setOption('rtlMoveVisually', language.isRtl);
+  mde?.codemirror.setOption('theme', language.locale);
 });
 
-let editor: EasyMDE;
+let mde: EasyMDE | null = null;
 const textArea = ref(undefined);
 
-onMounted(async () => {
-  // needed for SSR of Codemirror
+const toolbar = computed((): any[] => {
+  if (props.isReadOnly) return [];
+  // NOTE: make sure to clone the field before passing it to MDE where it is mutated
+  if (field.value.toolbar)
+    return Array.from(
+      field.value.toolbar.map((item) => {
+        const obj = EditorButtonComponents.find((obj) => obj.name === item);
+        return obj ? obj : item;
+      }),
+    );
 
-  const easymdeModule = await import('easymde');
-  const EasyMDE = easymdeModule.default;
+  return ['bold', 'italic', 'unordered-list', 'ordered-list', '|', 'guide'];
+});
 
-  editor = new EasyMDE({
+onMounted(() => {
+  mde = new EasyMDE({
     minHeight: field.value.minimal ? 'auto' : '300px',
     element: textArea.value,
     spellChecker: false,
     nativeSpellcheck: false,
     status: false,
-    toolbar: props.isReadOnly
-      ? []
-      : field.value.buttons
-      ? (field.value.buttons as any[])
-      : [
-          'bold',
-          'italic',
-          'heading',
-          'quote',
-          {
-            name: 'footnote',
-            action: (instance) => {
-              const selection = instance.codemirror.getSelection();
-              const newValue = `[${selection}](^${selection})`;
-              return instance.codemirror.replaceSelection(newValue);
-            },
-            className: 'fa fa-asterisk',
-            title: 'Footnote Button',
-          },
-          '|',
-          'guide',
-        ],
+    toolbar: toolbar.value,
   });
-  editor.codemirror.setOption('readOnly', props.isReadOnly);
-  editor.codemirror.on('change', update);
-
+  mde?.codemirror.setOption('readOnly', props.isReadOnly);
+  mde?.codemirror.on('change', update);
   load();
 });
 </script>
