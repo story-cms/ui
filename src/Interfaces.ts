@@ -49,17 +49,14 @@ export interface FieldSpec {
   default?: any;
   minimal?: boolean;
   buttons?: string[];
-  fileAttributes?: FileAttributes;
+  description?: string;
+  extensions?: string[];
+  maxSize?: number;
 }
 
 export interface ImageProvider {
   defaultPreset: string;
   cloudName: string;
-}
-export interface FileAttributes {
-  description: string;
-  extensions: string[];
-  maxSize: number;
 }
 
 export interface Scripture {

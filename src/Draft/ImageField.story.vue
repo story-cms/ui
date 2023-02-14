@@ -10,6 +10,11 @@
       <ModelControl :model="objectModelBlankImage" />
     </Variant>
 
+    <Variant title="Non Image Upload" :setup-app="loadData">
+      <ImageField :field="nonImageSpec" />
+      <ModelControl :model="objectModelBlankImage" />
+    </Variant>
+
     <Variant title="Model with file attributes" :setup-app="loadData">
       <ImageField :field="fileAttributesSpec" />
     </Variant>
@@ -84,10 +89,19 @@ const fileAttributesSpec = {
   widget: 'image',
   uploadPreset: 'cmsplayground',
   provider: provider,
-  fileAttributes: {
-    description: 'SVG, PNG up to 2MB',
-    extensions: ['.svg', '.png'],
-    maxSize: 2000000,
-  },
+  description: 'SVG, PNG up to 2MB',
+  extensions: ['.svg', '.png'],
+  maxSize: 2000000,
+};
+
+const nonImageSpec = {
+  name: 'avatar',
+  label: 'Profile Image',
+  widget: 'image',
+  uploadPreset: 'cmsplayground',
+  provider: provider,
+  description: 'RIV only',
+  extensions: ['.riv'],
+  maxSize: 2000000,
 };
 </script>

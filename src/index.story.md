@@ -96,11 +96,10 @@ Has two special keys
 
 - `uploadPreset` which expects a string specifying the Cloudinary upload preset for this
   image.
-- `fileAttributes` which expects an object containing
-  - `description` a message that will be displayed on the upload widget.
-  - `extensions` a list of accepted file extensions, for example
-    `['.svg', '.png', '.jpg', '.png']`
-  - `maxSize` a number in bytes that a file should not exceed.
+- `description` a message that will be displayed on the upload widget.
+- `extensions` a list of accepted file extensions, for example
+  `['.svg', '.png', '.jpg', '.png']`
+- `maxSize` a number in bytes that a file should not exceed.
 
 example:
 
@@ -120,11 +119,9 @@ Image with file attributes
   label: 'Image',
   name: 'imageUrl',
   widget: 'image',
-  fileAttributes: {
-    description: 'SVG, PNG, JPG, GIF up to 2MB',
-    extensions: ['.jpeg', '.jpg'],
-    maxSize: 2000000,
-  },
+  description: 'SVG, PNG, JPG, GIF up to 2MB',
+  extensions: ['.jpeg', '.jpg'],
+  maxSize: 2000000,
 },
 ```
 

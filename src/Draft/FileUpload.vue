@@ -36,7 +36,7 @@
           <span>Upload a file</span>
           <input
             type="file"
-            accept="image/*"
+            :accept="accept"
             name="upload"
             class="sr-only"
             @change="onSelect"
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   description: {
@@ -72,6 +72,9 @@ const props = defineProps({
   },
 });
 
+const accept = computed(() => {
+  return props.extensions.join(',');
+});
 const emit = defineEmits(['file']);
 
 const isHovering = ref(false);

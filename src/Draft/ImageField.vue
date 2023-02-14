@@ -16,7 +16,13 @@
       v-if="hasDropArea"
       class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
     >
-      <FileUpload class="w-full" v-bind="field.fileAttributes" @file="uploadImage" />
+      <FileUpload
+        class="w-full"
+        :description="field.description"
+        :extensions="field.extensions"
+        :max-size="field.maxSize"
+        @file="uploadImage"
+      />
       <p v-if="hasError" class="text-red/50 text-sm">{{ field.label }} cannot be empty</p>
       <div
         v-if="uploading"
