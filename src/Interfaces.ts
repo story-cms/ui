@@ -52,6 +52,7 @@ export interface FieldSpec {
   description?: string;
   extensions?: string[];
   maxSize?: number;
+  toolbar?: string[];
 }
 
 export interface ImageProvider {
