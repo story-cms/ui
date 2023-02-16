@@ -14,6 +14,10 @@ export default defineConfig({
         id: 'widgets',
         title: 'Chapter Widgets',
       },
+      {
+        id: 'pages',
+        title: 'Pages',
+      },
     ],
   },
   theme: {

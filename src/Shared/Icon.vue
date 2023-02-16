@@ -142,6 +142,118 @@
         fill="currentColor"
       />
     </svg>
+    <svg
+      v-if="name == 'drag'"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_1288_3562)">
+        <path
+          d="M10 4C8.89543 4 8 3.10457 8 2C8 0.89543 8.89543 -4.82823e-08 10 0C11.1046 4.82823e-08 12 0.895431 12 2C12 3.10457 11.1046 4 10 4Z"
+          fill="currentColor"
+        />
+        <path
+          d="M10 12C8.89543 12 8 11.1046 8 10C8 8.89543 8.89543 8 10 8C11.1046 8 12 8.89543 12 10C12 11.1046 11.1046 12 10 12Z"
+          fill="currentColor"
+        />
+        <path
+          d="M10 20C8.89543 20 8 19.1046 8 18C8 16.8954 8.89543 16 10 16C11.1046 16 12 16.8954 12 18C12 19.1046 11.1046 20 10 20Z"
+          fill="currentColor"
+        />
+        <path
+          d="M2 4C0.89543 4 -4.82823e-08 3.10457 0 2C4.82823e-08 0.895431 0.895431 -4.82823e-08 2 0C3.10457 4.82823e-08 4 0.895431 4 2C4 3.10457 3.10457 4 2 4Z"
+          fill="currentColor"
+        />
+        <path
+          d="M2 12C0.89543 12 -4.82823e-08 11.1046 0 10C4.82823e-08 8.89543 0.895431 8 2 8C3.10457 8 4 8.89543 4 10C4 11.1046 3.10457 12 2 12Z"
+          fill="currentColor"
+        />
+        <path
+          d="M2 20C0.89543 20 -4.82823e-08 19.1046 0 18C4.82823e-08 16.8954 0.895431 16 2 16C3.10457 16 4 16.8954 4 18C4 19.1046 3.10457 20 2 20Z"
+          fill="currentColor"
+        />
+        <path
+          d="M18 4C16.8954 4 16 3.10457 16 2C16 0.895431 16.8954 -4.82823e-08 18 0C19.1046 4.82823e-08 20 0.895431 20 2C20 3.10457 19.1046 4 18 4Z"
+          fill="currentColor"
+        />
+        <path
+          d="M18 12C16.8954 12 16 11.1046 16 10C16 8.89543 16.8954 8 18 8C19.1046 8 20 8.89543 20 10C20 11.1046 19.1046 12 18 12Z"
+          fill="currentColor"
+        />
+        <path
+          d="M18 20C16.8954 20 16 19.1046 16 18C16 16.8954 16.8954 16 18 16C19.1046 16 20 16.8954 20 18C20 19.1046 19.1046 20 18 20Z"
+          fill="currentColor"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1288_3562">
+          <rect width="20" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+    <svg
+      v-if="name == 'globe'"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M16 28C22.6274 28 28 22.6274 28 16C28 9.37258 22.6274 4 16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28Z"
+        stroke="black"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M4.6875 12H27.3125"
+        stroke="black"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M4.6875 20H27.3125"
+        stroke="black"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M16 27.675C18.7614 27.675 21 22.4479 21 16C21 9.55208 18.7614 4.325 16 4.325C13.2386 4.325 11 9.55208 11 16C11 22.4479 13.2386 27.675 16 27.675Z"
+        stroke="black"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    <svg
+      v-if="name == 'menu'"
+      width="14"
+      height="12"
+      viewBox="0 0 14 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0 1C0 0.447715 0.447715 0 1 0H13C13.5523 0 14 0.447715 14 1C14 1.55228 13.5523 2 13 2H1C0.447715 2 0 1.55228 0 1Z"
+        fill="#111827"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0 6C0 5.44772 0.447715 5 1 5H13C13.5523 5 14 5.44772 14 6C14 6.55228 13.5523 7 13 7H1C0.447715 7 0 6.55228 0 6Z"
+        fill="#111827"
+      />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0 11C0 10.4477 0.447715 10 1 10H7C7.55229 10 8 10.4477 8 11C8 11.5523 7.55229 12 7 12H1C0.447715 12 0 11.5523 0 11Z"
+        fill="#111827"
+      />
+    </svg>
   </span>
 </template>
 

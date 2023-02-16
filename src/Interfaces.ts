@@ -79,3 +79,13 @@ export interface SelectOption {
   label: string;
   value: string;
 }
+
+export interface PageItem {
+  order?: number;
+  group?: number;
+  title?: string;
+  icon?: string;
+  description?: string;
+  body?: string;
+  isPublished?: boolean;
+}
