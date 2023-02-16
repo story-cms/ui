@@ -1,5 +1,5 @@
 <template>
-  <Story title="ListField">
+  <Story title="ListField" group="widgets">
     <Variant title="Default" :setup-app="loadData">
       <ListField :field="listSpec" />
       <ModelControl :model="listModel" />

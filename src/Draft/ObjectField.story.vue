@@ -1,5 +1,5 @@
 <template>
-  <Story title="ObjectField">
+  <Story title="ObjectField" group="widgets">
     <Variant title="Default" :setup-app="loadData">
       <ObjectField :field="objectSpec" />
       <ModelControl :model="objectModel" />

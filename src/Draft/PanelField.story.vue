@@ -1,5 +1,5 @@
 <template>
-  <Story title="PanelField">
+  <Story title="PanelField" group="widgets">
     <Variant title="Default" :setup-app="loadData">
       <PanelField :field="spec" />
       <ModelControl :model="panelModel" />
