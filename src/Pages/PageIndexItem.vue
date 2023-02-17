@@ -15,11 +15,16 @@
       </div>
       <div class="flex items-center space-x-5">
         <span
-          class="rounded-full bg-green-500/20 px-2 py-1 text-xs font-medium text-green-500/100"
+          class="rounded-full px-2 py-1 text-xs font-medium"
+          :class="{
+            'bg-green-500/20 text-green-500/100': props.isPublished,
+            'bg-yellow-300 text-yellow-800': !props.isPublished,
+          }"
         >
-          Live
+          {{ props.isPublished ? 'Live' : 'Draft' }}
         </span>
-        <Icon name="menu" class="h-5 w-5 text-gray-900" />
+        <Icon v-if="isLink(props.body)" name="link" class="h-5 w-5 text-gray-900" />
+        <Icon v-else name="menu" class="h-5 w-5 text-gray-900" />
       </div>
     </div>
   </div>
@@ -41,5 +46,16 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  body: {
+    type: String,
+    default: '',
+  },
+  isPublished: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const isLink = (text: string) =>
+  text.startsWith('http://') || text.startsWith('https://');
 </script>
