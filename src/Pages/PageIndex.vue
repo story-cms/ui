@@ -1,20 +1,24 @@
 <template>
-  <div
-    v-for="page in items"
-    :key="page.title"
-    draggable="true"
-    @dragstart="onDragStart($event), (fromIndex = items.indexOf(page))"
-    @dragend="onDragEnd($event)"
-    @dragover="onDragOver($event)"
-    @dragenter="toIndex = items.indexOf(page)"
-    @dragleave="onDragLeave($event)"
-    @drop="onDrop()"
-  >
-    <PageIndexItem
-      :title="page.title"
-      :icon="page.icon"
-      :description="page.description"
-    />
+  <div class="space-y-10">
+    <div
+      v-for="page in items"
+      :key="page.title"
+      draggable="true"
+      @dragstart="onDragStart($event), (fromIndex = items.indexOf(page))"
+      @dragend="onDragEnd($event)"
+      @dragover="onDragOver($event)"
+      @dragenter="toIndex = items.indexOf(page)"
+      @dragleave="onDragLeave($event)"
+      @drop="onDrop()"
+    >
+      <PageIndexItem
+        :title="page.title"
+        :icon="page.icon"
+        :description="page.description"
+        :is-published="page.isPublished"
+        :body="page.body"
+      />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -36,19 +40,15 @@ const onDragStart = (event: DragEvent) => {
 const onDragEnd = (event: DragEvent) => {
   const target = event.target as Element;
   target.classList.remove('bg-blue-200');
-  target.classList.remove('border-2');
 };
 
 const onDragOver = (event: DragEvent) => {
   event.preventDefault();
-  const target = event.target as Element;
-  target.classList.add('border-2');
 };
 
 const onDragLeave = (event: DragEvent) => {
   const target = event.target as Element;
   target.classList.remove('bg-purple-300');
-  target.classList.remove('border-2');
   target.classList.remove('bg-blue-200');
 };
 
