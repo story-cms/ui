@@ -1,5 +1,6 @@
 <template>
   <div class="space-y-10">
+    <DividerItem />
     <div
       v-for="page in items"
       :key="page.title"
@@ -17,6 +18,7 @@
         :description="page.description"
         :is-published="page.isPublished"
         :body="page.body"
+        :is-divider="page.isDivider"
       />
     </div>
   </div>
