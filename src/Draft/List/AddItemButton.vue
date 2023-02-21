@@ -1,6 +1,6 @@
 <template>
   <button
-    class="inline-flex items-center rounded-full bg-indigo-200 px-3 py-1 text-indigo-700"
+    class="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-indigo-700"
     @click="props.onClick"
   >
     <span>
