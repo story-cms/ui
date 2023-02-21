@@ -1,30 +1,36 @@
 <template>
   <div class="space-y-10">
-    <div
-      v-for="(page, index) in items"
-      :key="page.title"
-      draggable="true"
-      @dragstart="onDragStart($event), (fromIndex = items.indexOf(page))"
-      @dragend="onDragEnd($event)"
-      @dragover="onDragOver($event)"
-      @dragenter="toIndex = items.indexOf(page)"
-      @dragleave="onDragLeave($event)"
-      @drop="onDrop()"
-    >
-      <PageIndexItem
-        :title="page.title"
-        :icon="page.icon"
-        :description="page.description"
-        :is-published="page.isPublished"
-        :body="page.body"
-        :is-divider="page.isDivider"
-        @remove-divider="removeDivider(index)"
-      />
+    <div class="flex space-x-6">
+      <AddItemButton :label="'Divider'" :on-click="addDivider" />
+    </div>
+    <div class="space-y-10">
+      <div
+        v-for="(page, index) in items"
+        :key="page.title"
+        draggable="true"
+        @dragstart="onDragStart($event), (fromIndex = items.indexOf(page))"
+        @dragend="onDragEnd($event)"
+        @dragover="onDragOver($event)"
+        @dragenter="toIndex = items.indexOf(page)"
+        @dragleave="onDragLeave($event)"
+        @drop="onDrop()"
+      >
+        <PageIndexItem
+          :title="page.title"
+          :icon="page.icon"
+          :description="page.description"
+          :is-published="page.isPublished"
+          :body="page.body"
+          :is-divider="page.isDivider"
+          @remove-divider="removeDivider(index)"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+import AddItemButton from '@/Draft/List/AddItemButton.vue';
 
 import { usePagesStore } from '../store';
 import PageIndexItem from './PageIndexItem.vue';
@@ -68,8 +74,17 @@ const swapListItems = (items: any[], fromIndex: number, toIndex: number) => {
   items.splice(toIndex, 0, element);
 };
 
+const addDivider = () => {
+  items.value.push({
+    isDivider: true,
+  });
+
+  pages.setItems(items.value);
+};
+
 const removeDivider = (index: number) => {
   items.value = [...items.value.slice(0, index), ...items.value.slice(index + 1)];
+
   pages.setItems(items.value);
 };
 </script>
