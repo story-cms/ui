@@ -34,7 +34,7 @@
           <button
             type="button"
             class="flex h-3 w-3 items-center justify-center rounded-full border border-gray-300 bg-transparent p-5 text-sm font-medium leading-5 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            @click="removeDivider($event)"
+            @click="removeDivider()"
           >
             <Icon name="trash" class="text-gray-500" />
           </button>
@@ -73,11 +73,12 @@ const props = defineProps({
     default: false,
   },
 });
+const emit = defineEmits(['removeDivider']);
 
 const isLink = (text: string) =>
   text.startsWith('http://') || text.startsWith('https://');
 
-const removeDivider = (event: Event) => {
-  console.log(event);
+const removeDivider = () => {
+  emit('removeDivider');
 };
 </script>

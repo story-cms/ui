@@ -1,8 +1,7 @@
 <template>
   <div class="space-y-10">
-    <DividerItem />
     <div
-      v-for="page in items"
+      v-for="(page, index) in items"
       :key="page.title"
       draggable="true"
       @dragstart="onDragStart($event), (fromIndex = items.indexOf(page))"
@@ -19,6 +18,7 @@
         :is-published="page.isPublished"
         :body="page.body"
         :is-divider="page.isDivider"
+        @remove-divider="removeDivider(index)"
       />
     </div>
   </div>
@@ -66,5 +66,10 @@ const swapListItems = (items: any[], fromIndex: number, toIndex: number) => {
   const element = items[fromIndex];
   items.splice(fromIndex, 1);
   items.splice(toIndex, 0, element);
+};
+
+const removeDivider = (index: number) => {
+  items.value = [...items.value.slice(0, index), ...items.value.slice(index + 1)];
+  pages.setItems(items.value);
 };
 </script>
