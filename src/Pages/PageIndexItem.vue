@@ -3,7 +3,10 @@
     <div class="col-span-1 flex items-center justify-center">
       <Icon name="drag" class="h-5 w-auto text-gray-400" />
     </div>
-    <div class="col-span-11 rounded-lg border py-4 px-7 shadow">
+    <div
+      class="col-span-11 rounded-lg border py-4 px-7 shadow"
+      :class="{ 'py-1': props.isDivider }"
+    >
       <div v-if="!props.isDivider" class="flex justify-between space-x-3">
         <div class="flex items-center">
           <img :src="props.icon" class="h-6 w-6" />
