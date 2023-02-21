@@ -31,7 +31,11 @@ const pageItems = [
     icon: 'https://res.cloudinary.com/kiekies/image/upload/v1676554928/tmwckmf75hvnpabrifqn.svg',
     description: 'Got questions? Find out how to make the most of your experience.',
     body: 'https://thewordonetoone.com/faq',
-    isPublished: true,
+    isPublished: false,
+  },
+  {
+    group: 5,
+    isDivider: true,
   },
   {
     group: 2,
@@ -40,6 +44,10 @@ const pageItems = [
     description: 'Tell us about your experience and help us improve the app.',
     body: 'https://thewordonetoone.com/feedback',
     isPublished: true,
+  },
+  {
+    group: 6,
+    isDivider: true,
   },
 ];
 </script>

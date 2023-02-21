@@ -88,4 +88,5 @@ export interface PageItem {
   description?: string;
   body?: string;
   isPublished?: boolean;
+  isDivider?: boolean;
 }
