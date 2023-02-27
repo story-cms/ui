@@ -10,6 +10,16 @@
       <ModelControl :model="objectModel" :is-inspect-only="true" />
     </Variant>
 
+    <Variant title="Special tint" :setup-app="loadData">
+      <BooleanField :field="{ ...spec, tintColor: 'green-400' }" />
+      <ModelControl :model="objectModel" :is-inspect-only="true" />
+    </Variant>
+
+    <Variant title="Label start" :setup-app="loadData">
+      <BooleanField :field="{ ...spec, labelOrder: 'start' }" />
+      <ModelControl :model="objectModel" :is-inspect-only="true" />
+    </Variant>
+
     <Variant title="Error" :setup-app="loadData">
       <BooleanField :field="spec" />
       <template #controls>
