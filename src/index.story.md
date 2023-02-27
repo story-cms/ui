@@ -121,14 +121,14 @@ the component to the `toolbar` Example:
 
 Holds a url to a hosted image file. Suitable for allowing content editors to upload image
 files and renders a [ImageField](./Draft/ImageField.story.vue).  
-Has two special keys
+An image field has four special keys:
 
-- `uploadPreset` which expects a string specifying the Cloudinary upload preset for this
-  image.
-- `description` a message that will be displayed on the upload widget.
-- `extensions` a list of accepted file extensions, for example
-  `['.svg', '.png', '.jpg', '.png']`
-- `maxSize` a number in bytes that a file should not exceed.
+- `uploadPreset` required string specifying the Cloudinary upload preset for this image.
+- `description` an optional message that will be displayed on the upload widget. Defaults
+  to 'SVG, PNG, JPG, GIF up to 5MB'
+- `extensions` an optional list of accepted file extensions. Defaults to '['.jpeg',
+  '.jpg', '.png', '.svg']'
+- `maxSize` an optional number in bytes that a file should not exceed. Defaults to 5662310
 
 example:
 
@@ -157,7 +157,11 @@ Image with file attributes
 ## boolean
 
 A boolean toggle switch that renders a [BooleanField](./Draft/BooleanField.story.vue). Has
-one required special key called `default` which has to have a value of true or false.
+one required special key called `default` which has to have a value of true or false and
+these optional extra properties:
+
+- `tintColor` a string value that accepts a Tailwind color. Defaults to `indigo-600`
+- `labelOrder` a string value that accepts `start` or `end`. Defaults to `end`
 
 example:
 
@@ -167,7 +171,21 @@ example:
   name: 'isFeatured',
   widget: 'boolean',
   default: false,
+  tintColor: 'green-400',
+  labelOrder: 'start'
 }
+```
+
+Note: You will have to whitelist any custom tint colors in the project's
+`tailwind.config.cjs` file. For example, for the custom 'green-400' value used in the
+example above, you will have to include these variants:
+
+```js
+module.exports = {
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  safelist: ['bg-green-400', 'green-400', 'focus:ring-green-400'], 👈
+  // rest of the Tailwind config
+};
 ```
 
 ## select

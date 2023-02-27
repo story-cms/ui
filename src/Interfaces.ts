@@ -53,6 +53,8 @@ export interface FieldSpec {
   extensions?: string[];
   maxSize?: number;
   toolbar?: string[];
+  tintColor?: string;
+  labelOrder?: string;
 }
 
 export interface ImageProvider {

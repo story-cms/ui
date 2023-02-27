@@ -5,26 +5,17 @@
       rtl: language.isRtl,
     }"
   >
-    <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
-    <div
-      class="flex items-center space-x-2"
-      :class="{ 'space-x-reverse': language.isRtl }"
-    >
+    <div class="flex items-center space-x-2" :class="{ 'space-x-reverse': spaceReverse }">
       <button
         type="button"
-        :class="{
-          'bg-indigo-600': isOn,
-          'bg-gray-200': !isOn,
-          'cursor-default': props.isReadOnly,
-        }"
-        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        :class="btnClass"
+        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
         role="switch"
         aria-checked="false"
         :disabled="props.isReadOnly"
         @click="toggle"
       >
         <span class="sr-only">{{ field.label }}</span>
-        <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
         <span
           aria-hidden="true"
           :class="{ 'translate-x-5': isOn, 'translate-x-0': !isOn }"
@@ -32,7 +23,11 @@
         ></span>
       </button>
 
-      <label :for="field.label" class="input-label mt-1" :class="{ rtl: language.isRtl }">
+      <label
+        :for="field.label"
+        class="input-label mt-1"
+        :class="{ rtl: language.isRtl, 'order-first': labelStart }"
+      >
         {{ field.label }}
       </label>
     </div>
@@ -61,6 +56,8 @@ const model = useModelStore();
 if (!model.isPopulated(fieldPath.value)) {
   model.setField(fieldPath.value, field.value.default);
 }
+
+// toggle
 const isOn = ref(Boolean(model.getField(fieldPath.value, field.value.default)));
 
 const toggle = () => {
@@ -73,6 +70,26 @@ model.$subscribe(() => {
   nextTick().then(() => {
     isOn.value = Boolean(model.getField(fieldPath.value, field.value.default));
   });
+});
+
+// tint
+const tintColor = computed(() => {
+  if (props.isReadOnly) return 'gray-200';
+  return field.value.tintColor ? field.value.tintColor : 'indigo-600';
+});
+
+const btnClass = computed((): string => {
+  const classes = [`bg-${tintColor.value} focus:ring-${tintColor.value}`];
+  if (props.isReadOnly) classes.push('cursor-default');
+  return classes.join(' ');
+});
+
+// label order
+const labelStart = computed((): boolean => field.value.labelOrder === 'start');
+const spaceReverse = computed((): boolean => {
+  if (labelStart.value && !language.isRtl) return true;
+  if (!labelStart.value && language.isRtl) return true;
+  return false;
 });
 
 const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
