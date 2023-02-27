@@ -79,7 +79,9 @@ const tintColor = computed(() => {
 });
 
 const btnClass = computed((): string => {
-  const classes = [`bg-${tintColor.value} focus:ring-${tintColor.value}`];
+  const classes = isOn.value
+    ? [`bg-${tintColor.value} focus:ring-${tintColor.value}`]
+    : ['bg-gray-200 focus:ring-gray-200'];
   if (props.isReadOnly) classes.push('cursor-default');
   return classes.join(' ');
 });
