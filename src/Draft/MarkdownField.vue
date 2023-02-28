@@ -33,7 +33,7 @@ import { FieldSpec } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import type { Editor, EditorChange } from 'codemirror';
-import { CustomToolbarButtons } from './Markdown/CustomToolbarButtons';
+import { customToolbarButtons, defaultButtons } from './Markdown/toolbar-buttons';
 import EasyMDE from 'easymde';
 
 const props = defineProps({
@@ -81,12 +81,12 @@ const toolbar = computed((): any[] => {
   if (field.value.toolbar)
     return Array.from(
       field.value.toolbar.map((item) => {
-        const obj = CustomToolbarButtons.find((obj) => obj.name === item);
+        const obj = customToolbarButtons.find((obj) => obj.name === item);
         return obj ? obj : item;
       }),
     );
 
-  return ['bold', 'italic', 'unordered-list', 'ordered-list', '|', 'guide'];
+  return defaultButtons;
 });
 
 onMounted(() => {

@@ -8,7 +8,7 @@ export interface EditorButton {
   action?: (instance: EasyMDE) => void;
 }
 
-export const CustomToolbarButtons: EditorButton[] = [
+export const customToolbarButtons: EditorButton[] = [
   {
     name: 'footnote',
     className: 'fa fa-asterisk',
@@ -19,4 +19,23 @@ export const CustomToolbarButtons: EditorButton[] = [
       return instance.codemirror.replaceSelection(newValue);
     },
   },
+  {
+    name: 'superscript',
+    className: 'fa fa-superscript',
+    title: 'Verse number',
+    action: (instance: EasyMDE) => {
+      const selection = instance.codemirror.getSelection();
+      const newValue = '`' + selection + '`';
+      return instance.codemirror.replaceSelection(newValue);
+    },
+  },
+];
+
+export const defaultButtons: string[] = [
+  'bold',
+  'italic',
+  'unordered-list',
+  'ordered-list',
+  '|',
+  'guide',
 ];
