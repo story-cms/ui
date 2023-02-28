@@ -8,7 +8,7 @@ export interface EditorButton {
   action?: (instance: EasyMDE) => void;
 }
 
-export const EditorButtonComponents: EditorButton[] = [
+export const CustomToolbarButtons: EditorButton[] = [
   {
     name: 'footnote',
     className: 'fa fa-asterisk',
