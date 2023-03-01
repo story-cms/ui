@@ -1,12 +1,12 @@
 <template>
   <div class="relative bg-white py-4" :class="{ rtl: language.isRtl }">
     <div class="relative">
-      <label class="input-label" :class="{ 'text-red-500': hasError }">{{
+      <label class="input-label" :class="{ 'text-error': hasError }">{{
         field.label
       }}</label>
       <button
         v-if="modelValue != '' && !props.isReadOnly"
-        class="absolute right-96"
+        class="absolute top-2 right-0"
         @click.prevent="deleteImage"
       >
         <Icon name="trash" class="h-10 w-10 text-gray-500" />
@@ -23,7 +23,7 @@
         :max-size="field.maxSize"
         @file="uploadImage"
       />
-      <p v-if="hasError" class="text-red/50 text-sm">{{ field.label }} cannot be empty</p>
+      <p v-if="hasError" class="text-sm text-error">{{ field.label }} cannot be empty</p>
       <div
         v-if="uploading"
         class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
@@ -119,6 +119,7 @@ const deleteImage = () => {
 
 const uploadImage = (files: File) => {
   if (!provider) return;
+
   uploading.value = true;
   const formData = new FormData();
   formData.append('file', files);
@@ -139,7 +140,7 @@ const uploadImage = (files: File) => {
   axios(requestObj)
     .then((response) => {
       progress.value = 'width:0%';
-      model.setField(fieldPath.value, response.data.url);
+      model.setField(fieldPath.value, response.data.secure_url);
       uploading.value = false;
     })
     .catch((error) => {
