@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from 'vitest';
+import { test, expect } from '@playwright/test';
 import { setActivePinia, createPinia } from 'pinia';
 
 import { useModelStore } from '@/store/model';
@@ -13,8 +13,8 @@ const fixture = {
   },
 };
 
-describe('Model Store', () => {
-  beforeEach(async () => {
+test.describe('Model Store', () => {
+  test.beforeEach(async () => {
     setActivePinia(createPinia());
   });
 
