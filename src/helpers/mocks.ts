@@ -1,4 +1,4 @@
-import { FieldSpec } from '../interfaces';
+import { FieldSpec } from '../Interfaces';
 
 export const objectModel = {
   name: 'John',
