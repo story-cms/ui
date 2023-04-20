@@ -1,8 +1,8 @@
-import { describe, expect, test } from 'vitest';
+import { test, expect } from '@playwright/test';
 
 import { parseReference } from '@/Shared/helpers';
 
-describe('Parse exactly spelled and punctuated references', () => {
+test.describe('Parse exactly spelled and punctuated references', () => {
   test('Identify junk', () => {
     expect(parseReference('Dear Johnny 1')).toBe('');
     expect(parseReference('kjhagdkjh jhsfljjsf')).toBe('');

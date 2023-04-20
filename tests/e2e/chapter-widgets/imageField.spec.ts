@@ -126,4 +126,88 @@ test.describe('Image Field', () => {
     //   page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
     // ).toBeVisible();
   });
+
+  test('should show image field with file attributes', async ({ page }) => {
+    await page.getByRole('link', { name: 'Model with file attributes' }).click();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
+    ).toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+    ).not.toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+    ).not.toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+    ).not.toBeVisible();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Upload a fileor drag and dropSVG, PNG up to 2MB'),
+    ).toBeVisible();
+    // await expect(
+    //   page
+    //     .frameLocator('[data-test-id="preview-iframe"]')
+    //     .getByText('Upload a fileor drag and dropRIV only'),
+    // ).toBeVisible();
+    // await page
+    //   .frameLocator('[data-test-id="preview-iframe"]')
+    //   .getByText('Upload a file')
+    //   .click();
+    // Todo: Fix upload via Playwright
+    // await page.setInputFiles("input[name='upload']", './tests/assets/pic.jpeg');
+    // await expect(
+    //   page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+    // ).toBeVisible();
+  });
+
+  test('should error message if image is missing', async ({ page }) => {
+    await page.getByRole('link', { name: 'Error' }).click();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Profile Image', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+    ).not.toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+    ).not.toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+    ).not.toBeVisible();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Upload a fileor drag and dropSVG, PNG, JPG, GIF up to 5MB'),
+    ).toBeVisible();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Profile Image cannot be empty'),
+    ).toBeVisible();
+  });
+
+  test('should not allow image upload', async ({ page }) => {
+    await page.getByRole('link', { name: 'Read Only' }).click();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
+    ).toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+    ).not.toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+    ).not.toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+    ).not.toBeVisible();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Upload a fileor drag and dropSVG, PNG, JPG, GIF up to 5MB'),
+    ).not.toBeVisible();
+  });
 });
