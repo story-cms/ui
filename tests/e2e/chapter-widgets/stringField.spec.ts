@@ -38,4 +38,47 @@ test.describe('String Field', () => {
         .getByText('This field cannot be empty'),
     ).toBeVisible();
   });
+
+  test('should toggle RTL', async ({ page }) => {
+    await page.getByRole('link', { name: 'RTL' }).click();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Name', { exact: true }),
+    ).toBeVisible();
+
+    const locator = page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .locator('div')
+      .filter({ hasText: /^Name$/ });
+
+    await expect(locator).not.toHaveClass(/rtl/);
+
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('button', { name: 'Set RTL' })
+      .click();
+
+    await expect(locator).toHaveClass(/rtl/);
+
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('button', { name: 'Set LTR' })
+      .click();
+
+    await expect(locator).not.toHaveClass(/rtl/);
+  });
+
+  test('should make a field readonly @readonly', async ({ page }) => {
+    await page.getByRole('link', { name: 'Readonly' }).click();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('Name', { exact: true }),
+    ).toBeVisible();
+
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('textbox'),
+    ).toHaveAttribute('readonly', '');
+  });
 });
