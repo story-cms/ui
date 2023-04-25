@@ -1,5 +1,5 @@
 import { PropType } from 'vue';
-import { FieldSpec } from '../interfaces';
+import { FieldSpec } from '../Interfaces';
 import { BibleBooksMap } from './bibleBooks';
 
 export const commonProps = {
