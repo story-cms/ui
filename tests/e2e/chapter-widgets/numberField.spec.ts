@@ -60,4 +60,39 @@ test.describe('Number Field', () => {
         .getByText('Please enter a number'),
     ).toBeVisible();
   });
+  test('should set RTL for field', async ({ page }) => {
+    await page.getByRole('link', { name: 'RTL' }).click();
+
+    const locator = page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('spinbutton');
+
+    await expect(locator).toBeVisible();
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('button', { name: 'Set RTL' })
+      .click();
+
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .locator('div')
+        .filter({ hasText: /^Age$/ }),
+    ).toHaveClass(/rtl/);
+  });
+  test('should not be able to edit readonly value', async ({ page }) => {
+    await page.getByRole('link', { name: 'Readonly' }).click();
+
+    const locator = page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('spinbutton');
+
+    await expect(locator).toBeVisible();
+    await expect(locator).toHaveValue('20');
+    await locator.press('ArrowUp');
+    await locator.press('ArrowUp');
+    await expect(locator).toHaveValue('20');
+    await locator.press('ArrowDown');
+    await expect(locator).toHaveValue('20');
+  });
 });
