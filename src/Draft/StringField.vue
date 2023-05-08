@@ -1,7 +1,8 @@
 <template>
   <div
     :class="{
-      'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
+      'rounded border border-gray-200 bg-white p-8 drop-shadow-sm': !isNested,
+      'mt-4': isNested,
       rtl: language.isRtl,
     }"
   >
@@ -15,11 +16,11 @@
         :readonly="props.isReadOnly"
         autocomplete="given-name"
         :value="modelValue"
+        @input="update"
         class="input-field"
         :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
-        @input="update"
       />
-      <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>
+      <p class="text-sm text-error" v-if="hasError">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
@@ -53,5 +54,12 @@ model.$subscribe(() => {
 });
 
 const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const errorMessage = computed(() => {
+  const path = `bundle.${fieldPath.value}`;
+  if (!model.errors[path]) return '';
+  if (model.errors[path].length === 0) return '';
+  return model.errors[path][0];
+});
+
 const language = useLanguageStore();
 </script>

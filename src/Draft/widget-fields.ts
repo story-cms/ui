@@ -1,6 +1,7 @@
 import StringField from './StringField.vue';
 import MarkdownField from './MarkdownField.vue';
 import ImageField from './ImageField.vue';
+import AnimationField from './AnimationField.vue';
 import NullField from './NullField.vue';
 import PanelField from './PanelField.vue';
 import ListField from './ListField.vue';
@@ -14,6 +15,9 @@ export const widgetField = (widget: string) => {
   const up = widget[0].toUpperCase() + widget.substring(1);
   const name = `${up}Field`;
   switch (name) {
+    // custom fields
+
+    // non-custom fields
     case 'StringField':
       return StringField;
     case 'ImageField':
@@ -34,6 +38,8 @@ export const widgetField = (widget: string) => {
       return SelectField;
     case 'NumberField':
       return NumberField;
+    case 'AnimationField':
+      return AnimationField;
 
     default:
       return NullField;

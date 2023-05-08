@@ -1,12 +1,12 @@
 <template>
-  <ul class="space-y-8 bg-transparent">
+  <ul class="my-8 space-y-8 bg-transparent">
     <li v-for="(_listItem, index) in listItems" :key="index">
       <div
-        class="relative mt-8 space-y-[24px] rounded bg-gray-100 px-8 pt-3 pb-8 shadow-sm"
+        class="relative ml-8 space-y-[24px] rounded bg-gray-100 px-8 pt-3 pb-8 drop-shadow"
       >
         <div
           class="absolute right-0 mr-3 cursor-pointer text-gray-500"
-          @click="removeSet(index)"
+          @click="emit('removeSet', index)"
         >
           <Icon name="trash" class="h-10 w-10" />
         </div>
@@ -20,8 +20,8 @@
         </div>
       </div>
     </li>
-    <div>
-      <AddItemButton :label="field.label" :on-click="addSet" />
+    <div class="ml-8">
+      <AddItemButton :label="field.label" @add="emit('addSet')" />
     </div>
   </ul>
 </template>
@@ -31,7 +31,7 @@ import { computed, PropType } from 'vue';
 import { widgetField } from '../widget-fields';
 import type { FieldSpec } from 'App/Models/Interfaces';
 import Icon from '../../Shared/Icon.vue';
-import AddItemButton from './AddItemButton.vue';
+import AddItemButton from '../../Shared/AddItemButton.vue';
 
 const props = defineProps({
   field: {
@@ -51,12 +51,4 @@ const props = defineProps({
 const emit = defineEmits(['addSet', 'removeSet']);
 const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
-
-const addSet = () => {
-  emit('addSet');
-};
-
-const removeSet = (index: number) => {
-  emit('removeSet', index);
-};
 </script>

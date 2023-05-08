@@ -1,5 +1,5 @@
 import { PropType } from 'vue';
-import { FieldSpec } from '../Interfaces';
+import { FieldSpec } from 'App/Models/Interfaces';
 import { BibleBooksMap } from './bibleBooks';
 
 export const commonProps = {
@@ -15,7 +15,6 @@ export const commonProps = {
 
   isNested: {
     type: Boolean,
-    required: false,
     default: false,
   },
 
@@ -37,6 +36,43 @@ export const validateFile = (file: File) => {
   if (file['size'] > 5662310) throw new Error(`File size is too large.`);
 };
 
+export const formatDate = (value: string): string => {
+  let d = new Date(value);
+  return `${padZero(d.getDate())}/${padZero(d.getMonth() + 1)}/${padZero(
+    d.getFullYear(),
+  )}, ${padZero(d.getHours())}:${padZero(d.getMinutes())}`;
+};
+
+export const debounce = <T extends (...args: any[]) => void>(
+  wait: number,
+  callback: T,
+  immediate = false,
+) => {
+  let timeout: ReturnType<typeof setTimeout> | null;
+
+  return function <U>(this: U, ...args: Parameters<typeof callback>) {
+    const context = this;
+    const later = () => {
+      timeout = null;
+
+      if (!immediate) {
+        callback.apply(context, args);
+      }
+    };
+    const callNow = immediate && !timeout;
+
+    if (typeof timeout === 'number') {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(later, wait);
+
+    if (callNow) {
+      callback.apply(context, args);
+    }
+  };
+};
+
 export const parseReference = (reference: string): string => {
   const match = reference
     .trim()
@@ -56,7 +92,7 @@ export const parseReference = (reference: string): string => {
   if (bookNum) {
     book = `${bookNum} ${book}`;
   }
-  const abbreviation = getAbbreviation(book);
+  let abbreviation = getAbbreviation(book);
 
   if (!abbreviation) {
     return '';
@@ -76,8 +112,8 @@ export const parseReference = (reference: string): string => {
 };
 
 function getAbbreviation(inputBook: string): string {
-  for (const book in BibleBooksMap) {
-    if (book == inputBook || BibleBooksMap[book].includes(inputBook)) {
+  for (var book in BibleBooksMap) {
+    if (book === inputBook || BibleBooksMap[book].includes(inputBook)) {
       return BibleBooksMap[book][0].toUpperCase();
     }
   }

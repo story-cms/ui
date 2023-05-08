@@ -15,6 +15,8 @@ export interface IndexItem {
   number: number;
   imageUrl: string;
   title: string;
+  reference: string;
+  part: number;
 }
 
 export interface IndexReadyItem {
@@ -42,17 +44,16 @@ export interface FieldSpec {
   index?: string;
   fields?: FieldSpec[] | FieldMap;
   canFold?: boolean;
-  uploadPreset?: string;
   isRow?: boolean;
+  uploadPreset?: string;
   provider?: ImageProvider;
   options?: Array<SelectOption>;
   default?: any;
   minimal?: boolean;
-  buttons?: string[];
+  toolbar?: string[];
   description?: string;
   extensions?: string[];
   maxSize?: number;
-  toolbar?: string[];
   tintColor?: string;
   labelOrder?: string;
 }
@@ -82,8 +83,14 @@ export interface SelectOption {
   value: string;
 }
 
+export interface TabItem {
+  label: string;
+  count: number;
+}
+
+// used for editing the pages
 export interface PageItem {
-  order?: number;
+  id: number;
   group?: number;
   title?: string;
   icon?: string;

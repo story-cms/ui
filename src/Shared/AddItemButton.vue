@@ -1,7 +1,7 @@
 <template>
   <button
-    class="inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-indigo-700"
-    @click="props.onClick"
+    class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-indigo-700 shadow-sm"
+    @click.prevent="emit('add')"
   >
     <span>
       <svg
@@ -13,7 +13,7 @@
       >
         <path
           d="M5 1V5M5 5V9M5 5H9M5 5L1 5"
-          stroke="#4338CA"
+          stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -31,9 +31,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  onClick: {
-    type: Function,
-    required: true,
-  },
 });
+const emit = defineEmits(['add']);
 </script>

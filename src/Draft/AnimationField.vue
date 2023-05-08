@@ -6,7 +6,6 @@
       }}</label>
       <button
         v-if="modelValue != '' && !props.isReadOnly"
-        type="button"
         class="absolute top-2 right-0"
         @click.prevent="deleteImage"
       >
@@ -33,11 +32,7 @@
       </div>
     </div>
     <div class="flex items-start">
-      <img
-        v-if="modelValue != ''"
-        :src="modelValue"
-        class="mt-1 h-48 w-auto rounded-md"
-      />
+      <Rive v-if="modelValue != ''" :src="modelValue" />
     </div>
   </div>
 </template>
@@ -48,6 +43,7 @@ import { FieldSpec } from 'App/Models/Interfaces';
 import { useLanguageStore, useModelStore, useSecretStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import FileUpload from './Attachments/FileUpload.vue';
+import Rive from './Attachments/RivePlayer.vue';
 import axios, { AxiosRequestConfig } from 'axios';
 import Icon from '../Shared/Icon.vue';
 
@@ -120,7 +116,6 @@ const deleteImage = () => {
 
 const uploadImage = (files: File) => {
   if (!provider) return;
-
   uploading.value = true;
   const formData = new FormData();
   formData.append('file', files);
@@ -130,9 +125,10 @@ const uploadImage = (files: File) => {
   formData.append('api_secret', secrets.cloudinarySecret);
   formData.append('timestamp', timestamp.toString());
   formData.append('signature', encryptedSecret.value);
+  formData.append('resource_type', 'raw');
 
   const requestObj: AxiosRequestConfig = {
-    url: 'https://api.cloudinary.com/v1_1/' + provider['cloudName'] + '/image/upload',
+    url: 'https://api.cloudinary.com/v1_1/' + provider['cloudName'] + '/raw/upload',
     method: 'POST',
     onUploadProgress: onFileProgress,
     data: formData,

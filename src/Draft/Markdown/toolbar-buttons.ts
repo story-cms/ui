@@ -10,16 +10,6 @@ export interface EditorButton {
 
 export const customToolbarButtons: EditorButton[] = [
   {
-    name: 'footnote',
-    className: 'fa fa-asterisk',
-    title: 'Footnote Button',
-    action: (instance: EasyMDE) => {
-      const selection = instance.codemirror.getSelection();
-      const newValue = `[${selection}](^${selection})`;
-      return instance.codemirror.replaceSelection(newValue);
-    },
-  },
-  {
     name: 'superscript',
     className: 'fa fa-superscript',
     title: 'Verse number',

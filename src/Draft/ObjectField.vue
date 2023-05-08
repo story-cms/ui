@@ -42,11 +42,11 @@ const fieldPath = computed(() => {
 });
 
 const widgetFor = (key: string) => {
-  const widget = (field.value.fields as FieldMap)[key].widget;
+  const widget = (field.value.fields! as FieldMap)[key].widget;
   return widgetField(widget);
 };
 
 const spec = (key: string): FieldSpec => {
-  return (field.value.fields as FieldMap)[key];
+  return (field.value.fields! as FieldMap)[key];
 };
 </script>

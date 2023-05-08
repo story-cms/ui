@@ -5,7 +5,6 @@ import type { Scripture } from 'App/Models/Interfaces';
 
 export const useModelStore = defineStore('model', () => {
   const model = ref({});
-  const errors: Ref<Record<string, string[]>> = ref({});
 
   const resolvePath = (
     object: Record<string | number, any>,
@@ -53,11 +52,9 @@ export const useModelStore = defineStore('model', () => {
     model.value = fresh;
   };
 
-  const setErrors = (fresh: any) => {
-    errors.value = fresh;
-  };
-
   const isPopulated = (path: string): boolean => readPath(path) !== undefined;
+
+  // field specific
 
   const updateVerse = (path: string, verse: string) => {
     const scripture = getField(path, {}) as Scripture;
@@ -71,6 +68,18 @@ export const useModelStore = defineStore('model', () => {
     setField(path, scripture);
   };
 
+  // errors
+
+  const errors: Ref<Record<string, string[]>> = ref({});
+
+  const setErrors = (fresh: any) => {
+    errors.value = fresh;
+  };
+
+  const clearErrors = () => {
+    errors.value = <Record<string, string[]>>{};
+  };
+
   return {
     model,
     getField,
@@ -80,8 +89,9 @@ export const useModelStore = defineStore('model', () => {
     addListItem,
     removeListItem,
     setModel,
-    setErrors,
     isPopulated,
     errors,
+    setErrors,
+    clearErrors,
   };
 });

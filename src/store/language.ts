@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { LanguageSpecification } from '../interfaces';
+import { LanguageSpecification } from 'App/Models/Interfaces';
 
 // this will be imported from the StoryCMS config
 // hardcoding it for the playground
@@ -35,7 +35,7 @@ export const useLanguageStore = defineStore('language', () => {
     locale.value = found.locale;
   };
 
-  const isRtl = computed(() => (languageDirection.value == 'rtl' ? true : false));
+  const isRtl = computed(() => (languageDirection.value === 'rtl' ? true : false));
 
   return {
     languages,

@@ -1,13 +1,13 @@
 <template>
   <Story title="Page Index" group="pages">
     <Variant title="With model" :setup-app="loadData">
-      <PageIndex />
+      <Index :user="{}" :pages="[]" />
     </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
-import PageIndex from './PageIndex.vue';
+import Index from './Index.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { usePagesStore } from '@/store';
 
@@ -18,6 +18,7 @@ const loadData: Vue3StorySetupHandler = () => {
 
 const pageItems = [
   {
+    id: 1,
     group: 1,
     title: 'About',
     icon: 'https://res.cloudinary.com/kiekies/image/upload/v1676554928/tmwckmf75hvnpabrifqn.svg',
@@ -26,6 +27,7 @@ const pageItems = [
     isPublished: true,
   },
   {
+    id: 2,
     group: 1,
     title: 'Help',
     icon: 'https://res.cloudinary.com/kiekies/image/upload/v1676554928/tmwckmf75hvnpabrifqn.svg',
@@ -34,10 +36,12 @@ const pageItems = [
     isPublished: false,
   },
   {
+    id: 3,
     group: 5,
     isDivider: true,
   },
   {
+    id: 4,
     group: 2,
     title: 'Feedback',
     icon: 'https://res.cloudinary.com/kiekies/image/upload/v1676554928/tmwckmf75hvnpabrifqn.svg',
@@ -46,6 +50,7 @@ const pageItems = [
     isPublished: true,
   },
   {
+    id: 5,
     group: 6,
     isDivider: true,
   },
