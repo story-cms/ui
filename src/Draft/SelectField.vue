@@ -1,30 +1,35 @@
 <template>
   <div
     :class="{
-      'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
+      'rounded border border-gray-200 bg-white p-8 shadow': !isNested,
+      'mt-4': isNested,
       rtl: language.isRtl,
     }"
   >
     <div class="flex flex-col">
-      <label :for="fieldPath" class="input-label mt-1" :class="{ rtl: language.isRtl }">
+      <label
+        :for="fieldPath"
+        class="input-label mt-1 mr-2"
+        :class="{ rtl: language.isRtl }"
+      >
         {{ field.label }}
       </label>
       <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
       <select
+        name="select"
         :id="fieldPath"
         v-model="selection"
-        name="select"
+        @change="update"
         :disabled="props.isReadOnly"
         class="max-w-min rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         :class="{ 'border-red-500': hasError }"
-        @change="update"
       >
-        <option v-for="item in field.options" :key="item.value" :value="item.value">
-          {{ item.label }}
+        <option v-for="{ value, label } in field.options" :value="value">
+          {{ label }}
         </option>
       </select>
 
-      <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>
+      <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
     </div>
   </div>
 </template>
@@ -57,7 +62,7 @@ model.$subscribe(() => {
   });
 });
 
-const update = () => {
+const update = (event: Event) => {
   model.setField(fieldPath.value, selection.value);
 };
 

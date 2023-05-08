@@ -1,7 +1,8 @@
 <template>
   <div
     :class="{
-      'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
+      'box-shadow-sm rounded border border-gray-200 bg-white p-8': !isNested,
+      'mt-4': isNested,
       rtl: language.isRtl,
     }"
   >
@@ -17,7 +18,7 @@
         :readonly="props.isReadOnly"
         placeholder="John 1 or John 1:3-4"
         autocomplete="given-name"
-        class="input-field"
+        class="input-field text-black"
         :class="{ 'border-error': referenceHasError, 'opacity-50': props.isReadOnly }"
         @input="updateReference"
         @blur="lookup"
@@ -32,7 +33,7 @@
         v-model="verse"
         :readonly="isBusy || props.isReadOnly"
         placeholder="Verse"
-        class="input-field mt-2 h-64"
+        class="input-field mt-2 h-64 text-black"
         :class="{
           'border-error': verseHasError,
           'opacity-50': isBusy || props.isReadOnly,

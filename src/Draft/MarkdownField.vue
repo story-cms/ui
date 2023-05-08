@@ -1,8 +1,8 @@
 <template>
   <div
     :class="{
-      'rounded border border-gray-100 bg-white p-8 shadow-sm': !isNested,
-      'mt-8': field.name == 'extra',
+      'rounded border border-gray-100 bg-white p-8 drop-shadow-sm': !isNested,
+      'mt-4': isNested,
     }"
   >
     <label
@@ -106,4 +106,8 @@ onMounted(() => {
 
 <style>
 @import 'easymde/dist/easymde.min.css';
+
+.editor-toolbar {
+  background-color: white !important;
+}
 </style>

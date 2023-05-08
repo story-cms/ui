@@ -1,0 +1,126 @@
+<template>
+  <div class="px-6 lg:w-2/3">
+    <div class="flex items-center justify-between">
+      <div class="space-x-6">
+        <AddItemButton label="Page" @add="addPage" />
+        <AddItemButton v-if="isShowingPublished" label="Divider" @add="addDivider" />
+      </div>
+      <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
+    </div>
+    <div class="my-8 flex flex-col space-y-8">
+      <div v-for="page in filteredItems" :key="page.id" @drop="onDrop">
+        <PageIndexItem
+          :page="page"
+          @remove-divider="deleteDivider(page.id)"
+          @tap="onTap"
+          @drag-start="fromIndex = items.indexOf(page)"
+          @drag-enter="toIndex = items.indexOf(page)"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { usePagesStore } from '../store';
+import AddItemButton from '../Shared/AddItemButton.vue';
+import PageIndexItem from './PageIndexItem.vue';
+import { Inertia, RequestPayload } from '../doubles';
+import { debounce } from '../Shared/helpers';
+import IndexFilter from './IndexFilter.vue';
+import { TabItem, PageItem } from 'App/Models/Interfaces';
+
+const props = defineProps({
+  user: { type: Object, required: true },
+  pages: {
+    type: Array<PageItem>,
+    required: true,
+  },
+});
+
+const pageStore = usePagesStore();
+pageStore.setItems([...props.pages]);
+const items = ref<PageItem[]>([...props.pages]);
+const fromIndex = ref();
+const toIndex = ref();
+
+// filtering
+const currentTab = ref('Published');
+const tabs = computed(() => {
+  const sansDividers = items.value.filter((item) => item.isDivider !== true);
+  const publishedCount = sansDividers.reduce(
+    (carry, item) => (item.isPublished ? carry + 1 : carry),
+    0,
+  );
+  return [
+    { label: 'Published', count: publishedCount },
+    { label: 'Unpublished', count: sansDividers.length - publishedCount },
+  ] as TabItem[];
+});
+
+const onFilter = (tab: string) => {
+  currentTab.value = tab;
+};
+
+const filteredItems = computed(() => {
+  if (isShowingPublished.value) {
+    return items.value.filter((item) => item.isPublished || item.isDivider);
+  }
+  return items.value.filter((item) => !item.isPublished);
+});
+
+const isShowingPublished = computed(() => currentTab.value === 'Published');
+
+const onTap = (id: number) => {
+  Inertia.visit(`/page/${id}/edit`);
+};
+
+const onDrop = () => {
+  swapListItems(items.value, fromIndex.value, toIndex.value);
+  pageStore.setItems(items.value);
+  fromIndex.value = null;
+  toIndex.value = null;
+};
+
+const swapListItems = (items: any[], fromIndex: number, toIndex: number) => {
+  const element = items[fromIndex];
+  items.splice(fromIndex, 1);
+  items.splice(toIndex, 0, element);
+};
+
+const save = debounce(1000, () => {
+  Inertia.post('/page/sort', getPayload(), {
+    onSuccess: (result) => {
+      console.log('! saved', result.props);
+    },
+    onError: (errors) => {
+      console.log('! error on save', errors);
+    },
+  });
+});
+
+const getPayload = (): RequestPayload => {
+  const payload = {
+    items: items.value,
+  } as unknown;
+
+  return payload as RequestPayload;
+};
+
+pageStore.$subscribe(() => {
+  items.value = [...pageStore.items];
+  save();
+});
+
+const addDivider = () => {
+  pageStore.addDivider();
+};
+
+const deleteDivider = (id: number) => {
+  pageStore.deleteDivider(id);
+};
+
+const addPage = () => {
+  Inertia.visit('/page/create');
+};
+</script>

@@ -1,5 +1,9 @@
 <template>
-  <div class="rounded border border-gray-100 bg-white p-[32px] shadow-sm">
+  <div
+    :class="{
+      'rounded border border-gray-200 bg-white p-8 pt-2 shadow': !field.isRow,
+    }"
+  >
     <div class="relative flex justify-center">
       <button
         v-if="field.label && field.label.trim() !== ''"
@@ -9,13 +13,23 @@
         <span>{{ field.label }}</span>
       </button>
     </div>
-    <div :class="{ 'flex items-center justify-between space-x-4': field.isRow }">
-      <div v-for="(item, index) in fields" :key="index">
+    <div
+      :class="{
+        'flex flex-wrap': field.isRow,
+      }"
+    >
+      <div
+        v-for="(item, index) in fields"
+        :key="index"
+        :class="{
+          'w-[calc(50%_-_16px)] odd:mr-[32px]': field.isRow,
+        }"
+      >
         <component
           :is="widgetFor(index)"
           :field="item"
           :root-path="rootPath"
-          :is-nested="true"
+          :isNested="true"
           :is-read-only="props.isReadOnly"
         />
       </div>
@@ -37,7 +51,7 @@ const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
 
 const widgetFor = (key: number) => {
-  const widget = (field.value.fields as FieldSpec[])[key].widget;
+  const widget = (field.value.fields! as FieldSpec[])[key].widget;
   return widgetField(widget);
 };
 </script>

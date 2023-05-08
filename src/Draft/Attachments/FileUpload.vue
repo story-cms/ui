@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative w-full bg-white p-[36px]"
+    class="relative w-full bg-white p-9"
     :class="{ 'bg-gray-400 bg-opacity-30': isHovering }"
     @dragover.prevent="onDragOver"
     @dragenter="onDragEnter"
@@ -31,7 +31,7 @@
       </svg>
       <div class="flex text-sm font-medium leading-5 text-gray-600">
         <label
-          class="text-al-massira-blue relative cursor-pointer rounded-md bg-white font-medium focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+          class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-700 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
         >
           <span>Upload a file</span>
           <input

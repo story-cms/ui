@@ -52,6 +52,5 @@ const listItems = ref(model.getField(fieldPath.value, []) as any[]);
 model.$subscribe(() => {
   const fresh = model.getField(fieldPath.value, []) as any[];
   listItems.value = fresh;
-  // listItems.value = fresh.filter((item) => Object.keys(item).length !== 0);
 });
 </script>
