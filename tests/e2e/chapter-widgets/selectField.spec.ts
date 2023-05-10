@@ -29,5 +29,30 @@ test.describe('Select Field', () => {
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('combobox', { name: 'City' });
+    await expect(locator).toHaveAttribute('disabled', '');
+  });
+  test('should be able make label and text RTL', async ({ page }) => {
+    await page.getByRole('link', { name: 'RTL' }).click();
+    const locator = page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .locator('div')
+      .filter({ hasText: 'CityChicagoParisTokyo' })
+      .nth(3);
+
+    await expect(locator).not.toHaveClass(/rtl/);
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('button', { name: 'Set RTL' })
+      .click();
+
+    await expect(locator).toHaveClass(/rtl/);
+  });
+  test('should show error message', async ({ page }) => {
+    await page.getByRole('link', { name: 'Error' }).click();
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByText('This field cannot be empty'),
+    ).toBeVisible();
   });
 });
