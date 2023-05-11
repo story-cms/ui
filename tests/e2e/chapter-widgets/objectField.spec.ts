@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { objectSpec, objectModel } from '@/helpers/mocks';
+import {
+  objectSpec,
+  objectModel,
+  listInObjectSpec,
+  listInObjectModel,
+} from '@/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-objectfield-story-vue');
@@ -77,5 +82,31 @@ test.describe('Object Field', () => {
         .frameLocator('[data-test-id="preview-iframe"]')
         .getByText('required validation failed'),
     ).toBeVisible();
+  });
+  test('should list in object @test', async ({ page }) => {
+    await page.getByRole('link', { name: 'List in Object', exact: true }).click();
+    for (const item of listInObjectSpec.fields as any) {
+      if (item.widget === 'string') {
+        await expect(
+          page
+            .frameLocator('[data-test-id="preview-iframe"]')
+            .locator(`input[name='${item.label}']`),
+        ).toHaveValue(listInObjectModel.spread.scriptureReference);
+      }
+
+      if (item.widget === 'list') {
+        for (const listItem of item.fields as any) {
+          if (listItem.widget === 'string') {
+            await page
+              .frameLocator('[data-test-id="preview-iframe"]')
+              .getByRole('listitem')
+              .filter({ hasText: listInObjectModel.spread.notes[0].type })
+              .filter({ has: })
+              .locator(`input[name='${listItem.label}']`)
+              .click();
+          }
+        }
+      }
+    }
   });
 });
