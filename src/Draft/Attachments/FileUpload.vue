@@ -118,7 +118,7 @@ const validateFile = (file: File) => {
 
   if (!allowedExtensions.some((extension) => file.name.endsWith(extension))) {
     throw new ValidationError(
-      `Invalid file! Use an image instead with the extension ${props.extensions}.`,
+      `Only media files with extensions ${props.extensions} accepted.`,
     );
   }
 
