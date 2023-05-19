@@ -71,7 +71,7 @@ const audioModel = {
 const audioModelBlankAudio = {
   name: 'John',
   age: 30,
-  soundtrack: { url: '', length: 0 },
+  soundtrack: { url: null, length: null },
 };
 
 const audioObjectErrors = {

@@ -6,7 +6,7 @@
           field.label
         }}</label>
         <button
-          v-if="url != '' && !props.isReadOnly"
+          v-if="url != null && !props.isReadOnly"
           class="absolute top-2 right-0"
           @click.prevent="deleteImage"
         >
@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="flex items-start pt-2">
-        <audio v-if="url != ''" controls>
+        <audio v-if="url != null" controls>
           <source :src="url" type="audio/mpeg" />
         </audio>
       </div>
@@ -62,8 +62,8 @@ const fieldPath = computed(() => {
   return `${props.rootPath}.${field.value.name}`;
 });
 const emptyAudio = {
-  url: '',
-  length: 0,
+  url: null,
+  length: null,
 };
 
 const model = useModelStore();
@@ -83,7 +83,7 @@ model.$subscribe(() => {
 
 const hasError = computed(() => `bundle.${fieldPath.value}.url` in model.errors);
 const hasDropArea = computed(() => {
-  if (!props.isReadOnly && url.value == '') {
+  if (!props.isReadOnly && url.value == null) {
     return true;
   }
   return false;
