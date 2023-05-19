@@ -67,6 +67,10 @@ export interface Scripture {
   reference: string;
   verse: string;
 }
+export interface Audio {
+  url: string;
+  length: number;
+}
 
 export interface FieldMap {
   [key: string]: FieldSpec;

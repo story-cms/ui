@@ -24,8 +24,8 @@ The chapter configuration is highly inspired by
 Following are the widgets that are currently implemented:
 
 [string](#string), [number](#number), [markdown](#markdown), [image](#image),
-[boolean](#boolean), [select](#select), [object](#object), [panel](#panel), [list](#list),
-[scripture](#scripture)
+[audio](#audio), [boolean](#boolean), [select](#select), [object](#object),
+[panel](#panel), [list](#list), [scripture](#scripture)
 
 ---
 
@@ -151,6 +151,45 @@ Image with file attributes
   description: 'SVG, PNG, JPG, GIF up to 2MB',
   extensions: ['.jpeg', '.jpg'],
   maxSize: 2000000,
+},
+```
+
+## audio
+
+Holds a url to a hosted audio file. Suitable for allowing content editors to upload audio
+files and renders a [AudioField](./Draft/AudioField.story.vue).  
+An audio field has four special keys:
+
+- `uploadPreset` required string specifying the hosting provider upload preset for this
+  file.
+- `description` an optional message that will be displayed on the upload widget. Defaults
+  to WAV, MP3, OGG, AAC, WMA up to 50MB
+- `extensions` an optional list of accepted file extensions. Defaults to '['.wav', '.mp3',
+  '.ogg', '.aac', '.wma']'
+- `maxSize` an optional number in bytes that a file should not exceed. Defaults to
+  50662310
+
+example:
+
+```ts
+{
+  label: 'Soundtrack',
+  name: 'soundtrack',
+  widget: 'audio',
+  uploadPreset: 'mp3_44000hz',
+},
+```
+
+AudioField with file attributes
+
+```ts
+{
+  label: 'Audio file',
+  name: 'soundtrack',
+  widget: 'audio',
+  description: 'WAV, MP3, OGG, AAC, WMA',
+  extensions: ['.wav', '.mp3', '.ogg', '.aac', '.wma'],
+  maxSize: 50000000,
 },
 ```
 
