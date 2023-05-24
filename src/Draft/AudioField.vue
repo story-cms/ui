@@ -1,44 +1,43 @@
 <template>
-  <div class="relative bg-white px-8 py-4" :class="{ rtl: language.isRtl }">
-    <div class="mx-5">
-      <div class="relative">
-        <label class="input-label" :class="{ 'text-error': hasError }">{{
-          field.label
-        }}</label>
-        <button
-          v-if="url != null && !props.isReadOnly"
-          class="absolute top-2 right-0"
-          @click.prevent="deleteImage"
-        >
-          <Icon name="trash" class="h-10 w-10 text-gray-500" />
-        </button>
-      </div>
-      <div
-        v-if="hasDropArea"
-        class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
+  <div
+    class="relative bg-white"
+    :class="{ 'p-8': !isNested, 'mt-4': isNested, rtl: language.isRtl }"
+  >
+    <div class="relative">
+      <label class="input-label" :class="{ 'text-error': hasError }">{{
+        field.label
+      }}</label>
+      <button
+        v-if="url != null && !props.isReadOnly"
+        class="absolute top-2 right-0"
+        @click.prevent="deleteImage"
       >
-        <FileUpload
-          class="w-full"
-          :description="field.description"
-          :extensions="field.extensions"
-          :max-size="field.maxSize"
-          @file="uploadFile"
-        />
-        <p v-if="hasError" class="text-sm text-error">
-          {{ field.label }} cannot be empty
-        </p>
-        <div
-          v-if="uploading"
-          class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
-        >
-          <div class="h-full bg-accent opacity-30" :style="progress"></div>
-        </div>
+        <Icon name="trash" class="h-10 w-10 text-gray-500" />
+      </button>
+    </div>
+    <div
+      v-if="hasDropArea"
+      class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
+    >
+      <FileUpload
+        class="w-full"
+        :description="field.description"
+        :extensions="field.extensions"
+        :max-size="field.maxSize"
+        @file="uploadFile"
+      />
+      <p v-if="hasError" class="text-sm text-error">{{ field.label }} cannot be empty</p>
+      <div
+        v-if="uploading"
+        class="absolute top-0 left-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
+      >
+        <div class="h-full bg-accent opacity-30" :style="progress"></div>
       </div>
-      <div class="flex items-start pt-2">
-        <audio v-if="url != null" controls>
-          <source :src="url" type="audio/mpeg" />
-        </audio>
-      </div>
+    </div>
+    <div class="flex items-start pt-2">
+      <audio v-if="url != null" controls>
+        <source :src="url" type="audio/mpeg" />
+      </audio>
     </div>
   </div>
 </template>
