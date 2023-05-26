@@ -1,7 +1,13 @@
 <template>
   <Story id="status-tag" title="Status Tag" group="chapterwidgets">
-    <Variant title="Tag with title">
-      <StatusTag tag="fritz" />
+    <Variant title="With expected text">
+      <StatusTag tag="New" />
+    </Variant>
+    <Variant title="With unexpected text">
+      <StatusTag tag="Unexpected" />
+    </Variant>
+    <Variant title="Without text">
+      <StatusTag tag="" />
     </Variant>
   </Story>
 </template>

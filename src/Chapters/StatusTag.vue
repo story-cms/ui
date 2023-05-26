@@ -22,9 +22,10 @@ const tagStyle = computed(() => {
 
     case 'Issues':
       return 'bg-red-500/20 text-red-500';
-
-    default:
+    case '':
       return '';
+    default:
+      return 'bg-yellow-500/20 text-yellow-800/100';
   }
 });
 </script>

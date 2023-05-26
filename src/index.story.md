@@ -398,3 +398,63 @@ example:
   widget: 'scripture',
 }
 ```
+
+# Index Configuration
+
+This section outlines how an index for each page [Pages, Chapters etc] will look.
+Following are the widgets that are currently implemented: [Index Card](#IndexCard)
+
+## IndexCard
+
+A widget that displays information about pages or chapters. Multiple of these widgets will
+display on an index page. This can be in gridview or listview With or without an image.
+This also includes tags depending on the scope
+
+- item is of type IndexReadyItem
+- isList is a boolean to determine whether or not the index cards should appear as a list
+  or in a grid
+
+- scope as a string determines how tags appear
+- placeholderImage is the url for an image that should appear on an index card if images
+  are required, but non exists for that item yet
+- chapterName is the name that will appear on the card
+
+```ts
+{
+  item: {
+    type: Object as PropType<IndexReadyItem>,
+    required: true,
+  },
+  isList: {
+    type: Boolean,
+    required: true,
+  },
+  scope: {
+    type: String,
+    required: true,
+  },
+  placeholderImage: {
+    type: String,
+    default: '',
+    required: false,
+  },
+  chapterName: {
+    type: String,
+    required: true,
+  },
+}
+```
+
+### IndexReadyItem
+
+- number is the order number, like chapter 1 or 2 etc.
+- imageUrl is the image for that item
+- title is a string for title
+- tags are the tags that should appear on the card
+
+```ts
+  number: number;
+  imageUrl: string;
+  title: string;
+  tags: string[];
+```
