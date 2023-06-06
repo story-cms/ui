@@ -1,7 +1,7 @@
 import './style.css'; // Import global CSS
 
 import { defineSetupVue3 } from '@histoire/plugin-vue';
-import { pinia, useSecretStore, useWidgetsStore } from './store';
+import { pinia, useSecretStore } from './store';
 
 const secrets = {
   cloudinaryApiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,

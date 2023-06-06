@@ -16,7 +16,8 @@ export default class CloudinaryService implements HostService {
 
   upload = async (
     file: File,
-    onProgress: (percentage: number | undefined) => void,
+    // eslint-disable-next-line no-unused-vars
+    onProgress: (progress: number | undefined) => void,
   ): Promise<AttachmentModel> => {
     if (!this.field?.provider) {
       console.log(`No hosting provider specified for field ${this.field?.name}`);

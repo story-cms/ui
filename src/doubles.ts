@@ -1,3 +1,4 @@
+/* eslint-disable */
 import type { VisitOptions } from '@inertiajs/core';
 
 // from here: https://github.com/inertiajs/inertia/blob/master/packages/vue3/src/useForm.ts

@@ -26,7 +26,6 @@
 <script setup lang="ts">
 import AudioField from './AudioField.vue';
 import PanelField from './PanelField.vue';
-import ObjectField from './ObjectField.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';

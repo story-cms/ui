@@ -44,11 +44,13 @@ const fieldPath = computed(() => {
 const store = useWidgetsStore();
 
 const widgetFor = (key: string) => {
-  const widget = (field.value.fields! as FieldMap)[key].widget;
+  if (field.value.fields === null) throw new Error('No fields defined');
+  const widget = (field.value.fields as FieldMap)[key].widget;
   return store.picker(widget);
 };
 
 const spec = (key: string): FieldSpec => {
-  return (field.value.fields! as FieldMap)[key];
+  if (field.value.fields === null) throw new Error('No fields defined');
+  return (field.value.fields as FieldMap)[key];
 };
 </script>

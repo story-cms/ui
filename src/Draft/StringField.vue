@@ -16,11 +16,11 @@
         :readonly="props.isReadOnly"
         autocomplete="given-name"
         :value="modelValue"
-        @input="update"
         class="input-field"
         :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
+        @input="update"
       />
-      <p class="text-sm text-error" v-if="hasError">{{ errorMessage }}</p>
+      <p v-if="hasError" class="text-sm text-error">{{ errorMessage }}</p>
     </div>
   </div>
 </template>

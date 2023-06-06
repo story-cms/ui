@@ -1,13 +1,13 @@
 <template>
   <Story title="Page Index" group="pages">
     <Variant title="With model" :setup-app="loadData">
-      <Index :user="{}" :pages="[]" />
+      <PageIndex :user="{}" :pages="[]" />
     </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
-import Index from './Index.vue';
+import PageIndex from './PageIndex.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { usePagesStore } from '../store';
 

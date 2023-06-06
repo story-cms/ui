@@ -1,5 +1,5 @@
 <template>
-  <Listbox as="div" v-model="model">
+  <Listbox v-model="model" as="div">
     <div class="relative mt-1 min-w-full">
       <ListboxButton
         class="relative w-32 cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
@@ -21,11 +21,11 @@
           class="absolute z-10 mt-1 max-h-60 w-32 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <ListboxOption
-            as="template"
             v-for="option in options"
             :key="option"
+            v-slot="{ active, value }"
+            as="template"
             :value="option"
-            v-slot="{ active, model }"
             @click="emit('change', option)"
           >
             <li
@@ -35,12 +35,12 @@
               ]"
             >
               <span
-                :class="[model ? 'font-semibold' : 'font-normal', 'block truncate']"
+                :class="[value ? 'font-semibold' : 'font-normal', 'block truncate']"
                 >{{ option }}</span
               >
 
               <span
-                v-if="model"
+                v-if="value"
                 :class="[
                   active ? 'text-white' : 'text-primary/60',
                   'absolute inset-y-0 right-0 flex items-center pr-4',

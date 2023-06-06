@@ -21,7 +21,7 @@
         class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       >
         <div class="py-1">
-          <MenuItem v-slot="{ active }" v-for="item in options" :key="item">
+          <MenuItem v-for="item in options" :key="item" v-slot="{ active }">
             <button
               type="button"
               :class="[

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 declare class EasyMDE {
   constructor(options?: EasyMDE.Options);
 

@@ -29,7 +29,7 @@
           :is="widgetFor(index)"
           :field="item"
           :root-path="rootPath"
-          :isNested="true"
+          :is-nested="true"
           :is-read-only="props.isReadOnly"
         />
       </div>
@@ -53,7 +53,8 @@ const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
 
 const widgetFor = (key: number) => {
-  const widget = (field.value.fields! as FieldSpec[])[key].widget;
+  if (field.value.fields === null) throw new Error('No fields defined');
+  const widget = (field.value.fields as FieldSpec[])[key].widget;
   return store.picker(widget);
 };
 </script>

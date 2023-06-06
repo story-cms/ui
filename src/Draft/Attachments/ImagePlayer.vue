@@ -4,6 +4,9 @@
 
 <script setup lang="ts">
 defineProps({
-  url: String,
+  url: {
+    type: String,
+    required: true,
+  },
 });
 </script>

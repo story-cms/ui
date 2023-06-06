@@ -115,4 +115,4 @@ export interface Part {
   description: string;
 }
 
-export type WidgetPicker = (widget: string) => any;
+export type WidgetPicker = (widget: string) => any; // eslint-disable-line
