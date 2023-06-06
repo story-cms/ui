@@ -95,18 +95,69 @@ test.describe('Object Field', () => {
       }
 
       if (item.widget === 'list') {
-        for (const listItem of item.fields as any) {
-          if (listItem.widget === 'string') {
-            await page
-              .frameLocator('[data-test-id="preview-iframe"]')
-              .getByRole('listitem')
-              .filter({ hasText: listInObjectModel.spread.notes[0].type })
-              .filter({ has: })
-              .locator(`input[name='${listItem.label}']`)
-              .click();
+        const listLocator = page
+          .frameLocator('[data-test-id="preview-iframe"]')
+          .getByRole('listitem');
+
+        const count = await listLocator.count();
+        expect(count).toEqual(listInObjectModel.spread.notes.length);
+
+        for (const listItem of await listLocator.all()) {
+          for (const el of await listItem.all()) {
+            for (const field of listInObjectSpec.fields as any)
+              if (field.widget === 'list') {
+                const bundle = field.name;
+                for (const item of field.fields) {
+                  if (item.widget === 'string') {
+                    await el.locator(`input[name='${item.label}']`).click();
+
+                    console.log('Field Item: ', listInObjectModel.spread.notes.length);
+
+                    console.log(bundle);
+                  }
+                }
+              }
           }
         }
+        // for (let i = 0; i < count; ++i) {
+        //   console.log(listLocator.nth(i));
+        // }
+
+        // for (const listItem of item.fields as any) {
+        //   if (listItem.widget === 'string') {
+        //     await expect(
+        //       listLocator.filter({
+        //         hasText: '',
+        //       }),
+        //     ).toBeVisible();
+
+        //     // list.filter({ has: page.getByRole('textbox') }).click();
+        //     // await page
+        //     //   .frameLocator('[data-test-id="preview-iframe"]')
+        //     //   .getByRole('listitem')
+        //     // .filter({
+        //     //   hasText:
+        //     //     'Frame typeFrame content|xxxxxxxxxx paragraph **1**paragraph **2**paragraph **3**',
+        //     // })
+        //     // .locator(`input[name='${listItem.label}']`)
+        //     // .click();
+        //   }
+        // }
+        // await page.pause();
+
+        // for (const listItem of item.fields as any) {
+        //   if (listItem.widget === 'string') {
+        //     console.log(listInObjectModel.spread.notes[0].type);
+        //     await page
+        //       .frameLocator('[data-test-id="preview-iframe"]')
+        //       .getByRole('listitem')
+        //       .filter({ hasText: listInObjectModel.spread.notes[0].type })
+        //       .locator(`input[name='${listItem.label}']`)
+        //       .click();
+        //   }
+        // }
       }
     }
+    await page.pause();
   });
 });
