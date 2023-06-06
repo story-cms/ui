@@ -28,7 +28,7 @@ import PageIndexItem from './PageIndexItem.vue';
 import { Inertia, RequestPayload } from '../doubles';
 import { debounce } from '../Shared/helpers';
 import IndexFilter from './IndexFilter.vue';
-import { TabItem, PageItem } from 'App/Models/Interfaces';
+import { TabItem, PageItem } from '../Shared/interfaces';
 
 const props = defineProps({
   user: { type: Object, required: true },

@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import Index from './Index.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { usePagesStore } from '@/store';
+import { usePagesStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = () => {
   const store = usePagesStore();

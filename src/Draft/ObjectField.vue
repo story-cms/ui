@@ -23,8 +23,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { commonProps } from '../Shared/helpers';
-import type { FieldSpec } from 'App/Models/Interfaces';
-import { widgetField } from './widget-fields';
+import type { FieldSpec } from '../Shared/interfaces';
+import { useWidgetsStore } from '../store';
 
 interface FieldMap {
   [key: string]: FieldSpec;
@@ -41,9 +41,11 @@ const fieldPath = computed(() => {
   return `${props.rootPath}.${field.value.name}`;
 });
 
+const store = useWidgetsStore();
+
 const widgetFor = (key: string) => {
   const widget = (field.value.fields! as FieldMap)[key].widget;
-  return widgetField(widget);
+  return store.picker(widget);
 };
 
 const spec = (key: string): FieldSpec => {

@@ -14,8 +14,7 @@
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "App/Models/*": ["src/*"]
+      "@/*": ["src/*"]
     },
     "types": ["vite/client"],
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }]

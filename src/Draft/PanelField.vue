@@ -40,18 +40,20 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { commonProps } from '../Shared/helpers';
-import { FieldSpec } from 'App/Models/Interfaces';
-import { widgetField } from './widget-fields';
+import { FieldSpec } from '../Shared/interfaces';
+import { useWidgetsStore } from '../store';
 
 const props = defineProps({
   ...commonProps,
 });
+
+const store = useWidgetsStore();
 
 const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
 
 const widgetFor = (key: number) => {
   const widget = (field.value.fields! as FieldSpec[])[key].widget;
-  return widgetField(widget);
+  return store.picker(widget);
 };
 </script>

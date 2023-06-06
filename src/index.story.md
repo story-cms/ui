@@ -32,12 +32,12 @@ Following are the widgets that are currently implemented:
 ## string
 
 Suitable for short, single line plain text strings. It has only the common properties and
-renders a [StringField](./Draft/StringField.story.vue)
+renders a [StringField](#)
 
 ## number
 
-Suitable for whole or decimal numbers and renders a
-[NumberField](./Draft/NumberField.story.vue) It has one optional special property:
+Suitable for whole or decimal numbers and renders a [NumberField](#) It has one optional
+special property:
 
 - `default` accepts string or number value; defaults to empty string
 
@@ -55,8 +55,8 @@ Example:
 ## markdown
 
 Suitable for longer, multi-line rich text which allows markup in markdown format and
-renders a [MarkdownField](./Draft/MarkdownField.story.vue). On top of the common widget
-properties, a markdown field has these optional extra properties:
+renders a [MarkdownField](#). On top of the common widget properties, a markdown field has
+these optional extra properties:
 
 - `minimal` a boolean value which is `false` by default. `minimal` sets the widget to the
   minimal height possible.
@@ -120,7 +120,7 @@ the component to the `toolbar` Example:
 ## image
 
 Holds a url to a hosted image file. Suitable for allowing content editors to upload image
-files and renders a [ImageField](./Draft/ImageField.story.vue).  
+files and renders a [ImageField](#).  
 An image field has four special keys:
 
 - `uploadPreset` required string specifying the Cloudinary upload preset for this image.
@@ -157,7 +157,7 @@ Image with file attributes
 ## audio
 
 Holds a url to a hosted audio file. Suitable for allowing content editors to upload audio
-files and renders a [AudioField](./Draft/AudioField.story.vue).  
+files and renders a [AudioField](#).  
 An audio field has four special keys:
 
 - `uploadPreset` required string specifying the hosting provider upload preset for this
@@ -195,9 +195,9 @@ AudioField with file attributes
 
 ## boolean
 
-A boolean toggle switch that renders a [BooleanField](./Draft/BooleanField.story.vue). Has
-one required special key called `default` which has to have a value of true or false and
-these optional extra properties:
+A boolean toggle switch that renders a [BooleanField](#). Has one required special key
+called `default` which has to have a value of true or false and these optional extra
+properties:
 
 - `tintColor` a string value that accepts a Tailwind color. Defaults to `indigo-600`
 - `labelOrder` a string value that accepts `start` or `end`. Defaults to `end`
@@ -229,9 +229,9 @@ module.exports = {
 
 ## select
 
-A dropdown menu that renders a [SelectField](./Draft/SelectField.story.vue). Has two
-special required keys called `options` and `default` which expects an array of objects
-with `label` and `value` keys and a string value respectively.
+A dropdown menu that renders a [SelectField](#). Has two special required keys called
+`options` and `default` which expects an array of objects with `label` and `value` keys
+and a string value respectively.
 
 example:
 
@@ -345,8 +345,8 @@ For horizontal layouts
 
 ## list
 
-A compound widget that renders a [ListField](./Draft/ListField.story.vue). A list is
-suitable for a collection of sets of other fields. The list has these specialised keys:
+A compound widget that renders a [ListField](#). A list is suitable for a collection of
+sets of other fields. The list has these specialised keys:
 
 - `fields`: required, a list with primitive fields that define a set
 - `index`: optional, a string that specifies which field in the set should be used as an
@@ -385,9 +385,9 @@ example:
 
 ## scripture
 
-A compound widget that renders a [ScriptureField](./Draft/ScriptureField.story.vue). It
-has a Bible reference field that can take a scripture reference and a markdown field for
-the scripture text. It has no special keys.
+A compound widget that renders a [ScriptureField](#). It has a Bible reference field that
+can take a scripture reference and a markdown field for the scripture text. It has no
+special keys.
 
 example:
 

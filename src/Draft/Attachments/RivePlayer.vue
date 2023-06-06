@@ -11,12 +11,12 @@ import { Rive } from '@rive-app/canvas';
 export default defineComponent({
   name: 'Rive',
   props: {
-    src: String,
+    url: String,
   },
   mounted() {
     new Rive({
-      canvas: this.$refs.canvas,
-      src: this.$props.src,
+      canvas: this.$refs.canvas as HTMLCanvasElement,
+      src: this.$props.url,
       autoplay: true,
     });
   },

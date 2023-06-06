@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { commonProps } from '../Shared/helpers';
-import type { FieldSpec } from 'App/Models/Interfaces';
+import type { FieldSpec } from '../Shared/interfaces';
 import FlatList from './List/FlatList.vue';
 import FoldableList from './List/FoldableList.vue';
 import { useModelStore } from '../store';
