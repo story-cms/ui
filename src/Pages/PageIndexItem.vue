@@ -4,7 +4,7 @@
       <Icon name="drag" class="h-5 w-auto text-gray-400" />
     </div>
     <div
-      class="col-span-11 rounded-lg border py-4 px-7 shadow"
+      class="col-span-11 rounded-lg border px-7 py-4 shadow"
       :class="{ 'py-1': props.isDivider }"
     >
       <div v-if="!props.isDivider" class="flex justify-between space-x-3">
@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/Shared/Icon.vue';
+import Icon from '../Shared/Icon.vue';
 
 const props = defineProps({
   title: {

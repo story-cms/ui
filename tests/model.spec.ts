@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { setActivePinia, createPinia } from 'pinia';
 
-import { useModelStore } from '@/store/model';
+import { useModelStore } from '../src/store/model';
 
 const fixture = {
   name: 'Jesse',

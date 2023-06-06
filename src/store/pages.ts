@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { PageItem } from 'App/Models/Interfaces';
+import type { PageItem } from '../Shared/interfaces';
 
 export const usePagesStore = defineStore('pages', () => {
   const items = ref<PageItem[]>([]);

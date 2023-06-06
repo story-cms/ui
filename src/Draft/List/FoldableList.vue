@@ -50,7 +50,7 @@
       <div v-if="isExpanded(index)" class="relative mt-8 ml-8">
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
-            :is="widgetField(item.widget)"
+            :is="widgets.picker(item.widget)"
             :class="{
               'rounded border border-gray-200  bg-white drop-shadow-sm':
                 item.widget != 'list',
@@ -74,10 +74,9 @@
 
 <script setup lang="ts">
 import { ref, computed, PropType } from 'vue';
-import { widgetField } from '../widget-fields';
-import type { FieldSpec } from 'App/Models/Interfaces';
+import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
-import { useModelStore } from '../../store';
+import { useModelStore, useWidgetsStore } from '../../store';
 import AddItemButton from '../../Shared/AddItemButton.vue';
 
 const props = defineProps({
@@ -115,6 +114,7 @@ const toggle = (index: number) => {
 };
 
 const model = useModelStore();
+const widgets = useWidgetsStore();
 
 const sectionTitle = (index: number): string => {
   const peek = title(index);

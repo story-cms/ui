@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { LanguageSpecification } from 'App/Models/Interfaces';
+import { LanguageSpecification } from '../Shared/interfaces';
 
 // this will be imported from the StoryCMS config
 // hardcoding it for the playground

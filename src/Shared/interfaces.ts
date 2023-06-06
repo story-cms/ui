@@ -67,10 +67,6 @@ export interface Scripture {
   reference: string;
   verse: string;
 }
-export interface Audio {
-  url: string;
-  length: number;
-}
 
 export interface FieldMap {
   [key: string]: FieldSpec;
@@ -103,3 +99,20 @@ export interface PageItem {
   isPublished?: boolean;
   isDivider?: boolean;
 }
+
+export interface Story {
+  id: number;
+  name: string;
+  fields: Array<object>;
+  chapterLimit: number;
+  parts?: Array<object>;
+}
+
+export interface Part {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+export type WidgetPicker = (widget: string) => any; // eslint-disable-line

@@ -12,7 +12,7 @@
         </div>
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
-            :is="widgetField(item.widget)"
+            :is="store.picker(item.widget)"
             :field="item"
             :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
@@ -28,10 +28,10 @@
 
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
-import { widgetField } from '../widget-fields';
-import type { FieldSpec } from 'App/Models/Interfaces';
+import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
 import AddItemButton from '../../Shared/AddItemButton.vue';
+import { useWidgetsStore } from '../../store';
 
 const props = defineProps({
   field: {
@@ -51,4 +51,5 @@ const props = defineProps({
 const emit = defineEmits(['addSet', 'removeSet']);
 const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
+const store = useWidgetsStore();
 </script>

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { parseReference } from '@/Shared/helpers';
+import { parseReference } from '../src/Shared/helpers';
 
 describe('Parse exactly spelled and punctuated references', () => {
   test('Identify junk', () => {

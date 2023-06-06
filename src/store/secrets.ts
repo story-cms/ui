@@ -1,14 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-// this will be different in a VITA instance
-// ------------------------------------------
 const start = {
-  cloudinaryApiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,
-  cloudinarySecret: import.meta.env.VITE_CLOUDINARY_SECRET,
-  bibleApiKey: import.meta.env.VITE_BIBLE_API_KEY,
+  cloudinaryApiKey: '',
+  cloudinarySecret: '',
+  bibleApiKey: '',
 };
-// ------------------------------------------
 
 export const useSecretStore = defineStore('secrets', () => {
   const cloudinaryApiKey = ref(start.cloudinaryApiKey);

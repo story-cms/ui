@@ -44,7 +44,9 @@
         </label>
         <p class="pl-1">or drag and drop</p>
       </div>
-      <p class="text-xs font-normal leading-4 text-gray-500">{{ props.description }}</p>
+      <p class="text-xs font-normal leading-4 text-gray-500">
+        {{ props.description }}
+      </p>
     </div>
   </div>
 </template>
@@ -72,10 +74,11 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['file']);
+
 const accept = computed(() => {
   return props.extensions.join(',');
 });
-const emit = defineEmits(['file']);
 
 const isHovering = ref(false);
 const feedback = ref('');
