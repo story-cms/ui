@@ -1,5 +1,5 @@
 <template>
-  <Story id="index-card" title="Index Card" group="chapterwidgets">
+  <Story id="index-card" title="Index Card" group="chapter">
     <Variant title="Without Image">
       <IndexCard
         :item="itemNoImage"
