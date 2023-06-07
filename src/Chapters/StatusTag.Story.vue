@@ -1,5 +1,5 @@
 <template>
-  <Story id="status-tag" title="Status Tag" group="chapterwidgets">
+  <Story id="status-tag" title="Status Tag" group="chapter">
     <Variant title="With expected text">
       <StatusTag tag="New" />
     </Variant>
