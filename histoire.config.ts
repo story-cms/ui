@@ -22,6 +22,10 @@ export default defineConfig({
         id: 'chapterwidgets',
         title: 'Chapter Index',
       },
+      {
+        id: 'shared',
+        title: 'Shared Widgets',
+      },
     ],
   },
   theme: {
