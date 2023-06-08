@@ -5,9 +5,11 @@
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue';
+
 defineProps({
   url: {
-    type: String,
+    type: null as unknown as PropType<string | null>,
     required: true,
   },
 });

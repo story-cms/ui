@@ -1,7 +1,7 @@
 <template>
   <div
-    class="relative w-full bg-white p-9"
-    :class="{ 'bg-gray-400 bg-opacity-30': isHovering }"
+    class="relative w-full p-9"
+    :class="dropStyle"
     @dragover.prevent="onDragOver"
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
@@ -83,7 +83,14 @@ const accept = computed(() => {
 const isHovering = ref(false);
 const feedback = ref('');
 
-const onDragEnter = () => (isHovering.value = true);
+const dropStyle = computed(() => {
+  return { 'bg-gray-200': isHovering.value, 'bg-white': !isHovering.value };
+});
+
+const onDragEnter = () => {
+  isHovering.value = true;
+  console.log('! drag enter', dropStyle.value);
+};
 const onDragLeave = () => (isHovering.value = false);
 const onDragOver = () => (isHovering.value = true);
 

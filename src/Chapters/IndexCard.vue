@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
 import StatusTag from './StatusTag.vue';
-import { IndexReadyItem } from 'App/Models/Interfaces';
+import { IndexReadyItem } from '../Shared/interfaces';
 import { padZero } from '../Shared/helpers';
 
 const props = defineProps({

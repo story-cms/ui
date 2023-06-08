@@ -31,7 +31,6 @@
         class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
       >
         <FileUpload
-          class="w-full"
           :description="defaults.description"
           :extensions="defaults.extensions"
           :max-size="defaults.maxSize"
@@ -64,7 +63,7 @@ const props = defineProps({
   ...commonProps,
 
   url: {
-    type: String,
+    type: null as unknown as PropType<string | null>,
     required: true,
   },
 
