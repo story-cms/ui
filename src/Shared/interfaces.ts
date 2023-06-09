@@ -116,3 +116,10 @@ export interface Part {
 }
 
 export type WidgetPicker = (widget: string) => any; // eslint-disable-line
+
+export interface Meta {
+  name: string;
+  logo: string;
+  storyType: string;
+  chapterType: string;
+}

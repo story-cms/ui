@@ -20,6 +20,7 @@ import ContextMenu from './Shared/ContextMenu.vue';
 import DropDown from './Shared/DropDown.vue';
 import AddItemButton from './Shared/AddItemButton.vue';
 import Icon from './Shared/Icon.vue';
+import PublicLayout from './Shared/PublicLayout.vue';
 
 export * from './store/index';
 export * from './Shared/helpers';
@@ -49,4 +50,5 @@ export {
   IndexFilter,
   AddItemButton,
   Icon,
+  PublicLayout,
 };

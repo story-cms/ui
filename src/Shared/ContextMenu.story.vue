@@ -1,10 +1,10 @@
 <template>
   <Story title="Context Menu" group="shared">
     <Variant title="With options">
-      <ContextMenu :options="options" />
+      <ContextMenu :options="options" anchor="Episode" />
     </Variant>
     <Variant title="Without options">
-      <ContextMenu :options="noOptions" />
+      <ContextMenu :options="noOptions" anchor="Book" />
     </Variant>
   </Story>
 </template>
