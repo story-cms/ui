@@ -17,12 +17,7 @@
     </div>
 
     <div v-if="!!url" class="flex items-start pt-2">
-      <!-- 
-        render slot 
-        we can sadly not use a slot here
-        see: https://github.com/vuejs/core/issues/4344
-      -->
-      <component :is="player" :url="url"></component>
+      <slot></slot>
     </div>
 
     <div v-else>
@@ -31,7 +26,6 @@
         class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
       >
         <FileUpload
-          class="w-full"
           :description="defaults.description"
           :extensions="defaults.extensions"
           :max-size="defaults.maxSize"
@@ -64,12 +58,7 @@ const props = defineProps({
   ...commonProps,
 
   url: {
-    type: String,
-    required: true,
-  },
-
-  player: {
-    type: Object,
+    type: null as unknown as PropType<string | null>,
     required: true,
   },
 

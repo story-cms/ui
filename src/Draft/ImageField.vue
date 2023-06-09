@@ -4,10 +4,10 @@
     :url="modelValue"
     :has-error="hasError"
     :host-service="host"
-    :player="ImagePlayer"
     @delete="onDelete"
     @attached="onAttached"
   >
+    <ImagePlayer :url="modelValue" />
   </AttachmentField>
 </template>
 

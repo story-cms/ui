@@ -27,7 +27,7 @@ import AddItemButton from '../Shared/AddItemButton.vue';
 import PageIndexItem from './PageIndexItem.vue';
 import { Inertia, RequestPayload } from '../doubles';
 import { debounce } from '../Shared/helpers';
-import IndexFilter from './IndexFilter.vue';
+import IndexFilter from '../Shared/IndexFilter.vue';
 import { TabItem, PageItem } from '../Shared/interfaces';
 
 const props = defineProps({

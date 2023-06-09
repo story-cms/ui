@@ -1,3 +1,6 @@
+import IndexCard from './Chapters/IndexCard.vue';
+import StatusTag from './Chapters/StatusTag.vue';
+
 import AnimationField from './Draft/AnimationField.vue';
 import AudioField from './Draft/AudioField.vue';
 import ImageField from './Draft/ImageField.vue';
@@ -12,16 +15,21 @@ import ScriptureField from './Draft/ScriptureField.vue';
 import SelectField from './Draft/SelectField.vue';
 import StringField from './Draft/StringField.vue';
 
+import IndexFilter from './Shared/IndexFilter.vue'; // TODO: rename to IndexFilter
 import AppLayout from './Shared/AppLayout.vue';
 import ContextMenu from './Shared/ContextMenu.vue';
 import DropDown from './Shared/DropDown.vue';
-import IndexFilter from './Shared/IndexFilter.vue';
+import AddItemButton from './Shared/AddItemButton.vue';
+import Icon from './Shared/Icon.vue';
 
 export * from './store/index';
 export * from './Shared/helpers';
 export * from './Shared/interfaces';
 
 export {
+  // chapters
+  IndexCard,
+  StatusTag,
   // drafts
   AnimationField,
   AudioField,
@@ -41,4 +49,6 @@ export {
   ContextMenu,
   DropDown,
   IndexFilter,
+  AddItemButton,
+  Icon,
 };

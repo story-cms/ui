@@ -21,12 +21,12 @@
         />
       </svg>
     </span>
-    <span class="ml-2">{{ props.label }}</span>
+    <span class="ml-2">{{ label }}</span>
   </button>
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   label: {
     type: String,
     required: true,

@@ -19,7 +19,7 @@ export default defineConfig({
         title: 'Pages',
       },
       {
-        id: 'chapterwidgets',
+        id: 'chapter',
         title: 'Chapter Index',
       },
       {
