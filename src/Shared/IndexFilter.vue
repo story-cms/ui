@@ -1,19 +1,6 @@
 <template>
   <div>
-    <div class="sm:hidden">
-      <label for="tabs" class="sr-only">Select a tab</label>
-      <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-      <select
-        id="tabs"
-        name="tabs"
-        class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-      >
-        <option v-for="tab in tabs" :key="tab.label" :selected="tab.current">
-          {{ tab.label }}
-        </option>
-      </select>
-    </div>
-    <div class="hidden sm:block">
+    <div class="sm:block">
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
           <button
@@ -35,7 +22,7 @@
                 tab.current
                   ? 'bg-indigo-100 text-indigo-600'
                   : 'bg-gray-100 text-gray-900',
-                'ml-3 hidden rounded-full px-2.5 py-0.5 text-xs font-medium md:inline-block',
+                'ml-3 rounded-full px-2.5 py-0.5 text-xs font-medium md:inline-block',
               ]"
               >{{ tab.count }}</span
             >

@@ -15,8 +15,7 @@ import ScriptureField from './Draft/ScriptureField.vue';
 import SelectField from './Draft/SelectField.vue';
 import StringField from './Draft/StringField.vue';
 
-import IndexFilter from './Shared/IndexFilter.vue'; // TODO: rename to IndexFilter
-import AppLayout from './Shared/AppLayout.vue';
+import IndexFilter from './Shared/IndexFilter.vue';
 import ContextMenu from './Shared/ContextMenu.vue';
 import DropDown from './Shared/DropDown.vue';
 import AddItemButton from './Shared/AddItemButton.vue';
@@ -45,7 +44,6 @@ export {
   SelectField,
   StringField,
   // shared
-  AppLayout,
   ContextMenu,
   DropDown,
   IndexFilter,
