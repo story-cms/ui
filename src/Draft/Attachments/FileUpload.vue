@@ -89,7 +89,6 @@ const dropStyle = computed(() => {
 
 const onDragEnter = () => {
   isHovering.value = true;
-  console.log('! drag enter', dropStyle.value);
 };
 const onDragLeave = () => (isHovering.value = false);
 const onDragOver = () => (isHovering.value = true);
