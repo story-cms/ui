@@ -18,7 +18,11 @@
           'opacity-50': props.isReadOnly,
         }"
       >
-        <textarea ref="textArea" :readonly="props.isReadOnly" />
+        <textarea
+          ref="textArea"
+          data-testid="markdown-field"
+          :readonly="props.isReadOnly"
+        />
       </div>
       <p v-if="hasError" class="mt-[8px] text-sm text-error">
         This field cannot be empty

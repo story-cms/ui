@@ -106,14 +106,14 @@ test.describe('Object Field', () => {
           for (const el of await listItem.all()) {
             for (const field of listInObjectSpec.fields as any)
               if (field.widget === 'list') {
-                const bundle = field.name;
                 for (const item of field.fields) {
                   if (item.widget === 'string') {
-                    await el.locator(`input[name='${item.label}']`).click();
-
-                    console.log('Field Item: ', listInObjectModel.spread.notes.length);
-
-                    console.log(bundle);
+                    await expect(el.locator(`input[name='${item.label}']`)).toHaveValue(
+                      listInObjectModel.spread.notes[0].type,
+                    );
+                  }
+                  if (item.widget === 'markdown') {
+                    await el.getByTestId('markdown-field').fill('sdasdsads');
                   }
                 }
               }
