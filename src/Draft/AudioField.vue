@@ -4,10 +4,10 @@
     :url="url"
     :has-error="hasError"
     :host-service="host"
-    :player="AudioPlayer"
     @delete="onDelete"
     @attached="onAttached"
   >
+    <AudioPlayer :url="url" />
   </AttachmentField>
 </template>
 

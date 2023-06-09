@@ -17,12 +17,7 @@
     </div>
 
     <div v-if="!!url" class="flex items-start pt-2">
-      <!-- 
-        render slot 
-        we can sadly not use a slot here
-        see: https://github.com/vuejs/core/issues/4344
-      -->
-      <component :is="player" :url="url"></component>
+      <slot></slot>
     </div>
 
     <div v-else>
@@ -64,11 +59,6 @@ const props = defineProps({
 
   url: {
     type: null as unknown as PropType<string | null>,
-    required: true,
-  },
-
-  player: {
-    type: Object,
     required: true,
   },
 
