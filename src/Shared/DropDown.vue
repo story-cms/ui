@@ -2,6 +2,7 @@
   <Listbox v-model="model" as="div">
     <div class="relative mt-1 min-w-full">
       <ListboxButton
+        :disabled="isReadOnly"
         class="relative w-32 cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
       >
         <span class="block truncate">{{ model }}</span>

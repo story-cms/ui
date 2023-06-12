@@ -1,13 +1,13 @@
 <template>
   <Story title="Drop Down" group="shared">
     <Variant title="With options">
+      <DropDown :options="options" modelValue="Add" />
+    </Variant>
+    <Variant title="With options no value">
       <DropDown :options="options" />
     </Variant>
-    <Variant title="With value">
-      <DropDown :options="options" :isReadOnly="isReadOnly" modelValue="Add" />
-    </Variant>
     <Variant title="Read only">
-      <DropDown :options="options" :isReadOnly="isReadOnly" />
+      <DropDown :options="options" :isReadOnly="isReadOnly" modelValue="Add" />
     </Variant>
   </Story>
 </template>
