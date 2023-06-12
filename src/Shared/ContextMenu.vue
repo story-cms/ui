@@ -2,10 +2,16 @@
   <Menu as="div" class="relative inline-block text-left">
     <div>
       <MenuButton
+        :disabled="!hasOptions"
         class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
       >
         {{ anchor }}
-        <Icon class="h-5 w-5 text-gray-400" aria-hidden="true" name="chevron-down" />
+        <Icon
+          v-if="hasOptions"
+          class="h-5 w-5 text-gray-400"
+          aria-hidden="true"
+          name="chevron-down"
+        />
       </MenuButton>
     </div>
 
@@ -40,12 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { PropType, computed } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import Icon from '../Shared/Icon.vue';
 
-// const props = defineProps({
-defineProps({
+const props = defineProps({
   options: {
     type: Array as PropType<string[]>,
     required: true,
@@ -57,4 +62,5 @@ defineProps({
 });
 
 const emit = defineEmits(['select']);
+const hasOptions = computed(() => props.options.length > 0);
 </script>
