@@ -61,11 +61,14 @@ these optional extra properties:
 - `minimal` a boolean value which is `false` by default. `minimal` sets the widget to the
   minimal height possible.
 - `toolbar` accepts an array of strings
-  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
+  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo', 'superscript', 'nospace']`
   representing the formatting buttons to display.
 
 A custom toolbar button can be used by defining it in `customEditorButtonComponent.ts` and
 adding its name in the `toolbar` property array.
+
+Presently the above array of strings that the `toolbar` accepts has 2 custom buttons,
+namely `superscript` and `nospace`.
 
 Minimal and toolbar example:
 
