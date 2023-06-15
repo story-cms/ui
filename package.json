@@ -40,6 +40,7 @@
     "axios": "^1.4.0",
     "easymde": "^2.18.0",
     "pinia": "^2.0.27",
+    "luxon": "^3.3.0",
     "vue": "^3.2.0"
   },
   "dependencies": {
@@ -48,12 +49,14 @@
     "@rive-app/canvas": "^1.1.5",
     "axios": "^1.4.0",
     "easymde": "^2.18.0",
+    "luxon": "^3.3.0",
     "pinia": "^2.0.27"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.16.1",
     "@onesheep/prettier-config": "^0.0.12",
     "@tailwindcss/forms": "^0.5.3",
+    "@types/luxon": "^3.3.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "@vitejs/plugin-vue": "^4.2.3",

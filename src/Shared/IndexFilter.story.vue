@@ -1,19 +1,19 @@
 <template>
   <Story title="Index Filter" group="shared">
     <Variant title="With tabs">
-      <IndexFilter :tabs="tabItems" :currentTab="currentTab" @change="changeTab" />
+      <IndexFilter :tabs="tabItems" :current-tab="currentTab" @change="changeTab" />
       <div class="text-white">{{ currentTab }}</div>
     </Variant>
     <Variant title="No tabs">
-      <IndexFilter :tabs="noItems" :currentTab="currentTab" @change="changeTab" />
+      <IndexFilter :tabs="noItems" :current-tab="currentTab" @change="changeTab" />
     </Variant>
     <Variant title="Light mode">
       <div class="bg-white">
-        <IndexFilter :tabs="tabItems" :currentTab="currentTab" @change="changeTab" />
+        <IndexFilter :tabs="tabItems" :current-tab="currentTab" @change="changeTab" />
       </div>
     </Variant>
     <Variant title="Demo">
-      <IndexFilter :tabs="tabItems" :currentTab="currentTab" @change="changeTab" />
+      <IndexFilter :tabs="tabItems" :current-tab="currentTab" @change="changeTab" />
       <div v-for="page in filteredItems" :key="page.id" class="bg-white">
         <PageIndexItem :page="page" />
       </div>

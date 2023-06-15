@@ -25,7 +25,7 @@
       </div>
 
       <div v-if="tags.length > 0" class="flex items-center space-x-4">
-        <StatusTag v-for="tag in tags" :tag="tag" :key="tag" />
+        <StatusTag v-for="tag in tags" :key="tag" :tag="tag" />
       </div>
     </div>
   </button>

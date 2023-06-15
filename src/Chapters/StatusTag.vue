@@ -8,7 +8,10 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  tag: String,
+  tag: {
+    type: String,
+    required: true,
+  },
 });
 
 const tagStyle = computed(() => {
