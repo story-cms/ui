@@ -1,31 +1,35 @@
 <template>
-  <div class="px-6 lg:w-2/3">
-    <div class="flex items-center justify-between">
-      <div class="space-x-6">
-        <AddItemButton label="Page" @add="addPage" />
-        <AddItemButton v-if="isShowingPublished" label="Divider" @add="addDivider" />
+  <AppLayout>
+    <div class="px-6 lg:w-2/3">
+      <div class="flex items-center justify-between">
+        <div class="space-x-6">
+          <AddItemButton label="Page" @add="addPage" />
+          <AddItemButton v-if="isShowingPublished" label="Divider" @add="addDivider" />
+        </div>
+        <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
       </div>
-      <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
-    </div>
-    <div class="my-8 flex flex-col space-y-8">
-      <div v-for="page in filteredItems" :key="page.id" @drop="onDrop">
-        <PageIndexItem
-          :page="page"
-          @remove-divider="deleteDivider(page.id)"
-          @tap="onTap"
-          @drag-start="fromIndex = items.indexOf(page)"
-          @drag-enter="toIndex = items.indexOf(page)"
-        />
+      <div class="my-8 flex flex-col space-y-8">
+        <div v-for="page in filteredItems" :key="page.id" @drop="onDrop">
+          <PageIndexItem
+            :page="page"
+            @remove-divider="deleteDivider(page.id)"
+            @tap="onTap"
+            @drag-start="fromIndex = items.indexOf(page)"
+            @drag-enter="toIndex = items.indexOf(page)"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </AppLayout>
 </template>
+
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { usePagesStore } from '../store';
+import AppLayout from '../Shared/AppLayout.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import PageIndexItem from './PageIndexItem.vue';
-import { Inertia, RequestPayload } from '../doubles';
+import { router } from '@inertiajs/vue3';
 import { debounce } from '../Shared/helpers';
 import IndexFilter from '../Shared/IndexFilter.vue';
 import { TabItem, PageItem } from '../Shared/interfaces';
@@ -72,7 +76,7 @@ const filteredItems = computed(() => {
 const isShowingPublished = computed(() => currentTab.value === 'Published');
 
 const onTap = (id: number) => {
-  Inertia.visit(`/page/${id}/edit`);
+  router.visit(`/page/${id}/edit`);
 };
 
 const onDrop = () => {
@@ -88,8 +92,18 @@ const swapListItems = (items: any[], fromIndex: number, toIndex: number) => {
   items.splice(toIndex, 0, element);
 };
 
+type postType = {
+  items: any[];
+};
+
+const getPayload = (): postType => {
+  return {
+    items: items.value,
+  };
+};
+
 const save = debounce(1000, () => {
-  Inertia.post('/page/sort', getPayload(), {
+  router.post('/page/sort', getPayload(), {
     onSuccess: (result) => {
       console.log('! saved', result.props);
     },
@@ -98,14 +112,6 @@ const save = debounce(1000, () => {
     },
   });
 });
-
-const getPayload = (): RequestPayload => {
-  const payload = {
-    items: items.value,
-  } as unknown;
-
-  return payload as RequestPayload;
-};
 
 pageStore.$subscribe(() => {
   items.value = [...pageStore.items];
@@ -121,6 +127,6 @@ const deleteDivider = (id: number) => {
 };
 
 const addPage = () => {
-  Inertia.visit('/page/create');
+  router.visit('/page/create');
 };
 </script>

@@ -22,11 +22,26 @@ import AddItemButton from './Shared/AddItemButton.vue';
 import Icon from './Shared/Icon.vue';
 import PublicLayout from './Shared/PublicLayout.vue';
 
+import PageIndexItem from './Pages/PageIndexItem.vue';
+
+import Login from './Auth/AuthLogin.vue';
+import ForgotPassword from './Auth/ForgotPassword.vue';
+import ResetPassword from './Auth/ResetPassword.vue';
+import DashboardIndex from './Dashboard/DashboardIndex.vue';
+import DraftIndex from './Draft/DraftIndex.vue';
+import PagesIndex from './Pages/PagesIndex.vue';
+import PagesEdit from './Pages/PagesEdit.vue';
+import UsersIndex from './Users/UsersIndex.vue';
+import ChapterPreview from './Chapters/ChapterPreview.vue';
+
 export * from './store/index';
 export * from './Shared/helpers';
 export * from './Shared/interfaces';
 
+import { createInertiaApp } from '@inertiajs/vue3';
+
 export {
+  createInertiaApp,
   // chapters
   IndexCard,
   StatusTag,
@@ -44,6 +59,8 @@ export {
   ScriptureField,
   SelectField,
   StringField,
+  // pages
+  PageIndexItem,
   // shared
   ContextMenu,
   DropDown,
@@ -51,4 +68,14 @@ export {
   AddItemButton,
   Icon,
   PublicLayout,
+  // auth
+  Login,
+  ForgotPassword,
+  ResetPassword,
+  DashboardIndex,
+  DraftIndex,
+  PagesIndex,
+  PagesEdit,
+  UsersIndex,
+  ChapterPreview,
 };

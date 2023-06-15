@@ -1,7 +1,7 @@
 <template>
   <div class="sticky top-0 h-full w-[416px]">
     <div
-      class="border-accent-gray bg-accent-gray space-y-5 rounded-md border p-8 shadow-sm"
+      class="space-y-5 rounded-md border border-accent-gray bg-accent-gray p-8 shadow-sm"
     >
       <div class="space-y-8 text-[18px] font-medium leading-7 text-gray-600">
         <div class="space-y-1 border-b border-gray-600">
@@ -31,5 +31,17 @@
 
 <script setup lang="ts">
 import { formatDate } from './helpers';
-defineProps(['chapter']);
+import { PropType } from 'vue';
+defineProps({
+  chapter: {
+    type: Object as PropType<Chapter>,
+    required: true,
+  },
+});
+
+type Chapter = {
+  number: number;
+  created_at: string;
+  updated_at: string;
+};
 </script>
