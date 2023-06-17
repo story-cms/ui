@@ -29,7 +29,14 @@
       <label class="input-label mt-4 block">
         {{ field.label + ' Passage' }}
       </label>
+      <button class="mr-1 rounded border border-gray-100 p-1" @mousedown="superscript">
+        <Icon name="superscript" class="text-gray-500" />
+      </button>
+      <button class="rounded border border-gray-100 p-1" @mousedown="nonBreakingSpace">
+        <Icon name="indent" class="text-gray-500" />
+      </button>
       <textarea
+        id="mytextarea"
         v-model="verse"
         :readonly="isBusy || props.isReadOnly"
         placeholder="Verse"
@@ -51,6 +58,7 @@ import { FieldSpec, Scripture } from '../Shared/interfaces';
 import { useLanguageStore, useModelStore, useSecretStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import { parseReference } from '../Shared/helpers';
+import Icon from '../Shared/Icon.vue';
 
 const props = defineProps({
   ...commonProps,
@@ -77,6 +85,26 @@ const lookup = () => {
   setScripture(reference.value).then(() => {
     isBusy.value = false;
   });
+};
+
+const superscript = () => {
+  const txtarea = document.getElementById('mytextarea') as HTMLInputElement;
+  const start = txtarea.selectionStart;
+  const finish = txtarea.selectionEnd;
+  if (start === null || finish === null) return;
+  const sel = '`' + txtarea.value.substring(start, finish) + '`';
+  txtarea.value =
+    txtarea.value.substring(0, start) + sel + txtarea.value.substring(finish);
+};
+
+const nonBreakingSpace = () => {
+  const txtarea = document.getElementById('mytextarea') as HTMLInputElement;
+  const start = txtarea.selectionStart;
+  const finish = txtarea.selectionEnd;
+  if (start === null || finish === null) return;
+  const sel = '|' + txtarea.value.substring(start, finish);
+  txtarea.value =
+    txtarea.value.substring(0, start) + sel + txtarea.value.substring(finish);
 };
 
 const updateVerse = () => {

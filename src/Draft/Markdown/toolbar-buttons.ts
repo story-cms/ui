@@ -19,16 +19,6 @@ export const customToolbarButtons: EditorButton[] = [
       return instance.codemirror.replaceSelection(newValue);
     },
   },
-  {
-    name: 'nospace',
-    className: 'fa fa-caret-right',
-    title: 'Non-breaking space',
-    action: (instance: EasyMDE) => {
-      const selection = instance.codemirror.getSelection();
-      const newValue = '|' + selection;
-      return instance.codemirror.replaceSelection(newValue);
-    },
-  },
 ];
 
 export const defaultButtons: string[] = [

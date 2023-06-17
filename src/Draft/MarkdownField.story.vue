@@ -15,17 +15,6 @@
       <ModelControl :model="objectModel" />
     </Variant>
 
-    \
-    <Variant title="With custom function toolbar buttons" :setup-app="loadData">
-      <MarkdownField
-        :field="{
-          ...spec,
-          toolbar: ['superscript', 'nospace'],
-        }"
-      />
-      <ModelControl :model="objectModel" />
-    </Variant>
-
     <Variant title="Error" :setup-app="loadData">
       <MarkdownField :field="spec" />
       <ErrorControl :errors="objectErrors" />
