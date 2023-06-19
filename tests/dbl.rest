@@ -1,0 +1,17 @@
+@authority = https://api.scripture.api.bible
+@kjv = de4e12af7f28f599-01
+@niv = 3e2eb613d45e131e-01
+@passage = JHN.1.14
+
+###
+GET {{ authority }}/v1/bibles/{{ niv }}/passages/{{ passage }}?content-type=text HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+api-key: {{ w121-key }}
+
+# find the bible versions that are available
+###
+GET {{ authority }}/v1/bibles HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+api-key: {{ w121-key }}

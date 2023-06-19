@@ -399,6 +399,19 @@ example:
 }
 ```
 
+The default translation is the KJV. To use a different translation:
+
+1. Contact [Maria Ferri][mferri@biblesocieties.org] at the United Bible Societies to get a
+   DBL token for the translation you want to use. You might be required to get a
+   [DBL][https://app.thedigitalbiblelibrary.org] account
+2. Get a [Bible API][https://scripture.api.bible] account
+3. [Create an app][https://scripture.api.bible/admin/applications] and fill in the DBL
+   token from step 1. Put the user key in the BIBLE_API_KEY environment variable
+4. Use the user key to authenticate a Bible API call to [get the Bible
+   ID][https://scripture.api.bible/livedocs#/Bibles/getBibles] for the translation you
+   want to use
+5. Put the Bible Id in the `config/story.ts` file
+
 # Index Configuration
 
 This section outlines how an index for each page [Pages, Chapters etc] will look.
