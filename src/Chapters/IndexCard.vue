@@ -1,12 +1,15 @@
 <template>
   <button
-    class="flex rounded-lg bg-white text-left shadow"
-    :class="{ 'flex-col': !isList }"
+    class="rounded-lg bg-white text-left shadow"
+    :class="{ 'flex w-full': isList }"
     type="button"
     @click="emit('tap', item)"
   >
-    <div v-if="showImage" class="">
-      <img class="rounded-t-lg" :src="imgUrl" alt="" />
+    <div v-if="showImage" class="h-52">
+      <div
+        class="h-full rounded-t-lg bg-cover bg-center"
+        :style="`background-image: url(${imgUrl});`"
+      />
     </div>
     <div
       class="flex justify-between"
@@ -68,7 +71,13 @@ const imgUrl = computed(() => props.item.imageUrl || props.placeholderImage);
 const title = computed(
   () => props.item.title || `${props.chapterName} ${props.item.number}`,
 );
-const showImage = true;
+
+const showImage = computed((): boolean => {
+  if (props.isList) {
+    return false;
+  }
+  return !!(props.item.imageUrl || props.placeholderImage);
+});
 
 const chapterNumber = computed(() => padZero(props.item.number));
 

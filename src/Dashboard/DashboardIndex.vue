@@ -10,9 +10,9 @@
         <input
           v-model="filterNumber"
           class="block w-24 rounded-md border border-gray-300 px-3 py-1 text-sm font-normal leading-5 text-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          placeholder="Day"
+          :placeholder="meta.chapterType"
         />
-        <AddItemButton v-if="!isComplete" label="Day" @add="addDraft" />
+        <AddItemButton v-if="!isComplete" :label="meta.chapterType" @add="addDraft" />
       </div>
       <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
     </div>
@@ -24,9 +24,9 @@
         v-for="item in filteredIndex"
         :key="item.number"
         :item="item"
-        :is-list="isList"
+        :isList="isList"
         :scope="currentTab"
-        chapter-name="Day"
+        :chapter-name="meta.chapterType"
         @tap="onTap"
       />
     </div>
@@ -35,8 +35,8 @@
 
 <script setup lang="ts">
 import { PropType, computed, ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
 import AppLayout from '../Shared/AppLayout.vue';
+import { usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import IndexFilter from '../Shared/IndexFilter.vue';

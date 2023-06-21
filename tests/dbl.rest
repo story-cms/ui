@@ -4,7 +4,7 @@
 @passage = JHN.1.14
 
 ###
-GET {{ authority }}/v1/bibles/{{ niv }}/passages/{{ passage }}?content-type=text HTTP/1.1
+GET {{ authority }}/v1/bibles/{{ kjv }}/passages/{{ passage }}?content-type=text HTTP/1.1
 Content-Type: application/json
 Accept: application/json
 api-key: {{ w121-key }}
