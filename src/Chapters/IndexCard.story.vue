@@ -4,18 +4,18 @@
       <IndexCard
         :item="itemNoImage"
         :is-list="notList"
-        scope="Live"
+        scope="Draft"
         chapter-name="Story"
       />
     </Variant>
     <Variant title="With Image">
-      <IndexCard :item="item" :is-list="notList" scope="Live" chapter-name="Story" />
+      <IndexCard :item="item" :is-list="notList" scope="Draft" chapter-name="Story" />
     </Variant>
     <Variant title="Placeholder Image">
       <IndexCard
         :item="itemNoImage"
         :is-list="notList"
-        scope="Live"
+        scope="Draft"
         placeholder-image="https://res.cloudinary.com/onesheep/image/upload/v1685084993/christ-chaos-header_yqrufy.jpg"
         chapter-name="Story"
       />
@@ -35,20 +35,20 @@
         <IndexCard
           :item="itemWide"
           :is-list="notList"
-          scope="Live"
+          scope="Draft"
           chapter-name="Story"
         />
 
         <IndexCard
           :item="itemSquare"
           :is-list="notList"
-          scope="Live"
+          scope="Draft"
           chapter-name="Story"
         />
         <IndexCard
           :item="itemTall"
           :is-list="notList"
-          scope="Live"
+          scope="Draft"
           chapter-name="Story"
         />
       </div>
@@ -91,7 +91,7 @@ const item = {
   imageUrl:
     'https://res.cloudinary.com/onesheep/image/upload/v1684754051/Screenshot_2023-05-22_at_13.12.03_pnamdt.png',
   title: 'Index Ready Item Title',
-  tags: ['Live'],
+  tags: [],
 };
 
 const itemSquare = {
@@ -107,7 +107,7 @@ const itemTall = {
   imageUrl:
     'https://res.cloudinary.com/theword121/image/upload/v1684768272/episodes/way4y06pk1smaxxg8u6p.jpg',
   title: 'Tall image',
-  tags: ['Live'],
+  tags: ['Live', 'Draft'],
 };
 
 const itemWide = {
@@ -122,6 +122,6 @@ const itemNoImage = {
   number: 1,
   imageUrl: '',
   title: 'Index Ready Item Title',
-  tags: ['Live'],
+  tags: [],
 };
 </script>

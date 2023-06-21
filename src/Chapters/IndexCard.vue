@@ -15,7 +15,7 @@
       class="flex justify-between"
       :class="{
         'min-w-full px-4 py-4': isList,
-        'min-h-full flex-col items-start px-8 py-5': !isList,
+        'flex-col items-start px-8 py-5': !isList,
       }"
     >
       <div class="grow">
