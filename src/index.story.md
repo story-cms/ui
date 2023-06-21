@@ -61,7 +61,7 @@ these optional extra properties:
 - `minimal` a boolean value which is `false` by default. `minimal` sets the widget to the
   minimal height possible.
 - `toolbar` accepts an array of strings
-  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
+  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo'`
   representing the formatting buttons to display.
 
 A custom toolbar button can be used by defining it in `customEditorButtonComponent.ts` and
@@ -387,7 +387,8 @@ example:
 
 A compound widget that renders a [ScriptureField](#). It has a Bible reference field that
 can take a scripture reference and a markdown field for the scripture text. It has no
-special keys.
+special keys. The scripture field has 2 buttons, one that will wrap selected text in '`',
+and another to insert a '|' character at the start of the selection.
 
 example:
 
