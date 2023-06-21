@@ -10,6 +10,7 @@
       <button
         v-if="!!url && !props.isReadOnly"
         class="absolute right-0 top-2"
+        type="button"
         @click.prevent="emit('delete')"
       >
         <Icon name="trash" class="h-10 w-10 text-gray-500" />
