@@ -110,22 +110,24 @@ const lookup = () => {
 };
 
 const superscript = () => {
-  const txtarea = thetextarea.value;
+  if (thetextarea.value === null) return;
+  const txtarea = thetextarea.value as unknown as HTMLTextAreaElement;
   const start = txtarea.selectionStart;
   const finish = txtarea.selectionEnd;
   if (start === null || finish === null) return;
   const sel = '`' + txtarea.value.substring(start, finish) + '`';
-  thetextarea.value.value =
+  txtarea.value =
     txtarea.value.substring(0, start) + sel + txtarea.value.substring(finish);
 };
 
 const nonBreakingSpace = () => {
-  const txtarea = thetextarea.value;
+  if (thetextarea.value === null) return;
+  const txtarea = thetextarea.value as unknown as HTMLTextAreaElement;
   const start = txtarea.selectionStart;
   const finish = txtarea.selectionEnd;
   if (start === null || finish === null) return;
   const sel = '|' + txtarea.value.substring(start, finish);
-  thetextarea.value.value =
+  txtarea.value =
     txtarea.value.substring(0, start) + sel + txtarea.value.substring(finish);
 };
 
