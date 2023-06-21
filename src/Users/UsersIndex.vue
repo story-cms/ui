@@ -16,6 +16,7 @@
           </div>
           <button
             v-if="user.id != pageUser.id"
+            type="button"
             class="cursor-pointer"
             @click="deleteUser(user)"
           >
@@ -24,7 +25,7 @@
         </li>
       </ul>
       <div class="my-8">
-        <button class="btn btn-blue w-32" @click="onAdd()">Add User</button>
+        <button type="button" class="btn btn-blue w-32" @click="onAdd()">Add User</button>
       </div>
     </section>
 
@@ -85,7 +86,9 @@
         <div class="my-8 flex space-x-4">
           <!-- eslint-disable vue/no-v-html -->
           <button class="btn btn-blue w-32" type="submit" v-html="submitLabel"></button>
-          <button class="btn w-32 bg-white" @click.prevent="onCancel()">Cancel</button>
+          <button class="btn w-32 bg-white" type="button" @click.prevent="onCancel()">
+            Cancel
+          </button>
         </div>
       </form>
     </section>

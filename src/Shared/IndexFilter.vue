@@ -6,6 +6,7 @@
           <button
             v-for="tab in tabs"
             :key="tab.label"
+            type="button"
             :class="[
               tab.current
                 ? 'border-indigo-500 text-indigo-600'
