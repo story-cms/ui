@@ -102,62 +102,44 @@ test.describe('Object Field', () => {
         const count = await listLocator.count();
         expect(count).toEqual(listInObjectModel.spread.notes.length);
 
-        for (const listItem of await listLocator.all()) {
-          for (const el of await listItem.all()) {
-            for (const field of listInObjectSpec.fields as any)
-              if (field.widget === 'list') {
-                for (const item of field.fields) {
-                  if (item.widget === 'string') {
-                    await expect(el.locator(`input[name='${item.label}']`)).toHaveValue(
-                      listInObjectModel.spread.notes[0].type,
-                    );
-                  }
-                  if (item.widget === 'markdown') {
-                    await el.getByTestId('markdown-field').fill('sdasdsads');
-                  }
-                }
+        for (const field of listInObjectSpec.fields as any) {
+          if (field.widget === 'list') {
+            for (const item of field.fields) {
+              if (item.widget === 'string') {
+                await expect(
+                  listLocator
+                    .filter({
+                      hasText: 'Frame typeFrame content|xxxxxxxxxx `grace` is a noun.',
+                    })
+                    .locator(`input[name='${item.label}']`),
+                ).toHaveValue(listInObjectModel.spread.notes[0].type);
+                await expect(
+                  listLocator
+                    .filter({
+                      hasText:
+                        'Frame typeFrame content|xxxxxxxxxx paragraph **1**paragraph **2**paragraph **3**',
+                    })
+                    .locator(`input[name='${item.label}']`),
+                ).toHaveValue(listInObjectModel.spread.notes[1].type);
               }
+              if (item.widget === 'markdown') {
+                await expect(
+                  listLocator.getByText('`grace` is a noun.', { exact: true }),
+                ).toBeVisible();
+                await expect(
+                  listLocator.getByText('paragraph **1**', { exact: true }),
+                ).toBeVisible();
+                await expect(
+                  listLocator.getByText('paragraph **2**', { exact: true }),
+                ).toBeVisible();
+                await expect(
+                  listLocator.getByText('paragraph **3**', { exact: true }),
+                ).toBeVisible();
+              }
+            }
           }
         }
-        // for (let i = 0; i < count; ++i) {
-        //   console.log(listLocator.nth(i));
-        // }
-
-        // for (const listItem of item.fields as any) {
-        //   if (listItem.widget === 'string') {
-        //     await expect(
-        //       listLocator.filter({
-        //         hasText: '',
-        //       }),
-        //     ).toBeVisible();
-
-        //     // list.filter({ has: page.getByRole('textbox') }).click();
-        //     // await page
-        //     //   .frameLocator('[data-test-id="preview-iframe"]')
-        //     //   .getByRole('listitem')
-        //     // .filter({
-        //     //   hasText:
-        //     //     'Frame typeFrame content|xxxxxxxxxx paragraph **1**paragraph **2**paragraph **3**',
-        //     // })
-        //     // .locator(`input[name='${listItem.label}']`)
-        //     // .click();
-        //   }
-        // }
-        // await page.pause();
-
-        // for (const listItem of item.fields as any) {
-        //   if (listItem.widget === 'string') {
-        //     console.log(listInObjectModel.spread.notes[0].type);
-        //     await page
-        //       .frameLocator('[data-test-id="preview-iframe"]')
-        //       .getByRole('listitem')
-        //       .filter({ hasText: listInObjectModel.spread.notes[0].type })
-        //       .locator(`input[name='${listItem.label}']`)
-        //       .click();
-        //   }
-        // }
       }
     }
-    await page.pause();
   });
 });
