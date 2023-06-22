@@ -83,7 +83,7 @@ test.describe('Object Field', () => {
         .getByText('required validation failed'),
     ).toBeVisible();
   });
-  test('should list in object @test', async ({ page }) => {
+  test('should list in object', async ({ page }) => {
     await page.getByRole('link', { name: 'List in Object', exact: true }).click();
     for (const item of listInObjectSpec.fields as any) {
       if (item.widget === 'string') {
