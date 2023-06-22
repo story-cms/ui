@@ -4,6 +4,8 @@ import {
   objectModel,
   listInObjectSpec,
   listInObjectModel,
+  objectInListInObjectSpec,
+  objectInListInObjectModel,
 } from '@/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
@@ -141,5 +143,56 @@ test.describe('Object Field', () => {
         }
       }
     }
+  });
+
+  test('should list object in list in object', async ({ page }) => {
+    await page
+      .getByRole('link', { name: 'Object in List in Object', exact: true })
+      .click();
+
+    const frameLocator = page.frameLocator('[data-test-id="preview-iframe"]');
+
+    await expect(
+      frameLocator.getByText(objectInListInObjectSpec.label, { exact: true }),
+    ).toBeVisible();
+
+    for (const item of objectInListInObjectSpec.fields as any) {
+      if (item.widget === 'string') {
+        await expect(frameLocator.locator(`input[name='${item.label}']`)).toHaveValue(
+          objectInListInObjectModel.episode[item.name],
+        );
+      }
+      if (item.widget === 'list') {
+        const mock_length: number =
+          objectInListInObjectModel[objectInListInObjectSpec.name][item.name].length;
+
+        let listLocator = frameLocator.getByRole('listitem');
+        let count = await listLocator.count();
+        expect(count).toEqual(mock_length);
+
+        await frameLocator.getByRole('button', { name: 'Spreads' }).click();
+        listLocator = frameLocator.getByRole('listitem');
+        count = await listLocator.count();
+        expect(count).toEqual(mock_length + 1);
+
+        await listLocator.nth(0).locator('path').click();
+        listLocator = frameLocator.getByRole('listitem');
+        count = await listLocator.count();
+        expect(count).toEqual(mock_length);
+      }
+    }
+  });
+  test('should list object in list in object empty', async ({ page }) => {
+    await page
+      .getByRole('link', { name: 'Object in List in Object Empty', exact: true })
+      .click();
+
+    const frameLocator = page.frameLocator('[data-test-id="preview-iframe"]');
+
+    await expect(frameLocator.getByRole('textbox')).toBeEmpty();
+    await frameLocator.getByRole('button', { name: 'Spreads' }).click();
+    const listLocator = frameLocator.getByRole('listitem');
+    const count = await listLocator.count();
+    expect(count).toEqual(1);
   });
 });
