@@ -16,18 +16,18 @@
         :readonly="props.isReadOnly"
         autocomplete="given-name"
         :value="modelValue"
-        @input="update"
         class="input-field"
         :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
+        @input="update"
       />
-      <p class="text-sm text-error" v-if="hasError">{{ errorMessage }}</p>
+      <p v-if="hasError" class="text-sm text-error">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue';
-import { FieldSpec } from 'App/Models/Interfaces';
+import { FieldSpec } from '../Shared/interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 

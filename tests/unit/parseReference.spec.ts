@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import { parseReference } from '@/Shared/helpers';
+import { parseReference } from '../src/Shared/helpers';
 
 test.describe('Parse exactly spelled and punctuated references', () => {
   test('Identify junk', () => {

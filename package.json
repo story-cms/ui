@@ -1,49 +1,86 @@
 {
-  "name": "histoire",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@story-cms/core",
+  "version": "0.0.1",
+  "description": "Story CMS core",
   "type": "module",
+  "keywords": [
+    "vue",
+    "vue3"
+  ],
+  "author": "OneSheep",
+  "private": false,
+  "main": "./dist/core.cjs",
+  "module": "./dist/core.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./styles.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "src/components"
+  ],
   "scripts": {
     "dev": "histoire dev",
     "build": "histoire build",
     "preview": "histoire preview",
-    "site:dev": "vite",
-    "site:build": "vue-tsc && vite build",
-    "site:preview": "vite preview",
+    "lib:dev": "vite",
+    "lib:build": "vue-tsc && vite build",
+    "lib:preview": "vite preview",
     "test": "vitest run",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "format": "prettier --write ."
   },
-  "dependencies": {
-    "@inertiajs/vue3": "^1.0.6",
+  "peerDependencies": {
     "@rive-app/canvas": "^1.1.5",
-    "axios": "^0.27.2",
+    "axios": "^1.4.0",
     "easymde": "^2.18.0",
     "pinia": "^2.0.27",
-    "vue": "^3.2.41"
+    "luxon": "^3.3.0",
+    "vue": "^3.2.0"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.14",
+    "@inertiajs/vue3": "^1.0.6",
+    "@rive-app/canvas": "^1.1.5",
+    "axios": "^1.4.0",
+    "easymde": "^2.18.0",
+    "luxon": "^3.3.0",
+    "pinia": "^2.0.27"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.12.4",
     "@onesheep/prettier-config": "^0.0.11",
     "@playwright/test": "^1.35.1",
+    "@histoire/plugin-vue": "^0.16.1",
+    "@onesheep/prettier-config": "^0.0.12",
     "@tailwindcss/forms": "^0.5.3",
+    "@types/luxon": "^3.3.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitejs/plugin-vue": "^4.2.3",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.32.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.9.0",
-    "histoire": "^0.12.4",
+    "histoire": "^0.16.1",
     "jest": "^29.3.1",
     "postcss": "^8.4.19",
     "prettier": "^2.8.3",
-    "prettier-plugin-tailwindcss": "^0.2.1",
+    "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4",
     "vite": "^3.2.5",
+    "vite": "^4.3.9",
+    "vite-plugin-dts": "^2.3.0",
+    "vitest": "^0.31.3",
+    "vue": "^3.2.41",
     "vue-tsc": "^1.0.11"
   },
   "prettier": "@onesheep/prettier-config"

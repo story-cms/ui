@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { setActivePinia, createPinia } from 'pinia';
 
-import { useModelStore } from '@/store/model';
+import { useModelStore } from '../src/store/model';
 
 const fixture = {
   name: 'Jesse',

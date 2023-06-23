@@ -1,5 +1,5 @@
 import { PropType } from 'vue';
-import { FieldSpec } from 'App/Models/Interfaces';
+import { FieldSpec } from '../Shared/interfaces';
 import { BibleBooksMap } from './bibleBooks';
 
 export const commonProps = {
@@ -37,13 +37,13 @@ export const validateFile = (file: File) => {
 };
 
 export const formatDate = (value: string): string => {
-  let d = new Date(value);
+  const d = new Date(value);
   return `${padZero(d.getDate())}/${padZero(d.getMonth() + 1)}/${padZero(
     d.getFullYear(),
   )}, ${padZero(d.getHours())}:${padZero(d.getMinutes())}`;
 };
 
-export const debounce = <T extends (...args: any[]) => void>(
+export const debounce = <T extends (...args: any[]) => void>( // eslint-disable-line
   wait: number,
   callback: T,
   immediate = false,
@@ -51,7 +51,7 @@ export const debounce = <T extends (...args: any[]) => void>(
   let timeout: ReturnType<typeof setTimeout> | null;
 
   return function <U>(this: U, ...args: Parameters<typeof callback>) {
-    const context = this;
+    const context = this; // eslint-disable-line
     const later = () => {
       timeout = null;
 
@@ -92,7 +92,7 @@ export const parseReference = (reference: string): string => {
   if (bookNum) {
     book = `${bookNum} ${book}`;
   }
-  let abbreviation = getAbbreviation(book);
+  const abbreviation = getAbbreviation(book);
 
   if (!abbreviation) {
     return '';
@@ -112,7 +112,7 @@ export const parseReference = (reference: string): string => {
 };
 
 function getAbbreviation(inputBook: string): string {
-  for (var book in BibleBooksMap) {
+  for (const book in BibleBooksMap) {
     if (book === inputBook || BibleBooksMap[book].includes(inputBook)) {
       return BibleBooksMap[book][0].toUpperCase();
     }

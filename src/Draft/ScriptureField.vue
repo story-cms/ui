@@ -29,7 +29,22 @@
       <label class="input-label mt-4 block">
         {{ field.label + ' Passage' }}
       </label>
+      <button
+        type="button"
+        class="mr-1 rounded border border-gray-100 p-1"
+        @mousedown="superscript"
+      >
+        <Icon name="superscript" class="text-gray-500" />
+      </button>
+      <button
+        type="button"
+        class="rounded border border-gray-100 p-1"
+        @mousedown="nonBreakingSpace"
+      >
+        <Icon name="indent" class="text-gray-500" />
+      </button>
       <textarea
+        ref="thetextarea"
         v-model="verse"
         :readonly="isBusy || props.isReadOnly"
         placeholder="Verse"
@@ -47,14 +62,29 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue';
-import { FieldSpec, Scripture } from 'App/Models/Interfaces';
+import { FieldSpec, Scripture } from '../Shared/interfaces';
 import { useLanguageStore, useModelStore, useSecretStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import { parseReference } from '../Shared/helpers';
+import Icon from '../Shared/Icon.vue';
+
+// docs: https://scripture.api.bible/livedocs#/Passages/getPassage
+const apiOptions = [
+  'content-type=text',
+  'include-titles=false',
+  // 'include-notes=false', // Include footnotes in content
+  // 'include-chapter-numbers=false',
+  // 'include-verse-numbers=true',
+  // 'include-verse-spans=false', // Include spans that wrap verse numbers and verse text for bible content.
+];
+
+const translationId = 'de4e12af7f28f599-01'; // KJV
 
 const props = defineProps({
   ...commonProps,
 });
+
+const thetextarea = ref(null);
 
 const field = computed(() => props.field as FieldSpec);
 const fieldPath = computed(() => {
@@ -77,6 +107,28 @@ const lookup = () => {
   setScripture(reference.value).then(() => {
     isBusy.value = false;
   });
+};
+
+const superscript = () => {
+  if (thetextarea.value === null) return;
+  const txtarea = thetextarea.value as unknown as HTMLTextAreaElement;
+  const start = txtarea.selectionStart;
+  const finish = txtarea.selectionEnd;
+  if (start === null || finish === null) return;
+  const sel = '`' + txtarea.value.substring(start, finish) + '`';
+  txtarea.value =
+    txtarea.value.substring(0, start) + sel + txtarea.value.substring(finish);
+};
+
+const nonBreakingSpace = () => {
+  if (thetextarea.value === null) return;
+  const txtarea = thetextarea.value as unknown as HTMLTextAreaElement;
+  const start = txtarea.selectionStart;
+  const finish = txtarea.selectionEnd;
+  if (start === null || finish === null) return;
+  const sel = '|' + txtarea.value.substring(start, finish);
+  txtarea.value =
+    txtarea.value.substring(0, start) + sel + txtarea.value.substring(finish);
 };
 
 const updateVerse = () => {
@@ -105,8 +157,9 @@ const secrets = useSecretStore();
 const setScripture = async (reference: string) => {
   const code = parseReference(reference);
   if (code === '') return;
+  const query = apiOptions.join('&');
   const response = await fetch(
-    `https://api.scripture.api.bible/v1/bibles/de4e12af7f28f599-01/passages/${code}?content-type=text`,
+    `https://api.scripture.api.bible/v1/bibles/${translationId}/passages/${code}?${query}`,
     {
       headers: {
         accept: 'application/json',

@@ -99,3 +99,27 @@ export interface PageItem {
   isPublished?: boolean;
   isDivider?: boolean;
 }
+
+export interface Story {
+  id: number;
+  name: string;
+  fields: Array<object>;
+  chapterLimit: number;
+  parts?: Array<object>;
+}
+
+export interface Part {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+export type WidgetPicker = (widget: string) => any; // eslint-disable-line
+
+export interface Meta {
+  name: string;
+  logo: string;
+  storyType: string;
+  chapterType: string;
+}

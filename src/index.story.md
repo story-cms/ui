@@ -24,20 +24,20 @@ The chapter configuration is highly inspired by
 Following are the widgets that are currently implemented:
 
 [string](#string), [number](#number), [markdown](#markdown), [image](#image),
-[boolean](#boolean), [select](#select), [object](#object), [panel](#panel), [list](#list),
-[scripture](#scripture)
+[audio](#audio), [boolean](#boolean), [select](#select), [object](#object),
+[panel](#panel), [list](#list), [scripture](#scripture)
 
 ---
 
 ## string
 
 Suitable for short, single line plain text strings. It has only the common properties and
-renders a [StringField](./Draft/StringField.story.vue)
+renders a [StringField](#)
 
 ## number
 
-Suitable for whole or decimal numbers and renders a
-[NumberField](./Draft/NumberField.story.vue) It has one optional special property:
+Suitable for whole or decimal numbers and renders a [NumberField](#) It has one optional
+special property:
 
 - `default` accepts string or number value; defaults to empty string
 
@@ -55,13 +55,13 @@ Example:
 ## markdown
 
 Suitable for longer, multi-line rich text which allows markup in markdown format and
-renders a [MarkdownField](./Draft/MarkdownField.story.vue). On top of the common widget
-properties, a markdown field has these optional extra properties:
+renders a [MarkdownField](#). On top of the common widget properties, a markdown field has
+these optional extra properties:
 
 - `minimal` a boolean value which is `false` by default. `minimal` sets the widget to the
   minimal height possible.
 - `toolbar` accepts an array of strings
-  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo']`
+  `['bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', 'heading-1', 'heading-2', 'heading-3', 'code', 'quote', 'unordered-list', 'ordered-list', 'clean-block', 'link', 'image', 'upload-image', 'table', 'horizontal-rule', 'preview', 'side-by-side', 'fullscreen', 'guide','undo', 'redo'`
   representing the formatting buttons to display.
 
 A custom toolbar button can be used by defining it in `customEditorButtonComponent.ts` and
@@ -120,7 +120,7 @@ the component to the `toolbar` Example:
 ## image
 
 Holds a url to a hosted image file. Suitable for allowing content editors to upload image
-files and renders a [ImageField](./Draft/ImageField.story.vue).  
+files and renders a [ImageField](#).  
 An image field has four special keys:
 
 - `uploadPreset` required string specifying the Cloudinary upload preset for this image.
@@ -154,11 +154,50 @@ Image with file attributes
 },
 ```
 
+## audio
+
+Holds a url to a hosted audio file. Suitable for allowing content editors to upload audio
+files and renders a [AudioField](#).  
+An audio field has four special keys:
+
+- `uploadPreset` required string specifying the hosting provider upload preset for this
+  file.
+- `description` an optional message that will be displayed on the upload widget. Defaults
+  to WAV, MP3, OGG, AAC, WMA up to 50MB
+- `extensions` an optional list of accepted file extensions. Defaults to '['.wav', '.mp3',
+  '.ogg', '.aac', '.wma']'
+- `maxSize` an optional number in bytes that a file should not exceed. Defaults to
+  50662310
+
+example:
+
+```ts
+{
+  label: 'Soundtrack',
+  name: 'soundtrack',
+  widget: 'audio',
+  uploadPreset: 'mp3_44000hz',
+},
+```
+
+AudioField with file attributes
+
+```ts
+{
+  label: 'Audio file',
+  name: 'soundtrack',
+  widget: 'audio',
+  description: 'WAV, MP3, OGG, AAC, WMA',
+  extensions: ['.wav', '.mp3', '.ogg', '.aac', '.wma'],
+  maxSize: 50000000,
+},
+```
+
 ## boolean
 
-A boolean toggle switch that renders a [BooleanField](./Draft/BooleanField.story.vue). Has
-one required special key called `default` which has to have a value of true or false and
-these optional extra properties:
+A boolean toggle switch that renders a [BooleanField](#). Has one required special key
+called `default` which has to have a value of true or false and these optional extra
+properties:
 
 - `tintColor` a string value that accepts a Tailwind color. Defaults to `indigo-600`
 - `labelOrder` a string value that accepts `start` or `end`. Defaults to `end`
@@ -190,9 +229,9 @@ module.exports = {
 
 ## select
 
-A dropdown menu that renders a [SelectField](./Draft/SelectField.story.vue). Has two
-special required keys called `options` and `default` which expects an array of objects
-with `label` and `value` keys and a string value respectively.
+A dropdown menu that renders a [SelectField](#). Has two special required keys called
+`options` and `default` which expects an array of objects with `label` and `value` keys
+and a string value respectively.
 
 example:
 
@@ -306,8 +345,8 @@ For horizontal layouts
 
 ## list
 
-A compound widget that renders a [ListField](./Draft/ListField.story.vue). A list is
-suitable for a collection of sets of other fields. The list has these specialised keys:
+A compound widget that renders a [ListField](#). A list is suitable for a collection of
+sets of other fields. The list has these specialised keys:
 
 - `fields`: required, a list with primitive fields that define a set
 - `index`: optional, a string that specifies which field in the set should be used as an
@@ -346,9 +385,10 @@ example:
 
 ## scripture
 
-A compound widget that renders a [ScriptureField](./Draft/ScriptureField.story.vue). It
-has a Bible reference field that can take a scripture reference and a markdown field for
-the scripture text. It has no special keys.
+A compound widget that renders a [ScriptureField](#). It has a Bible reference field that
+can take a scripture reference and a markdown field for the scripture text. It has no
+special keys. The scripture field has 2 buttons, one that will wrap selected text in '`',
+and another to insert a '|' character at the start of the selection.
 
 example:
 
@@ -358,4 +398,77 @@ example:
   name: 'nt',
   widget: 'scripture',
 }
+```
+
+The default translation is the KJV. To use a different translation:
+
+1. Contact [Maria Ferri][mferri@biblesocieties.org] at the United Bible Societies to get a
+   DBL token for the translation you want to use. You might be required to get a
+   [DBL][https://app.thedigitalbiblelibrary.org] account
+2. Get a [Bible API][https://scripture.api.bible] account
+3. [Create an app][https://scripture.api.bible/admin/applications] and fill in the DBL
+   token from step 1. Put the user key in the BIBLE_API_KEY environment variable
+4. Use the user key to authenticate a Bible API call to [get the Bible
+   ID][https://scripture.api.bible/livedocs#/Bibles/getBibles] for the translation you
+   want to use
+5. Put the Bible Id in the `config/story.ts` file
+
+# Index Configuration
+
+This section outlines how an index for each page [Pages, Chapters etc] will look.
+Following are the widgets that are currently implemented: [Index Card](#IndexCard)
+
+## IndexCard
+
+A widget that displays information about pages or chapters. Multiple of these widgets will
+display on an index page. This can be in gridview or listview With or without an image.
+This also includes tags depending on the scope
+
+- item is of type IndexReadyItem
+- isList is a boolean to determine whether or not the index cards should appear as a list
+  or in a grid
+
+- scope as a string determines how tags appear
+- placeholderImage is the url for an image that should appear on an index card if images
+  are required, but non exists for that item yet
+- chapterName is the name that will appear on the card
+
+```ts
+{
+  item: {
+    type: Object as PropType<IndexReadyItem>,
+    required: true,
+  },
+  isList: {
+    type: Boolean,
+    required: true,
+  },
+  scope: {
+    type: String,
+    required: true,
+  },
+  placeholderImage: {
+    type: String,
+    default: '',
+    required: false,
+  },
+  chapterName: {
+    type: String,
+    required: true,
+  },
+}
+```
+
+### IndexReadyItem
+
+- number is the order number, like chapter 1 or 2 etc.
+- imageUrl is the image for that item
+- title is a string for title
+- tags are the tags that should appear on the card
+
+```ts
+  number: number;
+  imageUrl: string;
+  title: string;
+  tags: string[];
 ```

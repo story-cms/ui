@@ -1,11 +1,13 @@
 <template>
-  <p>Field: {{ field.name }}</p>
-  <p>Widget: {{ field.widget }}</p>
+  <div>
+    <p>Field: {{ field.name }}</p>
+    <p>Widget: {{ field.widget }}</p>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { FieldSpec } from 'App/Models/Interfaces';
+import { FieldSpec } from '../Shared/interfaces';
 import { commonProps } from '../Shared/helpers';
 const props = defineProps({
   ...commonProps,

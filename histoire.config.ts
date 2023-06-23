@@ -18,6 +18,14 @@ export default defineConfig({
         id: 'pages',
         title: 'Pages',
       },
+      {
+        id: 'chapter',
+        title: 'Chapter Index',
+      },
+      {
+        id: 'shared',
+        title: 'Shared Widgets',
+      },
     ],
   },
   theme: {

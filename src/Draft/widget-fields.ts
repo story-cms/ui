@@ -1,3 +1,4 @@
+import AudioField from './AudioField.vue';
 import StringField from './StringField.vue';
 import MarkdownField from './MarkdownField.vue';
 import ImageField from './ImageField.vue';
@@ -14,10 +15,13 @@ import NumberField from './NumberField.vue';
 export const widgetField = (widget: string) => {
   const up = widget[0].toUpperCase() + widget.substring(1);
   const name = `${up}Field`;
+
   switch (name) {
     // custom fields
 
     // non-custom fields
+    case 'AudioField':
+      return AudioField;
     case 'StringField':
       return StringField;
     case 'ImageField':

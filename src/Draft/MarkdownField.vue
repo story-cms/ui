@@ -33,12 +33,13 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onMounted } from 'vue';
-import { FieldSpec } from 'App/Models/Interfaces';
+import { FieldSpec } from '../Shared/interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import type { Editor, EditorChange } from 'codemirror';
 import { customToolbarButtons, defaultButtons } from './Markdown/toolbar-buttons';
-import EasyMDE from 'easymde';
+import type EasyMDE from './Markdown/types';
+// import EasyMDE from 'easymde';
 
 const props = defineProps({
   ...commonProps,
@@ -93,7 +94,11 @@ const toolbar = computed((): any[] => {
   return defaultButtons;
 });
 
-onMounted(() => {
+onMounted(async () => {
+  // to be able to export the component without browser references,
+  // we have to dynamically import the easymde dependency
+  const easymdeModule = await import('easymde');
+  const EasyMDE = easymdeModule.default;
   mde = new EasyMDE({
     minHeight: field.value.minimal ? 'auto' : '300px',
     element: textArea.value,

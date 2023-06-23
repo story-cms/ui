@@ -1,7 +1,7 @@
 <template>
   <div
-    class="relative w-full bg-white p-9"
-    :class="{ 'bg-gray-400 bg-opacity-30': isHovering }"
+    class="relative w-full p-9"
+    :class="dropStyle"
     @dragover.prevent="onDragOver"
     @dragenter="onDragEnter"
     @dragleave="onDragLeave"
@@ -44,7 +44,9 @@
         </label>
         <p class="pl-1">or drag and drop</p>
       </div>
-      <p class="text-xs font-normal leading-4 text-gray-500">{{ props.description }}</p>
+      <p class="text-xs font-normal leading-4 text-gray-500">
+        {{ props.description }}
+      </p>
     </div>
   </div>
 </template>
@@ -72,15 +74,22 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['file']);
+
 const accept = computed(() => {
   return props.extensions.join(',');
 });
-const emit = defineEmits(['file']);
 
 const isHovering = ref(false);
 const feedback = ref('');
 
-const onDragEnter = () => (isHovering.value = true);
+const dropStyle = computed(() => {
+  return { 'bg-gray-200': isHovering.value, 'bg-white': !isHovering.value };
+});
+
+const onDragEnter = () => {
+  isHovering.value = true;
+};
 const onDragLeave = () => (isHovering.value = false);
 const onDragOver = () => (isHovering.value = true);
 
@@ -118,7 +127,7 @@ const validateFile = (file: File) => {
 
   if (!allowedExtensions.some((extension) => file.name.endsWith(extension))) {
     throw new ValidationError(
-      `Invalid file! Use an image instead with the extension ${props.extensions}.`,
+      `Only media files with extensions ${props.extensions} accepted.`,
     );
   }
 

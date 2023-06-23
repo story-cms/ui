@@ -9,34 +9,34 @@
     <div class="flex flex-col">
       <label
         :for="fieldPath"
-        class="input-label mt-1 mr-2"
+        class="input-label mr-2 mt-1"
         :class="{ rtl: language.isRtl }"
       >
         {{ field.label }}
       </label>
       <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
       <select
-        name="select"
         :id="fieldPath"
         v-model="selection"
-        @change="update"
+        name="select"
         :disabled="props.isReadOnly"
         class="max-w-min rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         :class="{ 'border-red-500': hasError }"
+        @change="update"
       >
-        <option v-for="{ value, label } in field.options" :value="value">
+        <option v-for="{ value, label } in field.options" :key="value" :value="value">
           {{ label }}
         </option>
       </select>
 
-      <p class="text-sm text-error" v-if="hasError">This field cannot be empty</p>
+      <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue';
-import type { FieldSpec } from 'App/Models/Interfaces';
+import type { FieldSpec } from '../Shared/interfaces';
 import { useLanguageStore, useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 
@@ -62,7 +62,7 @@ model.$subscribe(() => {
   });
 });
 
-const update = (event: Event) => {
+const update = () => {
   model.setField(fieldPath.value, selection.value);
 };
 

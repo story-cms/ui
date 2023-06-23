@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
-import type { Scripture } from 'App/Models/Interfaces';
+import type { Scripture } from '../Shared/interfaces';
 
 export const useModelStore = defineStore('model', () => {
   const model = ref({});
