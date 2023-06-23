@@ -15,7 +15,7 @@ test.describe('Image Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).toBeVisible();
   });
 
@@ -25,7 +25,7 @@ test.describe('Image Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
@@ -47,10 +47,7 @@ test.describe('Image Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
-    ).not.toBeVisible();
-    await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).not.toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
@@ -68,7 +65,7 @@ test.describe('Image Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).not.toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
@@ -81,15 +78,14 @@ test.describe('Image Field', () => {
         .frameLocator('[data-test-id="preview-iframe"]')
         .getByText('Upload a fileor drag and dropSVG, PNG, JPG, GIF up to 5MB'),
     ).toBeVisible();
+
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
-      .getByText('Upload a file')
-      .click();
-    // Todo: Fix upload via Playwright
-    // await page.setInputFiles("input[name='upload']", './tests/assets/pic.jpeg');
-    // await expect(
-    //   page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
-    // ).toBeVisible();
+      .getByLabel('Upload a file')
+      .setInputFiles('./tests/assets/pic.jpg');
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
+    ).toBeVisible();
   });
 
   test('should upload RIV image only', async ({ page }) => {
@@ -98,7 +94,7 @@ test.describe('Image Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).not.toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
@@ -118,13 +114,11 @@ test.describe('Image Field', () => {
     ).toBeVisible();
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
-      .getByText('Upload a file')
-      .click();
-    // Todo: Fix upload via Playwright
-    // await page.setInputFiles("input[name='upload']", './tests/assets/pic.jpeg');
-    // await expect(
-    //   page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
-    // ).toBeVisible();
+      .getByLabel('Upload a file')
+      .setInputFiles('./tests/assets/pic.jpg');
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
+    ).not.toBeVisible();
   });
 
   test('should show image field with file attributes', async ({ page }) => {
@@ -133,7 +127,7 @@ test.describe('Image Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).not.toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
@@ -144,22 +138,16 @@ test.describe('Image Field', () => {
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
-        .getByText('Upload a fileor drag and dropSVG, PNG up to 2MB'),
+        .getByText('Upload a fileor drag and dropSVG, PNG up to 20KB'),
     ).toBeVisible();
-    // await expect(
-    //   page
-    //     .frameLocator('[data-test-id="preview-iframe"]')
-    //     .getByText('Upload a fileor drag and dropRIV only'),
-    // ).toBeVisible();
-    // await page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .getByText('Upload a file')
-    //   .click();
-    // Todo: Fix upload via Playwright
-    // await page.setInputFiles("input[name='upload']", './tests/assets/pic.jpeg');
-    // await expect(
-    //   page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
-    // ).toBeVisible();
+
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByLabel('Upload a file')
+      .setInputFiles('./tests/assets/pic-medium.jpg');
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
+    ).not.toBeVisible();
   });
 
   test('should error message if image is missing', async ({ page }) => {
@@ -170,7 +158,7 @@ test.describe('Image Field', () => {
         .getByText('Profile Image', { exact: true }),
     ).toBeVisible();
     await expect(
-      page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('img'),
     ).not.toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),

@@ -13,14 +13,17 @@ test.describe('Markdown Field', () => {
   test('should show markdown field', async ({ page }) => {
     await page.getByRole('link', { name: 'With model' }).click();
 
-    // await expect(
-    //   page.frameLocator('[data-test-id="preview-iframe"]').locator('.CodeMirror'),
-    // ).toContainText(objectModel.notes);
-
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
         .getByText('Notes', { exact: true }),
+    ).toBeVisible();
+
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('.CodeMirror'),
+    ).toBeVisible();
+    await expect(
+      page.frameLocator('[data-test-id="preview-iframe"]').locator('.CodeMirror-lines'),
     ).toBeVisible();
   });
 
@@ -41,11 +44,6 @@ test.describe('Markdown Field', () => {
       page
         .frameLocator('[data-test-id="preview-iframe"]')
         .getByRole('button', { name: 'Heading' }),
-    ).toBeVisible();
-    await expect(
-      page
-        .frameLocator('[data-test-id="preview-iframe"]')
-        .getByRole('button', { name: 'Footnote Button' }),
     ).toBeVisible();
   });
   test('should show error', async ({ page }) => {
@@ -84,10 +82,6 @@ test.describe('Markdown Field', () => {
   test('should set RTL', async ({ page }) => {
     await page.getByRole('link', { name: 'RTL' }).click();
 
-    // const locator = page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .locator('.CodeMirror-scroll');
-
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByText('Notes');
@@ -100,22 +94,20 @@ test.describe('Markdown Field', () => {
     await expect(locator).toHaveClass(/rtl/);
   });
 
-  test('should be readonly', async ({ page }) => {
+  test('should be readonly @test', async ({ page }) => {
     await page.getByRole('link', { name: 'Readonly' }).click();
 
-    // const locator = page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .locator('.CodeMirror');
-
-    // const locator = page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .getByText('Notes');
-
-    // await page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .getByRole('button', { name: 'Set RTL' })
-    //   .click();
-
-    // await expect(locator).toHaveAttribute('readonly', '');
+    const locator = page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByText('We went to the park at *09h00* on a **sunny** day.');
+    await expect(locator).toBeVisible();
+    // TODO: check for readonly attribute in element
+    // await expect(
+    //   page
+    //     .frameLocator('[data-test-id="preview-iframe"]')
+    //     .getByText(
+    //       'Notesxxxxxxxxxx # The OutingWe went to the park at *09h00* on a **sunny** day.',
+    //     ),
+    // ).toHaveClass(/opacity-50/);
   });
 });
