@@ -3,9 +3,9 @@ steps:
     name: 'gcr.io/cloud-builders/npm'
     args: ['install']
 
-  # - id: lint
-  #   name: 'gcr.io/cloud-builders/npm'
-  #   args: ['run', 'lint']
+  - id: lint
+    name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'lint']
 
   - id: install-playwright
     name: 'gcr.io/cloud-builders/npm'
@@ -19,4 +19,4 @@ steps:
 
   - id: tests
     name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'dev']
+    args: ['run', 'test:e2e']
