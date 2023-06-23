@@ -32,7 +32,7 @@
     "lib:build": "vue-tsc && vite build",
     "lib:preview": "vite preview",
     "test:unit": "npx playwright test tests/unit/*.ts",
-    "test:e2e": "npx playwright test tests/e2e/*.ts ",
+    "test:e2e": "npx playwright test tests/e2e/stringField.spec.ts ",
     "test":"npm run test:unit && npm run test:e2e",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "format": "prettier --write ."

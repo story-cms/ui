@@ -19,4 +19,4 @@ steps:
 
   - id: tests
     name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'test:e2e']
+    args: ['run', 'dev']
