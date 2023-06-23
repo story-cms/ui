@@ -41,12 +41,12 @@ test.describe('Boolean Field', () => {
 
   test('should have label at the start', async ({ page }) => {
     await page.getByRole('link', { name: 'Label start' }).click();
-    // TODO: check parent element for ordering class
-    // await expect(
-    //   page
-    //     .frameLocator('[data-test-id="preview-iframe"]')
-    //     .getByRole('switch', { name: 'Is Favourite' }),
-    // ).toHaveClass(/space-x-reverse/);
+
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .getByRole('switch', { name: 'Is Favourite' }),
+    ).toBeVisible();
   });
 
   test('should have error message', async ({ page }) => {
@@ -79,15 +79,26 @@ test.describe('Boolean Field', () => {
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('button', { name: 'Set RTL' })
       .click();
-    // TODO: Make this work
-    // await expect(locator).toHaveClass(/rtl/);
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .locator('div')
+        .filter({ hasText: 'Is FavouriteIs Favourite' })
+        .nth(3),
+    ).toHaveClass(/rtl/);
 
-    // await page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .getByRole('button', { name: 'Set LTR' })
-    //   .click();
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('button', { name: 'Set LTR' })
+      .click();
 
-    // await expect(locator).not.toHaveClass(/rtl/);
+    await expect(
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .locator('div')
+        .filter({ hasText: 'Is FavouriteIs Favourite' })
+        .nth(3),
+    ).not.toHaveClass(/rtl/);
   });
 
   test('should set switch to readonly', async ({ page }) => {
@@ -96,23 +107,6 @@ test.describe('Boolean Field', () => {
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('switch', { name: 'Is Favourite' });
     await expect(locator).toHaveClass(/bg-gray-200/);
-    await locator.click();
-    await expect(locator).toHaveClass(/bg-indigo-600/);
-
-    await expect(locator).not.toHaveClass(/rtl/);
-
-    await page
-      .frameLocator('[data-test-id="preview-iframe"]')
-      .getByRole('button', { name: 'Set RTL' })
-      .click();
-    // TODO: Make this work
-    // await expect(locator).toHaveClass(/rtl/);
-
-    // await page
-    //   .frameLocator('[data-test-id="preview-iframe"]')
-    //   .getByRole('button', { name: 'Set LTR' })
-    //   .click();
-
-    // await expect(locator).not.toHaveClass(/rtl/);
+    await expect(locator).toHaveAttribute('disabled', '');
   });
 });
