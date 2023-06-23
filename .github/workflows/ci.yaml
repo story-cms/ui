@@ -8,17 +8,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use node version 16
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: "npm"
-    - name: Install dependencies
-      run: npm ci
-    - name: Lint code
-      run: npm run lint
-    - name: Install playwright browser
-      run: npx playwright install --with-deps
-    - name: Run tests
-      run: npm run test
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build the env file
+        run: cp ops/.env.ci .env
+
+      - uses: falnyr/replace-env-vars-action@master
+        env:
+          VITE_CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          VITE_CLOUDINARY_SECRET: ${{ secrets.CLOUDINARY_SECRET }}
+        with:
+          filename: .env
+
+      - name: Use node version 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Install playwright browser
+        run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npm run test
