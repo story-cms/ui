@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-// import { objectModel } from '@/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-markdownfield-story-vue');

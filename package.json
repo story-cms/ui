@@ -31,7 +31,8 @@
     "lib:dev": "vite",
     "lib:build": "vue-tsc && vite build",
     "lib:preview": "vite preview",
-    "test": "vitest run",
+    "test:unit": "npx playwright test tests/unit/*.ts",
+    "test:e2e": "npx playwright test tests/e2e/*.ts ",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "format": "prettier --write ."
   },

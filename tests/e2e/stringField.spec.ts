@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { objectModel } from '@/helpers/mocks';
+import { objectModel } from '../../src/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-stringfield-story-vue');
@@ -69,7 +69,7 @@ test.describe('String Field', () => {
     await expect(locator).not.toHaveClass(/rtl/);
   });
 
-  test('should make a field readonly @readonly', async ({ page }) => {
+  test('should make a field readonly', async ({ page }) => {
     await page.getByRole('link', { name: 'Readonly' }).click();
     await expect(
       page

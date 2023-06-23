@@ -89,9 +89,9 @@ const fileAttributesSpec = {
   widget: 'image',
   uploadPreset: 'cmsplayground',
   provider: provider,
-  description: 'SVG, PNG up to 2MB',
+  description: 'SVG, PNG up to 20KB',
   extensions: ['.svg', '.png'],
-  maxSize: 2000000,
+  maxSize: 20000,
 };
 
 const nonImageSpec = {

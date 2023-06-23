@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
-import { listModel, listSpec, listInListModel, listInListSpec } from '@/helpers/mocks';
+import {
+  listModel,
+  listSpec,
+  listInListModel,
+  listInListSpec,
+} from '../../src/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-listfield-story-vue');

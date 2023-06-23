@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { panelModel } from '@/helpers/mocks';
+import { panelModel } from '../../src/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-objectfield-story-vue');

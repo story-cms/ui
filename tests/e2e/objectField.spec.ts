@@ -6,7 +6,7 @@ import {
   listInObjectModel,
   objectInListInObjectSpec,
   objectInListInObjectModel,
-} from '@/helpers/mocks';
+} from '../../src/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-objectfield-story-vue');

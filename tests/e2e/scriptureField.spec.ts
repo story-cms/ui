@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { scriptureModel } from '@/helpers/mocks';
+import { scriptureModel } from '../../src/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-scripturefield-story-vue');
