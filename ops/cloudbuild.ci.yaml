@@ -10,7 +10,7 @@ steps:
   - id: install-playwright
     name: 'gcr.io/cloud-builders/npm'
     entrypoint: 'npx'
-    args: ['playwright', 'install']
+    args: ['playwright', 'install', 'chromium', '--with-deps']
 
   - id: tests
     name: 'gcr.io/cloud-builders/npm'
