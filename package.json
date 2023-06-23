@@ -53,8 +53,6 @@
     "pinia": "^2.0.27"
   },
   "devDependencies": {
-    "@histoire/plugin-vue": "^0.12.4",
-    "@onesheep/prettier-config": "^0.0.11",
     "@playwright/test": "^1.35.1",
     "@histoire/plugin-vue": "^0.16.1",
     "@onesheep/prettier-config": "^0.0.12",
@@ -76,7 +74,6 @@
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4",
-    "vite": "^3.2.5",
     "vite": "^4.3.9",
     "vite-plugin-dts": "^2.3.0",
     "vitest": "^0.31.3",

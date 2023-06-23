@@ -20,10 +20,6 @@ export default defineConfig({
     },
     dedupe: ['vue'],
   },
-
-  test: {
-    globals: true,
-  },
   build: {
     lib: {
       entry: {
