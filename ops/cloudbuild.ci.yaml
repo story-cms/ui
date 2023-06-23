@@ -7,6 +7,11 @@ steps:
     name: 'gcr.io/cloud-builders/npm'
     args: ['run', 'lint']
 
+  - id: install-playwright
+    name: 'gcr.io/cloud-builders/npm'
+    entrypoint: 'npx'
+    args: ['playwright', 'install']
+
   - id: tests
     name: 'gcr.io/cloud-builders/npm'
     args: ['run', 'test']
