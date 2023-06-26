@@ -9,11 +9,12 @@ steps:
   
   - id: install-playwright
     name: 'node'
-    args: ['npx', 'playwright', 'install', 'chromium', '--with-deps']
+    entrypoint: "npx"
+    args: ['playwright', 'install', 'chromium', '--with-deps']
  
   - id: install-playwright-deps
     name: 'node'
-    args: ['npx', 'playwright', 'install-deps']
+    args: ['playwright', 'install-deps']
 
   - id: tests
     name: 'node'
