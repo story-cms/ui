@@ -9,13 +9,11 @@ steps:
   
   - id: install-playwright
     name: 'ubuntu'
-    entrypoint: 'npx'
-    args: ['playwright', 'install', 'chromium', '--with-deps']
+    args: ['npx', 'playwright', 'install', 'chromium', '--with-deps']
  
   - id: install-playwright-deps
     name: 'ubuntu'
-    entrypoint: 'npx'
-    args: ['playwright', 'install-deps']
+    args: ['npx', 'playwright', 'install-deps']
 
   - id: tests
     name: 'ubuntu'
