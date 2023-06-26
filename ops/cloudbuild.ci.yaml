@@ -8,15 +8,15 @@ steps:
     args: ['run', 'lint']
   
   - id: install-playwright
-    name: 'ubuntu'
+    name: 'node'
     args: ['npx', 'playwright', 'install', 'chromium', '--with-deps']
  
   - id: install-playwright-deps
-    name: 'ubuntu'
+    name: 'node'
     args: ['npx', 'playwright', 'install-deps']
 
   - id: tests
-    name: 'ubuntu'
+    name: 'node'
     entrypoint: 'bash'
     args:
       - '-c'
