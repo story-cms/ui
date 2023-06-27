@@ -14,10 +14,12 @@ steps:
       - '-c'
       - |
         npx playwright test -g "should upload image"
-    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
+    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET', 'VITE_BIBLE_API_KEY']
 availableSecrets:
   secretManager:
     - env: 'VITE_CLOUDINARY_API_KEY'
       versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_API_KEY/versions/1
     - env: 'VITE_CLOUDINARY_SECRET'
       versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1
+    - env: 'VITE_BIBLE_API_KEY'
+      versionName: projects/$PROJECT_ID/secrets/VITE_BIBLE_API_KEY/versions/1

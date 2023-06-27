@@ -31,5 +31,3 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
 });
-console.log('API key', process.env.VITE_CLOUDINARY_API_KEY);
-console.log('Secret', process.env.VITE_CLOUDINARY_SECRET);
