@@ -16,14 +16,14 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
   ],
   webServer: {
     command: 'npm run dev',
@@ -31,6 +31,3 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
 });
-console.log(process.env.VITE_CLOUDINARY_API_KEY);
-console.log(process.env.VITE_CLOUDINARY_SECRET);
-console.log(process.env.VITE_BIBLE_API_KEY);
