@@ -13,8 +13,6 @@ steps:
     args:
       - '-c'
       - |
-        VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY
-        VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET
         npx playwright test -g "should upload image"
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
 availableSecrets:
