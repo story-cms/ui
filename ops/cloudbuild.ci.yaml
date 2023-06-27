@@ -17,7 +17,7 @@ steps:
     args: ['playwright', 'install-deps']
 
   - id: tests
-    name: 'node'
+    name: 'mcr.microsoft.com/playwright'
     entrypoint: 'bash'
     args:
       - '-c'
