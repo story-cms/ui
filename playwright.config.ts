@@ -26,8 +26,10 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    command:
+      'VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET npm run dev',
     url: 'http://localhost:6006',
     reuseExistingServer: !process.env.CI,
   },
 });
+console.log(process.env.VITE_CLOUDINARY_API_KEY);

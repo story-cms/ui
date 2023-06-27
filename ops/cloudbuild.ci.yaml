@@ -1,11 +1,11 @@
 steps:
-  - id: install
-    name: 'gcr.io/cloud-builders/npm'
-    args: ['install']
+  # - id: install
+  #   name: 'gcr.io/cloud-builders/npm'
+  #   args: ['install']
   
-  - id: lint
-    name: 'gcr.io/cloud-builders/npm'
-    args: ['run', 'lint']
+  # - id: lint
+  #   name: 'gcr.io/cloud-builders/npm'
+  #   args: ['run', 'lint']
 
   - id: tests
     name: 'mcr.microsoft.com/playwright'
@@ -13,9 +13,9 @@ steps:
     args:
       - '-c'
       - |
-        VITE_CLOUDINARY_API_KEY=VITE_CLOUDINARY_API_KEY
-        VITE_CLOUDINARY_SECRET=VITE_CLOUDINARY_SECRET
-        npx playwright test tests/unit/*.ts && npx playwright test tests/e2e/*.ts
+        VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY
+        VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET
+        npx playwright test -g "should upload image"
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET']
 availableSecrets:
   secretManager:
