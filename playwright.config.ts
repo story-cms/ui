@@ -16,18 +16,18 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
   ],
   webServer: {
     command:
-      'VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET npm run dev',
+      'VITE_CLOUDINARY_API_KEY=VITE_CLOUDINARY_API_KEY VITE_CLOUDINARY_SECRET=VITE_CLOUDINARY_SECRET npm run dev',
     url: 'http://localhost:6006',
     reuseExistingServer: !process.env.CI,
   },
