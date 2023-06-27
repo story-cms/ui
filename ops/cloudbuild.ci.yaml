@@ -6,15 +6,6 @@ steps:
   - id: lint
     name: 'gcr.io/cloud-builders/npm'
     args: ['run', 'lint']
-  
-  - id: install-playwright
-    name: 'node'
-    entrypoint: "npx"
-    args: ['playwright', 'install', 'chromium', '--with-deps']
- 
-  - id: install-playwright-deps
-    name: 'node'
-    args: ['playwright', 'install-deps']
 
   - id: tests
     name: 'mcr.microsoft.com/playwright'
