@@ -8,10 +8,17 @@ steps:
           --build-arg VITE_CLOUDINARY_API_KEY=$$VITE_CLOUDINARY_API_KEY \
           --build-arg VITE_CLOUDINARY_SECRET=$$VITE_CLOUDINARY_SECRET \
           --build-arg VITE_BIBLE_API_KEY=$$VITE_BIBLE_API_KEY \
+          --build-arg DO_OAUTH_TOKEN=$$DO_OAUTH_TOKEN \
           -t $_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA \
           .
     entrypoint: bash
-    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET', 'VITE_BIBLE_API_KEY']
+    secretEnv:
+      [
+        'VITE_CLOUDINARY_API_KEY',
+        'VITE_CLOUDINARY_SECRET',
+        'VITE_BIBLE_API_KEY',
+        'DO_OAUTH_TOKEN',
+      ]
 
   - id: Push
     name: gcr.io/cloud-builders/docker
@@ -56,3 +63,5 @@ availableSecrets:
       versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1
     - env: 'VITE_BIBLE_API_KEY'
       versionName: projects/$PROJECT_ID/secrets/VITE_BIBLE_API_KEY/versions/1
+    - env: 'DO_OAUTH_TOKEN'
+      versionName: projects/$PROJECT_ID/secrets/DO_OAUTH_TOKEN/versions/1
