@@ -24,6 +24,7 @@ export default class S3Service implements HostService {
       return { url: '' };
     }
     const secrets = useSecretStore();
+    console.log(secrets.doOauthToken);
 
     const formData = new FormData();
     formData.append('file', file);
