@@ -196,6 +196,6 @@ test.describe('Image Field', () => {
       page
         .frameLocator('[data-test-id="preview-iframe"]')
         .getByText('Upload a fileor drag and dropSVG, PNG, JPG, GIF up to 5MB'),
-    ).not.toBeVisible({ timeout: 120000 });
+    ).not.toBeVisible();
   });
 });
