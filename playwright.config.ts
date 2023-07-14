@@ -28,6 +28,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://127.0.0.1:6006/story',
+    timeout: 120 * 1000,
     reuseExistingServer: true,
   },
 });
