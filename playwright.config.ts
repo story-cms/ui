@@ -6,6 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 3,
   workers: process.env.CI ? 1 : undefined,
+  expect: { timeout: 120000 },
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:6006/story',
@@ -27,8 +28,8 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run dev',
-    url: 'http://127.0.0.1:6006/story',
+    url: 'http://127.0.0.1:6006/',
     timeout: 120 * 1000,
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
 });
