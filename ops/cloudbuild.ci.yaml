@@ -8,7 +8,7 @@ steps:
     args: ['run', 'lint']
 
   - id: tests
-    name: 'mcr.microsoft.com/playwright:v1.36.0'
+    name: 'mcr.microsoft.com/playwright'
     entrypoint: 'npm'
     args: ['run', 'test:e2e']
     secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET', 'VITE_BIBLE_API_KEY']
