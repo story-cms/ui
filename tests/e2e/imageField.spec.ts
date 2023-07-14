@@ -59,7 +59,7 @@ test.describe('Image Field', () => {
     ).toBeVisible();
   });
 
-  test.skip('should upload image', async ({ page }) => {
+  test('should upload image', async ({ page }) => {
     await page.getByRole('link', { name: 'Model without Image' }).click();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
