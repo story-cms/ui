@@ -7,7 +7,6 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'list',
-  expect: { timeout: 60000 },
   use: {
     baseURL: 'http://127.0.0.1:6006/story',
     trace: 'on-first-retry',
