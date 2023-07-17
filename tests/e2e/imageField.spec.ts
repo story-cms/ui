@@ -178,14 +178,14 @@ test.describe('Image Field', () => {
     ).toBeVisible();
   });
 
-  test.skip('should not allow image upload', async ({ page }) => {
+  test('should not allow image upload', async ({ page }) => {
     await page.getByRole('link', { name: 'Read Only' }).click();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
     ).toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('img'),
-    ).not.toBeVisible();
+    ).toBeVisible();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
     ).not.toBeVisible();
