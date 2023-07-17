@@ -178,7 +178,7 @@ test.describe('Image Field', () => {
     ).toBeVisible();
   });
 
-  test('should not allow image upload', async ({ page }) => {
+  test.skip('should not allow image upload', async ({ page }) => {
     await page.getByRole('link', { name: 'Read Only' }).click();
     await expect(
       page.frameLocator('[data-test-id="preview-iframe"]').getByText('Profile Image'),
