@@ -4,22 +4,31 @@ import { ref } from 'vue';
 const start = {
   cloudinaryApiKey: '',
   cloudinarySecret: '',
-  doOauthToken: '',
   bibleApiKey: '',
+  doAccessKeyId: '',
+  doSecretAccessKey: '',
+  doBucket: '',
+  doRegion: '',
 };
 
 export const useSecretStore = defineStore('secrets', () => {
   const cloudinaryApiKey = ref(start.cloudinaryApiKey);
   const cloudinarySecret = ref(start.cloudinarySecret);
-  const doOauthToken = ref(start.doOauthToken);
   const bibleApiKey = ref(start.bibleApiKey);
+  const doAccessKeyId = ref(start.doAccessKeyId);
+  const doSecretAccessKey = ref(start.doSecretAccessKey);
+  const doBucket = ref(start.doBucket);
+  const doRegion = ref(start.doRegion);
 
   const setSecrets = (fresh: any) => {
     const strong = fresh as typeof start;
     cloudinaryApiKey.value = strong.cloudinaryApiKey;
     cloudinarySecret.value = strong.cloudinarySecret;
-    doOauthToken.value = strong.doOauthToken;
     bibleApiKey.value = strong.bibleApiKey;
+    doAccessKeyId.value = strong.doAccessKeyId;
+    doSecretAccessKey.value = strong.doSecretAccessKey;
+    doBucket.value = strong.doBucket;
+    doRegion.value = strong.doRegion;
   };
 
   return {
@@ -27,7 +36,10 @@ export const useSecretStore = defineStore('secrets', () => {
 
     cloudinaryApiKey,
     cloudinarySecret,
-    doOauthToken,
     bibleApiKey,
+    doAccessKeyId,
+    doSecretAccessKey,
+    doBucket,
+    doRegion,
   };
 });
