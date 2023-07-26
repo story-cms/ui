@@ -100,5 +100,13 @@ test.describe('Markdown Field', () => {
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByText('We went to the park at *09h00* on a **sunny** day.');
     await expect(locator).toBeVisible();
+    // TODO: check for readonly attribute in element
+    // await expect(
+    //   page
+    //     .frameLocator('[data-test-id="preview-iframe"]')
+    //     .getByText(
+    //       'Notesxxxxxxxxxx # The OutingWe went to the park at *09h00* on a **sunny** day.',
+    //     ),
+    // ).toHaveClass(/opacity-50/);
   });
 });

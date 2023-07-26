@@ -64,7 +64,7 @@ test.describe('Boolean Field', () => {
     ).toBeVisible();
   });
 
-  test('should set RTL', async ({ page }) => {
+  test('should set RLT', async ({ page }) => {
     await page.getByRole('link', { name: 'RTL' }).click();
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
