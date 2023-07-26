@@ -8,5 +8,15 @@ steps:
     args: ['run', 'lint']
 
   - id: tests
-    name: 'gcr.io/cloud-builders/npm'
+    name: 'mcr.microsoft.com/playwright'
+    entrypoint: 'npm'
     args: ['run', 'test']
+    secretEnv: ['VITE_CLOUDINARY_API_KEY', 'VITE_CLOUDINARY_SECRET', 'VITE_BIBLE_API_KEY']
+availableSecrets:
+  secretManager:
+    - env: 'VITE_CLOUDINARY_API_KEY'
+      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_API_KEY/versions/1
+    - env: 'VITE_CLOUDINARY_SECRET'
+      versionName: projects/$PROJECT_ID/secrets/VITE_CLOUDINARY_SECRET/versions/1
+    - env: 'VITE_BIBLE_API_KEY'
+      versionName: projects/$PROJECT_ID/secrets/VITE_BIBLE_API_KEY/versions/1
