@@ -25,7 +25,7 @@ export default class S3Service implements HostService {
     const secrets = useSecretStore();
 
     const client = new S3Client({
-      region: 'ams3',
+      region: secrets.doRegion,
       endpoint: secrets.doEndpoint,
       credentials: {
         accessKeyId: secrets.doAccessKeyId,
@@ -49,13 +49,17 @@ export default class S3Service implements HostService {
         partSize: 1024 * 1024 * 5,
       });
 
-      upload.on('httpUploadProgress', (progress) => {
-        onProgress((progress?.loaded ?? 0) / (progress?.total ?? 1));
+      upload.on('httpUploadProgress', ({ loaded, total }) => {
+        onProgress((loaded ?? 0) / (total ?? 1));
       });
 
       const response = (await upload.done()) as CompleteMultipartUploadCommandOutput;
 
-      return { url: response?.Location as string };
+      const url = response?.Location as string;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        return { url: 'https://' + url };
+      }
+      return { url };
     } catch (error) {
       console.error(error);
     } finally {
