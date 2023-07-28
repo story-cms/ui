@@ -5,6 +5,7 @@ const start = {
   cloudinaryApiKey: '',
   cloudinarySecret: '',
   bibleApiKey: '',
+  doEndpoint: '',
   doAccessKeyId: '',
   doSecretAccessKey: '',
   doBucket: '',
@@ -15,6 +16,7 @@ export const useSecretStore = defineStore('secrets', () => {
   const cloudinaryApiKey = ref(start.cloudinaryApiKey);
   const cloudinarySecret = ref(start.cloudinarySecret);
   const bibleApiKey = ref(start.bibleApiKey);
+  const doEndpoint = ref(start.doEndpoint);
   const doAccessKeyId = ref(start.doAccessKeyId);
   const doSecretAccessKey = ref(start.doSecretAccessKey);
   const doBucket = ref(start.doBucket);
@@ -25,6 +27,7 @@ export const useSecretStore = defineStore('secrets', () => {
     cloudinaryApiKey.value = strong.cloudinaryApiKey;
     cloudinarySecret.value = strong.cloudinarySecret;
     bibleApiKey.value = strong.bibleApiKey;
+    doEndpoint.value = strong.doEndpoint;
     doAccessKeyId.value = strong.doAccessKeyId;
     doSecretAccessKey.value = strong.doSecretAccessKey;
     doBucket.value = strong.doBucket;
@@ -37,6 +40,7 @@ export const useSecretStore = defineStore('secrets', () => {
     cloudinaryApiKey,
     cloudinarySecret,
     bibleApiKey,
+    doEndpoint,
     doAccessKeyId,
     doSecretAccessKey,
     doBucket,
