@@ -38,7 +38,8 @@ const formState = ref(props.model);
 const store = useModelStore();
 
 const setModel = () => {
-  store.model = formState.value;
+  const fresh = formState.value as unknown;
+  store.setModel(fresh as object);
 };
 
 const pretty = computed(() => JSON.stringify(store.model, null, 2));

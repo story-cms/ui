@@ -24,7 +24,7 @@
         v-for="item in filteredIndex"
         :key="item.number"
         :item="item"
-        :isList="isList"
+        :is-list="isList"
         :scope="currentTab"
         :chapter-name="meta.chapterType"
         @tap="onTap"

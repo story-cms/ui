@@ -1,6 +1,6 @@
 import { FieldSpec } from '../Shared/interfaces';
 
-export const objectModel = {
+export const objectModel: any = {
   name: 'John',
   age: 30,
   notes: '# The Outing\nWe went to the park at *09h00* on a **sunny** day.',
@@ -271,7 +271,7 @@ export const objectInListInObjectSpec: FieldSpec = {
   ],
 };
 
-export const objectInListInObjectModel = {
+export const objectInListInObjectModel: Record<string, any> = {
   episode: {
     title: 'The Outing',
     spreads: [

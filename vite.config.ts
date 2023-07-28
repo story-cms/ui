@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
@@ -20,10 +19,6 @@ export default defineConfig({
       vue: path.resolve('./node_modules/vue'),
     },
     dedupe: ['vue'],
-  },
-
-  test: {
-    globals: true,
   },
   build: {
     lib: {
