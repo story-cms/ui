@@ -1,7 +1,8 @@
 import { useSecretStore } from '../../store';
 import { HostService, AttachmentModel } from './types';
 import { FieldSpec } from '../../Shared/interfaces';
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { S3Client, CompleteMultipartUploadCommandOutput } from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
 
 export default class S3Service implements HostService {
   private field: FieldSpec;
@@ -17,59 +18,51 @@ export default class S3Service implements HostService {
     // eslint-disable-next-line no-unused-vars
     onProgress: (progress: number | undefined) => void,
   ): Promise<AttachmentModel> => {
-    console.log('uploading to s3');
-
     if (!this.field?.provider) {
       console.log(`No hosting provider specified for field ${this.field?.name}`);
       return { url: '' };
     }
     const secrets = useSecretStore();
 
-    // const formData = new FormData();
-    // formData.append('file', file);
-
     const client = new S3Client({
-      endpoint: 'https://ams3.digitaloceanspaces.com',
+      region: 'ams3',
+      endpoint: secrets.doEndpoint,
       credentials: {
         accessKeyId: secrets.doAccessKeyId,
         secretAccessKey: secrets.doSecretAccessKey,
       },
-      region: 'ams3',
     });
 
-    const command = new PutObjectCommand({
+    const params = {
       Bucket: secrets.doBucket,
       Key: file.name,
       Body: file,
-    });
+      ContentType: file.type,
+      ACL: 'public-read',
+    };
 
     try {
-      const response = await client.send(command);
-      console.log(response);
-      return { url: `https://cmsplayground.ams3.digitaloceanspaces.com/${file.name}` };
-    } catch (err) {
-      console.error(err);
+      const upload = new Upload({
+        client,
+        params,
+        queueSize: 4,
+        partSize: 1024 * 1024 * 5,
+      });
+
+      upload.on('httpUploadProgress', (progress) => {
+        onProgress((progress?.loaded ?? 0) / (progress?.total ?? 1));
+      });
+
+      const response = (await upload.done()) as CompleteMultipartUploadCommandOutput;
+
+      return { url: response?.Location as string };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      if (client) {
+        client.destroy();
+      }
     }
-
-    // const requestObj: AxiosRequestConfig = {
-    //   url: `https://cmsplayground.ams3.digitaloceanspaces.com/${file.name}`,
-    //   method: 'PUT',
-    //   onUploadProgress: (progress) => onProgress(progress.progress),
-    //   data: formData,
-    //   headers: {
-    //     Authorization: `Bearer ${secrets.doOauthToken}`,
-    //     Origin: 'http://localhost:6006',
-    //   },
-    // };
-    // const { default: axios } = await import('axios');
-    // try {
-    //   const response = await axios(requestObj);
-    //   console.log(response.data);
-    //   return { url: `https://cmsplayground.ams3.digitaloceanspaces.com/${file.name}` };
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
     return { url: '' };
   };
 }

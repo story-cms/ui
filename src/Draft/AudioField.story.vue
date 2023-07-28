@@ -58,7 +58,7 @@ const spec = {
   name: 'soundtrack',
   description: 'WAV, MP3, OGG, AAC, WMA',
   label: 'Audio file',
-  extensions: ['.wav', '.mp3', '.ogg', '.aac', '.wma'],
+  extensions: ['.wav', '.mp3', '.ogg', '.aac', '.wma', '.m4a'],
   widget: 'audio',
   uploadPreset: 'cmsplayground',
   provider: provider,
