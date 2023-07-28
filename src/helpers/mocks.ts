@@ -271,7 +271,7 @@ export const objectInListInObjectSpec: FieldSpec = {
   ],
 };
 
-export const objectInListInObjectModel = {
+export const objectInListInObjectModel: Record<string, any> = {
   episode: {
     title: 'The Outing',
     spreads: [

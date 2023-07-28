@@ -5,6 +5,7 @@ import {
   listInListModel,
   listInListSpec,
 } from '../../src/helpers/mocks';
+import { FieldMap, FieldSpec } from 'src';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-listfield-story-vue');
@@ -166,10 +167,10 @@ test.describe('List Field', () => {
         name: `${listInListSpec.label} : ${listInListModel.spreads[0].title}`,
       })
       .click();
-
-    await expect(
-      frame.locator(`input[name=${listInListSpec.fields[0].label}]`),
-    ).toHaveValue(listInListModel.spreads[0].title);
+    const fields = listInListSpec.fields as FieldSpec[];
+    await expect(frame.locator(`input[name=${fields[0].label}]`)).toHaveValue(
+      listInListModel.spreads[0].title,
+    );
   });
 
   // TODO: List in List Empty, List in List Error
