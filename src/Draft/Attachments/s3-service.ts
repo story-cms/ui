@@ -23,16 +23,16 @@ export default class S3Service implements HostService {
     const secrets = useSecretStore();
 
     const client = new S3Client({
-      region: secrets.doRegion,
-      endpoint: secrets.doEndpoint,
+      region: secrets.s3Region,
+      endpoint: secrets.s3Endpoint,
       credentials: {
-        accessKeyId: secrets.doAccessKeyId,
-        secretAccessKey: secrets.doSecretAccessKey,
+        accessKeyId: secrets.s3AccessKeyId,
+        secretAccessKey: secrets.s3SecretAccessKey,
       },
     });
 
     const params = {
-      Bucket: secrets.doBucket,
+      Bucket: secrets.s3Bucket,
       Key: file.name,
       Body: file,
       ContentType: file.type,
