@@ -7,11 +7,11 @@ const secrets = {
   cloudinaryApiKey: import.meta.env.VITE_CLOUDINARY_API_KEY,
   cloudinarySecret: import.meta.env.VITE_CLOUDINARY_SECRET,
   bibleApiKey: import.meta.env.VITE_BIBLE_API_KEY,
-  doEndpoint: import.meta.env.VITE_DO_ENDPOINT,
-  doAccessKeyId: import.meta.env.VITE_DO_ACCESS_KEY_ID,
-  doSecretAccessKey: import.meta.env.VITE_DO_SECRET_ACCESS_KEY,
-  doBucket: import.meta.env.VITE_DO_BUCKET,
-  doRegion: import.meta.env.VITE_DO_REGION,
+  s3Endpoint: import.meta.env.VITE_S3_ENDPOINT,
+  s3AccessKeyId: import.meta.env.VITE_S3_ACCESS_KEY_ID,
+  s3SecretAccessKey: import.meta.env.VITE_S3_SECRET_ACCESS_KEY,
+  s3Bucket: import.meta.env.VITE_S3_BUCKET,
+  s3Region: import.meta.env.VITE_S3_REGION,
 };
 
 const store = useSecretStore(pinia);
