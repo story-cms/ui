@@ -6,11 +6,9 @@ import { Upload } from '@aws-sdk/lib-storage';
 
 export default class S3Service implements HostService {
   private field: FieldSpec;
-  private endpoint: string;
 
-  constructor(field: FieldSpec, endpoint: string) {
+  constructor(field: FieldSpec) {
     this.field = field;
-    this.endpoint = endpoint;
   }
 
   upload = async (
