@@ -81,7 +81,6 @@ const language = useLanguageStore();
 const progress = ref('width:0.9%');
 const uploading = ref(false);
 
-// This hooks to the requestObj onFileProgress event so that we can indicate upload progress.
 const onFileProgress = (event: any) => {
   progress.value = 'width:' + Math.round(event * 100) + '%';
 };
