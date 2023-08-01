@@ -5,7 +5,7 @@ import {
   listInListModel,
   listInListSpec,
 } from '../../src/helpers/mocks';
-import { FieldMap, FieldSpec } from 'src';
+import { FieldSpec } from 'src';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-listfield-story-vue');
