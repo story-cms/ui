@@ -1,7 +1,7 @@
 steps:
   - id: install
     name: 'gcr.io/cloud-builders/npm'
-    args: ['install']
+    args: ['install', '--ignore-scripts']
 
   - id: lint
     name: 'gcr.io/cloud-builders/npm'
