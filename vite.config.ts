@@ -31,13 +31,14 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        'vue',
-        'pinia',
+        '@aws-sdk/client-s3',
+        '@aws-sdk/lib-storage',
+        '@rive-app/canva',
         'axios',
         'easymde',
         'luxon',
-        '@aws-sdk/client-s3',
-        '@aws-sdk/lib-storage',
+        'pinia',
+        'vue',
       ],
       output: {
         globals: {
