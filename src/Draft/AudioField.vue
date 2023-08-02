@@ -17,7 +17,7 @@ import { FieldSpec } from '../Shared/interfaces';
 import { useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import AttachmentField from './Attachments/AttachmentField.vue';
-import CloudinaryService from './Attachments/cloudinary-service';
+import S3Service from './Attachments/s3-service';
 import { AttachmentModel, Audio } from './Attachments/types';
 import AudioPlayer from './Attachments/AudioPlayer.vue';
 
@@ -41,7 +41,7 @@ const emptyAudio = {
 const startValue = model.getField(fieldPath.value, emptyAudio) as Audio;
 const url = ref(startValue.url);
 const length = ref(startValue.length);
-const host = new CloudinaryService(field.value, '/auto/upload');
+const host = new S3Service(field.value);
 
 model.$subscribe(() => {
   nextTick().then(() => {

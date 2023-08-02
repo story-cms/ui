@@ -30,7 +30,16 @@ export default defineConfig({
       fileName: 'core',
     },
     rollupOptions: {
-      external: ['vue', 'pinia', 'axios', 'easymde', 'luxon'],
+      external: [
+        '@aws-sdk/client-s3',
+        '@aws-sdk/lib-storage',
+        '@rive-app/canva',
+        'axios',
+        'easymde',
+        'luxon',
+        'pinia',
+        'vue',
+      ],
       output: {
         globals: {
           vue: 'Vue',

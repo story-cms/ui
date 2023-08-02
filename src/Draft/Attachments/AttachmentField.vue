@@ -78,12 +78,11 @@ const emit = defineEmits(['delete', 'attached']);
 
 const field = computed(() => props.field as FieldSpec);
 const language = useLanguageStore();
-const progress = ref('width:0%');
+const progress = ref('width:0.9%');
 const uploading = ref(false);
 
-// This hooks to the requestObj onFileProgress event so that we can indicate upload progress.
 const onFileProgress = (event: any) => {
-  progress.value = 'width:' + Math.round((event.loaded * 100.0) / event.total) + '%';
+  progress.value = 'width:' + Math.round(event * 100) + '%';
 };
 
 const onFile = async (file: File) => {
@@ -111,7 +110,6 @@ const defaults = computed(() => {
       };
 
     default:
-      console.log('! default', props.field);
       return {
         description: props.field?.description,
         extensions: props.field?.extensions,

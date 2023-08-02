@@ -39,10 +39,12 @@
     "test:e2e": "npx playwright test tests/e2e/*.ts",
     "test": "npm run test:unit && npm run test:e2e",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
-    "prepare": "npm run lib:build",
+    "pre": "npm run lib:build",
     "format": "prettier --write ."
   },
   "peerDependencies": {
+    "@aws-sdk/client-s3": "^3.379.1",
+    "@aws-sdk/lib-storage": "^3.379.1",
     "@rive-app/canvas": "^1.1.5",
     "axios": "^1.4.0",
     "easymde": "^2.18.0",
@@ -51,6 +53,8 @@
     "vue": "^3.2.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.379.1",
+    "@aws-sdk/lib-storage": "^3.379.1",
     "@headlessui/vue": "^1.7.14",
     "@inertiajs/vue3": "^1.0.6",
     "@rive-app/canvas": "^1.1.5",
