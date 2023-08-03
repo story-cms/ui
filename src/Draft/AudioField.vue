@@ -7,12 +7,12 @@
     @delete="onDelete"
     @attached="onAttached"
   >
-    <AudioPlayer :url="url" />
+    <AudioPlayer :url="url" @duration="onAudioDuration" />
   </AttachmentField>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick } from 'vue';
+import { computed, ref, nextTick, watch } from 'vue';
 import { FieldSpec } from '../Shared/interfaces';
 import { useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
@@ -42,6 +42,7 @@ const startValue = model.getField(fieldPath.value, emptyAudio) as Audio;
 const url = ref(startValue.url);
 const length = ref(startValue.length);
 const host = new S3Service(field.value);
+let durationReady = false;
 
 model.$subscribe(() => {
   nextTick().then(() => {
@@ -62,10 +63,28 @@ const onDelete = () => {
   });
 };
 
-const onAttached = (data: AttachmentModel) => {
+const onAttached = async (data: AttachmentModel) => {
   model.setField(fieldPath.value, {
     url: data.url,
-    length: 10.0, //TODO: get audio duration from file
+    length: length.value,
   });
 };
+
+const onAudioDuration = (duration: number) => {
+  length.value = duration;
+  durationReady = true;
+};
+
+watch(
+  () => length.value,
+  (newLength, oldLength) => {
+    if (newLength !== null && newLength !== oldLength && durationReady) {
+      model.setField(fieldPath.value, {
+        url: url.value,
+        length: newLength,
+      });
+    }
+  },
+  { immediate: true },
+);
 </script>
