@@ -9,7 +9,7 @@ export default defineConfig({
   expect: { timeout: 120000 },
   reporter: 'list',
   use: {
-    baseURL: 'http://127.0.0.1:6006/story',
+    baseURL: 'http://localhost:6006/story',
     trace: 'on-first-retry',
   },
   projects: [
@@ -28,7 +28,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'npm run dev',
-    url: 'http://127.0.0.1:6006/',
+    url: 'http://localhost:6006/',
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
   },

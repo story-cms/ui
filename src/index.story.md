@@ -120,8 +120,11 @@ the component to the `toolbar` Example:
 ## image
 
 Holds a url to a hosted image file. Suitable for allowing content editors to upload image
-files and renders a [ImageField](#).  
-An image field has four special keys:
+files and renders a [ImageField](#). The image field uses a Cloudinary service provider
+and the default cloudinary upload preset and cloud name needs to be configured in the .env
+file with these keys `CLOUDINARY_UPLOAD_PRESET`, `CLOUDINARY_CLOUD_NAME`. The upload
+preset can be overridden by specifying the `uploadPreset` key in the image field. An image
+field has four special keys:
 
 - `uploadPreset` required string specifying the Cloudinary upload preset for this image.
 - `description` an optional message that will be displayed on the upload widget. Defaults
@@ -157,11 +160,10 @@ Image with file attributes
 ## audio
 
 Holds a url to a hosted audio file. Suitable for allowing content editors to upload audio
-files and renders a [AudioField](#).  
-An audio field has four special keys:
+files and renders a [AudioField](#). The audio field uses a S3 service provider to store
+the audio files. The provider needs to be configured in the .env file with these keys:
+`S3_REGION`, `S3_BUCKET`, `S3_ENDPOINT` An audio field has four special keys:
 
-- `uploadPreset` required string specifying the hosting provider upload preset for this
-  file.
 - `description` an optional message that will be displayed on the upload widget. Defaults
   to WAV, MP3, OGG, AAC, WMA up to 50MB
 - `extensions` an optional list of accepted file extensions. Defaults to '['.wav', '.mp3',
@@ -175,8 +177,7 @@ example:
 {
   label: 'Soundtrack',
   name: 'soundtrack',
-  widget: 'audio',
-  uploadPreset: 'mp3_44000hz',
+  widget: 'audio'
 },
 ```
 

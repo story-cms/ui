@@ -35,7 +35,6 @@ export interface StorySpec {
   hasEditReview: boolean;
   fields: Array<object>;
 }
-
 export interface FieldSpec {
   name: string;
   label: string;
@@ -46,7 +45,6 @@ export interface FieldSpec {
   canFold?: boolean;
   isRow?: boolean;
   uploadPreset?: string;
-  provider?: ImageProvider;
   options?: Array<SelectOption>;
   default?: any;
   minimal?: boolean;
@@ -122,4 +120,15 @@ export interface Meta {
   logo: string;
   storyType: string;
   chapterType: string;
+}
+
+export interface S3Target {
+  bucket: string;
+  region: string;
+  endpoint: string;
+}
+
+export interface Providers {
+  s3Target?: S3Target;
+  imageProvider?: ImageProvider;
 }

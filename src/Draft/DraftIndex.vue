@@ -113,7 +113,7 @@ import AppLayout from '../Shared/AppLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
-import { Meta, FieldSpec, StorySpec, Story } from '../Shared/interfaces';
+import { Meta, FieldSpec, StorySpec, Story, Providers } from '../Shared/interfaces';
 import { useModelStore, useSecretStore, useWidgetsStore } from '../store';
 
 interface Draft {
@@ -166,6 +166,8 @@ const props = defineProps({
     type: Object as PropType<Meta>,
     required: true,
   },
+
+  providers: Object as PropType<Providers>,
 });
 
 interface FeedbackPanel {
@@ -270,6 +272,11 @@ onMounted(() => {
 });
 
 const widgets = useWidgetsStore();
+
+if (props.providers) {
+  widgets.setProviders(props.providers);
+}
+
 const widgetFor = (key: number) => {
   const widget = (props.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);

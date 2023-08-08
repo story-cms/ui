@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { WidgetPicker } from '../Shared/interfaces';
+import type {
+  WidgetPicker,
+  S3Target,
+  Providers,
+  ImageProvider,
+} from '../Shared/interfaces';
 import { widgetField } from '../Draft/widget-fields';
 
 export const useWidgetsStore = defineStore('widgets', () => {
@@ -11,9 +16,33 @@ export const useWidgetsStore = defineStore('widgets', () => {
     picker.value = fresh;
   };
 
+  let providers:Providers = {
+    s3Target: {
+      bucket: '',
+      region: '',
+      endpoint: '',
+    },
+    imageProvider: {
+      cloudName: '',
+      defaultPreset: '',
+    },
+  };
+
+  const s3Target = (): S3Target => providers.s3Target as S3Target;
+  const imageProvider = (): ImageProvider =>
+    providers.imageProvider as ImageProvider;
+
+  const setProviders = (fresh: Providers) => {
+    providers = fresh;
+  };
+
   return {
     picker,
     setPicker,
     standardPicker,
+
+    setProviders,
+    s3Target,
+    imageProvider,
   };
 });

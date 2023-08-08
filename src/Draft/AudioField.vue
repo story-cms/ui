@@ -41,7 +41,7 @@ const emptyAudio = {
 const startValue = model.getField(fieldPath.value, emptyAudio) as Audio;
 const url = ref(startValue.url);
 const length = ref(startValue.length);
-const host = new S3Service(field.value);
+const host = new S3Service();
 let durationReady = false;
 
 model.$subscribe(() => {

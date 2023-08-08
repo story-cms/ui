@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios';
-import { useSecretStore } from '../../store';
+import { useSecretStore, useWidgetsStore } from '../../store';
 import { HostService, AttachmentModel } from './types';
 import { FieldSpec } from '../../Shared/interfaces';
 
@@ -19,15 +19,16 @@ export default class CloudinaryService implements HostService {
     // eslint-disable-next-line no-unused-vars
     onProgress: (progress: number | undefined) => void,
   ): Promise<AttachmentModel> => {
-    if (!this.field?.provider) {
-      console.log(`No hosting provider specified for field ${this.field?.name}`);
+    const provider = useWidgetsStore().imageProvider();
+
+    if (!provider.cloudName || !provider.defaultPreset) {
+      console.log(`Check your env for CLOUDINARY_CLOUD_NAME and CLOUDINARY_PRESET`);
       return { url: '' };
     }
 
     const { default: axios } = await import('axios');
 
-    const uploadPreset =
-      this.field.uploadPreset ?? this.field.provider.defaultPreset ?? '';
+    const uploadPreset = this.field.uploadPreset ?? provider.defaultPreset ?? '';
     const secrets = useSecretStore();
     const secretToSign =
       'tags=browser-upload&timestamp=' +
@@ -54,10 +55,7 @@ export default class CloudinaryService implements HostService {
     }
 
     const requestObj: AxiosRequestConfig = {
-      url:
-        'https://api.cloudinary.com/v1_1/' +
-        this.field.provider['cloudName'] +
-        this.endpoint,
+      url: 'https://api.cloudinary.com/v1_1/' + provider.cloudName + this.endpoint,
       method: 'POST',
       onUploadProgress: (progress) => onProgress(progress.progress),
       data: formData,
