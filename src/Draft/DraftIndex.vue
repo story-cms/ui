@@ -167,7 +167,10 @@ const props = defineProps({
     required: true,
   },
 
-  providers: Object as PropType<Providers>,
+  providers: {
+    type: Object as PropType<Providers>,
+    required: true,
+  },
 });
 
 interface FeedbackPanel {
