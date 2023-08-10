@@ -1,7 +1,7 @@
 <template>
   <Story id="audio-field" title="Audio Field" group="widgets">
     <Variant title="Model with audio" :setup-app="loadData">
-      <AudioField :field="spec" />
+      <AudioField :field="spec" :file-path="greet('donkey')" />
       <ModelControl :model="audioModelBlankAudio" />
     </Variant>
 
@@ -48,6 +48,10 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
 
   store.model = audioModel;
 };
+
+function greet(name: string): string {
+  return `dev/cat/dog/${name}`;
+}
 
 const provider = {
   defaultPreset: 'cmsplayground',
