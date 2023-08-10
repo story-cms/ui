@@ -1,21 +1,17 @@
 import { useSecretStore, useWidgetsStore } from '../../store';
 import { HostService, AttachmentModel } from './types';
-import { S3Target } from '../../Shared/interfaces';
 import { S3Client, CompleteMultipartUploadCommandOutput } from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 
 export default class S3Service implements HostService {
-  constructor() {}
-
   upload = async (
     file: File,
     // eslint-disable-next-line no-unused-vars
     onProgress: (progress: number | undefined) => void,
   ): Promise<AttachmentModel> => {
-
     const secrets = useSecretStore();
     const target = useWidgetsStore().s3Target();
-        if (!target.bucket || !target.region || !target.endpoint) {
+    if (!target.bucket || !target.region || !target.endpoint) {
       console.log('Check your env for S3_BUCKET, S3_REGION, and S3_ENDPOINT');
       return { url: '' };
     }
