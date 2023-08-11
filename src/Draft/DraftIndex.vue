@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, ref, onMounted } from 'vue';
+import { PropType, computed, ref, onMounted, toRefs } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
@@ -181,8 +181,9 @@ interface FeedbackPanel {
 let isSettingErrors = false;
 const secrets = useSecretStore();
 const store = useModelStore();
-store.setModel(props.bundle);
-store.setErrors(props.errors);
+const { bundle, errors } = toRefs(props);
+store.setModel(bundle.value);
+store.setErrors(errors.value);
 secrets.setSecrets(usePage().props.secrets);
 
 const feedbackPanel = ref<FeedbackPanel>({
