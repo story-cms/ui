@@ -131,16 +131,16 @@
   </AppLayout>
 </template>
 <script setup lang="ts">
-import { PropType, ref, computed, onMounted } from 'vue';
+import { PropType, ref, computed, onMounted, toRefs } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
-import { ImageProvider } from '../Shared/interfaces';
+import { Providers } from '../Shared/interfaces';
 import SelectField from '../Draft/SelectField.vue';
 import MarkdownField from '../Draft/MarkdownField.vue';
 import BooleanField from '../Draft/BooleanField.vue';
 import { formatDate, debounce } from '../Shared/helpers';
-import { useModelStore, useSecretStore } from '../store';
+import { useModelStore, useSecretStore, useWidgetsStore } from '../store';
 import { router, usePage } from '@inertiajs/vue3';
 import { DateTime } from 'luxon';
 
@@ -149,14 +149,17 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  imageProvider: {
-    type: Object as PropType<ImageProvider>,
+
+  providers: {
+    type: Object as PropType<Providers>,
     required: true,
   },
+
   page: {
     type: Object as PropType<Page>,
     required: true,
   },
+
   bundle: {
     type: Object,
     required: true,
@@ -186,14 +189,22 @@ const getPayload = (): RequestPayload => {
   return payload as RequestPayload;
 };
 
-const secrets = useSecretStore();
-const store = useModelStore();
-store.setModel(props.bundle);
 let isSettingErrors = false;
+const { bundle, providers, page } = toRefs(props);
+
+const store = useModelStore();
+store.setModel(bundle.value);
+
+const secrets = useSecretStore();
 secrets.setSecrets(usePage().props.secrets);
 
+const widgets = useWidgetsStore();
+if (providers.value) {
+  widgets.setProviders(providers.value);
+}
+
 const selection = ref(store.getField('type', 'comment'));
-const savedAt = ref(formatDate(props.page['updated_at']));
+const savedAt = ref(formatDate(page.value['updated_at']));
 
 const isLink = computed((): boolean => selection.value === 'link');
 
