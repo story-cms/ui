@@ -34,6 +34,7 @@ export default defineConfig({
         '@aws-sdk/client-s3',
         '@aws-sdk/lib-storage',
         '@rive-app/canva',
+        '@inertiajs',
         'axios',
         'easymde',
         'luxon',
