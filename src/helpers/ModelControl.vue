@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { useModelStore } from '../store';
-import { computed, ref } from 'vue';
+import { computed, toRef } from 'vue';
 import { objectModel } from './mocks';
 
 const props = defineProps({
@@ -33,7 +33,7 @@ const props = defineProps({
   },
 });
 
-const formState = ref(props.model);
+const formState = toRef(props, 'model');
 
 const store = useModelStore();
 

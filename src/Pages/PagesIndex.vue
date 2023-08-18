@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, toRefs } from 'vue';
 import { usePagesStore } from '../store';
 import AppLayout from '../Shared/AppLayout.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
@@ -43,8 +43,9 @@ const props = defineProps({
 });
 
 const pageStore = usePagesStore();
-pageStore.setItems([...props.pages]);
-const items = ref<PageItem[]>([...props.pages]);
+const { pages } = toRefs(props);
+pageStore.setItems([...pages.value]);
+const items = ref<PageItem[]>([...pages.value]);
 const fromIndex = ref();
 const toIndex = ref();
 

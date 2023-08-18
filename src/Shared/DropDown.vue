@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
+import { toRef, PropType } from 'vue';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue';
 import Icon from '../Shared/Icon.vue';
 
@@ -78,7 +78,7 @@ const props = defineProps({
   },
 });
 
-const model = ref(props.modelValue);
+const model = toRef(props, 'modelValue');
 
 const emit = defineEmits(['change']);
 </script>

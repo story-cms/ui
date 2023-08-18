@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { useModelStore } from '../store';
-import { computed, ref } from 'vue';
+import { computed, toRef } from 'vue';
 
 const props = defineProps({
   errors: {
@@ -35,7 +35,7 @@ const props = defineProps({
   },
 });
 
-const formErrors = ref(props.errors);
+const formErrors = toRef(props, 'errors');
 
 const store = useModelStore();
 

@@ -1,20 +1,23 @@
 <template>
   <Story title="Drop Down" group="shared">
     <Variant title="With options">
-      <DropDown :options="options" model-value="Add" />
-    </Variant>
-    <Variant title="With options no value">
-      <DropDown :options="options" />
+      <DropDown v-model="model" :options="options" @change="onSet" />
     </Variant>
     <Variant title="Read only">
-      <DropDown :options="options" :is-read-only="isReadOnly" model-value="Add" />
+      <DropDown v-model="model" :options="options" :is-read-only="true" />
     </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
 import DropDown from './DropDown.vue';
+import { ref } from 'vue';
 
 const options = ['Add', 'Edit', 'Delete'];
-const isReadOnly = true;
+const model = ref('Edit');
+
+const onSet = async (val: string) => {
+  model.value = val;
+  console.log(model.value);
+};
 </script>
