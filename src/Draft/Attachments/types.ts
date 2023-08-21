@@ -10,8 +10,3 @@ export type UploadFile = (
 export interface HostService {
   upload: UploadFile;
 }
-
-export interface Audio {
-  url: string;
-  length: number;
-}

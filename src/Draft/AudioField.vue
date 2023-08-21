@@ -13,16 +13,21 @@
 
 <script setup lang="ts">
 import { computed, ref, nextTick, watch } from 'vue';
-import { FieldSpec } from '../Shared/interfaces';
+import { FieldSpec, Audio } from '../Shared/interfaces';
 import { useModelStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import AttachmentField from './Attachments/AttachmentField.vue';
 import S3Service from './Attachments/s3-service';
-import { AttachmentModel, Audio } from './Attachments/types';
+import { AttachmentModel } from './Attachments/types';
 import AudioPlayer from './Attachments/AudioPlayer.vue';
 
 const props = defineProps({
   ...commonProps,
+  filePath: {
+    type: String,
+    required: false,
+    default: '',
+  },
 });
 
 const field = computed(() => props.field as FieldSpec);
@@ -41,7 +46,7 @@ const emptyAudio = {
 const startValue = model.getField(fieldPath.value, emptyAudio) as Audio;
 const url = ref(startValue.url);
 const length = ref(startValue.length);
-const host = new S3Service();
+const host = new S3Service(props.filePath);
 let durationReady = false;
 
 model.$subscribe(() => {

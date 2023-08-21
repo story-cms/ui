@@ -4,6 +4,11 @@ import { S3Client, CompleteMultipartUploadCommandOutput } from '@aws-sdk/client-
 import { Upload } from '@aws-sdk/lib-storage';
 
 export default class S3Service implements HostService {
+  private path: string;
+
+  constructor(path: string) {
+    this.path = path;
+  }
   upload = async (
     file: File,
     // eslint-disable-next-line no-unused-vars
@@ -16,6 +21,10 @@ export default class S3Service implements HostService {
       return { url: '' };
     }
 
+    const filePath = (path: string, file: File) => {
+      return `${path}.${file.name.split('.').pop()}`;
+    };
+
     const client = new S3Client({
       region: target.region,
       endpoint: target.endpoint,
@@ -27,7 +36,7 @@ export default class S3Service implements HostService {
 
     const params = {
       Bucket: target.bucket,
-      Key: file.name,
+      Key: this.path === '' ? file.name : filePath(this.path, file),
       Body: file,
       ContentType: file.type,
       ACL: 'public-read',

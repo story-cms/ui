@@ -42,10 +42,11 @@ export * from './Draft/Attachments/types';
 export * from './Draft/Attachments/cloudinary-service';
 export * from './Draft/Attachments/s3-service';
 
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, usePage } from '@inertiajs/vue3';
 
 export {
   createInertiaApp,
+  usePage,
   // chapters
   IndexCard,
   StatusTag,

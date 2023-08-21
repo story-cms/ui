@@ -132,3 +132,8 @@ export interface Providers {
   s3Target?: S3Target;
   imageProvider?: ImageProvider;
 }
+
+export interface Audio {
+  url: string;
+  length: number;
+}
