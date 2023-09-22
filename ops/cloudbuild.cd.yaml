@@ -49,16 +49,15 @@ images:
 options:
   substitutionOption: ALLOW_LOOSE
 substitutions:
-  _GCR_HOSTNAME: eu.gcr.io
-  _PLATFORM: managed
-  _SERVICE_NAME: playground
-  _LABELS: gcb-trigger-id=fa5fed62-1133-423c-a580-25243991619b
-  _TRIGGER_ID: fa5fed62-1133-423c-a580-25243991619b
   _DEPLOY_REGION: europe-west1
+  _AR_HOSTNAME: europe-west1-docker.pkg.dev
+  _TRIGGER_ID: 408d33b6-666f-4045-a21e-c28095ec5aad
+  _PLATFORM: managed
+  _SERVICE_NAME: story-cms-ui
 tags:
   - gcp-cloud-build-deploy-cloud-run
   - gcp-cloud-build-deploy-cloud-run-managed
-  - playground
+  - story-cms-ui
 availableSecrets:
   secretManager:
     - env: 'VITE_CLOUDINARY_API_KEY'
