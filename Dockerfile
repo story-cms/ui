@@ -5,8 +5,8 @@ ARG VITE_BIBLE_API_KEY
 ARG DO_OAUTH_TOKEN
 
 WORKDIR /app
-COPY package-lock.json ./
-RUN npm install
+COPY package*.json ./
+RUN npm ci
 COPY . .
 RUN npm run build
 

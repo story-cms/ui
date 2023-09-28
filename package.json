@@ -40,7 +40,7 @@
     "test": "npm run test:unit && npm run test:e2e",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "format": "prettier --write .",
-    "prepublish": "npm run lib:build"
+    "prepare": "npm run lib:build"
   },
   "peerDependencies": {
     "@aws-sdk/client-s3": "^3.379.1",
