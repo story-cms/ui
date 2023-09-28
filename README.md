@@ -21,7 +21,7 @@ This project happily accepts contributions.
 After cloning the project run
 
 ```shell
-npm ci
+npm i --ignore-scripts
 cp .env.example .env
 ```
 
