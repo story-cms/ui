@@ -39,8 +39,8 @@
     "test:e2e": "npx playwright test tests/e2e/*.ts",
     "test": "npm run test:unit && npm run test:e2e",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
-    "prepare": "npm run lib:build",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepublishOnly": "npm run lib:build"
   },
   "peerDependencies": {
     "@aws-sdk/client-s3": "^3.379.1",
