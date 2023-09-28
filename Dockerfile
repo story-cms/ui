@@ -6,7 +6,7 @@ ARG DO_OAUTH_TOKEN
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm i --ignore-scripts
 COPY . .
 RUN npm run build
 
