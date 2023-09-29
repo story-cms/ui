@@ -26,7 +26,7 @@
         >
         <a
           class="inline-block px-2 py-3 hover:text-secondary"
-          href="https://docs.bioy.app/"
+          href="https://example.cop/"
           target="_blank"
           rel="noopener noreferrer"
           >Help
