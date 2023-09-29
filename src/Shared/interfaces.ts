@@ -120,6 +120,7 @@ export interface Meta {
   logo: string;
   storyType: string;
   chapterType: string;
+  helpUrl: string;
 }
 
 export interface S3Target {
