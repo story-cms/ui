@@ -20,7 +20,7 @@ onMounted(() => {
   if (!target) {
     throw new Error('Flutter target not found');
   }
-
+  // @ts-ignore
   _flutter.loader.loadEntrypoint({
     onEntrypointLoaded: async (engineInitializer: any) => {
       const appRunner = await engineInitializer.initializeEngine({
