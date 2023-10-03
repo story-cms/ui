@@ -194,6 +194,7 @@ const { bundle, providers, page } = toRefs(props);
 
 const store = useModelStore();
 store.setModel(bundle.value);
+store.clearErrors();
 
 const secrets = useSecretStore();
 secrets.setSecrets(usePage().props.secrets);
