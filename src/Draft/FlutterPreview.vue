@@ -13,7 +13,7 @@ const props = defineProps({
 onMounted(() => {
   // Embed Flutter into the div with ref "flutterTarget"
   const target = flutterTarget.value;
-
+  // @ts-ignore
   _flutter.loader.loadEntrypoint({
     onEntrypointLoaded: async (engineInitializer: any) => {
       const appRunner = await engineInitializer.initializeEngine({
