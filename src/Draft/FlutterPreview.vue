@@ -1,5 +1,8 @@
 <template>
-  <div ref="flutterTarget"></div>
+  <div>
+    <h1>Flutter Preview</h1>
+    <div ref="flutterTarget"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
