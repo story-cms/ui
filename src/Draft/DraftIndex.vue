@@ -82,7 +82,7 @@
               </button>
             </div>
           </div>
-          <FlutterPreview v-if="hasFlutterPreview" :loadEpisode="loadEpisode" />
+          <FlutterPreview :load-episode="loadEpisode" />
           <div
             v-if="feedbackPanel.message"
             class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
