@@ -295,7 +295,9 @@ const widgetFor = (key: number) => {
 const loadEpisode = () => {
   const data = props.bundle;
   data['number'] = 1;
-  // @ts-ignore
-  window._appState.setEpisode(JSON.stringify(data));
+  if (typeof window !== 'undefined') {
+    // Accessing the global window object
+    window._appState.setEpisode(JSON.stringify(data));
+  }
 };
 </script>

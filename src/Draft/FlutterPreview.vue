@@ -7,13 +7,20 @@ import { ref, onMounted, PropType } from 'vue';
 
 const flutterTarget = ref(null);
 const props = defineProps({
-  loadEpisode: Function as PropType<() => void>,
+  loadEpisode: {
+    type: Function as PropType<() => void>,
+    default: () => {
+      return null;
+    },
+  },
 });
 
 onMounted(() => {
-  // Embed Flutter into the div with ref "flutterTarget"
   const target = flutterTarget.value;
-  // @ts-ignore
+  if (!target) {
+    throw new Error('Flutter target not found');
+  }
+
   _flutter.loader.loadEntrypoint({
     onEntrypointLoaded: async (engineInitializer: any) => {
       const appRunner = await engineInitializer.initializeEngine({
