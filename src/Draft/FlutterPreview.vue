@@ -1,29 +1,48 @@
 <template>
-  <div>
-    <h1>Flutter Preview</h1>
-    <div ref="flutterTarget"></div>
+  <div class="flex flex-col items-center justify-center">
+    <div ref="flutterTarget" class="h-[812px] w-[375px] border transition-all"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, PropType } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+
+declare global {
+  interface Window {
+    _flutter: any;
+    _appState: any;
+  }
+}
 
 const flutterTarget = ref(null);
 const props = defineProps({
-  loadEpisode: {
-    type: Function as PropType<() => void>,
-    default: () => {
-      return null;
-    },
+  bundle: {
+    type: Object,
+    required: true,
   },
 });
 
-onMounted(() => {
+const loadEpisode = (bundle: any) => {
+  const data = bundle;
+  data['number'] = 1;
+  window._appState.setEpisode(JSON.stringify(data));
+};
+
+watch(
+  () => props.bundle,
+  (newBundle, oldBundle) => {
+    if (newBundle !== oldBundle) {
+      loadEpisode(newBundle);
+    }
+  },
+);
+
+const flutterLoader = () => {
   const target = flutterTarget.value;
   if (!target) {
     throw new Error('Flutter target not found');
   }
-  // @ts-ignore
+  const _flutter: any = window._flutter || {};
   _flutter.loader.loadEntrypoint({
     onEntrypointLoaded: async (engineInitializer: any) => {
       const appRunner = await engineInitializer.initializeEngine({
@@ -32,9 +51,13 @@ onMounted(() => {
       });
       await appRunner.runApp();
       setTimeout(() => {
-        props.loadEpisode();
+        loadEpisode(props.bundle);
       }, 1000);
     },
   });
+};
+
+onMounted(() => {
+  flutterLoader();
 });
 </script>

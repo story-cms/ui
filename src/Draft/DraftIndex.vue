@@ -82,7 +82,7 @@
               </button>
             </div>
           </div>
-          <FlutterPreview :load-episode="loadEpisode" />
+          <FlutterPreview v-if="spec.hasAppPreview" :bundle="bundle" class="mt-2" />
           <div
             v-if="feedbackPanel.message"
             class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
@@ -127,10 +127,6 @@ interface Draft {
 }
 
 const props = defineProps({
-  hasFlutterPreview: {
-    type: Boolean,
-    required: true,
-  },
   user: { type: Object, required: true },
   draft: {
     type: Object as PropType<Draft>,
@@ -290,12 +286,5 @@ if (props.providers) {
 const widgetFor = (key: number) => {
   const widget = (props.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);
-};
-
-const loadEpisode = () => {
-  const data = props.bundle;
-  data['number'] = 1;
-  // @ts-ignore
-  window._appState.setEpisode(JSON.stringify(data));
 };
 </script>
