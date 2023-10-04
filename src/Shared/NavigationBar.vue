@@ -20,12 +20,12 @@
           :anchor="meta.storyType"
           @select="onStory"
         ></ContextMenu>
-        <Link class="px-2 py-3 hover:text-secondary" href="/page">Pages</Link>
-        <Link v-if="user.isAdmin" class="px-2 py-3 hover:text-secondary" href="/user"
+        <Link class="px-2 py-3 hover:text-gray-700" href="/page">Pages</Link>
+        <Link v-if="user.isAdmin" class="px-2 py-3 hover:text-gray-700" href="/user"
           >Users</Link
         >
         <a
-          class="inline-block px-2 py-3 hover:text-secondary"
+          class="inline-block px-2 py-3 hover:text-gray-700"
           :href="meta.helpUrl"
           target="_blank"
           rel="noopener noreferrer"
