@@ -43,7 +43,7 @@
               <span
                 v-if="value"
                 :class="[
-                  active ? 'text-white' : 'text-primary/60',
+                  active ? 'text-white' : 'text-red-500/60',
                   'absolute inset-y-0 right-0 flex items-center pr-4',
                 ]"
               >

@@ -49,7 +49,7 @@
             v-model="form.remember"
             name="remember-me"
             type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-secondary"
+            class="h-4 w-4 rounded border-gray-300 text-[--primary-color] focus:ring-secondary"
           />
           <label for="remember-me" class="ml-2 block text-sm text-gray-900">
             Remember me
@@ -69,7 +69,7 @@
       <div>
         <button
           type="submit"
-          class="relative flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-purple focus:ring-offset-2"
+          class="relative flex w-full justify-center rounded-md border border-transparent bg-[--primary-color] px-4 py-2 text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-purple focus:ring-offset-2"
         >
           Sign in
         </button>

@@ -36,7 +36,7 @@
       <div>
         <button
           type="submit"
-          class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-secondary/70 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
+          class="group relative flex w-full justify-center rounded-md border border-transparent bg-[--primary-color] px-4 py-2 text-sm font-medium text-white hover:bg-secondary/70 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2"
           :class="{ 'cursor-wait opacity-50': form.processing }"
           :disabled="form.processing"
         >
