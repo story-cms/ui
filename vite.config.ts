@@ -11,7 +11,9 @@ export default defineConfig({
       insertTypesEntry: true,
     }),
   ],
-
+  define: {
+    __VUE_PROD_DEVTOOLS__: JSON.stringify(true),
+  },
   resolve: {
     // alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
     alias: {
@@ -21,6 +23,7 @@ export default defineConfig({
     dedupe: ['vue'],
   },
   build: {
+    sourcemap: 'inline',
     lib: {
       entry: {
         main: path.resolve(__dirname, 'src/index.ts'),
