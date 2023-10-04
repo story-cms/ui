@@ -13,6 +13,7 @@ export default defineConfig({
   ],
   define: {
     __VUE_PROD_DEVTOOLS__: JSON.stringify(true),
+    __VUE_OPTIONS_API__: JSON.stringify(true),
   },
   resolve: {
     // alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
