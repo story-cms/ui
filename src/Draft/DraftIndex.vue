@@ -82,6 +82,7 @@
               </button>
             </div>
           </div>
+          <FlutterPreview v-if="spec.hasAppPreview" :bundle="bundle" class="mt-2" />
           <div
             v-if="feedbackPanel.message"
             class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
@@ -115,6 +116,7 @@ import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
 import { Meta, FieldSpec, StorySpec, Story, Providers } from '../Shared/interfaces';
 import { useModelStore, useSecretStore, useWidgetsStore } from '../store';
+import FlutterPreview from './FlutterPreview.vue';
 
 interface Draft {
   id: number;

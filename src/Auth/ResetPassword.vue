@@ -15,7 +15,7 @@
         ><button
           v-if="success"
           type="submit"
-          class="group relative mt-4 flex w-full justify-center rounded-md border border-transparent bg-secondary/60 px-4 py-2 text-sm font-medium text-white hover:bg-secondary/70 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2"
+          class="group relative mt-4 flex w-full justify-center rounded-md border border-transparent bg-gray-700/60 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700/70 focus:outline-none focus:ring-2 focus:ring-gray-700/50 focus:ring-offset-2"
         >
           Login
         </button></a
@@ -45,7 +45,7 @@
             type="email"
             autocomplete="email"
             required
-            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-secondary/50 focus:outline-none focus:ring-secondary/50 sm:text-sm"
+            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-700/50 focus:outline-none focus:ring-gray-700/50 sm:text-sm"
             placeholder="Email address"
           />
         </div>
@@ -58,7 +58,7 @@
             type="password"
             autocomplete="new-password"
             required
-            class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-secondary/50 focus:outline-none focus:ring-secondary/50 sm:text-sm"
+            class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-700/50 focus:outline-none focus:ring-gray-700/50 sm:text-sm"
             placeholder="New Password"
           />
         </div>
@@ -71,7 +71,7 @@
             type="password"
             autocomplete="confirm-new-password"
             required
-            class="focus:ring-secondary-500 focus:border-secondary-500 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:outline-none sm:text-sm"
+            class="focus:ring-gray-700-500 focus:border-gray-700-500 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:outline-none sm:text-sm"
             placeholder="Confirm New Password"
           />
         </div>
@@ -80,7 +80,7 @@
       <div>
         <button
           type="submit"
-          class="group relative flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-secondary/70 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-2"
+          class="group relative flex w-full justify-center rounded-md border border-transparent bg-[--primary-color] px-4 py-2 text-sm font-medium text-white hover:bg-gray-700/70 focus:outline-none focus:ring-2 focus:ring-gray-700/50 focus:ring-offset-2"
         >
           Reset Password
         </button>

@@ -21,7 +21,7 @@
             type="email"
             autocomplete="email"
             required
-            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[--secondary-color] focus:outline-none focus:ring-[--secondary-color] sm:text-sm"
             :class="{ 'border-red': form.errors.email }"
             placeholder="Email address"
           />
@@ -35,7 +35,7 @@
             type="password"
             autocomplete="current-password"
             required
-            class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-secondary focus:outline-none focus:ring-secondary sm:text-sm"
+            class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[--secondary-color] focus:outline-none focus:ring-[--secondary-color] sm:text-sm"
             :class="{ 'border-red': form.errors.password }"
             placeholder="Password"
           />
@@ -49,7 +49,7 @@
             v-model="form.remember"
             name="remember-me"
             type="checkbox"
-            class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-secondary"
+            class="h-4 w-4 rounded border-gray-300 text-[--primary-color] focus:ring-[--secondary-color]"
           />
           <label for="remember-me" class="ml-2 block text-sm text-gray-900">
             Remember me
@@ -59,7 +59,7 @@
         <div class="text-sm">
           <a
             href="/forgot-password"
-            class="font-medium text-gray-600 hover:text-secondary"
+            class="font-medium text-gray-600 hover:text-[--secondary-color]"
           >
             Forgot your password?
           </a>
@@ -69,7 +69,7 @@
       <div>
         <button
           type="submit"
-          class="relative flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-purple focus:ring-offset-2"
+          class="relative flex w-full justify-center rounded-md border border-transparent bg-[--primary-color] px-4 py-2 text-sm font-medium text-white hover:bg-[--secondary-color] focus:outline-none focus:ring-2 focus:ring-purple focus:ring-offset-2"
         >
           Sign in
         </button>
