@@ -16,11 +16,12 @@ export const useWidgetsStore = defineStore('widgets', () => {
     picker.value = fresh;
   };
 
-  let providers:Providers = {
+  let providers: Providers = {
     s3Target: {
       bucket: '',
       region: '',
       endpoint: '',
+      folder: '',
     },
     imageProvider: {
       cloudName: '',
@@ -29,8 +30,7 @@ export const useWidgetsStore = defineStore('widgets', () => {
   };
 
   const s3Target = (): S3Target => providers.s3Target as S3Target;
-  const imageProvider = (): ImageProvider =>
-    providers.imageProvider as ImageProvider;
+  const imageProvider = (): ImageProvider => providers.imageProvider as ImageProvider;
 
   const setProviders = (fresh: Providers) => {
     providers = fresh;
