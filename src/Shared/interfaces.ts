@@ -128,6 +128,7 @@ export interface S3Target {
   bucket: string;
   region: string;
   endpoint: string;
+  folder?: string;
 }
 
 export interface Providers {
