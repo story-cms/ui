@@ -75,6 +75,7 @@ export interface LanguageSpecification {
   language: string;
   languageDirection: 'rtl' | 'ltr';
   locale: string;
+  bibleVersion?: string;
 }
 
 export interface SelectOption {
