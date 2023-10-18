@@ -5,13 +5,18 @@
       <ModelControl :model="scriptureModel" :is-inspect-only="true" />
     </Variant>
 
-    <Variant title="ReadOnly" :setup-app="loadData">
-      <ScriptureField :field="scriptureSpec" :is-read-only="true" />
+    <Variant title="Empty">
+      <ScriptureField :field="scriptureSpec" />
       <ModelControl :model="scriptureModel" :is-inspect-only="true" />
     </Variant>
 
-    <Variant title="Empty">
+    <Variant title="German" :setup-app="setGerman">
       <ScriptureField :field="scriptureSpec" />
+      <ModelControl :model="scriptureModel" :is-inspect-only="true" />
+    </Variant>
+
+    <Variant title="ReadOnly" :setup-app="loadData">
+      <ScriptureField :field="scriptureSpec" :is-read-only="true" />
       <ModelControl :model="scriptureModel" :is-inspect-only="true" />
     </Variant>
 
@@ -30,11 +35,17 @@ import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import { scriptureSpec, scriptureModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
+import { useModelStore, useLanguageStore } from '../store';
 
 const scriptureError = {
   'bundle.scripture.verse': ['required validation failed'],
 };
+const setGerman: Vue3StorySetupHandler = () => {
+  const lang = useLanguageStore();
+  lang.setLanguage('Deutsch');
+  console.log(lang.language, lang.bibleVersion);
+};
+
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
   store.model = scriptureModel;
