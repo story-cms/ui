@@ -140,3 +140,19 @@ export interface Audio {
   url: string;
   length: number;
 }
+
+export interface User {
+  name: string;
+  initials: string;
+  email: string;
+  isManager: boolean;
+  isAdmin: boolean;
+}
+
+export interface Draft {
+  id: number;
+  number: number;
+  status: string;
+  updated_at: string;
+  created_at: string;
+}
