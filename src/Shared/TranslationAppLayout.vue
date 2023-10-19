@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-gray-50">
     <TranslationNavigation
       ref="translationNavigationComponent"
       :meta="props.meta"
@@ -17,8 +17,12 @@
       />
     </div>
     <div
-      class="mx-2 grid gap-x-2 bg-gray-50 [&>section]:mt-2 [&>section]:rounded [&>section]:bg-white [&>section]:shadow"
-      :class="isSingleColumn ? 'grid-cols-1' : 'grid-cols-2'"
+      class="container mx-2 grid place-content-center gap-x-2 overflow-auto bg-gray-50 [&>section]:mt-2"
+      :class="
+        isSingleColumn
+          ? 'max-w-[1080px] grid-cols-1 lg:mx-auto'
+          : 'mx-auto max-w-7xl grid-cols-[repeat(2,_minmax(628px,_1fr))]'
+      "
     >
       <slot></slot>
     </div>
