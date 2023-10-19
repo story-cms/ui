@@ -1,21 +1,27 @@
 <template>
-  <TranslationNavigation
-    ref="translationNavigationComponent"
-    :meta="props.meta"
-    :stories="props.stories"
-    :story="props.story"
-    :user="props.user"
-  />
-  <div ref="translationHeader" class="w-full">
-    <TranslationHeader
-      :chapter-title="props.chapterTitle"
-      :has-edit-review="props.hasEditReview"
-      :draft-status="props.draftStatus"
+  <div class="bg-white">
+    <TranslationNavigation
+      ref="translationNavigationComponent"
+      :meta="props.meta"
+      :stories="props.stories"
+      :story="props.story"
       :user="props.user"
     />
-  </div>
-  <div>
-    <slot></slot>
+    <div ref="translationHeader" class="w-full">
+      <TranslationHeader
+        :chapter-title="props.chapterTitle"
+        :has-edit-review="props.hasEditReview"
+        :draft-status="props.draftStatus"
+        :user="props.user"
+        @toggle="toggle"
+      />
+    </div>
+    <div
+      class="mx-2 grid gap-x-2 bg-gray-50 [&>section]:mt-2 [&>section]:rounded [&>section]:bg-white [&>section]:shadow"
+      :class="isSingleColumn ? 'grid-cols-1' : 'grid-cols-2'"
+    >
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -77,4 +83,13 @@ const observer = new IntersectionObserver((entries) => {
 onMounted(() => {
   observer.observe(translationNavigationComponent.value?.navbar as HTMLElement);
 });
+
+const isSingleColumn = ref(false);
+
+const emit = defineEmits(['isSingleColumn']);
+
+const toggle = () => {
+  isSingleColumn.value = !isSingleColumn.value;
+  emit('isSingleColumn', isSingleColumn.value);
+};
 </script>

@@ -7,25 +7,22 @@
     :story="story"
     :stories="stories as string[]"
     :user="props.user"
+    @is-single-column="isSingleColumn = $event"
   >
-    <div
-      class="mx-2 grid grid-cols-2 gap-x-2 bg-gray-50 [&>section]:mt-2 [&>section]:rounded [&>section]:bg-white [&>section]:shadow"
-    >
-      <section>
-        <form class="space-y-8">
-          <div v-for="(item, index) in fields" :key="index">
-            <component :is="widgetFor(index)" :field="item" :is-nested="false" />
-          </div>
-        </form>
-      </section>
-      <section>
-        <form class="space-y-8">
-          <div v-for="(item, index) in fields" :key="index">
-            <component :is="widgetFor(index)" :field="item" :is-nested="false" />
-          </div>
-        </form>
-      </section>
-    </div>
+    <section>
+      <form class="space-y-8">
+        <div v-for="(item, index) in fields" :key="index">
+          <component :is="widgetFor(index)" :field="item" :is-nested="false" />
+        </div>
+      </form>
+    </section>
+    <section :class="isSingleColumn ? 'hidden' : ''">
+      <form class="space-y-8">
+        <div v-for="(item, index) in fields" :key="index">
+          <component :is="widgetFor(index)" :field="item" :is-nested="false" />
+        </div>
+      </form>
+    </section>
   </TranslationAppLayout>
 </template>
 
@@ -161,4 +158,6 @@ const widgetFor = (key: number) => {
 onMounted(() => {
   console.log(publish);
 });
+
+const isSingleColumn = ref(false);
 </script>

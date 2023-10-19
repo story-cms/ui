@@ -65,10 +65,9 @@ const props = defineProps({
   },
 });
 
-// const emit = defineEmits(['toggle']);
+const emit = defineEmits(['toggle']);
 
 const toggle = () => {
-  //   emit('toggle');
-  console.log('toggle');
+  emit('toggle');
 };
 </script>
