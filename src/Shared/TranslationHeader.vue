@@ -34,7 +34,11 @@
       <h3 class="inline-flex items-center">
         English
         <span class="ml-2">
-          <icon name="eyeoff" class="h-8 w-8 text-black" @click.prevent="toggle" />
+          <icon
+            name="eyeoff"
+            class="h-8 w-8 cursor-pointer text-black"
+            @click.prevent="toggle"
+          />
         </span>
       </h3>
       <hr class="col-span-full" />
