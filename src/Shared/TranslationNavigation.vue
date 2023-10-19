@@ -6,8 +6,8 @@
       </Link>
       <div class="flex items-center space-x-8 py-4">
         <ContextMenu
-          :options="(stories as string[])"
-          :anchor="meta.storyType"
+          :options="(props.stories as string[])"
+          :anchor="props.meta.storyType"
           @select="onStory"
         ></ContextMenu>
         <Link
@@ -16,14 +16,15 @@
           >Pages</Link
         >
         <Link
-          v-if="user.isAdmin"
+          v-if="props.user.isAdmin"
           class="px-3 py-2 text-sm/5 font-medium text-gray-600 hover:bg-gray-100"
           href="/user"
           >Users</Link
         >
         <a
+          v-if="props.meta.helpUrl"
           class="inline-block px-2 py-3 hover:text-gray-700"
-          :href="meta.helpUrl"
+          :href="props.meta.helpUrl"
           target="_blank"
           rel="noopener noreferrer"
           >Help
@@ -31,7 +32,7 @@
       </div>
     </div>
     <div class="flex items-center space-x-6">
-      <p class="text-lg/5 font-extrabold text-gray-600">{{ user.name }}</p>
+      <p class="text-lg/5 font-extrabold text-gray-600">{{ props.user.name }}</p>
       <Menu as="div" class="relative">
         <div>
           <MenuButton
@@ -41,7 +42,7 @@
             <div
               class="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-accent p-2.5 text-2xl font-extrabold uppercase leading-8 text-white"
             >
-              {{ user.initials }}
+              {{ props.user.initials }}
             </div>
           </MenuButton>
         </div>
@@ -76,21 +77,34 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineExpose } from 'vue';
-import { Link, usePage, useForm } from '@inertiajs/vue3';
+import { ref, PropType, defineExpose } from 'vue';
+import { Link, useForm } from '@inertiajs/vue3';
 import { Meta, Story, User } from './interfaces';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 import ContextMenu from './ContextMenu.vue';
 
-const page = usePage();
-const user = computed(() => page.props.user as User);
-const meta = computed(() => page.props.meta as Meta);
-const story = computed(() => page.props.story as Story);
-const stories = computed(() => page.props.stories);
+const props = defineProps({
+  meta: {
+    type: Object as PropType<Meta>,
+    required: true,
+  },
+  story: {
+    type: Object as PropType<Story>,
+    required: true,
+  },
+  stories: {
+    type: Array as PropType<string[]>,
+    required: true,
+  },
+  user: {
+    type: Object as PropType<User>,
+    required: true,
+  },
+});
 
 const form = useForm({
-  story: story.value.name,
+  story: props.story.name,
 });
 
 const navbar = ref<HTMLElement | null>(null);

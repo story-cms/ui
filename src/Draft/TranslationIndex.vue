@@ -3,7 +3,10 @@
     :chapter-title="chapterTitle"
     :has-edit-review="spec.hasEditReview"
     :draft-status="draft.status"
-    :user-role="props.user.role"
+    :meta="meta"
+    :story="story"
+    :stories="stories as string[]"
+    :user="props.user"
   >
     <div
       class="mx-2 grid grid-cols-2 gap-x-2 bg-gray-50 [&>section]:mt-2 [&>section]:rounded [&>section]:bg-white [&>section]:shadow"
@@ -28,15 +31,22 @@
 
 <script setup lang="ts">
 import { computed, PropType, ref, onMounted } from 'vue';
-import { router } from '@inertiajs/vue3';
-import { Draft } from '../Shared/interfaces';
-import { Meta, FieldSpec, StorySpec, Providers } from '../Shared/interfaces';
+import { router, usePage } from '@inertiajs/vue3';
+import { Meta, FieldSpec, StorySpec, Providers, Story, User } from '../Shared/interfaces';
 import { useModelStore, useWidgetsStore } from '../store';
 
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 
+interface Draft {
+  id: number;
+  number: number;
+  status: string;
+  updated_at: string;
+  created_at: string;
+}
+
 const props = defineProps({
-  user: { type: Object, required: true },
+  user: { type: Object as PropType<User>, required: true },
   draft: {
     type: Object as PropType<Draft>,
     required: true,
@@ -72,12 +82,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
-
   meta: {
     type: Object as PropType<Meta>,
     required: true,
   },
-
   providers: {
     type: Object as PropType<Providers>,
     required: true,
@@ -90,6 +98,10 @@ interface FeedbackPanel {
 }
 
 type postType = { feedback: string | undefined; bundle: any };
+
+const page = usePage();
+const stories = computed(() => page.props.stories);
+const story = computed(() => page.props.story as Story);
 
 const store = useModelStore();
 const feedbackPanel = ref<FeedbackPanel>({

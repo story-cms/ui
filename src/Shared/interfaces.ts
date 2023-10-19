@@ -121,7 +121,7 @@ export interface Meta {
   logo: string;
   storyType: string;
   chapterType: string;
-  helpUrl: string;
+  helpUrl?: string;
 }
 
 export interface S3Target {
@@ -147,12 +147,5 @@ export interface User {
   email: string;
   isManager: boolean;
   isAdmin: boolean;
-}
-
-export interface Draft {
-  id: number;
-  number: number;
-  status: string;
-  updated_at: string;
-  created_at: string;
+  role: string;
 }
