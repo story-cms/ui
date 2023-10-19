@@ -84,7 +84,7 @@
 import { onBeforeMount, computed } from 'vue';
 import { Link, usePage, useForm } from '@inertiajs/vue3';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { Meta, Story } from './interfaces';
+import { LanguageSpecification, Meta, Story } from './interfaces';
 import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
 import { pinia, useLanguageStore } from '../store';
@@ -100,20 +100,20 @@ interface User {
 const languageStore = useLanguageStore(pinia);
 const page = usePage();
 const user = computed(() => page.props.user as User);
+const language = computed(() => page.props.language as LanguageSpecification);
 const languages = computed(() => page.props.languages);
 const stories = computed(() => page.props.stories);
 const story = computed(() => page.props.story as Story);
 const meta = computed(() => page.props.meta as Meta);
 
 const form = useForm({
-  language: page.props.language,
+  language: language.value.language,
   story: story.value.name,
 });
 
 const onLanguage = async (lang: string) => {
-  languageStore.language = lang;
-  form.language = languageStore.language;
-  languageStore.setLanguage(form.language as string);
+  if (lang === form.language) return;
+  form.language = lang;
   form.post(`/switch`);
 };
 
@@ -123,8 +123,7 @@ const onStory = async (story: string) => {
 };
 
 onBeforeMount(() => {
-  languageStore.language = form.language as string;
-  languageStore.setLanguage(form.language as string);
+  languageStore.setLanguage(language.value);
 });
 
 const signOut = () => (window.location.href = '/logout');
