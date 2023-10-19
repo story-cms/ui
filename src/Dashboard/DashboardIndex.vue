@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <div class="my-4 flex items-center justify-between">
-      <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ story.name }}</h3>
+      <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ story }}</h3>
       <icon :name="iconName" class="h-8 w-8 text-black" @click.prevent="toggle" />
     </div>
 
@@ -41,7 +41,7 @@ import Icon from '../Shared/Icon.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import IndexFilter from '../Shared/IndexFilter.vue';
 import IndexCard from '../Chapters/IndexCard.vue';
-import { Meta, IndexReadyItem, Story } from '../Shared/interfaces';
+import { Meta, IndexReadyItem } from '../Shared/interfaces';
 
 const props = defineProps({
   index: {
@@ -74,7 +74,7 @@ const onFilter = (tab: string) => {
   currentTab.value = tab;
 };
 
-const story = computed(() => usePage().props.story as Story);
+const story = computed(() => usePage().props.storyName as string);
 const iconName = computed(() => {
   return isList.value ? 'list' : 'grid';
 });
