@@ -6,7 +6,7 @@
     :story="props.story"
     :user="props.user"
   />
-  <div ref="translationHeader">
+  <div ref="translationHeader" class="w-full">
     <TranslationHeader
       :chapter-title="props.chapterTitle"
       :has-edit-review="props.hasEditReview"

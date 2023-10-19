@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, ref, onMounted } from 'vue';
-import { router, usePage } from '@inertiajs/vue3';
+import { computed, PropType, ref, onMounted, onBeforeMount } from 'vue';
+import { router } from '@inertiajs/vue3';
 import { Meta, FieldSpec, StorySpec, Providers, Story, User } from '../Shared/interfaces';
-import { useModelStore, useWidgetsStore } from '../store';
+import { useModelStore, useWidgetsStore, useConfigStore } from '../store';
 
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 
@@ -99,9 +99,20 @@ interface FeedbackPanel {
 
 type postType = { feedback: string | undefined; bundle: any };
 
-const page = usePage();
-const stories = computed(() => page.props.stories);
-const story = computed(() => page.props.story as Story);
+const config = useConfigStore();
+
+const story = ref<Story>(config.story);
+const stories = ref<string[]>(config.stories);
+
+// TODO: Get story and stories from inertia
+// const page = usePage();
+// const stories = computed(() => page.props.stories);
+// const story = computed(() => page.props.story as Story);
+
+onBeforeMount(() => {
+  config.setStory(story.value);
+  config.setStories(stories.value as string[]);
+});
 
 const store = useModelStore();
 const feedbackPanel = ref<FeedbackPanel>({

@@ -348,3 +348,82 @@ export const scriptureInListModel = {
 export const scriptureInListError = {
   'bundle.scriptures.0.scripture': ['required validation failed'],
 };
+
+export const meta = {
+  name: 'The Word One to One',
+  storyType: 'Book',
+  chapterType: 'Episode',
+  logo: 'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg',
+  helpUrl: 'https://www.theword121.com/',
+};
+
+export const user = {
+  name: 'John Doe',
+  initials: 'JD',
+  email: 'john@example.com',
+  isManager: true,
+  isAdmin: true,
+  role: 'admin',
+};
+
+export const stories = ['John', 'Acts'];
+export const story = {
+  id: 1,
+  name: 'John',
+  fields: [
+    {
+      label: 'Title',
+      name: 'title',
+      widget: 'string',
+    },
+    {
+      label: 'Part',
+      name: 'part',
+      widget: 'number',
+      default: 1,
+    },
+
+    {
+      label: 'Episode Scripture',
+      name: 'passage',
+      widget: 'scripture',
+    },
+
+    {
+      label: 'Introduction',
+      name: 'intro',
+      widget: 'markdown',
+    },
+  ],
+  chapterLimit: 42,
+  parts: [
+    {
+      id: 1,
+      title: 'Part 1',
+      subtitle: 'God among us',
+      description:
+        "Could Jesus really be the Word, the Son, the Messiah... God Himself here on earth? Can He give us life that starts now and lasts forever? We're invited to come and see for ourselves.\n\nPart 1 covers John's Gospel (one of the books of the Bible) chapters 1-4.",
+    },
+    {
+      id: 2,
+      title: 'Part 2',
+      subtitle: 'God at work',
+      description:
+        "Jesus says He brings life, rest and satisfaction. Powerful words are backed up by amazing miracles... but opinion about Him is divided.\n\nCovering chapters 5-10 of John's Gospel.",
+    },
+    {
+      id: 3,
+      title: 'Part 3',
+      subtitle: 'Matters of life and death',
+      description:
+        "The action slows down to focus in on a few short weeks. Could Jesus' death really be His greatest achievement?\n\nCovering chapters 11-17 of John's Gospel.",
+    },
+    {
+      id: 4,
+      title: 'Part 4',
+      subtitle: 'Mission accomplished!',
+      description:
+        "Jesus is betrayed by His friends, put on trial and killed. It looks like a disaster. But all is not as it seems...\n\nCovering chapters 18-21 of John's Gospel.",
+    },
+  ],
+};
