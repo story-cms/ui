@@ -42,8 +42,12 @@ const scriptureError = {
 };
 const setGerman: Vue3StorySetupHandler = () => {
   const lang = useLanguageStore();
-  lang.setLanguage('Deutsch');
-  console.log(lang.language, lang.bibleVersion);
+  lang.setLanguage({
+    locale: 'de',
+    language: 'Deutsch',
+    languageDirection: 'ltr',
+    bibleVersion: 'f492a38d0e52db0f-01',
+  });
 };
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {

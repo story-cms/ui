@@ -9,6 +9,21 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useLanguageStore } from '../store';
+import { LanguageSpecification } from 'src/Shared/interfaces';
+
+const english = {
+  locale: 'en',
+  language: 'English',
+  languageDirection: 'ltr',
+  bibleVersion: 'de4e12af7f28f599-01',
+} as LanguageSpecification;
+
+const arabic = {
+  locale: 'ar',
+  language: 'Arabic: عربى',
+  languageDirection: 'rtl',
+  bibleVersion: 'b17e246951402e50-01',
+} as LanguageSpecification;
 
 const store = useLanguageStore();
 const label = computed(() => {
@@ -16,9 +31,9 @@ const label = computed(() => {
 });
 const toggle = () => {
   if (store.isRtl) {
-    store.setLanguage('English');
+    store.setLanguage(english);
   } else {
-    store.setLanguage('عربى');
+    store.setLanguage(arabic);
   }
 };
 </script>
