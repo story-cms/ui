@@ -79,7 +79,7 @@
 <script setup lang="ts">
 import { ref, PropType, defineExpose } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
-import { Meta, Story, User } from './interfaces';
+import { Meta, LanguageSpecification, User } from './interfaces';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 import ContextMenu from './ContextMenu.vue';
@@ -89,14 +89,19 @@ const props = defineProps({
     type: Object as PropType<Meta>,
     required: true,
   },
-  story: {
-    type: Object as PropType<Story>,
+  language: {
+    type: Object as PropType<LanguageSpecification>,
+    required: true,
+  },
+  storyName: {
+    type: String,
     required: true,
   },
   stories: {
     type: Array as PropType<string[]>,
     required: true,
   },
+
   user: {
     type: Object as PropType<User>,
     required: true,
@@ -104,7 +109,8 @@ const props = defineProps({
 });
 
 const form = useForm({
-  story: props.story.name,
+  language: props.language.language,
+  story: props.storyName,
 });
 
 const navbar = ref<HTMLElement | null>(null);

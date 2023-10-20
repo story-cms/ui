@@ -3,8 +3,9 @@
     <Variant title="Stories">
       <TranslationNavigation
         :meta="meta"
-        :story="story"
-        :stories="stories"
+        :language="spanish"
+        :stories="['John', 'Acts']"
+        story-name="Acts"
         :user="user"
       />
     </Variant>
@@ -14,5 +15,5 @@
 <script setup lang="ts">
 import TranslationNavigation from './TranslationNavigation.vue';
 
-import { meta, story, stories, user } from '../helpers/mocks';
+import { meta, spanish, user } from '../helpers/mocks';
 </script>

@@ -1,4 +1,4 @@
-import { FieldSpec } from '../Shared/interfaces';
+import { FieldSpec, LanguageSpecification } from '../Shared/interfaces';
 
 export const objectModel: any = {
   name: 'John',
@@ -347,6 +347,12 @@ export const scriptureInListModel = {
 
 export const scriptureInListError = {
   'bundle.scriptures.0.scripture': ['required validation failed'],
+};
+
+export const spanish: LanguageSpecification = {
+  locale: 'es',
+  language: 'Espanol',
+  languageDirection: 'ltr',
 };
 
 export const meta = {

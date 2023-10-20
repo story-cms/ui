@@ -4,7 +4,8 @@
     :has-edit-review="spec.hasEditReview"
     :draft-status="draft.status"
     :meta="meta"
-    :story="story"
+    :language="language"
+    :story-name="storyName"
     :stories="stories as string[]"
     :user="props.user"
     @is-single-column="isSingleColumn = $event"
@@ -27,10 +28,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, ref, onMounted, onBeforeMount } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
-import { Meta, FieldSpec, StorySpec, Providers, Story, User } from '../Shared/interfaces';
-import { useModelStore, useWidgetsStore, useConfigStore } from '../store';
+import {
+  Meta,
+  FieldSpec,
+  StorySpec,
+  Providers,
+  User,
+  LanguageSpecification,
+} from '../Shared/interfaces';
+import { useModelStore, useWidgetsStore } from '../store';
 
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 
@@ -42,52 +50,22 @@ interface Draft {
   created_at: string;
 }
 
-const props = defineProps({
-  user: { type: Object as PropType<User>, required: true },
-  draft: {
-    type: Object as PropType<Draft>,
-    required: true,
-  },
-
-  bundle: {
-    type: Object,
-    required: true,
-  },
-
-  spec: {
-    type: Object as PropType<StorySpec>,
-    required: true,
-  },
-
-  fields: {
-    type: Array as PropType<FieldSpec[]>,
-    required: true,
-  },
-
-  errors: {
-    type: Object,
-    default: () => ({}),
-  },
-
-  feedback: {
-    type: String,
-    required: false,
-    default: undefined,
-  },
-
-  lastPublished: {
-    type: String,
-    required: true,
-  },
-  meta: {
-    type: Object as PropType<Meta>,
-    required: true,
-  },
-  providers: {
-    type: Object as PropType<Providers>,
-    required: true,
-  },
-});
+const props = defineProps<{
+  draft: Draft;
+  bundle: any;
+  spec: StorySpec;
+  fields: FieldSpec[];
+  feedback: string | undefined;
+  lastPublished: string;
+  providers: Providers;
+  // shared page props
+  meta: Meta;
+  user: User;
+  storyName: string;
+  stories: string[];
+  language: LanguageSpecification;
+  errors: any;
+}>();
 
 interface FeedbackPanel {
   message: string;
@@ -95,21 +73,6 @@ interface FeedbackPanel {
 }
 
 type postType = { feedback: string | undefined; bundle: any };
-
-const config = useConfigStore();
-
-const story = ref<Story>(config.story);
-const stories = ref<string[]>(config.stories);
-
-// TODO: Get story and stories from inertia
-// const page = usePage();
-// const stories = computed(() => page.props.stories);
-// const story = computed(() => page.props.story as Story);
-
-onBeforeMount(() => {
-  config.setStory(story.value);
-  config.setStories(stories.value as string[]);
-});
 
 const store = useModelStore();
 const feedbackPanel = ref<FeedbackPanel>({

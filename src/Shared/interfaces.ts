@@ -150,3 +150,14 @@ export interface User {
   isAdmin: boolean;
   role: string;
 }
+
+export interface SharedPageProps {
+  meta: Meta;
+  language: LanguageSpecification;
+  langauges: string[];
+  storyName: string;
+  stories: string[];
+  user: User;
+  secrets?: any;
+  errors?: any;
+}

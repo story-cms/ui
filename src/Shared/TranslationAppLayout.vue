@@ -2,17 +2,18 @@
   <div class="bg-gray-50">
     <TranslationNavigation
       ref="translationNavigationComponent"
-      :meta="props.meta"
-      :stories="props.stories"
-      :story="props.story"
-      :user="props.user"
+      :meta="props.meta!"
+      :language="props.language!"
+      :stories="props.stories!"
+      :story-name="props.storyName!"
+      :user="props.user!"
     />
     <div ref="translationHeader" class="w-full">
       <TranslationHeader
         :chapter-title="props.chapterTitle"
         :has-edit-review="props.hasEditReview"
         :draft-status="props.draftStatus"
-        :user="props.user"
+        :user="props.user!"
         @toggle="toggle"
       />
     </div>
@@ -30,43 +31,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, PropType } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import TranslationNavigation from './TranslationNavigation.vue';
 import TranslationHeader from './TranslationHeader.vue';
+import { Meta, LanguageSpecification, User } from './interfaces';
 
-import { Meta, Story, User } from './interfaces';
-
-const props = defineProps({
-  chapterTitle: {
-    type: String,
-    required: true,
-  },
-  hasEditReview: {
-    type: Boolean,
-    required: true,
-  },
-  draftStatus: {
-    type: String,
-    required: true,
-  },
-  meta: {
-    type: Object as PropType<Meta>,
-    required: true,
-  },
-  story: {
-    type: Object as PropType<Story>,
-    required: true,
-  },
-  stories: {
-    type: Array as PropType<string[]>,
-    required: true,
-  },
-  user: {
-    type: Object as PropType<User>,
-    required: true,
-  },
-});
+const props = defineProps<{
+  chapterTitle: string;
+  hasEditReview: boolean;
+  draftStatus: string;
+  // shared page props
+  meta: Meta;
+  language: LanguageSpecification;
+  storyName: string;
+  stories: string[];
+  user: User;
+}>();
 
 const translationNavigationComponent = ref<typeof TranslationNavigation | null>(null);
 const translationHeader = ref<HTMLElement | null>(null);

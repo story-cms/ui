@@ -1,21 +1,25 @@
 <template>
-  <Story title="Translation Index" group="shared">
+  <Story title="Translation Page" group="draft">
     <Variant title="Index" :setup-app="loadData">
       <TranslationIndex
-        :user="user"
         :draft="draft"
         :bundle="{}"
+        :fields="fields"
         :spec="{
           chapterLimit: 21,
           hasEditReview: true,
           hasAppPreview: false,
           fields: fields,
         }"
-        :fields="fields"
-        :errors="{}"
         :last-published="'undefined'"
-        :meta="meta"
+        :feedback="'undefined'"
         :providers="{}"
+        :meta="meta"
+        :user="user"
+        story-name="Acts"
+        :stories="['John', 'Acts']"
+        :language="language"
+        :errors="{}"
       />
     </Variant>
   </Story>
@@ -26,6 +30,7 @@ import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useConfigStore } from '../store';
 import TranslationIndex from './TranslationIndex.vue';
 import { story, stories, user, meta } from '../helpers/mocks';
+import { LanguageSpecification } from 'src/Shared/interfaces';
 
 const fields = [
   { name: 'title', label: 'Title', widget: 'string' },
@@ -37,6 +42,12 @@ const fields = [
   { name: 'image', label: 'Image', widget: 'image' },
   { name: 'body', label: 'Body', widget: 'markdown' },
 ];
+
+const language: LanguageSpecification = {
+  locale: 'es',
+  language: 'Espanol',
+  languageDirection: 'ltr',
+};
 
 const draft = {
   id: 1,
