@@ -1,6 +1,10 @@
 import { useSecretStore, useWidgetsStore } from '../../store';
 import { HostService, AttachmentModel } from './types';
-import { S3Client, CompleteMultipartUploadCommandOutput } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  CompleteMultipartUploadCommandOutput,
+  ObjectCannedACL,
+} from '@aws-sdk/client-s3';
 import { Upload } from '@aws-sdk/lib-storage';
 
 export default class S3Service implements HostService {
@@ -39,7 +43,7 @@ export default class S3Service implements HostService {
       Key: this.path === '' ? file.name : filePath(this.path, file),
       Body: file,
       ContentType: file.type,
-      ACL: 'public-read',
+      ACL: 'public-read' as ObjectCannedACL,
     };
 
     try {

@@ -18,7 +18,7 @@
               <div class="space-y-1 border-b border-gray-600">
                 <div class="grid grid-cols-2 font-bold">
                   <p class="mr-2">{{ meta.storyType }}</p>
-                  <span class="text-right">{{ story.name }}</span>
+                  <span class="text-right">{{ story }}</span>
                 </div>
                 <div class="grid grid-cols-2 font-bold">
                   <p class="mr-2">{{ meta.chapterType }}</p>
@@ -114,7 +114,7 @@ import AppLayout from '../Shared/AppLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
-import { Meta, FieldSpec, StorySpec, Story, Providers } from '../Shared/interfaces';
+import { Meta, FieldSpec, StorySpec, Providers } from '../Shared/interfaces';
 import { useModelStore, useSecretStore, useWidgetsStore } from '../store';
 import FlutterPreview from './FlutterPreview.vue';
 
@@ -193,7 +193,7 @@ const feedbackPanel = ref<FeedbackPanel>({
   icon: null,
 });
 
-const story = computed(() => usePage().props.story as Story);
+const story = computed(() => usePage().props.storyName as string);
 
 type postType = { feedback: string | undefined; bundle: any };
 

@@ -20,7 +20,9 @@
           :anchor="meta.storyType"
           @select="onStory"
         ></ContextMenu>
-        <Link class="px-2 py-3 hover:text-gray-700" href="/page">Pages</Link>
+        <Link v-if="user.isAdmin" class="px-2 py-3 hover:text-gray-700" href="/page"
+          >Pages</Link
+        >
         <Link v-if="user.isAdmin" class="px-2 py-3 hover:text-gray-700" href="/user"
           >Users</Link
         >
@@ -82,7 +84,7 @@
 import { onBeforeMount, computed } from 'vue';
 import { Link, usePage, useForm } from '@inertiajs/vue3';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { Meta, Story } from './interfaces';
+import { LanguageSpecification, Meta } from './interfaces';
 import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
 import { pinia, useLanguageStore } from '../store';
@@ -98,20 +100,19 @@ interface User {
 const languageStore = useLanguageStore(pinia);
 const page = usePage();
 const user = computed(() => page.props.user as User);
-const languages = computed(() => page.props.languages);
-const stories = computed(() => page.props.stories);
-const story = computed(() => page.props.story as Story);
+const languages = computed(() => page.props.languages as string[]);
+const stories = computed(() => page.props.stories as string[]);
 const meta = computed(() => page.props.meta as Meta);
+const language = page.props.language as LanguageSpecification;
 
 const form = useForm({
-  language: page.props.language,
-  story: story.value.name,
+  language: language.language,
+  story: page.props.storyName,
 });
 
 const onLanguage = async (lang: string) => {
-  languageStore.language = lang;
-  form.language = languageStore.language;
-  languageStore.setLanguage(form.language as string);
+  if (lang === form.language) return;
+  form.language = lang;
   form.post(`/switch`);
 };
 
@@ -121,8 +122,7 @@ const onStory = async (story: string) => {
 };
 
 onBeforeMount(() => {
-  languageStore.language = form.language as string;
-  languageStore.setLanguage(form.language as string);
+  languageStore.setLanguage(language);
 });
 
 const signOut = () => (window.location.href = '/logout');

@@ -1,34 +1,60 @@
 <template>
-  <div :class="{
-    'box-shadow-sm rounded border border-gray-200 bg-white p-8': !isNested,
-    'mt-4': isNested,
-    rtl: language.isRtl,
-  }">
+  <div
+    :class="{
+      'box-shadow-sm rounded border border-gray-200 bg-white p-8': !isNested,
+      'mt-4': isNested,
+      rtl: language.isRtl,
+    }"
+  >
     <label :for="field.label" class="input-label">
       {{ field.label + ' Reference' }}
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
-      <input :id="fieldPath" v-model="reference" type="text" :name="field.label" :readonly="props.isReadOnly"
-        placeholder="John 1 or John 1:3-4" autocomplete="given-name" class="input-field text-black"
-        :class="{ 'border-error': referenceHasError, 'opacity-50': props.isReadOnly }" @input="updateReference"
-        @blur="lookup" />
+      <input
+        :id="fieldPath"
+        v-model="reference"
+        type="text"
+        :name="field.label"
+        :readonly="props.isReadOnly"
+        placeholder="John 1 or John 1:3-4"
+        autocomplete="given-name"
+        class="input-field text-black"
+        :class="{ 'border-error': referenceHasError, 'opacity-50': props.isReadOnly }"
+        @input="updateReference"
+        @blur="lookup"
+      />
       <p v-if="referenceHasError" class="text-sm text-error">
         This field cannot be empty
       </p>
       <label class="input-label mt-4 block">
         {{ field.label + ' Passage' }}
       </label>
-      <button type="button" class="mr-1 rounded border border-gray-100 p-1" @mousedown="superscript">
+      <button
+        type="button"
+        class="mr-1 rounded border border-gray-100 p-1"
+        @mousedown="superscript"
+      >
         <Icon name="superscript" class="text-gray-500" />
       </button>
-      <button type="button" class="rounded border border-gray-100 p-1" @mousedown="nonBreakingSpace">
+      <button
+        type="button"
+        class="rounded border border-gray-100 p-1"
+        @mousedown="nonBreakingSpace"
+      >
         <Icon name="indent" class="text-gray-500" />
       </button>
-      <textarea ref="thetextarea" v-model="verse" :readonly="isBusy || props.isReadOnly" placeholder="Verse"
-        class="input-field mt-2 h-64 text-black" :class="{
+      <textarea
+        ref="thetextarea"
+        v-model="verse"
+        :readonly="isBusy || props.isReadOnly"
+        placeholder="Verse"
+        class="input-field mt-2 h-64 text-black"
+        :class="{
           'border-error': verseHasError,
           'opacity-50': isBusy || props.isReadOnly,
-        }" @input="updateVerse"></textarea>
+        }"
+        @input="updateVerse"
+      ></textarea>
       <p v-if="verseHasError" class="text-sm text-error">This field cannot be empty</p>
     </div>
   </div>
@@ -51,8 +77,6 @@ const apiOptions = [
   // 'include-verse-numbers=true',
   // 'include-verse-spans=false', // Include spans that wrap verse numbers and verse text for bible content.
 ];
-
-const translationId = 'de4e12af7f28f599-01'; // KJV
 
 const props = defineProps({
   ...commonProps,
@@ -130,10 +154,10 @@ const secrets = useSecretStore();
 
 onMounted(async () => {
   if (!reference.value) {
-    model.updateReference(fieldPath.value, "");
+    model.updateReference(fieldPath.value, '');
   }
   if (!verse.value) {
-    model.updateVerse(fieldPath.value, "");
+    model.updateVerse(fieldPath.value, '');
   }
 });
 
@@ -142,7 +166,7 @@ const setScripture = async (reference: string) => {
   if (code === '') return;
   const query = apiOptions.join('&');
   const response = await fetch(
-    `https://api.scripture.api.bible/v1/bibles/${translationId}/passages/${code}?${query}`,
+    `https://api.scripture.api.bible/v1/bibles/${language.bibleVersion}/passages/${code}?${query}`,
     {
       headers: {
         accept: 'application/json',

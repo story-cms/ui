@@ -70,7 +70,7 @@
           <select id="language" v-model="form.language" class="input-field">
             <option value="*" :selected="form.language === '*'">All Languages</option>
             <option
-              v-for="lang in languages"
+              v-for="lang in allLanguages"
               :key="lang.locale"
               :value="lang.locale"
               :selected="lang.locale == form.language"
@@ -122,34 +122,16 @@ defineProps({
     type: Array<User>,
     required: true,
   },
-  languages: {
+  allLanguages: {
     type: Array<LanguageSpecification>,
     required: true,
   },
 });
 
 const pageUser = computed(() => usePage().props.user as User);
-// const languages = computed(() => {
-//   const configured = usePage().props.languages as languageType[];
-
-//   return [
-//     { key: '*', label: 'All languages' },
-//     { key: '', label: 'Not Valid' },
-//     ...configured.map((e) => {
-//       return {
-//         key: e.locale,
-//         label: e.language,
-//       };
-//     }),
-//   ];
-// });
-
 const focusId = ref(0);
-
 const roles = ['admin', 'editor'];
-
 const formMode = ref('hidden');
-
 const form = useForm(emptyForm);
 
 type userErrors = Partial<
