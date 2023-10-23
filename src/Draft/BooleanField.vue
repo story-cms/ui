@@ -9,7 +9,7 @@
       <button
         type="button"
         :class="btnClass"
-        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
+        class="relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
         role="switch"
         aria-checked="false"
         :disabled="props.isReadOnly"
@@ -26,7 +26,10 @@
       <label
         :for="field.label"
         class="input-label mt-1"
-        :class="{ rtl: language.isRtl, 'order-first': labelStart }"
+        :class="{
+          rtl: language.isRtl,
+          'order-first': labelStart,
+        }"
       >
         {{ field.label }}
       </label>
@@ -58,7 +61,9 @@ if (!model.isPopulated(fieldPath.value)) {
 }
 
 // toggle
-const isOn = ref(Boolean(model.getField(fieldPath.value, field.value.default)));
+const isOn = props.isReadOnly
+  ? ref(Boolean(model.getSourceField(fieldPath.value, field.value.default)))
+  : ref(Boolean(model.getField(fieldPath.value, field.value.default)));
 
 const toggle = () => {
   if (props.isReadOnly) return;
@@ -74,7 +79,6 @@ model.$subscribe(() => {
 
 // tint
 const tintColor = computed(() => {
-  if (props.isReadOnly) return 'gray-200';
   return field.value.tintColor ? field.value.tintColor : 'indigo-600';
 });
 
@@ -82,7 +86,8 @@ const btnClass = computed((): string => {
   const classes = isOn.value
     ? [`bg-${tintColor.value} focus:ring-${tintColor.value}`]
     : ['bg-gray-200 focus:ring-gray-200'];
-  if (props.isReadOnly) classes.push('cursor-default');
+  const cursor = props.isReadOnly ? 'cursor-default' : 'cursor-pointer';
+  classes.push(cursor);
   return classes.join(' ');
 });
 

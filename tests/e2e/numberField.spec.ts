@@ -88,11 +88,11 @@ test.describe('Number Field', () => {
       .getByRole('spinbutton');
 
     await expect(locator).toBeVisible();
-    await expect(locator).toHaveValue('20');
+    await expect(locator).toHaveValue('50');
     await locator.press('ArrowUp');
     await locator.press('ArrowUp');
-    await expect(locator).toHaveValue('20');
+    await expect(locator).toHaveValue('50');
     await locator.press('ArrowDown');
-    await expect(locator).toHaveValue('20');
+    await expect(locator).toHaveValue('50');
   });
 });

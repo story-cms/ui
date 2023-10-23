@@ -6,7 +6,11 @@
       rtl: language.isRtl,
     }"
   >
-    <label :for="field.label" class="input-label">
+    <label
+      :for="field.label"
+      class="input-label"
+      :class="{ 'text-gray-600': isReadOnly }"
+    >
       {{ field.label }}
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
@@ -17,7 +21,11 @@
         autocomplete="given-name"
         :value="modelValue"
         class="input-field"
-        :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
+        :class="{
+          'border-error': hasError,
+          'text-gray-600': props.isReadOnly,
+          'shadow-none': props.isReadOnly,
+        }"
         @input="update"
       />
       <p v-if="hasError" class="text-sm text-error">{{ errors[0] }}</p>
@@ -42,7 +50,10 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const modelValue = ref(model.getField(fieldPath.value, ''));
+const modelValue = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, ''))
+  : ref(model.getField(fieldPath.value, ''));
+
 const update = (event: Event) => {
   model.setField(fieldPath.value, (event.target as HTMLInputElement).value);
 };

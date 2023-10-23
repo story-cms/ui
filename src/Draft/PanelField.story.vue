@@ -32,7 +32,6 @@
 import PanelField from './PanelField.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
-import { panelErrors, panelModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 
@@ -41,6 +40,12 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   store.model = panelModel;
   if (variant?.title == 'Error') {
     store.errors = panelErrors;
+  }
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      title: 'English Title',
+      description: 'English Description',
+    });
   }
 };
 
@@ -97,5 +102,14 @@ const isRowWithNoLabel = {
       widget: 'image',
     },
   ],
+};
+
+const panelModel = {
+  title: 'John',
+  description: '# Read about John',
+};
+
+const panelErrors = {
+  'bundle.title': ['required validation failed'],
 };
 </script>

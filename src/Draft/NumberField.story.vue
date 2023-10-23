@@ -47,6 +47,12 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   if (variant?.title == 'Error') {
     store.errors = objectErrors;
   }
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      ...objectModel,
+      age: 50,
+    });
+  }
 };
 
 const spec = {

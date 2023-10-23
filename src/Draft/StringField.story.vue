@@ -28,7 +28,7 @@ import StringField from './StringField.vue';
 import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
-import { objectErrors, objectModel } from '../helpers/mocks';
+import { objectErrors, objectModel, emptyModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore } from '../store';
 
@@ -37,6 +37,12 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   store.model = objectModel;
   if (variant?.title == 'Error') {
     store.errors = objectErrors;
+  }
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      ...emptyModel,
+      name: 'Kalvin Kiptum',
+    });
   }
 };
 

@@ -5,7 +5,11 @@
       rtl: language.isRtl,
     }"
   >
-    <label :for="field.label" class="input-label">
+    <label
+      :for="field.label"
+      class="input-label"
+      :class="{ 'text-gray-600': isReadOnly }"
+    >
       {{ field.label }}
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
@@ -14,7 +18,11 @@
         type="number"
         :readonly="props.isReadOnly"
         class="input-field w-24"
-        :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
+        :class="{
+          'border-error': hasError,
+          'text-gray-600': props.isReadOnly,
+          'shadow-none': props.isReadOnly,
+        }"
         @input="update"
       />
       <p v-if="hasError" class="text-sm text-error">Please enter a number</p>
@@ -39,7 +47,9 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const modelValue = ref(model.getField(fieldPath.value, field.value.default ?? ''));
+const modelValue = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, ''))
+  : ref(model.getField(fieldPath.value, field.value.default ?? ''));
 if (!model.isPopulated(fieldPath.value)) {
   model.setField(fieldPath.value, field.value.default ?? '');
 }

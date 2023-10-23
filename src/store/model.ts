@@ -54,6 +54,17 @@ export const useModelStore = defineStore('model', () => {
 
   const isPopulated = (path: string): boolean => readPath(path) !== undefined;
 
+  // translation source
+
+  const source = ref({});
+
+  const setSource = (fresh: object) => {
+    source.value = fresh;
+  };
+
+  const getSourceField = (path: string, defaultValue: any = {}) =>
+    resolvePath(source.value, path, defaultValue);
+
   // field specific
 
   const updateVerse = (path: string, verse: string) => {
@@ -99,5 +110,8 @@ export const useModelStore = defineStore('model', () => {
     setErrors,
     clearErrors,
     errorMessages,
+    source,
+    setSource,
+    getSourceField,
   };
 });

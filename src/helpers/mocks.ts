@@ -19,6 +19,23 @@ export const objectModel: any = {
   },
 };
 
+export const emptyModel: any = {
+  name: '',
+  age: null,
+  notes: '',
+  profile: '',
+  address: {
+    street: '',
+    city: '',
+    state: '',
+    zip: '',
+    favoriteScripture: {
+      reference: '',
+      verse: '',
+    },
+  },
+};
+
 export const objectModelBlankImage = {
   name: 'John',
   age: 30,
@@ -118,15 +135,6 @@ export const listInObjectModel = {
 
 export const listInObjectError = {
   'bundle.spread.notes.0.content': ['required validation failed'],
-};
-
-export const panelModel = {
-  title: 'John',
-  description: '# Read about John',
-};
-
-export const panelErrors = {
-  'bundle.title': ['required validation failed'],
 };
 
 export const listSpec = {

@@ -38,7 +38,7 @@
           name: 'isFavourite',
           label: 'Is Favourite',
           widget: 'boolean',
-          default: false,
+          default: true,
         }"
         :is-read-only="true"
       />
@@ -67,6 +67,11 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   store.model = objectModel;
   if (variant?.title == 'Error') {
     store.errors = objectErrors;
+  }
+  if (variant?.title === 'Readonly') {
+    store.setSource({
+      isFavourite: false,
+    });
   }
 };
 

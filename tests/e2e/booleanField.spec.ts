@@ -106,7 +106,6 @@ test.describe('Boolean Field', () => {
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('switch', { name: 'Is Favourite' });
-    await expect(locator).toHaveClass(/bg-gray-200/);
     await expect(locator).toHaveAttribute('disabled', '');
   });
 });
