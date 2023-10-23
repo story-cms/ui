@@ -20,7 +20,7 @@
         :class="{ 'border-error': hasError, 'opacity-50': props.isReadOnly }"
         @input="update"
       />
-      <p v-if="hasError" class="text-sm text-error">{{ errorMessage }}</p>
+      <p v-if="hasError" class="text-sm text-error">{{ errors[0] }}</p>
     </div>
   </div>
 </template>
@@ -53,13 +53,8 @@ model.$subscribe(() => {
   });
 });
 
-const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
-const errorMessage = computed(() => {
-  const path = `bundle.${fieldPath.value}`;
-  if (!model.errors[path]) return '';
-  if (model.errors[path].length === 0) return '';
-  return model.errors[path][0];
-});
+const errors = computed(() => model.errorMessages(fieldPath.value));
+const hasError = computed(() => errors.value.length > 0);
 
 const language = useLanguageStore();
 </script>

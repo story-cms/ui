@@ -60,7 +60,7 @@ test.describe('Boolean Field', () => {
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
-        .getByText('This field cannot be empty'),
+        .getByText('required validation failed'),
     ).toBeVisible();
   });
 

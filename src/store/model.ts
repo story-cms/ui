@@ -80,6 +80,11 @@ export const useModelStore = defineStore('model', () => {
     errors.value = <Record<string, string[]>>{};
   };
 
+  const errorMessages = (path: string): string[] => {
+    const messages = errors.value[`bundle.${path}`] || [];
+    return messages;
+  };
+
   return {
     model,
     getField,
@@ -93,5 +98,6 @@ export const useModelStore = defineStore('model', () => {
     errors,
     setErrors,
     clearErrors,
+    errorMessages,
   };
 });

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/audio-field');
-  await page.getByRole('link', { name: 'Audio Field 4' }).click();
+  await page.getByRole('link', { name: 'Audio Field 5' }).click();
 });
 test.afterEach(async ({ page }) => {
   await page.close();
@@ -39,7 +39,8 @@ test.describe('Audio Field', () => {
       page.frameLocator('[data-test-id="preview-iframe"]').getByRole('button'),
     ).not.toBeVisible();
   });
-  test('should upload audio file', async ({ page }) => {
+  // we don't yet have a s3 bucket for testing provisioned
+  test.skip('should upload audio file', async ({ page }) => {
     await page.getByRole('link', { name: 'Model without audio' }).click();
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
