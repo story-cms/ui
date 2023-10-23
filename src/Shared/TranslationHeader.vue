@@ -28,7 +28,7 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-2 gap-x-2 [&>h3]:pb-2 [&>h3]:pl-6 [&>h3]:text-lg/8 [&>h3]:font-semibold [&>h3]:text-gray-800"
+      class="grid grid-cols-[repeat(2,_minmax(calc(64rem/2),_1fr))] gap-x-2 lg:place-content-center [&>h3]:pb-2 [&>h3]:pl-6 [&>h3]:text-lg/8 [&>h3]:font-semibold [&>h3]:text-gray-800"
     >
       <h3>Afrikaans</h3>
       <h3 class="inline-flex items-center">
