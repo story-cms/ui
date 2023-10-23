@@ -10,7 +10,14 @@
       <ModelControl :model="audioModelBlankAudio" />
     </Variant>
 
-    <Variant title="Error" :setup-app="loadData">
+    <Variant title="Error with audio" :setup-app="loadData">
+      <AudioField :field="spec" />
+      <template #controls>
+        <ErrorControl :errors="audioObjectErrors" />
+      </template>
+    </Variant>
+
+    <Variant title="Error without audio" :setup-app="loadData">
       <AudioField :field="spec" />
       <template #controls>
         <ErrorControl :errors="audioObjectErrors" />
@@ -33,20 +40,25 @@ import { useModelStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  if (variant?.title == 'Model with audio') {
-    store.model = audioModel;
-    return;
-  }
-  if (variant?.title == 'Model without audio') {
-    store.model = audioModelBlankAudio;
-    return;
-  }
-  if (variant?.title == 'Error') {
-    store.errors = audioObjectErrors;
-    return;
-  }
+  switch (variant?.title) {
+    case 'Model without audio':
+      store.model = audioModelBlankAudio;
+      return;
 
-  store.model = audioModel;
+    case 'Error with audio':
+      store.model = audioModel;
+      store.errors = audioObjectErrors;
+      return;
+
+    case 'Error without audio':
+      store.model = audioModelBlankAudio;
+      store.errors = audioObjectErrors;
+      return;
+
+    default:
+      store.model = audioModel;
+      break;
+  }
 };
 
 function greet(name: string): string {
@@ -97,6 +109,6 @@ const audioModelBlankAudio = {
 
 const audioObjectErrors = {
   'bundle.name': ['required validation failed'],
-  'bundle.soundtrack.url': ['required validation failed'],
+  'bundle.soundtrack': ['We could not publish the file. Please try again.'],
 };
 </script>

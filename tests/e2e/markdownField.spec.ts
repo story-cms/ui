@@ -50,8 +50,8 @@ test.describe('Markdown Field', () => {
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
-        .getByText('This field cannot be empty'),
-    ).toBeVisible();
+        .getByText('required validation failed'),
+    ).toHaveCount(2);
   });
 
   test('should hide toolbar buttons', async ({ page }) => {
