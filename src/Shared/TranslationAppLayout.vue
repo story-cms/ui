@@ -17,15 +17,17 @@
         @toggle="toggle"
       />
     </div>
-    <div
-      class="container mx-2 grid place-content-center gap-x-2 overflow-auto bg-gray-50 [&>section]:mt-2"
-      :class="
-        isSingleColumn
-          ? 'max-w-[1080px] grid-cols-1 lg:mx-auto'
-          : 'mx-auto max-w-7xl grid-cols-[repeat(2,_minmax(628px,_1fr))]'
-      "
-    >
-      <slot></slot>
+    <div class="mx-2 overflow-x-auto">
+      <div
+        class="grid max-w-5xl gap-x-2 [&>section]:mt-2"
+        :class="
+          isSingleColumn
+            ? 'grid-cols-1 lg:mx-auto'
+            : 'mx-auto grid-flow-col-dense grid-cols-[repeat(2,_minmax(calc(64rem/2),_1fr))] overflow-x-auto lg:place-content-center'
+        "
+      >
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
