@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType, defineExpose } from 'vue';
+import { ref, PropType } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { Meta, LanguageSpecification, User } from './interfaces';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
