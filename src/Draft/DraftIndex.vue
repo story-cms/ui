@@ -74,6 +74,7 @@
                   (!spec.hasEditReview || draft.status === 'submitted') &&
                   props.user.role === 'admin'
                 "
+                :disabled="isSaving"
                 type="submit"
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
                 @click.prevent="publish"
@@ -181,6 +182,7 @@ interface FeedbackPanel {
 }
 
 let isSettingErrors = false;
+let isSaving = false;
 const secrets = useSecretStore();
 const store = useModelStore();
 const { bundle, errors } = toRefs(props);
@@ -209,8 +211,11 @@ const chapterTitle = computed(() =>
 );
 
 const save = debounce(2000, () => {
+  isSaving = true;
+  console.log('saving...');
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
+
     onSuccess: () => {
       // feedbackPanel.value.message = `Episode saved!`;
       // feedbackPanel.value.icon = 'check';
