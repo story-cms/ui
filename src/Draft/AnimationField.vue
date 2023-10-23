@@ -2,7 +2,7 @@
   <AttachmentField
     v-bind="props"
     :url="url"
-    :has-error="hasError"
+    :errors="errors"
     :host-service="host"
     @delete="onDelete"
     @attached="onAttached"
@@ -40,8 +40,7 @@ model.$subscribe(() => {
     url.value = model.getField(fieldPath.value, '') as string;
   });
 });
-
-const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const errors = computed(() => model.errorMessages(fieldPath.value));
 
 const onDelete = () => {
   model.setField(fieldPath.value, '');

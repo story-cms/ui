@@ -29,7 +29,7 @@
         </option>
       </select>
 
-      <p v-if="hasError" class="text-sm text-error">This field cannot be empty</p>
+      <p v-if="hasError" class="text-sm text-error">{{ errors[0] }}</p>
     </div>
   </div>
 </template>
@@ -66,7 +66,8 @@ const update = () => {
   model.setField(fieldPath.value, selection.value);
 };
 
-const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const errors = computed(() => model.errorMessages(fieldPath.value));
+const hasError = computed(() => errors.value.length > 0);
 
 const language = useLanguageStore();
 </script>

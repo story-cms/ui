@@ -25,7 +25,7 @@
         />
       </div>
       <p v-if="hasError" class="mt-[8px] text-sm text-error">
-        This field cannot be empty
+        {{ errors[0] }}
       </p>
     </div>
   </div>
@@ -68,7 +68,8 @@ const load = () => {
 
 model.$subscribe(load);
 
-const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const errors = computed(() => model.errorMessages(fieldPath.value));
+const hasError = computed(() => errors.value.length > 0);
 
 const language = useLanguageStore();
 language.$subscribe(() => {

@@ -174,7 +174,7 @@ test.describe('Image Field', () => {
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
-        .getByText('Profile Image cannot be empty'),
+        .getByText('required validation failed'),
     ).toBeVisible();
   });
 

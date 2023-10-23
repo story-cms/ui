@@ -1,48 +1,48 @@
 <template>
   <div
-    class="relative bg-white"
+    class="bg-white"
     :class="{ 'p-8': !isNested, 'mt-4': isNested, rtl: language.isRtl }"
   >
     <div class="relative">
-      <label class="input-label" :class="{ 'text-error': hasError }">{{
-        field.label
-      }}</label>
-      <button
-        v-if="!!url && !props.isReadOnly"
-        class="absolute right-0 top-2"
-        type="button"
-        @click.prevent="emit('delete')"
-      >
-        <Icon name="trash" class="h-10 w-10 text-gray-500" />
-      </button>
-    </div>
-
-    <div v-if="!!url" class="flex items-start pt-2">
-      <slot></slot>
-    </div>
-
-    <div v-else>
-      <div
-        v-if="!props.isReadOnly"
-        class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
-      >
-        <FileUpload
-          :description="defaults.description"
-          :extensions="defaults.extensions"
-          :max-size="defaults.maxSize"
-          @file="onFile"
-        />
-        <p v-if="hasError" class="text-sm text-error">
-          {{ field.label }} cannot be empty
-        </p>
-        <div
-          v-if="uploading"
-          class="absolute left-0 top-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
+      <div class="relative">
+        <label class="input-label" :class="{ 'text-error': hasError }">{{
+          field.label
+        }}</label>
+        <button
+          v-if="!!url && !props.isReadOnly"
+          class="absolute right-0 top-2"
+          type="button"
+          @click.prevent="emit('delete')"
         >
-          <div class="h-full bg-accent opacity-30" :style="progress"></div>
+          <Icon name="trash" class="h-10 w-10 text-gray-500" />
+        </button>
+      </div>
+
+      <div v-if="!!url" class="flex items-start pt-2">
+        <slot></slot>
+      </div>
+
+      <div v-else>
+        <div
+          v-if="!props.isReadOnly"
+          class="relative mt-[2px] rounded-md border-2 border-dashed border-gray-300"
+        >
+          <FileUpload
+            :description="defaults.description"
+            :extensions="defaults.extensions"
+            :max-size="defaults.maxSize"
+            @file="onFile"
+          />
+          <div
+            v-if="uploading"
+            class="absolute left-0 top-0 h-full w-full rounded-md bg-gray-400 bg-opacity-30"
+          >
+            <div class="h-full bg-accent opacity-30" :style="progress"></div>
+          </div>
         </div>
       </div>
     </div>
+    <p v-if="hasError" class="mt-2 text-sm text-error">{{ errors[0] }}</p>
   </div>
 </template>
 
@@ -63,8 +63,8 @@ const props = defineProps({
     required: true,
   },
 
-  hasError: {
-    type: Boolean,
+  errors: {
+    type: Array as PropType<string[]>,
     required: true,
   },
 
@@ -91,6 +91,8 @@ const onFile = async (file: File) => {
   emit('attached', result);
   uploading.value = false;
 };
+
+const hasError = computed(() => props.errors.length > 0);
 
 const defaults = computed(() => {
   switch (props.field?.widget) {

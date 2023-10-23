@@ -55,8 +55,8 @@ const isWeird = computed((): boolean => {
   return isNaN(modelValue.value);
 });
 
-const hasError = computed(
-  () => `bundle.${fieldPath.value}` in model.errors || isWeird.value === true,
-);
+const errors = computed(() => model.errorMessages(fieldPath.value));
+const hasError = computed(() => errors.value.length > 0 || isWeird.value === true);
+
 const language = useLanguageStore();
 </script>

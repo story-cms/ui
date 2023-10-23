@@ -2,8 +2,8 @@
   <AttachmentField
     v-bind="props"
     :url="url"
-    :has-error="hasError"
     :host-service="host"
+    :errors="errors"
     @delete="onDelete"
     @attached="onAttached"
   >
@@ -57,7 +57,7 @@ model.$subscribe(() => {
   });
 });
 
-const hasError = computed(() => `bundle.${fieldPath.value}` in model.errors);
+const errors = computed(() => model.errorMessages(fieldPath.value));
 
 const onDelete = () => {
   model.setField(fieldPath.value, emptyAudio);
