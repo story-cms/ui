@@ -14,7 +14,7 @@
         :has-edit-review="props.hasEditReview"
         :draft-status="props.draftStatus"
         :user="props.user!"
-        @toggle="toggle"
+        @is-single-column="forwardEvent"
       />
     </div>
     <div class="mx-2 overflow-x-auto">
@@ -75,8 +75,10 @@ const isSingleColumn = ref(false);
 
 const emit = defineEmits(['isSingleColumn']);
 
-const toggle = () => {
-  isSingleColumn.value = !isSingleColumn.value;
-  emit('isSingleColumn', isSingleColumn.value);
+const forwardEvent = (event: boolean) => {
+  isSingleColumn.value = event;
+  emit('isSingleColumn', event);
 };
+
+onMounted(() => forwardEvent);
 </script>

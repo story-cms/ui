@@ -28,7 +28,12 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-[repeat(2,_minmax(calc(64rem/2),_1fr))] gap-x-2 lg:place-content-center [&>h3]:pb-2 [&>h3]:pl-6 [&>h3]:text-lg/8 [&>h3]:font-semibold [&>h3]:text-gray-800"
+      class="grid max-w-5xl lg:place-content-center [&>h3]:pb-2 [&>h3]:pl-6 [&>h3]:text-lg/8 [&>h3]:font-semibold [&>h3]:text-gray-800"
+      :class="
+        isSingleColumn
+          ? 'grid-cols-2'
+          : 'mx-auto  grid-cols-[repeat(2,_minmax(calc(64rem/2),_1fr))] overflow-auto'
+      "
     >
       <h3>Afrikaans</h3>
       <h3 class="inline-flex items-center">
@@ -41,12 +46,12 @@
           />
         </span>
       </h3>
-      <hr class="col-span-full" />
     </div>
+    <hr class="col-span-full" />
   </div>
 </template>
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { PropType, onMounted, ref } from 'vue';
 import { User } from '../Shared/interfaces';
 import Icon from './Icon.vue';
 
@@ -69,9 +74,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['toggle']);
+const isSingleColumn = ref(false);
+
+const emit = defineEmits(['isSingleColumn']);
 
 const toggle = () => {
-  emit('toggle');
+  isSingleColumn.value = !isSingleColumn.value;
+  emit('isSingleColumn', isSingleColumn.value);
 };
+
+onMounted(() => emit('isSingleColumn', isSingleColumn.value));
 </script>
