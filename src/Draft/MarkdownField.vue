@@ -8,7 +8,7 @@
     <label
       for="first-name"
       class="block text-sm font-medium text-gray-700"
-      :class="{ rtl: language.isRtl }"
+      :class="{ rtl: language.isRtl, 'text-gray-600': props.isReadOnly }"
       >{{ field.label }}</label
     >
     <div class="mt-1">
@@ -59,7 +59,9 @@ const update = (e: Editor, change: EditorChange) => {
 
 const load = () => {
   nextTick().then(() => {
-    const fresh = model.getField(fieldPath.value, '') as unknown as string;
+    const fresh = props.isReadOnly
+      ? model.getSourceField(fieldPath.value, '')
+      : (model.getField(fieldPath.value, '') as unknown as string);
     if (fresh === mde?.value()) return;
 
     mde?.codemirror.setValue(fresh);

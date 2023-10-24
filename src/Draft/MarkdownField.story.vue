@@ -86,7 +86,7 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   if (variant?.title == 'Readonly') {
     store.setSource({
       ...objectModel,
-      notes: 'This is a readonly note',
+      notes: '# This is a readonly note',
     });
   }
   store.model = objectModel;

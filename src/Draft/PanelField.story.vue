@@ -44,7 +44,7 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   if (variant?.title == 'Readonly') {
     store.setSource({
       title: 'English Title',
-      description: 'English Description',
+      description: '# English Description',
     });
   }
 };
