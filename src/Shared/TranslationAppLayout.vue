@@ -14,14 +14,13 @@
         :has-edit-review="props.hasEditReview"
         :draft-status="props.draftStatus"
         :user="props.user!"
-        @is-single-column="forwardEvent"
       />
     </div>
     <div class="mx-2 overflow-x-auto">
       <div
         class="grid max-w-5xl gap-x-2 [&>section]:mt-2"
         :class="
-          isSingleColumn
+          store.isSingleColumn
             ? 'grid-cols-1 lg:mx-auto'
             : 'mx-auto grid-flow-col-dense grid-cols-[repeat(2,_minmax(calc(64rem/2),_1fr))] overflow-x-auto lg:place-content-center'
         "
@@ -38,6 +37,7 @@ import { onMounted, ref } from 'vue';
 import TranslationNavigation from './TranslationNavigation.vue';
 import TranslationHeader from './TranslationHeader.vue';
 import { Meta, LanguageSpecification, User } from './interfaces';
+import { useLanguageStore } from '../store';
 
 const props = defineProps<{
   chapterTitle: string;
@@ -71,14 +71,5 @@ onMounted(() => {
   observer.observe(translationNavigationComponent.value?.navbar as HTMLElement);
 });
 
-const isSingleColumn = ref(false);
-
-const emit = defineEmits(['isSingleColumn']);
-
-const forwardEvent = (event: boolean) => {
-  isSingleColumn.value = event;
-  emit('isSingleColumn', event);
-};
-
-onMounted(() => forwardEvent);
+const store = useLanguageStore();
 </script>

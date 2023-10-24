@@ -8,7 +8,6 @@
     :story-name="storyName"
     :stories="stories as string[]"
     :user="props.user"
-    @is-single-column="isSingleColumn = $event"
   >
     <section>
       <form class="space-y-8">
@@ -17,7 +16,7 @@
         </div>
       </form>
     </section>
-    <section :class="isSingleColumn ? 'hidden' : ''">
+    <section :class="languageStore.isSingleColumn ? 'hidden' : ''">
       <form class="space-y-8">
         <div v-for="(item, index) in fields" :key="index">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
@@ -38,7 +37,7 @@ import {
   User,
   LanguageSpecification,
 } from '../Shared/interfaces';
-import { useModelStore, useWidgetsStore } from '../store';
+import { useModelStore, useWidgetsStore, useLanguageStore } from '../store';
 
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 
@@ -122,5 +121,5 @@ onMounted(() => {
   console.log(publish);
 });
 
-const isSingleColumn = ref(false);
+const languageStore = useLanguageStore();
 </script>
