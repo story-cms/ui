@@ -5,9 +5,11 @@
   >
     <div class="relative">
       <div class="relative">
-        <label class="input-label" :class="{ 'text-error': hasError }">{{
-          field.label
-        }}</label>
+        <label
+          class="input-label"
+          :class="{ 'text-error': hasError, 'text-gray-600': isReadOnly }"
+          >{{ field.label }}</label
+        >
         <button
           v-if="!!url && !props.isReadOnly"
           class="absolute right-0 top-2"

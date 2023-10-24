@@ -32,7 +32,10 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const modelValue = ref(model.getField(fieldPath.value, '') as string);
+const modelValue = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, '') as string)
+  : ref(model.getField(fieldPath.value, ''));
+
 const host = new CloudinaryService(field.value, '/image/upload');
 
 model.$subscribe(() => {
