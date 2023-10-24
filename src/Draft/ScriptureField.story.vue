@@ -17,7 +17,6 @@
 
     <Variant title="ReadOnly" :setup-app="loadData">
       <ScriptureField :field="scriptureSpec" :is-read-only="true" />
-      <ModelControl :model="scriptureModel" :is-inspect-only="true" />
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
@@ -52,10 +51,20 @@ const setGerman: Vue3StorySetupHandler = () => {
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  store.model = scriptureModel;
   if (variant?.title == 'Error') {
     store.errors = scriptureError;
   }
+  if (variant?.title == 'ReadOnly') {
+    store.setSource({
+      scripture: {
+        reference: 'Matthew 3:16',
+        verse:
+          '`16` And when Jesus was baptized, immediately he went up from the water, and behold, the heavens were opened to him, and he saw the Spirit of God descending like a dove and coming to rest on him',
+      },
+    });
+    return;
+  }
+  store.model = scriptureModel;
 };
 </script>
 

@@ -6,7 +6,11 @@
       rtl: language.isRtl,
     }"
   >
-    <label :for="field.label" class="input-label">
+    <label
+      :for="field.label"
+      class="input-label"
+      :class="{ 'text-gray-600': props.isReadOnly }"
+    >
       {{ field.label + ' Reference' }}
     </label>
     <div class="mt-[2px] pt-1 sm:col-span-2 sm:mt-0">
@@ -26,7 +30,10 @@
       <p v-if="referenceHasError" class="text-sm text-error">
         This field cannot be empty
       </p>
-      <label class="input-label mt-4 block">
+      <label
+        class="input-label mt-4 block"
+        :class="{ 'text-gray-600': props.isReadOnly }"
+      >
         {{ field.label + ' Passage' }}
       </label>
       <button
@@ -91,10 +98,17 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const startValue = model.getField(fieldPath.value, {
-  reference: '',
-  verse: '',
-}) as Scripture;
+
+const startValue = props.isReadOnly
+  ? (model.getSourceField(fieldPath.value, {
+      reference: '',
+      verse: '',
+    }) as Scripture)
+  : (model.getField(fieldPath.value, {
+      reference: '',
+      verse: '',
+    }) as Scripture);
+
 const reference = ref(startValue.reference);
 const verse = ref(startValue.verse);
 const isBusy = ref(false);
