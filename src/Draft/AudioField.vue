@@ -43,7 +43,10 @@ const emptyAudio = {
   length: null,
 };
 
-const startValue = model.getField(fieldPath.value, emptyAudio) as Audio;
+const startValue = props.isReadOnly
+  ? model.getSourceField(fieldPath.value, emptyAudio)
+  : (model.getField(fieldPath.value, emptyAudio) as Audio);
+
 const url = ref(startValue.url);
 const length = ref(startValue.length);
 const host = new S3Service(props.filePath);

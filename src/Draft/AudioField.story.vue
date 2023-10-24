@@ -27,6 +27,10 @@
     <Variant title="Nested" :setup-app="loadData">
       <PanelField :field="nested" />
     </Variant>
+
+    <Variant title="Readonly" :setup-app="loadData">
+      <AudioField :field="spec" :is-read-only="true" />
+    </Variant>
   </Story>
 </template>
 
@@ -53,6 +57,16 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
     case 'Error without audio':
       store.model = audioModelBlankAudio;
       store.errors = audioObjectErrors;
+      return;
+
+    case 'Readonly':
+      store.setSource({
+        ...audioModel,
+        soundtrack: {
+          url: 'https://res.cloudinary.com/redeem/video/upload/v1698150694/story-cms-ui/audio/297_CLASSIC_en-GB_be9mpu.mp3',
+          length: 16.39,
+        },
+      });
       return;
 
     default:
