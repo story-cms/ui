@@ -1,13 +1,13 @@
 <template>
   <AttachmentField
     v-bind="props"
-    :url="url"
+    :url="modelValue"
     :errors="errors"
     :host-service="host"
     @delete="onDelete"
     @attached="onAttached"
   >
-    <RivePlayer :url="url" />
+    <RivePlayer :url="modelValue" />
   </AttachmentField>
 </template>
 
@@ -32,12 +32,15 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
-const url = ref(model.getField(fieldPath.value, '') as string);
+const modelValue = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, '') as string)
+  : ref(model.getField(fieldPath.value, ''));
+
 const host = new CloudinaryService(field.value, '/raw/upload');
 
 model.$subscribe(() => {
   nextTick().then(() => {
-    url.value = model.getField(fieldPath.value, '') as string;
+    modelValue.value = model.getField(fieldPath.value, '') as string;
   });
 });
 const errors = computed(() => model.errorMessages(fieldPath.value));
@@ -45,7 +48,7 @@ const errors = computed(() => model.errorMessages(fieldPath.value));
 const onDelete = () => {
   model.setField(fieldPath.value, '');
   nextTick().then(() => {
-    url.value = model.getField(fieldPath.value, '') as string;
+    modelValue.value = model.getField(fieldPath.value, '') as string;
   });
 };
 

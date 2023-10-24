@@ -36,7 +36,7 @@
       <AnimationField
         :field="{
           name: 'success',
-          label: 'Success celebration',
+          label: 'Success celebration (readonly)',
           widget: 'animation',
         }"
         :is-read-only="true"
@@ -54,16 +54,21 @@ import { useModelStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  if (variant?.title == 'Read Only') {
-    store.model = objectModel;
-    return;
-  }
   if (variant?.title == 'Model without attachment') {
     store.model = modelBlankAnimation;
     return;
   }
   if (variant?.title == 'Error') {
     store.errors = objectErrors;
+    return;
+  }
+
+  if (variant?.title == 'Read Only') {
+    store.setSource({
+      ...objectModel,
+      success:
+        'https://res.cloudinary.com/onesheep/raw/upload/v1685641667/cmsplayground/fnu2m4ogxi9wdhi91iqi.riv',
+    });
     return;
   }
   store.model = objectModel;
