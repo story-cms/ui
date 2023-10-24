@@ -23,7 +23,7 @@
         placeholder="John 1 or John 1:3-4"
         autocomplete="given-name"
         class="input-field text-black"
-        :class="{ 'border-error': referenceHasError, 'opacity-50': props.isReadOnly }"
+        :class="{ 'border-error': referenceHasError, 'text-gray-600': props.isReadOnly }"
         @input="updateReference"
         @blur="lookup"
       />
@@ -58,7 +58,7 @@
         class="input-field mt-2 h-64 text-black"
         :class="{
           'border-error': verseHasError,
-          'opacity-50': isBusy || props.isReadOnly,
+          'text-gray-600': isBusy || props.isReadOnly,
         }"
         @input="updateVerse"
       ></textarea>

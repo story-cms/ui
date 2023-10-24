@@ -7,7 +7,6 @@
 
     <Variant title="Readonly" :setup-app="loadData">
       <ObjectField :field="objectSpec" :is-read-only="true" />
-      <ModelControl :model="objectModel" />
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
@@ -78,6 +77,21 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
       store.errors = objectErrors;
       break;
     case 'Readonly':
+      store.setSource({
+        ...objectModel,
+        address: {
+          street: '567 Main St',
+          city: 'Las Vegas',
+          state: 'NV',
+          zip: '89123',
+          favoriteScripture: {
+            reference: 'Matthew 3:16',
+            verse:
+              '`16` As soon as Jesus was baptized, he went up out of the water. At that moment heaven was opened, and he saw the Spirit of God descending like a dove and alighting on him.',
+          },
+        },
+      });
+      break;
     case 'Default':
       store.model = objectModel;
       break;
