@@ -228,6 +228,7 @@ const save = debounce(2000, () => {
       feedbackPanel.value.message = JSON.stringify(props.errors, null, 2);
     },
   });
+  isSaving = false;
 });
 
 const deleteDraft = () => {
