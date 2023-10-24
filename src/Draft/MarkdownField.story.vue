@@ -80,10 +80,16 @@ import { useModelStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  store.model = objectModel;
   if (variant?.title == 'Error') {
     store.errors = objectErrors;
   }
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      ...objectModel,
+      notes: 'This is a readonly note',
+    });
+  }
+  store.model = objectModel;
 };
 
 const spec = {
