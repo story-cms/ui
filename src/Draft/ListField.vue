@@ -47,7 +47,9 @@ const removeSet = (index: number) => {
   model.removeListItem(fieldPath.value, index);
 };
 
-const listItems = ref(model.getField(fieldPath.value, []) as any[]);
+const listItems = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, []) as any[])
+  : ref(model.getField(fieldPath.value, []) as any[]);
 
 model.$subscribe(() => {
   const fresh = model.getField(fieldPath.value, []) as any[];

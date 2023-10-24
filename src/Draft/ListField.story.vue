@@ -22,6 +22,10 @@
       </template>
     </Variant>
 
+    <Variant title="Readonly" :setup-app="loadData">
+      <ListField :field="pokeSpec" :is-read-only="true" />
+    </Variant>
+
     <Variant title="List in List" :setup-app="loadData">
       <ListField :field="listInListSpec" />
       <ModelControl :model="listInListModel" />
@@ -64,27 +68,41 @@ import {
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  switch (variant?.title) {
-    case 'Error':
-      store.errors = listErrors;
-      store.model = listModel;
-      break;
-    case 'Foldable':
-    case 'Default':
-      store.model = listModel;
-      break;
-    case 'List in List Error':
-      store.errors = listInListErrors;
-      break;
-    case 'List in List':
-      store.model = listInListModel;
-      break;
-    case 'Poke':
-      store.model = pokeModel;
-      break;
-    default:
-      break;
+
+  if (variant?.title == 'Error') {
+    store.errors = listErrors;
+    store.model = listModel;
+    return;
   }
+  if (variant?.title == 'List in List Error') {
+    store.errors = listInListErrors;
+    return;
+  }
+  if (variant?.title == 'List in List') {
+    store.model = listInListModel;
+    return;
+  }
+  if (variant?.title == 'Poke') {
+    store.model = pokeModel;
+    return;
+  }
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      ...pokeModel,
+      conclusions: [
+        {
+          statement: 'This is a summary statement',
+          excerpt: 'This is a scripture excerpt',
+        },
+        {
+          statement: 'This is another summary statement',
+          excerpt: 'This is another scripture excerpt',
+        },
+      ],
+    });
+    return;
+  }
+  store.model = listModel;
 };
 
 const pokeSpec = {
