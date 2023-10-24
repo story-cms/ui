@@ -211,8 +211,10 @@ const chapterTitle = computed(() =>
 );
 
 const save = debounce(2000, () => {
+  console.log(isSaving);
   isSaving = true;
   console.log('saving...');
+  console.log(isSaving);
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
 
