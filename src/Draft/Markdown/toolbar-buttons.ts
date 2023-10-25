@@ -19,6 +19,14 @@ export const customToolbarButtons: EditorButton[] = [
       return instance.codemirror.replaceSelection(newValue);
     },
   },
+  {
+    name: 'transparent',
+    className: 'fa fa-transparent noHover',
+    title: '',
+    action: (instance: EasyMDE) => {
+      return null;
+    },
+  },
 ];
 
 export const defaultButtons: string[] = [
