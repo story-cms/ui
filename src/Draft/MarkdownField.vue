@@ -82,7 +82,8 @@ let mde: EasyMDE | null = null;
 const textArea = ref(undefined);
 
 const toolbar = computed((): any[] => {
-  if (props.isReadOnly) return [customToolbarButtons.find((obj) => obj.name === 'transparent')];
+  if (props.isReadOnly)
+    return [customToolbarButtons.find((obj) => obj.name === 'transparent')];
   // NOTE: make sure to clone the field before passing it to MDE where it is mutated
   if (field.value.toolbar)
     return Array.from(
@@ -119,8 +120,5 @@ onMounted(async () => {
 
 .editor-toolbar {
   background-color: white !important;
-}
-.noHover{
-    pointer-events: none;
 }
 </style>

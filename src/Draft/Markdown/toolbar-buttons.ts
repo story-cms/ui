@@ -21,9 +21,9 @@ export const customToolbarButtons: EditorButton[] = [
   },
   {
     name: 'transparent',
-    className: 'fa fa-transparent noHover',
+    className: 'fa fa-transparent pointer-events-none',
     title: '',
-    action: (instance: EasyMDE) => {
+    action: () => {
       return null;
     },
   },
