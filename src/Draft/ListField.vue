@@ -5,6 +5,7 @@
       :field="field"
       :field-path="fieldPath"
       :list-items="listItems"
+      :is-read-only="props.isReadOnly"
       @add-set="addSet"
       @remove-set="removeSet"
     />
@@ -13,6 +14,7 @@
       :field="field"
       :field-path="fieldPath"
       :list-items="listItems"
+      :is-read-only="props.isReadOnly"
       @add-set="addSet"
       @remove-set="removeSet"
     />

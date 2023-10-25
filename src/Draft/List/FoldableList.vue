@@ -22,7 +22,7 @@
           </button>
           <div
             v-if="itemHasError(index)"
-            class="text-accent-one cursor-pointer"
+            class="cursor-pointer text-accent-one"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
@@ -30,14 +30,14 @@
             </div>
           </div>
           <div class="cursor-pointer text-gray-500" @click="emit('removeSet', index)">
-            <div class="rounded-full border bg-white p-2">
+            <div v-if="!props.isReadOnly" class="rounded-full border bg-white p-2">
               <Icon name="trash" class="h-10 w-10" />
             </div>
           </div>
         </div>
       </div>
       <div class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"></div>
-      <div v-if="isExpanded(index)" class="absolute left-1.5 bottom-0">
+      <div v-if="isExpanded(index)" class="absolute bottom-0 left-1.5">
         <button
           type="button"
           class="cursor-pointer rounded bg-white px-1.5 py-2 shadow-sm"
@@ -47,7 +47,7 @@
         </button>
       </div>
 
-      <div v-if="isExpanded(index)" class="relative mt-8 ml-8">
+      <div v-if="isExpanded(index)" class="relative ml-8 mt-8">
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
             :is="widgets.picker(item.widget)"
@@ -59,6 +59,7 @@
               ),
             }"
             :field="item"
+            :is-read-only="props.isReadOnly"
             :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
           />
@@ -66,7 +67,7 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="!props.isReadOnly">
       <AddItemButton :label="field.label" @add="emit('addSet')" />
     </div>
   </div>
@@ -91,6 +92,11 @@ const props = defineProps({
   listItems: {
     type: Array,
     required: true,
+  },
+  isReadOnly: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 

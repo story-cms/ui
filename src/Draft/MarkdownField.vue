@@ -11,11 +11,13 @@
       :class="{ rtl: language.isRtl, 'text-gray-600': props.isReadOnly }"
       >{{ field.label }}</label
     >
-    <div class="mt-1">
+    <div
+      class="mt-1"
+      :class="{ '[&_.CodeMirror-lines]:text-gray-600': props.isReadOnly }"
+    >
       <div
         :class="{
           'rounded border border-error': hasError,
-          'opacity-50': props.isReadOnly,
         }"
       >
         <textarea

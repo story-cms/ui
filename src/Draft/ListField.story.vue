@@ -26,6 +26,10 @@
       <ListField :field="pokeSpec" :is-read-only="true" />
     </Variant>
 
+    <Variant title="Readonly foldable" :setup-app="loadData">
+      <ListField :field="foldableSpec" :is-read-only="true" />
+    </Variant>
+
     <Variant title="List in List" :setup-app="loadData">
       <ListField :field="listInListSpec" />
       <ModelControl :model="listInListModel" />
@@ -88,6 +92,22 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   }
   if (variant?.title == 'Readonly') {
     store.setSource({
+      ...listModel,
+      conclusions: [
+        {
+          statement: 'This is a summary statement',
+          excerpt: 'This is a scripture excerpt',
+        },
+        {
+          statement: 'This is another summary statement',
+          excerpt: 'This is another scripture excerpt',
+        },
+      ],
+    });
+    return;
+  }
+  if (variant?.title == 'Readonly foldable') {
+    store.setSource({
       ...pokeModel,
       conclusions: [
         {
@@ -109,6 +129,7 @@ const pokeSpec = {
   label: 'Summary Statement',
   name: 'conclusions',
   widget: 'list',
+  index: 'statement',
   fields: [
     {
       label: 'Summary Statement',
@@ -124,6 +145,8 @@ const pokeSpec = {
     },
   ],
 };
+
+const foldableSpec = { ...pokeSpec, canFold: true };
 
 const pokeModel = {
   conclusions: [
