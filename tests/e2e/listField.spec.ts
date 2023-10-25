@@ -9,7 +9,7 @@ import { FieldSpec } from 'src';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-listfield-story-vue');
-  await page.getByRole('link', { name: 'ListField 8' }).click();
+  await page.getByRole('link', { name: 'ListField 10' }).click();
 });
 test.afterEach(async ({ page }) => {
   await page.close();
@@ -61,7 +61,7 @@ test.describe('List Field', () => {
   });
 
   test('should show foldable list', async ({ page }) => {
-    await page.getByRole('link', { name: 'Foldable' }).click();
+    await page.getByRole('link', { name: 'Foldable', exact: true }).click();
 
     const listItemFrame = page.frameLocator('[data-test-id="preview-iframe"]');
 

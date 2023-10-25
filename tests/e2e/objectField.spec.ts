@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import {
   objectSpec,
   objectModel,
+  objectModelReadonly,
   listInObjectSpec,
   listInObjectModel,
   objectInListInObjectSpec,
@@ -49,7 +50,7 @@ test.describe('Object Field', () => {
           page
             .frameLocator('[data-test-id="preview-iframe"]')
             .locator(`input[name=${item.label}]`),
-        ).toHaveValue(objectModel.address[item.name]);
+        ).toHaveValue(objectModelReadonly.address[item.name]);
         await expect(
           page
             .frameLocator('[data-test-id="preview-iframe"]')
@@ -61,10 +62,10 @@ test.describe('Object Field', () => {
           page
             .frameLocator('[data-test-id="preview-iframe"]')
             .getByPlaceholder('John 1 or John 1:3-4'),
-        ).toHaveValue(objectModel.address.favoriteScripture.reference);
+        ).toHaveValue(objectModelReadonly.address.favoriteScripture.reference);
         await expect(
           page.frameLocator('[data-test-id="preview-iframe"]').getByPlaceholder('Verse'),
-        ).toHaveValue(objectModel.address.favoriteScripture.verse);
+        ).toHaveValue(objectModelReadonly.address.favoriteScripture.verse);
         await expect(
           page
             .frameLocator('[data-test-id="preview-iframe"]')
