@@ -62,6 +62,9 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
+          toolbar: [
+            'bold',
+          ],
         }"
         :is-read-only="true"
       />

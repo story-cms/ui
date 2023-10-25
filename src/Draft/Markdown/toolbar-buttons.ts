@@ -19,6 +19,14 @@ export const customToolbarButtons: EditorButton[] = [
       return instance.codemirror.replaceSelection(newValue);
     },
   },
+  {
+    name: 'transparent',
+    className: 'fa fa-transparent pointer-events-none',
+    title: '',
+    action: () => {
+      return null;
+    },
+  },
 ];
 
 export const defaultButtons: string[] = [
