@@ -122,7 +122,7 @@ export interface Meta {
   logo: string;
   storyType: string;
   chapterType: string;
-  helpUrl: string;
+  helpUrl?: string;
 }
 
 export interface S3Target {
@@ -140,4 +140,24 @@ export interface Providers {
 export interface Audio {
   url: string;
   length: number;
+}
+
+export interface User {
+  name: string;
+  initials: string;
+  email: string;
+  isManager: boolean;
+  isAdmin: boolean;
+  role: string;
+}
+
+export interface SharedPageProps {
+  meta: Meta;
+  language: LanguageSpecification;
+  langauges: string[];
+  storyName: string;
+  stories: string[];
+  user: User;
+  secrets?: any;
+  errors?: any;
 }

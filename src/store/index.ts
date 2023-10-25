@@ -7,3 +7,4 @@ export * from './model';
 export * from './secrets';
 export * from './pages';
 export * from './widgets';
+export * from './config';

@@ -30,6 +30,7 @@ import ForgotPassword from './Auth/ForgotPassword.vue';
 import ResetPassword from './Auth/ResetPassword.vue';
 import DashboardIndex from './Dashboard/DashboardIndex.vue';
 import DraftIndex from './Draft/DraftIndex.vue';
+import TranslationIndex from './Draft/TranslationIndex.vue';
 import PagesIndex from './Pages/PagesIndex.vue';
 import PagesEdit from './Pages/PagesEdit.vue';
 import UsersIndex from './Users/UsersIndex.vue';
@@ -80,6 +81,7 @@ export {
   ResetPassword,
   DashboardIndex,
   DraftIndex,
+  TranslationIndex,
   PagesIndex,
   PagesEdit,
   UsersIndex,
