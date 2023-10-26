@@ -161,3 +161,11 @@ export interface SharedPageProps {
   secrets?: any;
   errors?: any;
 }
+
+export interface DraftMeta {
+  id: number;
+  number: number;
+  status: string;
+  updated_at: string;
+  created_at: string;
+}

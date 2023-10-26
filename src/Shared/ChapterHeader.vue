@@ -12,6 +12,7 @@
         <button
           type="submit"
           class="w-32 rounded-[38px] border border-yellow-500 bg-white px-[15px] py-[9px] text-sm/5 font-medium text-yellow-600 shadow"
+          @click="emit('delete')"
         >
           Delete Draft
         </button>
@@ -56,24 +57,14 @@ import { User } from '../Shared/interfaces';
 import Icon from './Icon.vue';
 import { useLanguageStore } from '../store';
 
-const props = defineProps({
-  chapterTitle: {
-    type: String,
-    required: true,
-  },
-  hasEditReview: {
-    type: Boolean,
-    required: true,
-  },
-  draftStatus: {
-    type: String,
-    required: true,
-  },
-  user: {
-    type: Object as PropType<User>,
-    required: true,
-  },
-});
+const props = defineProps<{
+  chapterTitle: string;
+  hasEditReview: boolean;
+  draftStatus: string;
+  user: User;
+}>();
+
+const emit = defineEmits(['delete']);
 
 const store = useLanguageStore();
 

@@ -14,6 +14,7 @@
         :has-edit-review="props.hasEditReview"
         :draft-status="props.draftStatus"
         :user="props.user!"
+        @delete="emit('delete')"
       />
     </div>
     <div class="mx-2 overflow-x-auto">
@@ -50,6 +51,8 @@ const props = defineProps<{
   stories: string[];
   user: User;
 }>();
+
+const emit = defineEmits(['delete']);
 
 const translationNavigationComponent = ref<typeof TranslationNavigation | null>(null);
 const translationHeader = ref<HTMLElement | null>(null);
