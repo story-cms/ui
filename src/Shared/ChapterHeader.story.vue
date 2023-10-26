@@ -1,7 +1,7 @@
 <template>
-  <Story title="Translation Header" group="shared">
+  <Story title="Chapter Header" group="shared">
     <Variant title="Role Admin">
-      <TranslationHeader
+      <ChapterHeader
         :chapter-title="'John . 01 . God Came to Earth'"
         :has-edit-review="spec.hasEditReview"
         :draft-status="spec.draftStatus"
@@ -9,7 +9,7 @@
       />
     </Variant>
     <Variant title="Role Editor">
-      <TranslationHeader
+      <ChapterHeader
         :chapter-title="'John . 01 . God Came to Earth'"
         :has-edit-review="spec.hasEditReview"
         :draft-status="spec.draftStatus"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import TranslationHeader from './TranslationHeader.vue';
+import ChapterHeader from './ChapterHeader.vue';
 import { user } from '../helpers/mocks';
 
 const spec = {

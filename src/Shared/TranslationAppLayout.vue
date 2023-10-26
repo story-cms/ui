@@ -9,7 +9,7 @@
       :user="props.user!"
     />
     <div ref="translationHeader" class="w-full">
-      <TranslationHeader
+      <ChapterHeader
         :chapter-title="props.chapterTitle"
         :has-edit-review="props.hasEditReview"
         :draft-status="props.draftStatus"
@@ -35,7 +35,7 @@
 import { onMounted, ref } from 'vue';
 
 import TranslationNavigation from './TranslationNavigation.vue';
-import TranslationHeader from './TranslationHeader.vue';
+import ChapterHeader from './ChapterHeader.vue';
 import { Meta, LanguageSpecification, User } from './interfaces';
 import { useLanguageStore } from '../store';
 
