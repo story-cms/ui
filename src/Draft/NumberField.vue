@@ -57,6 +57,8 @@ if (!model.isPopulated(fieldPath.value)) {
 const update = () => model.setField(fieldPath.value, modelValue.value);
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   modelValue.value = model.getField(fieldPath.value, '');
 });
 
