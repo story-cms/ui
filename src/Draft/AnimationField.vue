@@ -39,6 +39,8 @@ const modelValue = props.isReadOnly
 const host = new CloudinaryService(field.value, '/raw/upload');
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     modelValue.value = model.getField(fieldPath.value, '') as string;
   });

@@ -72,6 +72,8 @@ const toggle = () => {
 };
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     isOn.value = Boolean(model.getField(fieldPath.value, field.value.default));
   });

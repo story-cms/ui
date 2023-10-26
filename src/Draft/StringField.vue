@@ -59,6 +59,8 @@ const update = (event: Event) => {
 };
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     modelValue.value = model.getField(fieldPath.value, '');
   });

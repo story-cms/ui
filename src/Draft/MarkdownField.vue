@@ -61,9 +61,15 @@ const update = (e: Editor, change: EditorChange) => {
 
 const load = () => {
   nextTick().then(() => {
-    const fresh = props.isReadOnly
-      ? model.getSourceField(fieldPath.value, '')
-      : (model.getField(fieldPath.value, '') as unknown as string);
+    if (props.isReadOnly) {
+      if (mde?.value()) return;
+
+      const value = model.getSourceField(fieldPath.value, '');
+      mde?.codemirror.setValue(value);
+      return;
+    }
+
+    const fresh = model.getField(fieldPath.value, '') as unknown as string;
     if (fresh === mde?.value()) return;
 
     mde?.codemirror.setValue(fresh);
@@ -77,6 +83,8 @@ const hasError = computed(() => errors.value.length > 0);
 
 const language = useLanguageStore();
 language.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   mde?.codemirror.setOption('direction', language.languageDirection);
   mde?.codemirror.setOption('rtlMoveVisually', language.isRtl);
   mde?.codemirror.setOption('theme', language.locale);

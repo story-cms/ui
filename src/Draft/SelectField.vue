@@ -59,6 +59,8 @@ const selection = props.isReadOnly
   : ref(model.getField(fieldPath.value, field.value.default));
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     selection.value = model.getField(fieldPath.value, field.value.default);
   });

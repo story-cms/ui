@@ -152,6 +152,8 @@ const updateReference = () => {
 };
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     const fresh = model.getField(fieldPath.value) as Scripture;
     reference.value = fresh.reference;

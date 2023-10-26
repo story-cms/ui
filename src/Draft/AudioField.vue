@@ -53,6 +53,8 @@ const host = new S3Service(props.filePath);
 let durationReady = false;
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     const fresh = model.getField(fieldPath.value) as Audio;
     url.value = fresh.url;

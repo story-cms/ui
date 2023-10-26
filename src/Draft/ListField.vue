@@ -54,6 +54,8 @@ const listItems = props.isReadOnly
   : ref(model.getField(fieldPath.value, []) as any[]);
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   const fresh = model.getField(fieldPath.value, []) as any[];
   listItems.value = fresh;
 });
