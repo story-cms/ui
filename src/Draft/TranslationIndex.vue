@@ -10,15 +10,15 @@
     :user="props.user"
     @delete="deleteDraft"
   >
-    <section>
-      <form class="space-y-8">
+    <section class="row-subgrid">
+      <form class="row-subgrid gap-y-8">
         <div v-for="(item, index) in fields" :key="index">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>
       </form>
     </section>
-    <section :class="languageStore.isSingleColumn ? 'hidden' : ''">
-      <form class="space-y-8">
+    <section class="row-subgrid" :class="languageStore.isSingleColumn ? 'hidden' : ''">
+      <div class="row-subgrid gap-y-8">
         <div v-for="(item, index) in fields" :key="index">
           <component
             :is="widgetFor(index)"
@@ -27,7 +27,7 @@
             :is-read-only="true"
           />
         </div>
-      </form>
+      </div>
     </section>
   </TranslationAppLayout>
 </template>
@@ -100,7 +100,7 @@ const widgetFor = (key: number) => {
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    onSuccess: () => {},
+    // onSuccess: () => {},
     onError: (e) => {
       console.log('error deleting draft', e);
     },

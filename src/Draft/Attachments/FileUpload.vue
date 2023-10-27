@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative w-full p-9"
+    class="relative h-48 w-full p-9"
     :class="dropStyle"
     @dragover.prevent="onDragOver"
     @dragenter="onDragEnter"
