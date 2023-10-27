@@ -36,6 +36,16 @@ export const useWidgetsStore = defineStore('widgets', () => {
     providers = fresh;
   };
 
+  // list toggle states
+
+  const listToggles = ref<Record<string, boolean[]>>({});
+  const setListToggles = (path: string, value: boolean[]): void => {
+    const fresh = { ...listToggles.value };
+    fresh[path] = value;
+    listToggles.value = fresh;
+  };
+  const getListToggles = (path: string): boolean[] => listToggles.value[path] || [];
+
   return {
     picker,
     setPicker,
@@ -44,5 +54,7 @@ export const useWidgetsStore = defineStore('widgets', () => {
     setProviders,
     s3Target,
     imageProvider,
+    getListToggles,
+    setListToggles,
   };
 });

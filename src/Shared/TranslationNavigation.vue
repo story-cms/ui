@@ -77,10 +77,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from 'vue';
+import { ref, PropType, onBeforeMount } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { Meta, LanguageSpecification, User } from './interfaces';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import { useLanguageStore } from '../store';
 
 import ContextMenu from './ContextMenu.vue';
 
@@ -123,4 +124,9 @@ const onStory = async (story: string) => {
 };
 
 const signOut = () => (window.location.href = '/logout');
+
+onBeforeMount(() => {
+  const store = useLanguageStore();
+  store.setLanguage(props.language);
+});
 </script>

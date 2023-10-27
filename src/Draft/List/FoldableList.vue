@@ -5,7 +5,7 @@
         <div class="absolute inset-0 flex items-center" aria-hidden="true">
           <div class="w-full border-t border-gray-300"></div>
         </div>
-        <div class="relative flex justify-between">
+        <div v-if="!isReadOnly" class="relative flex justify-between">
           <button
             type="button"
             class="z-10 ml-1 inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -29,15 +29,19 @@
               <Icon name="exclamation" class="h-10 w-10 text-red-500" />
             </div>
           </div>
-          <div class="cursor-pointer text-gray-500" @click="emit('removeSet', index)">
-            <div v-if="!props.isReadOnly" class="rounded-full border bg-white p-2">
+          <div
+            v-if="canMutate"
+            class="cursor-pointer text-gray-500"
+            @click="emit('removeSet', index)"
+          >
+            <div v-if="!isReadOnly" class="rounded-full border bg-white p-2">
               <Icon name="trash" class="h-10 w-10" />
             </div>
           </div>
         </div>
       </div>
       <div class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"></div>
-      <div v-if="isExpanded(index)" class="absolute bottom-0 left-1.5">
+      <div v-if="isExpanded(index) && !isReadOnly" class="absolute bottom-0 left-1.5">
         <button
           type="button"
           class="cursor-pointer rounded bg-white px-1.5 py-2 shadow-sm"
@@ -67,17 +71,17 @@
       </div>
     </div>
 
-    <div v-if="!props.isReadOnly">
+    <div v-if="canMutate">
       <AddItemButton :label="field.label" @add="emit('addSet')" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, PropType } from 'vue';
+import { computed, PropType } from 'vue';
 import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
-import { useModelStore, useWidgetsStore } from '../../store';
+import { useModelStore, useWidgetsStore, useLanguageStore } from '../../store';
 import AddItemButton from '../../Shared/AddItemButton.vue';
 
 const props = defineProps({
@@ -103,24 +107,36 @@ const props = defineProps({
 const emit = defineEmits(['addSet', 'removeSet']);
 const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
+const model = useModelStore();
+const widgets = useWidgetsStore();
+const language = useLanguageStore();
+
+console.log('! isTranslation', language.isTranslation);
+
+const canMutate = computed(() => {
+  if (props.isReadOnly) return false;
+
+  return !language.isTranslation;
+});
 
 const isIsland = (type: string): boolean => {
   const singleWidgets = ['string', 'number', 'markdown', 'image', 'boolean', 'select'];
   return singleWidgets.includes(type);
 };
 
-const toggleState = ref([false, false, false, false]);
+widgets.setListToggles(props.fieldPath, [true, true, true, true, true]);
+const toggleState = computed(() => widgets.getListToggles(props.fieldPath));
 
 const isExpanded = (index: number): boolean => {
   return toggleState.value[index];
 };
 
 const toggle = (index: number) => {
-  toggleState.value[index] = !toggleState.value[index];
-};
+  const fresh = toggleState.value;
+  fresh[index] = !fresh[index];
 
-const model = useModelStore();
-const widgets = useWidgetsStore();
+  widgets.setListToggles(props.fieldPath, fresh);
+};
 
 const sectionTitle = (index: number): string => {
   const peek = title(index);
