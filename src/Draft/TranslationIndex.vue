@@ -100,7 +100,9 @@ const widgetFor = (key: number) => {
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    // onSuccess: () => {},
+    onSuccess: () => {
+      console.log('draft deleted');
+    },
     onError: (e) => {
       console.log('error deleting draft', e);
     },
