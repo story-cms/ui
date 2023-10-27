@@ -6,10 +6,11 @@
       </label>
     </div>
 
-    <div class="space-y-[24px]">
-      <div v-for="key in Object.keys(field.fields!)" :key="key" class="">
+    <div class="grid gap-y-6">
+      <div v-for="key in Object.keys(field.fields!)" :key="key">
         <component
           :is="widgetFor(key)"
+          class=""
           :field="spec(key)"
           :root-path="fieldPath"
           :is-nested="true"

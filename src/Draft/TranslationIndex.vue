@@ -10,21 +10,23 @@
     :user="props.user"
     @delete="deleteDraft"
   >
-    <section>
-      <form class="space-y-8">
+    <section class="row-subgrid">
+      <form class="row-subgrid gap-y-8">
         <div v-for="(item, index) in fields" :key="index">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>
       </form>
     </section>
-    <section class="space-y-8" :class="languageStore.isSingleColumn ? 'hidden' : ''">
-      <div v-for="(item, index) in fields" :key="index">
-        <component
-          :is="widgetFor(index)"
-          :field="item"
-          :is-nested="false"
-          :is-read-only="true"
-        />
+    <section class="row-subgrid" :class="languageStore.isSingleColumn ? 'hidden' : ''">
+      <div class="row-subgrid gap-y-8">
+        <div v-for="(item, index) in fields" :key="index">
+          <component
+            :is="widgetFor(index)"
+            :field="item"
+            :is-nested="false"
+            :is-read-only="true"
+          />
+        </div>
       </div>
     </section>
   </TranslationAppLayout>
