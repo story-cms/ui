@@ -17,17 +17,15 @@
         </div>
       </form>
     </section>
-    <section :class="languageStore.isSingleColumn ? 'hidden' : ''">
-      <form class="space-y-8">
-        <div v-for="(item, index) in fields" :key="index">
-          <component
-            :is="widgetFor(index)"
-            :field="item"
-            :is-nested="false"
-            :is-read-only="true"
-          />
-        </div>
-      </form>
+    <section class="space-y-8" :class="languageStore.isSingleColumn ? 'hidden' : ''">
+      <div v-for="(item, index) in fields" :key="index">
+        <component
+          :is="widgetFor(index)"
+          :field="item"
+          :is-nested="false"
+          :is-read-only="true"
+        />
+      </div>
     </section>
   </TranslationAppLayout>
 </template>
@@ -100,7 +98,9 @@ const widgetFor = (key: number) => {
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    onSuccess: () => {},
+    onSuccess: () => {
+      console.log('draft deleted');
+    },
     onError: (e) => {
       console.log('error deleting draft', e);
     },

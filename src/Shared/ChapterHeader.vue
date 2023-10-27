@@ -52,7 +52,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { PropType } from 'vue';
 import { User } from '../Shared/interfaces';
 import Icon from './Icon.vue';
 import { useLanguageStore } from '../store';
