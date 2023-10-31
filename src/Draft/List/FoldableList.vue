@@ -2,7 +2,11 @@
   <div class="my-8 space-y-8 bg-transparent">
     <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
       <div class="relative">
-        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div
+          v-if="!isReadOnly"
+          class="absolute inset-0 flex items-center"
+          aria-hidden="true"
+        >
           <div class="w-full border-t border-gray-300"></div>
         </div>
         <div v-if="!isReadOnly" class="relative flex justify-between">
@@ -40,7 +44,10 @@
           </div>
         </div>
       </div>
-      <div class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"></div>
+      <div
+        v-if="!isReadOnly"
+        class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"
+      ></div>
       <div v-if="isExpanded(index) && !isReadOnly" class="absolute bottom-0 left-1.5">
         <button
           type="button"
@@ -51,7 +58,11 @@
         </button>
       </div>
 
-      <div v-if="isExpanded(index)" class="relative ml-8 mt-8">
+      <div
+        v-if="isExpanded(index)"
+        class="relative ml-8"
+        :class="isReadOnly ? 'mt-24' : 'mt-8'"
+      >
         <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
             :is="widgets.picker(item.widget)"
