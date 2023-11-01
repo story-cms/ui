@@ -126,8 +126,6 @@ const model = useModelStore();
 const widgets = useWidgetsStore();
 const language = useLanguageStore();
 
-console.log('! isTranslation', language.isTranslation);
-
 const canMutate = computed(() => {
   if (props.isReadOnly) return false;
 
