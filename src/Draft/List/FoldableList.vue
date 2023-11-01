@@ -1,15 +1,11 @@
 <template>
   <div class="my-8 space-y-8 bg-transparent">
-    <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
-      <div class="relative">
-        <div
-          v-if="!isReadOnly"
-          class="absolute inset-0 flex items-center"
-          aria-hidden="true"
-        >
-          <div class="w-full border-t border-gray-300"></div>
-        </div>
+    <div v-for="(_listItem, index) in listItems" :key="index">
+      <div>
         <div v-if="!isReadOnly" class="relative flex justify-between">
+          <div class="absolute bottom-0 left-0 right-0 top-0 flex items-center">
+            <span class="-z-10 ml-2 w-full border-t border-gray-300"></span>
+          </div>
           <button
             type="button"
             class="z-10 ml-1 inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -44,40 +40,38 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="!isReadOnly"
-        class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"
-      ></div>
-      <div v-if="isExpanded(index) && !isReadOnly" class="absolute bottom-0 left-1.5">
-        <button
-          type="button"
-          class="cursor-pointer rounded bg-white px-1.5 py-2 shadow-sm"
-          @click="toggle(index)"
-        >
-          <Icon name="chevron-up-down" class="h-3.5 w-3.5 text-gray-700" />
-        </button>
-      </div>
+      <div class="relative">
+        <div v-if="isExpanded(index) && !isReadOnly" class="absolute bottom-0 left-1.5">
+          <button
+            type="button"
+            class="cursor-pointer rounded bg-white px-1.5 py-2 shadow-sm"
+            @click="toggle(index)"
+          >
+            <Icon name="chevron-up-down" class="h-3.5 w-3.5 text-gray-700" />
+          </button>
+        </div>
 
-      <div
-        v-if="isExpanded(index)"
-        class="relative ml-8"
-        :class="isReadOnly ? 'mt-24' : 'mt-8'"
-      >
-        <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
-          <component
-            :is="widgets.picker(item.widget)"
-            :class="{
-              'rounded border border-gray-200  bg-white drop-shadow-sm':
-                item.widget != 'list',
-              'mt-8 rounded border border-gray-200  bg-white p-8 shadow': isIsland(
-                item.widget,
-              ),
-            }"
-            :field="item"
-            :is-read-only="props.isReadOnly"
-            :root-path="`${fieldPath}.${index.toString()}`"
-            :is-nested="true"
-          />
+        <div
+          v-if="isExpanded(index)"
+          class="relative ml-8"
+          :class="isReadOnly ? 'mt-24' : 'mt-8'"
+        >
+          <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
+            <component
+              :is="widgets.picker(item.widget)"
+              :class="{
+                'rounded border border-gray-200  bg-white drop-shadow-sm':
+                  item.widget != 'list',
+                'mt-8 rounded border border-gray-200  bg-white p-8 shadow': isIsland(
+                  item.widget,
+                ),
+              }"
+              :field="item"
+              :is-read-only="props.isReadOnly"
+              :root-path="`${fieldPath}.${index.toString()}`"
+              :is-nested="true"
+            />
+          </div>
         </div>
       </div>
     </div>
