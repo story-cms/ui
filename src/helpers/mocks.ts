@@ -244,7 +244,16 @@ export const listInListModel = {
         },
       ],
     },
-    { title: 'Spread 2', notes: [] },
+    {
+      title: 'Spread 2',
+      notes: [
+        { type: 'definition', content: '`love`' },
+        {
+          type: 'comment',
+          content: 'paragraph **1**\nparagraph **2**\nparagraph **3**\nparagraph **4**',
+        },
+      ],
+    },
   ],
 };
 

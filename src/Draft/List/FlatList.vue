@@ -5,7 +5,7 @@
         class="relative ml-8 space-y-[24px] rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow"
       >
         <div
-          v-if="!props.isReadOnly"
+          v-if="canMutate"
           class="absolute right-0 mr-3 cursor-pointer text-gray-500"
           @click="emit('removeSet', index)"
         >
@@ -22,7 +22,7 @@
         </div>
       </div>
     </li>
-    <div v-if="!props.isReadOnly" class="ml-8">
+    <div v-if="canMutate" class="ml-8">
       <AddItemButton :label="field.label" @add="emit('addSet')" />
     </div>
   </ul>
@@ -33,7 +33,7 @@ import { computed, PropType } from 'vue';
 import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
 import AddItemButton from '../../Shared/AddItemButton.vue';
-import { useWidgetsStore } from '../../store';
+import { useWidgetsStore, useLanguageStore } from '../../store';
 
 const props = defineProps({
   field: {
@@ -59,4 +59,11 @@ const emit = defineEmits(['addSet', 'removeSet']);
 const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
 const store = useWidgetsStore();
+const language = useLanguageStore();
+
+const canMutate = computed(() => {
+  if (props.isReadOnly) return false;
+
+  return !language.isTranslation;
+});
 </script>

@@ -28,6 +28,10 @@ export const useLanguageStore = defineStore('language', () => {
     isSingleColumn.value = value;
   };
 
+  const isTranslation = computed(
+    () => _language.value.locale !== _defaultLanguage.locale,
+  );
+
   return {
     label,
     languageDirection,
@@ -37,5 +41,6 @@ export const useLanguageStore = defineStore('language', () => {
     bibleVersion,
     isSingleColumn,
     setSingleColumn,
+    isTranslation,
   };
 });
