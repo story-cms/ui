@@ -7,9 +7,13 @@
       ></div>
       <div>
         <div v-if="!isReadOnly" class="relative flex justify-between">
-          <div class="absolute bottom-0 left-0 right-0 top-0 flex w-screen items-center">
+          <div
+            class="absolute bottom-0 left-0 right-0 top-0 flex items-center"
+            :class="language.isSingleColumn ? 'w-full' : 'w-screen'"
+          >
             <span
-              class="z-10 ml-1 w-[calc(100%_-_1.5rem)] border-t border-gray-300"
+              class="z-10 ml-1 max-w-full border-t border-gray-300"
+              :class="language.isSingleColumn ? 'w-full' : 'w-[calc(100%_-_1.5rem)]'"
             ></span>
           </div>
           <button
