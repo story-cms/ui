@@ -12,14 +12,14 @@
   >
     <section class="row-subgrid">
       <form class="row-subgrid gap-y-8">
-        <div v-for="(item, index) in fields" :key="index">
+        <div v-for="(item, index) in fields" :key="index" class="grid">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>
       </form>
     </section>
     <section class="row-subgrid" :class="languageStore.isSingleColumn ? 'hidden' : ''">
       <div class="row-subgrid gap-y-8">
-        <div v-for="(item, index) in fields" :key="index">
+        <div v-for="(item, index) in fields" :key="index" class="grid">
           <component
             :is="widgetFor(index)"
             :field="item"
