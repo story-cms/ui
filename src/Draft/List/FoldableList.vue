@@ -16,13 +16,13 @@
             :class="language.isSingleColumn ? 'w-full' : 'w-screen'"
           >
             <span
-              class="z-10 ml-1 max-w-full border-t border-gray-300"
+              class="z-0 ml-1 max-w-full border-t border-gray-300"
               :class="language.isSingleColumn ? 'w-full' : 'w-[calc(100%_-_1.5rem)]'"
             ></span>
           </div>
           <button
             type="button"
-            class="z-10 ml-1 inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            class="z-0 ml-1 inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             @click="toggle(index)"
           >
             <icon
@@ -36,7 +36,7 @@
           </button>
           <div
             v-if="itemHasError(index)"
-            class="z-10 cursor-pointer text-accent-one"
+            class="z-0 cursor-pointer text-accent-one"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
@@ -134,15 +134,6 @@ const fields = field.value.fields as FieldSpec[];
 const model = useModelStore();
 const widgets = useWidgetsStore();
 const language = useLanguageStore();
-
-// const margins = {
-//   'mt-8': true,
-//   'mb-8': true,
-//   'ml-8': true,
-//   'mr-8': true,
-//   'mx-8': true,
-//   'my-8': true,
-// };
 
 const canMutate = computed(() => {
   if (props.isReadOnly) return false;
