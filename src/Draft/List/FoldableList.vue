@@ -1,10 +1,16 @@
 <template>
   <div class="my-8 space-y-8 bg-transparent">
-    <div v-for="(_listItem, index) in listItems" :key="index">
+    <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
+      <div
+        v-if="!isReadOnly"
+        class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"
+      ></div>
       <div>
         <div v-if="!isReadOnly" class="relative flex justify-between">
-          <div class="absolute bottom-0 left-0 right-0 top-0 flex items-center">
-            <span class="-z-10 ml-2 w-full border-t border-gray-300"></span>
+          <div class="absolute bottom-0 left-0 right-0 top-0 flex w-screen items-center">
+            <span
+              class="z-10 ml-1 w-[calc(100%_-_1.5rem)] border-t border-gray-300"
+            ></span>
           </div>
           <button
             type="button"
@@ -22,7 +28,7 @@
           </button>
           <div
             v-if="itemHasError(index)"
-            class="cursor-pointer text-accent-one"
+            class="z-10 cursor-pointer text-accent-one"
             @click="toggle(index)"
           >
             <div class="rounded-full border bg-white p-2">
@@ -31,7 +37,7 @@
           </div>
           <div
             v-if="canMutate"
-            class="cursor-pointer text-gray-500"
+            class="z-10 cursor-pointer text-gray-500"
             @click="emit('removeSet', index)"
           >
             <div v-if="!isReadOnly" class="rounded-full border bg-white p-2">
