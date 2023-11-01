@@ -1,6 +1,10 @@
 <template>
-  <div class="my-8 space-y-8 bg-transparent">
-    <div v-for="(_listItem, index) in listItems" :key="index" class="relative">
+  <div class="row-subgrid my-8 space-y-8 bg-transparent">
+    <div
+      v-for="(_listItem, index) in listItems"
+      :key="index"
+      class="row-subgrid relative"
+    >
       <div
         v-if="!isReadOnly"
         class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"
@@ -50,7 +54,12 @@
           </div>
         </div>
       </div>
-      <div class="relative">
+      <div
+        class="row-subgrid relative"
+        :class="{
+          'mt-8': isReadOnly,
+        }"
+      >
         <div v-if="isExpanded(index) && !isReadOnly" class="absolute bottom-0 left-1.5">
           <button
             type="button"
@@ -61,12 +70,12 @@
           </button>
         </div>
 
-        <div
-          v-if="isExpanded(index)"
-          class="relative ml-8"
-          :class="isReadOnly ? 'mt-24' : 'mt-8'"
-        >
-          <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
+        <div v-if="isExpanded(index)" class="row-subgrid relative ml-8">
+          <div
+            v-for="(item, i) in fields"
+            :key="item.name + `${i.toString()}`"
+            class="row-subgrid"
+          >
             <component
               :is="widgets.picker(item.widget)"
               :class="{
@@ -125,6 +134,15 @@ const fields = field.value.fields as FieldSpec[];
 const model = useModelStore();
 const widgets = useWidgetsStore();
 const language = useLanguageStore();
+
+// const margins = {
+//   'mt-8': true,
+//   'mb-8': true,
+//   'ml-8': true,
+//   'mr-8': true,
+//   'mx-8': true,
+//   'my-8': true,
+// };
 
 const canMutate = computed(() => {
   if (props.isReadOnly) return false;
