@@ -14,7 +14,6 @@ import PanelField from './Draft/PanelField.vue';
 import ScriptureField from './Draft/ScriptureField.vue';
 import SelectField from './Draft/SelectField.vue';
 import StringField from './Draft/StringField.vue';
-// import { widgetField } from './Draft/widget-fields';
 
 import IndexFilter from './Shared/IndexFilter.vue';
 import ContextMenu from './Shared/ContextMenu.vue';
@@ -36,6 +35,8 @@ import PagesEdit from './Pages/PagesEdit.vue';
 import UsersIndex from './Users/UsersIndex.vue';
 import ChapterPreview from './Chapters/ChapterPreview.vue';
 
+import { version } from '../package.json';
+
 export * from './store/index';
 export * from './Shared/helpers';
 export * from './Shared/interfaces';
@@ -46,6 +47,7 @@ export * from './Draft/Attachments/s3-service';
 import { createInertiaApp, usePage } from '@inertiajs/vue3';
 
 export {
+  version,
   createInertiaApp,
   usePage,
   // chapters
