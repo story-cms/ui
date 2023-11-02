@@ -31,9 +31,13 @@ export const useWidgetsStore = defineStore('widgets', () => {
 
   const s3Target = (): S3Target => providers.s3Target as S3Target;
   const imageProvider = (): ImageProvider => providers.imageProvider as ImageProvider;
-
   const setProviders = (fresh: Providers) => {
     providers = fresh;
+  };
+
+  const isDirty = ref(false);
+  const setIsDirty = (fresh: boolean) => {
+    isDirty.value = fresh;
   };
 
   return {
@@ -44,5 +48,8 @@ export const useWidgetsStore = defineStore('widgets', () => {
     setProviders,
     s3Target,
     imageProvider,
+
+    isDirty,
+    setIsDirty,
   };
 });

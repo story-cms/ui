@@ -70,10 +70,7 @@
               </button>
 
               <button
-                v-if="
-                  (!spec.hasEditReview || draft.status === 'submitted') &&
-                  props.user.role === 'admin'
-                "
+                v-if="showPublishButton"
                 type="submit"
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
                 @click.prevent="publish"
@@ -183,6 +180,8 @@ interface FeedbackPanel {
 let isSettingErrors = false;
 const secrets = useSecretStore();
 const store = useModelStore();
+const widgets = useWidgetsStore();
+
 const { bundle, errors } = toRefs(props);
 store.setModel(bundle.value);
 store.setErrors(errors.value);
@@ -191,6 +190,13 @@ secrets.setSecrets(usePage().props.secrets);
 const feedbackPanel = ref<FeedbackPanel>({
   message: '',
   icon: null,
+});
+
+const showPublishButton = computed(() => {
+  if (widgets.isDirty) return false;
+  if (props.user.role !== 'admin') return false;
+
+  return !props.spec.hasEditReview || props.draft.status === 'submitted';
 });
 
 const story = computed(() => usePage().props.storyName as string);
@@ -212,10 +218,12 @@ const save = debounce(2000, () => {
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
     onSuccess: () => {
+      widgets.setIsDirty(false);
       // feedbackPanel.value.message = `Episode saved!`;
       // feedbackPanel.value.icon = 'check';
     },
     onError: () => {
+      widgets.setIsDirty(false);
       store.setErrors(props.errors);
       isSettingErrors = true;
       feedbackPanel.value.message = JSON.stringify(props.errors, null, 2);
@@ -273,11 +281,10 @@ onMounted(() => {
       isSettingErrors = false;
       return;
     }
+    widgets.setIsDirty(true);
     save();
   });
 });
-
-const widgets = useWidgetsStore();
 
 if (props.providers) {
   widgets.setProviders(props.providers);
