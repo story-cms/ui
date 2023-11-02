@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { computed, toRefs } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import {
   DraftMeta,
   Meta,
@@ -51,6 +51,10 @@ import {
   useSecretStore,
 } from '../store';
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
+
+interface Bundle {
+  title: string;
+}
 
 const props = defineProps<{
   draft: DraftMeta;
@@ -71,6 +75,8 @@ const props = defineProps<{
   secrets: any;
 }>();
 
+// const meta = computed(() => usePage().props.meta as Meta);
+
 // state
 const languageStore = useLanguageStore();
 const secretStore = useSecretStore();
@@ -81,8 +87,9 @@ store.setErrors(errors.value);
 store.setSource(props.source);
 secretStore.setSecrets(props.secrets);
 
-const chapterTitle = computed(() =>
-  props.bundle.title ? props.bundle.title : `New ${props.meta.chapterType}`,
+const chapterTitle = computed(
+  () => (bundle.value.title ? bundle.value.title : `New Draft`),
+  // props.bundle.title ? props.bundle.title : `New ${props.meta.chapterType}`,
 );
 
 const widgets = useWidgetsStore();
