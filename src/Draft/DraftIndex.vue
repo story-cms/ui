@@ -247,19 +247,21 @@ const submit = () => {
 };
 
 const publish = () => {
-  if (props.user.role === 'admin') {
-    router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
-      onSuccess: () => {
-        feedbackPanel.value.message = `Successfully published.`;
-        feedbackPanel.value.icon = 'check-badge';
-      },
-      onError: () => {
-        store.setErrors(props.errors);
-        feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
-        feedbackPanel.value.icon = 'exclamation';
-      },
-    });
-  }
+  if (props.user.role !== 'admin') return;
+  widgets.setIsDirty(true);
+  router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
+    onSuccess: () => {
+      widgets.setIsDirty(false);
+      feedbackPanel.value.message = `Successfully published.`;
+      feedbackPanel.value.icon = 'check-badge';
+    },
+    onError: () => {
+      widgets.setIsDirty(false);
+      store.setErrors(props.errors);
+      feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
+      feedbackPanel.value.icon = 'exclamation';
+    },
+  });
 };
 
 const reject = () => {
