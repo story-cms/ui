@@ -71,11 +71,16 @@
 
               <button
                 v-if="showPublishButton"
+                :disabled="widgets.isDirty"
                 type="submit"
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
+                :class="{
+                  'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
+                    widgets.isDirty,
+                }"
                 @click.prevent="publish"
               >
-                <Icon name="check-badge" class="mr-1" />Publish
+                Publish
               </button>
             </div>
           </div>
@@ -193,7 +198,6 @@ const feedbackPanel = ref<FeedbackPanel>({
 });
 
 const showPublishButton = computed(() => {
-  if (widgets.isDirty) return false;
   if (props.user.role !== 'admin') return false;
 
   return !props.spec.hasEditReview || props.draft.status === 'submitted';
