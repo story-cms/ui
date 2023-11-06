@@ -1,5 +1,6 @@
 <template>
   <TranslationAppLayout
+    v-if="false"
     :chapter-title="chapterTitle"
     :has-edit-review="spec.hasEditReview"
     :draft-status="draft.status"
