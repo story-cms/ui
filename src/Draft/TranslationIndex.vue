@@ -17,7 +17,11 @@
         </div>
       </form>
     </section>
-    <section class="row-subgrid" :class="languageStore.isSingleColumn ? 'hidden' : ''">
+    <section
+      v-if="false"
+      class="row-subgrid"
+      :class="languageStore.isSingleColumn ? 'hidden' : ''"
+    >
       <div class="row-subgrid gap-y-8">
         <div v-for="(item, index) in fields" :key="index" class="grid">
           <component

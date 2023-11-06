@@ -1,6 +1,6 @@
 {
   "name": "@story-cms/ui",
-  "version": "3.0.0-4",
+  "version": "3.0.0-5",
   "description": "Components for the StoryCMS user interface",
   "repository": "https://github.com/story-cms/ui",
   "bugs": "https://github.com/story-cms/ui/issues",
@@ -58,10 +58,10 @@
     "@headlessui/vue": "^1.7.14",
     "@inertiajs/vue3": "^1.0.10",
     "@rive-app/canvas": "^1.1.5",
-    "axios": "^1.4.0",
     "easymde": "^2.18.0",
     "luxon": "^3.3.0",
-    "pinia": "^2.0.27"
+    "pinia": "^2.0.27",
+    "axios": "^1.4.0"
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.16.1",
