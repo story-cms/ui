@@ -92,6 +92,7 @@ export const useModelStore = defineStore('model', () => {
   };
 
   const errorMessages = (path: string): string[] => {
+    if (!errors.value) return [];
     const messages = errors.value[`bundle.${path}`] || [];
     return messages;
   };

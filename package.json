@@ -1,6 +1,6 @@
 {
   "name": "@story-cms/ui",
-  "version": "3.0.0-6",
+  "version": "3.0.0-7",
   "description": "Components for the StoryCMS user interface",
   "repository": "https://github.com/story-cms/ui",
   "bugs": "https://github.com/story-cms/ui/issues",
@@ -60,7 +60,7 @@
     "@rive-app/canvas": "^1.1.5",
     "easymde": "^2.18.0",
     "luxon": "^3.3.0",
-    "pinia": "^2.0.27",
+    "pinia": "^2.1.7",
     "axios": "^1.4.0"
   },
   "devDependencies": {

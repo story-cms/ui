@@ -1,6 +1,5 @@
 <template>
   <TranslationAppLayout
-    v-if="false"
     :chapter-title="chapterTitle"
     :has-edit-review="spec.hasEditReview"
     :draft-status="draft.status"
@@ -18,11 +17,7 @@
         </div>
       </form>
     </section>
-    <section
-      v-if="false"
-      class="row-subgrid"
-      :class="languageStore.isSingleColumn ? 'hidden' : ''"
-    >
+    <section class="row-subgrid" :class="languageStore.isSingleColumn ? 'hidden' : ''">
       <div class="row-subgrid gap-y-8">
         <div v-for="(item, index) in fields" :key="index" class="grid">
           <component
@@ -86,14 +81,14 @@ const props = defineProps<{
 const languageStore = useLanguageStore();
 const secretStore = useSecretStore();
 const store = useModelStore();
-const { bundle, errors } = toRefs(props);
-store.setModel(bundle.value);
-store.setErrors(errors.value);
-store.setSource(props.source);
+
+store.setModel(toRefs(props.bundle));
+store.setErrors(toRefs(props.errors));
+store.setSource(toRefs(props.source));
 secretStore.setSecrets(props.secrets);
 
 const chapterTitle = computed(() =>
-  bundle.value.title ? bundle.value.title : `New Draft`,
+  props.bundle.title ? props.bundle.title : `New Draft`,
 );
 // props.bundle.title ? props.bundle.title : `New ${props.meta.chapterType}`,
 
