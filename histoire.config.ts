@@ -13,7 +13,7 @@ export default defineConfig({
       },
       {
         id: 'widgets',
-        title: 'Chapter Widgets',
+        title: 'Field Widgets',
       },
       {
         id: 'pages',
@@ -22,6 +22,10 @@ export default defineConfig({
       {
         id: 'chapter',
         title: 'Chapter Index',
+      },
+      {
+        id: 'draft',
+        title: 'Drafts',
       },
       {
         id: 'shared',

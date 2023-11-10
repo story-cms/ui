@@ -2,9 +2,10 @@
   <ul class="my-8 space-y-8 bg-transparent">
     <li v-for="(_listItem, index) in listItems" :key="index">
       <div
-        class="relative ml-8 space-y-[24px] rounded bg-gray-100 px-8 pt-3 pb-8 drop-shadow"
+        class="relative ml-8 space-y-[24px] rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow"
       >
         <div
+          v-if="canMutate"
           class="absolute right-0 mr-3 cursor-pointer text-gray-500"
           @click="emit('removeSet', index)"
         >
@@ -14,13 +15,14 @@
           <component
             :is="store.picker(item.widget)"
             :field="item"
+            :is-read-only="props.isReadOnly"
             :root-path="`${fieldPath}.${index.toString()}`"
             :is-nested="true"
           />
         </div>
       </div>
     </li>
-    <div class="ml-8">
+    <div v-if="canMutate" class="ml-8">
       <AddItemButton :label="field.label" @add="emit('addSet')" />
     </div>
   </ul>
@@ -31,7 +33,7 @@ import { computed, PropType } from 'vue';
 import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
 import AddItemButton from '../../Shared/AddItemButton.vue';
-import { useWidgetsStore } from '../../store';
+import { useWidgetsStore, useSharedStore } from '../../store';
 
 const props = defineProps({
   field: {
@@ -46,10 +48,22 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  isReadOnly: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['addSet', 'removeSet']);
 const field = computed(() => props.field as FieldSpec);
 const fields = field.value.fields as FieldSpec[];
 const store = useWidgetsStore();
+const language = useSharedStore();
+
+const canMutate = computed(() => {
+  if (props.isReadOnly) return false;
+
+  return !language.isTranslation;
+});
 </script>

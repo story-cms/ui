@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useLanguageStore } from '../store';
+import { useSharedStore } from '../store';
 import { LanguageSpecification } from 'src/Shared/interfaces';
 
 const english = {
@@ -25,7 +25,7 @@ const arabic = {
   bibleVersion: 'b17e246951402e50-01',
 } as LanguageSpecification;
 
-const store = useLanguageStore();
+const store = useSharedStore();
 const label = computed(() => {
   return store.isRtl ? 'Set LTR' : 'Set RTL';
 });

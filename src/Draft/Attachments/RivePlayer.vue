@@ -4,24 +4,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import { Rive } from '@rive-app/canvas';
 
-export default defineComponent({
-  name: 'RivePlayer',
-  props: {
-    url: {
-      type: String,
-      required: true,
-    },
+const props = defineProps({
+  url: {
+    type: String,
+    required: true,
   },
-  mounted() {
-    new Rive({
-      canvas: this.$refs.canvas as HTMLCanvasElement,
-      src: this.$props.url,
-      autoplay: true,
-    });
-  },
+});
+
+const canvas = ref<InstanceType<typeof HTMLCanvasElement> | null>(null);
+
+onMounted(() => {
+  new Rive({
+    canvas: canvas.value as HTMLCanvasElement,
+    src: props.url,
+    autoplay: true,
+  });
 });
 </script>

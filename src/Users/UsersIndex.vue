@@ -15,7 +15,7 @@
             {{ user.name }} &lt;{{ user.email }}&gt;
           </div>
           <button
-            v-if="user.id != pageUser.id"
+            v-if="user.id != shared.user.id"
             type="button"
             class="cursor-pointer"
             @click="deleteUser(user)"
@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div v-if="focusId != pageUser.id" class="my-2">
+        <div v-if="focusId != shared.user.id" class="my-2">
           <label class="input-label" for="role">Role:</label>
           <select id="role" v-model="form.role" class="input-field">
             <option
@@ -70,7 +70,7 @@
           <select id="language" v-model="form.language" class="input-field">
             <option value="*" :selected="form.language === '*'">All Languages</option>
             <option
-              v-for="lang in allLanguages"
+              v-for="lang in shared.languages"
               :key="lang.locale"
               :value="lang.locale"
               :selected="lang.locale == form.language"
@@ -97,18 +97,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import AppLayout from '../Shared/AppLayout.vue';
 import Icon from '../Shared/Icon.vue';
-import { LanguageSpecification } from 'src/Shared/interfaces';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  language: string;
-  role: string;
-}
+import { SharedPageProps, UsersProps, UserMeta } from 'src/Shared/interfaces';
+import { useSharedStore } from '../store';
 
 const emptyForm = {
   name: '',
@@ -117,18 +110,11 @@ const emptyForm = {
   role: 'editor',
 };
 
-defineProps({
-  users: {
-    type: Array<User>,
-    required: true,
-  },
-  allLanguages: {
-    type: Array<LanguageSpecification>,
-    required: true,
-  },
-});
+const props = defineProps<UsersProps & SharedPageProps>();
 
-const pageUser = computed(() => usePage().props.user as User);
+const shared = useSharedStore();
+shared.setFromProps(props);
+
 const focusId = ref(0);
 const roles = ['admin', 'editor'];
 const formMode = ref('hidden');
@@ -142,7 +128,7 @@ const otherError = computed((): string => {
   return all.other || '';
 });
 
-const focus = (user: User) => {
+const focus = (user: UserMeta) => {
   focusId.value = user.id;
   form.name = user.name;
   form.email = user.email;
@@ -151,7 +137,7 @@ const focus = (user: User) => {
   formMode.value = 'update';
 };
 
-const deleteUser = (user: User) => {
+const deleteUser = (user: UserMeta) => {
   resetForm();
   formMode.value = 'hidden';
   form.delete(`/user/${user.id}`, {

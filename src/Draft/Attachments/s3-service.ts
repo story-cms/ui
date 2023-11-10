@@ -1,4 +1,4 @@
-import { useSecretStore, useWidgetsStore } from '../../store';
+import { useWidgetsStore } from '../../store';
 import { HostService, AttachmentModel } from './types';
 import {
   S3Client,
@@ -18,9 +18,15 @@ export default class S3Service implements HostService {
     // eslint-disable-next-line no-unused-vars
     onProgress: (progress: number | undefined) => void,
   ): Promise<AttachmentModel> => {
-    const secrets = useSecretStore();
-    const target = useWidgetsStore().s3Target();
-    if (!target.bucket || !target.region || !target.endpoint) {
+    const provider = useWidgetsStore().providers.s3;
+    if (!provider) throw new Error('S3 provider not found');
+
+    if (
+      !useWidgetsStore().providers.s3 ||
+      !provider.bucket ||
+      !provider.region ||
+      !provider.endpoint
+    ) {
       console.log('Check your env for S3_BUCKET, S3_REGION, and S3_ENDPOINT');
       return { url: '' };
     }
@@ -30,16 +36,16 @@ export default class S3Service implements HostService {
     };
 
     const client = new S3Client({
-      region: target.region,
-      endpoint: target.endpoint,
+      region: provider.region,
+      endpoint: provider.endpoint,
       credentials: {
-        accessKeyId: secrets.s3AccessKeyId,
-        secretAccessKey: secrets.s3SecretAccessKey,
+        accessKeyId: provider.accessKeyId,
+        secretAccessKey: provider.accessKey,
       },
     });
 
     const params = {
-      Bucket: target.bucket,
+      Bucket: provider.bucket,
       Key: this.path === '' ? file.name : filePath(this.path, file),
       Body: file,
       ContentType: file.type,

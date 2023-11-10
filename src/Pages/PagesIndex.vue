@@ -35,7 +35,6 @@ import IndexFilter from '../Shared/IndexFilter.vue';
 import { TabItem, PageItem } from '../Shared/interfaces';
 
 const props = defineProps({
-  user: { type: Object, required: true },
   pages: {
     type: Array<PageItem>,
     required: true,

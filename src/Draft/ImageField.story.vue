@@ -51,12 +51,18 @@ import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import { objectErrors, objectModel, objectModelBlankImage } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
+  const shared = useSharedStore();
+
   if (variant?.title == 'Read Only') {
-    store.model = objectModel;
+    store.setSource({
+      ...objectModel,
+      profile:
+        'https://res.cloudinary.com/redeem/image/upload/v1698125799/aaron-burden-c333d6YEhi0-unsplash_agmne9.jpg',
+    });
     return;
   }
   if (variant?.title == 'Model without image') {
@@ -64,7 +70,7 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
     return;
   }
   if (variant?.title == 'Error') {
-    store.errors = objectErrors;
+    shared.errors = objectErrors;
     return;
   }
   store.model = objectModel;

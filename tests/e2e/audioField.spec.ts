@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/audio-field');
-  await page.getByRole('link', { name: 'Audio Field 5' }).click();
+  await page.getByRole('link', { name: 'Audio Field 6' }).click();
 });
 test.afterEach(async ({ page }) => {
   await page.close();

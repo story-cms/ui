@@ -34,7 +34,7 @@ import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 
 const objectModel = {
   name: 'Neil Shenvi',
@@ -47,9 +47,18 @@ const objectErrors = {
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
+  const shared = useSharedStore();
+
   store.model = objectModel;
   if (variant?.title == 'Error') {
-    store.errors = objectErrors;
+    shared.errors = objectErrors;
+  }
+
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      ...objectModel,
+      airport: 'CHG',
+    });
   }
 };
 

@@ -34,31 +34,19 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import { usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import IndexFilter from '../Shared/IndexFilter.vue';
 import IndexCard from '../Chapters/IndexCard.vue';
-import { Meta, IndexReadyItem } from '../Shared/interfaces';
+import { IndexReadyItem, SharedPageProps, DashboardProps } from '../Shared/interfaces';
+import { useSharedStore } from '../store';
 
-const props = defineProps({
-  index: {
-    type: Array as PropType<IndexReadyItem[]>,
-    required: true,
-  },
+const props = defineProps<DashboardProps & SharedPageProps>();
 
-  isComplete: {
-    type: Boolean,
-    required: true,
-  },
-
-  meta: {
-    type: Object as PropType<Meta>,
-    required: true,
-  },
-});
+useSharedStore().setFromProps(props);
 
 const isList = ref(false);
 const toggle = () => {

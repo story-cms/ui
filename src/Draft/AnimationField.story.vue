@@ -36,7 +36,7 @@
       <AnimationField
         :field="{
           name: 'success',
-          label: 'Success celebration',
+          label: 'Success celebration (readonly)',
           widget: 'animation',
         }"
         :is-read-only="true"
@@ -50,20 +50,26 @@ import AnimationField from './AnimationField.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  if (variant?.title == 'Read Only') {
-    store.model = objectModel;
-    return;
-  }
+  const shared = useSharedStore();
   if (variant?.title == 'Model without attachment') {
     store.model = modelBlankAnimation;
     return;
   }
   if (variant?.title == 'Error') {
-    store.errors = objectErrors;
+    shared.errors = objectErrors;
+    return;
+  }
+
+  if (variant?.title == 'Read Only') {
+    store.setSource({
+      ...objectModel,
+      success:
+        'https://res.cloudinary.com/onesheep/raw/upload/v1685641667/cmsplayground/fnu2m4ogxi9wdhi91iqi.riv',
+    });
     return;
   }
   store.model = objectModel;

@@ -7,7 +7,6 @@
 
     <Variant title="Readonly" :setup-app="loadData">
       <ObjectField :field="objectSpec" :is-read-only="true" />
-      <ModelControl :model="objectModel" />
     </Variant>
 
     <Variant title="Error" :setup-app="loadData">
@@ -55,13 +54,14 @@
 
 <script setup lang="ts">
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 import ObjectField from './ObjectField.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import {
   objectErrors,
   objectModel,
+  objectModelReadonly,
   objectSpec,
   listInObjectSpec,
   listInObjectModel,
@@ -73,24 +73,30 @@ import {
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
+  const shared = useSharedStore();
+
   switch (variant?.title) {
     case 'Error':
-      store.errors = objectErrors;
+      shared.errors = objectErrors;
       break;
     case 'Readonly':
+      store.setSource({
+        ...objectModelReadonly,
+      });
+      break;
     case 'Default':
       store.model = objectModel;
       break;
 
     case 'List in Object Error':
-      store.errors = listInObjectError;
+      shared.errors = listInObjectError;
       break;
     case 'List in Object':
       store.model = listInObjectModel;
       break;
 
     case 'Object in List in Object Error':
-      store.errors = objectInListInObjectErrors;
+      shared.errors = objectInListInObjectErrors;
       break;
     case 'Object in List in Object':
       store.model = objectInListInObjectModel;

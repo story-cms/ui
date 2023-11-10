@@ -93,7 +93,7 @@
                 <div class="grid grid-cols-2">
                   <p class="mr-2">Created</p>
                   <span class="text-right">{{
-                    formatDate(props.page['created_at'])
+                    formatDate(props.page['createdAt'])
                   }}</span>
                 </div>
                 <div class="grid grid-cols-2">
@@ -130,47 +130,22 @@
     </div>
   </AppLayout>
 </template>
+
 <script setup lang="ts">
-import { PropType, ref, computed, onMounted, toRefs } from 'vue';
+import { ref, computed, onMounted, toRefs } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
-import { Providers } from '../Shared/interfaces';
+import { SharedPageProps, PageEditProps } from '../Shared/interfaces';
 import SelectField from '../Draft/SelectField.vue';
 import MarkdownField from '../Draft/MarkdownField.vue';
 import BooleanField from '../Draft/BooleanField.vue';
 import { formatDate, debounce } from '../Shared/helpers';
-import { useModelStore, useSecretStore, useWidgetsStore } from '../store';
-import { router, usePage } from '@inertiajs/vue3';
+import { useModelStore, useSharedStore, useWidgetsStore } from '../store';
+import { router } from '@inertiajs/vue3';
 import { DateTime } from 'luxon';
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-
-  providers: {
-    type: Object as PropType<Providers>,
-    required: true,
-  },
-
-  page: {
-    type: Object as PropType<Page>,
-    required: true,
-  },
-
-  bundle: {
-    type: Object,
-    required: true,
-  },
-});
-
-interface Page {
-  id: number;
-  created_at: string;
-  updated_at: string;
-}
+const props = defineProps<PageEditProps & SharedPageProps>();
 
 type RequestPayload = {
   title: string;
@@ -181,38 +156,33 @@ type RequestPayload = {
   isPublished: boolean;
 };
 
+const { bundle, page } = toRefs(props);
+const model = useModelStore();
+const shared = useSharedStore();
+model.setModel(bundle.value);
+shared.setFromProps(props);
+shared.clearErrors();
+useWidgetsStore().setProviders(props.providers);
+
 const getPayload = (): RequestPayload => {
   const payload = {
-    ...store.model,
+    ...model.model,
   } as unknown;
 
   return payload as RequestPayload;
 };
 
 let isSettingErrors = false;
-const { bundle, providers, page } = toRefs(props);
 
-const store = useModelStore();
-store.setModel(bundle.value);
-store.clearErrors();
-
-const secrets = useSecretStore();
-secrets.setSecrets(usePage().props.secrets);
-
-const widgets = useWidgetsStore();
-if (providers.value) {
-  widgets.setProviders(providers.value);
-}
-
-const selection = ref(store.getField('type', 'comment'));
-const savedAt = ref(formatDate(page.value['updated_at']));
+const selection = ref(model.getField('type', 'comment'));
+const savedAt = ref(formatDate(page.value['updatedAt']));
 
 const isLink = computed((): boolean => selection.value === 'link');
 
 const save = debounce(1000, () => {
   // clear errors
   isSettingErrors = true;
-  store.clearErrors();
+  shared.clearErrors();
 
   router.post(`/page/${props.page.id}`, getPayload(), {
     preserveScroll: true,
@@ -225,7 +195,7 @@ const save = debounce(1000, () => {
     onError: (errors) => {
       console.log('! error on save', errors);
       isSettingErrors = true;
-      store.setErrors(errors);
+      shared.setErrors(errors);
     },
   });
 });
@@ -235,7 +205,7 @@ const deletePage = () => {
 };
 
 onMounted(() => {
-  store.$subscribe(() => {
+  model.$subscribe(() => {
     // prevent infinite loop
     if (isSettingErrors) {
       isSettingErrors = false;
@@ -243,7 +213,7 @@ onMounted(() => {
     }
 
     save();
-    selection.value = store.getField('type', 'comment');
+    selection.value = model.getField('type', 'comment');
   });
 });
 </script>

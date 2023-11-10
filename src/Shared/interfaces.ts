@@ -30,12 +30,6 @@ export interface IndexItems {
   root: Array<IndexItem>;
 }
 
-export interface StorySpec {
-  chapterLimit: number;
-  hasEditReview: boolean;
-  hasAppPreview: boolean;
-  fields: Array<object>;
-}
 export interface FieldSpec {
   name: string;
   label: string;
@@ -55,11 +49,6 @@ export interface FieldSpec {
   maxSize?: number;
   tintColor?: string;
   labelOrder?: string;
-}
-
-export interface ImageProvider {
-  defaultPreset: string;
-  cloudName: string;
 }
 
 export interface Scripture {
@@ -100,12 +89,28 @@ export interface PageItem {
   isDivider?: boolean;
 }
 
+export interface Meta {
+  name: string;
+  logo: string;
+  storyType: string;
+  chapterType: string;
+  helpUrl?: string;
+  hasEditReview: boolean;
+  hasAppPreview: boolean;
+}
+
 export interface Story {
   id: number;
   name: string;
   fields: Array<object>;
   chapterLimit: number;
   parts?: Array<object>;
+}
+
+export interface StorySpec {
+  name: string;
+  fields: Array<object>;
+  chapterLimit: number;
 }
 
 export interface Part {
@@ -117,27 +122,105 @@ export interface Part {
 
 export type WidgetPicker = (widget: string) => any; // eslint-disable-line
 
-export interface Meta {
-  name: string;
-  logo: string;
-  storyType: string;
-  chapterType: string;
-  helpUrl: string;
-}
-
-export interface S3Target {
-  bucket: string;
-  region: string;
-  endpoint: string;
-  folder?: string;
-}
-
 export interface Providers {
-  s3Target?: S3Target;
-  imageProvider?: ImageProvider;
+  s3?: {
+    accessKeyId: string;
+    accessKey: string;
+    bucket: string;
+    region: string;
+    endpoint: string;
+    folder?: string;
+  };
+
+  cloudinary?: {
+    apiKey: string;
+    secret: string;
+    defaultPreset: string;
+    cloudName: string;
+  };
+
+  scripture?: {
+    bibleApiKey: string;
+  };
 }
 
 export interface Audio {
   url: string;
   length: number;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  initials: string;
+  email: string;
+  isManager: boolean;
+  isAdmin: boolean;
+  role: string;
+}
+
+export interface DraftMeta {
+  id: number;
+  number: number;
+  status: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
+export interface DraftEditProps {
+  draft: DraftMeta; // drafts
+  bundle: any; // model
+  source?: any; // model
+  spec: StorySpec; // drafts
+  lastPublished: string; // drafts
+  providers: Providers; // widgets
+}
+
+export interface SharedPageProps {
+  errors?: any;
+  meta: Meta;
+  language: LanguageSpecification;
+  languages: LanguageSpecification[];
+  stories: string[];
+  user: User;
+}
+
+export interface PageMeta {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PageEditProps {
+  page: PageMeta;
+  bundle: any; // model
+  providers: Providers; // widgets
+}
+
+export interface DashboardProps {
+  index: IndexReadyItem[];
+  isComplete: boolean;
+}
+
+export interface ChapterMeta {
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PreviewProps {
+  chapter: ChapterMeta;
+  bundleView: string;
+}
+
+export interface UserMeta {
+  id: number;
+  name: string;
+  email: string;
+  language: string;
+  role: string;
+}
+
+export interface UsersProps {
+  users: UserMeta[];
 }

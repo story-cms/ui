@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios';
-import { useSecretStore, useWidgetsStore } from '../../store';
+import { useWidgetsStore } from '../../store';
 import { HostService, AttachmentModel } from './types';
 import { FieldSpec } from '../../Shared/interfaces';
 
@@ -19,7 +19,8 @@ export default class CloudinaryService implements HostService {
     // eslint-disable-next-line no-unused-vars
     onProgress: (progress: number | undefined) => void,
   ): Promise<AttachmentModel> => {
-    const provider = useWidgetsStore().imageProvider();
+    const provider = useWidgetsStore().providers.cloudinary;
+    if (!provider) throw new Error('Cloudinary provider not found');
 
     if (!provider.cloudName || !provider.defaultPreset) {
       console.log(`Check your env for CLOUDINARY_CLOUD_NAME and CLOUDINARY_PRESET`);
@@ -29,13 +30,12 @@ export default class CloudinaryService implements HostService {
     const { default: axios } = await import('axios');
 
     const uploadPreset = this.field.uploadPreset ?? provider.defaultPreset ?? '';
-    const secrets = useSecretStore();
     const secretToSign =
       'tags=browser-upload&timestamp=' +
       timestamp +
       '&upload_preset=' +
       uploadPreset +
-      secrets.cloudinarySecret;
+      provider.secret;
     const buffer = new TextEncoder().encode(secretToSign);
     const sha = await crypto.subtle.digest('SHA-1', buffer);
     const encryptedSecret = Array.from(new Uint8Array(sha))
@@ -46,8 +46,8 @@ export default class CloudinaryService implements HostService {
     formData.append('file', file);
     formData.append('upload_preset', uploadPreset);
     formData.append('tags', 'browser-upload');
-    formData.append('api_key', secrets.cloudinaryApiKey);
-    formData.append('api_secret', secrets.cloudinarySecret);
+    formData.append('api_key', provider.apiKey as string);
+    formData.append('api_secret', provider.secret);
     formData.append('timestamp', timestamp.toString());
     formData.append('signature', encryptedSecret);
     if (this.endpoint.includes('raw')) {

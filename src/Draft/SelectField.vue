@@ -3,14 +3,14 @@
     :class="{
       'rounded border border-gray-200 bg-white p-8 shadow': !isNested,
       'mt-4': isNested,
-      rtl: language.isRtl,
+      rtl: shared.isRtl,
     }"
   >
     <div class="flex flex-col">
       <label
         :for="fieldPath"
         class="input-label mr-2 mt-1"
-        :class="{ rtl: language.isRtl }"
+        :class="{ rtl: shared.isRtl, 'text-gray-600': isReadOnly }"
       >
         {{ field.label }}
       </label>
@@ -21,7 +21,7 @@
         name="select"
         :disabled="props.isReadOnly"
         class="max-w-min rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        :class="{ 'border-red-500': hasError }"
+        :class="{ 'border-red-500': hasError, 'text-gray-600': props.isReadOnly }"
         @change="update"
       >
         <option v-for="{ value, label } in field.options" :key="value" :value="value">
@@ -37,12 +37,15 @@
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue';
 import type { FieldSpec } from '../Shared/interfaces';
-import { useLanguageStore, useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 
 const props = defineProps({
   ...commonProps,
 });
+
+const model = useModelStore();
+const shared = useSharedStore();
 
 const field = computed(() => props.field as FieldSpec);
 const fieldPath = computed(() => {
@@ -50,13 +53,16 @@ const fieldPath = computed(() => {
   return `${props.rootPath}.${field.value.name}`;
 });
 
-const model = useModelStore();
 if (!model.isPopulated(fieldPath.value)) {
   model.setField(fieldPath.value, field.value.default);
 }
-const selection = ref(model.getField(fieldPath.value, field.value.default));
+const selection = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, field.value.default))
+  : ref(model.getField(fieldPath.value, field.value.default));
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     selection.value = model.getField(fieldPath.value, field.value.default);
   });
@@ -66,8 +72,6 @@ const update = () => {
   model.setField(fieldPath.value, selection.value);
 };
 
-const errors = computed(() => model.errorMessages(fieldPath.value));
+const errors = computed(() => shared.errorMessages(fieldPath.value));
 const hasError = computed(() => errors.value.length > 0);
-
-const language = useLanguageStore();
 </script>

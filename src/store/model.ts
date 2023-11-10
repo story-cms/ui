@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import type { Ref } from 'vue';
-import type { Scripture } from '../Shared/interfaces';
+import { ref, toRefs } from 'vue';
+import type { Scripture, SharedPageProps, DraftEditProps } from '../Shared/interfaces';
 
 export const useModelStore = defineStore('model', () => {
   const model = ref({});
@@ -54,6 +53,17 @@ export const useModelStore = defineStore('model', () => {
 
   const isPopulated = (path: string): boolean => readPath(path) !== undefined;
 
+  // translation source
+
+  const source = ref({});
+
+  const setSource = (fresh: object) => {
+    source.value = fresh;
+  };
+
+  const getSourceField = (path: string, defaultValue: any = {}) =>
+    resolvePath(source.value, path, defaultValue);
+
   // field specific
 
   const updateVerse = (path: string, verse: string) => {
@@ -68,21 +78,14 @@ export const useModelStore = defineStore('model', () => {
     setField(path, scripture);
   };
 
-  // errors
+  const setFromProps = (props: DraftEditProps & SharedPageProps) => {
+    if (props.bundle) {
+      model.value = toRefs(props.bundle);
+    }
 
-  const errors: Ref<Record<string, string[]>> = ref({});
-
-  const setErrors = (fresh: any) => {
-    errors.value = fresh;
-  };
-
-  const clearErrors = () => {
-    errors.value = <Record<string, string[]>>{};
-  };
-
-  const errorMessages = (path: string): string[] => {
-    const messages = errors.value[`bundle.${path}`] || [];
-    return messages;
+    if (props.source) {
+      source.value = toRefs(props.source);
+    }
   };
 
   return {
@@ -95,9 +98,9 @@ export const useModelStore = defineStore('model', () => {
     removeListItem,
     setModel,
     isPopulated,
-    errors,
-    setErrors,
-    clearErrors,
-    errorMessages,
+    source,
+    setSource,
+    getSourceField,
+    setFromProps,
   };
 });

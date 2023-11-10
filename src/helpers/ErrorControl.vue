@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useModelStore } from '../store';
+import { useSharedStore } from '../store';
 import { computed, toRef } from 'vue';
 
 const props = defineProps({
@@ -37,7 +37,7 @@ const props = defineProps({
 
 const formErrors = toRef(props, 'errors');
 
-const store = useModelStore();
+const store = useSharedStore();
 
 const setError = () => {
   store.errors = formErrors.value;

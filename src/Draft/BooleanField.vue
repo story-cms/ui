@@ -2,14 +2,14 @@
   <div
     :class="{
       'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
-      rtl: language.isRtl,
+      rtl: shared.isRtl,
     }"
   >
     <div class="flex items-center space-x-2" :class="{ 'space-x-reverse': spaceReverse }">
       <button
         type="button"
         :class="btnClass"
-        class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
+        class="relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
         role="switch"
         aria-checked="false"
         :disabled="props.isReadOnly"
@@ -26,7 +26,10 @@
       <label
         :for="field.label"
         class="input-label mt-1"
-        :class="{ rtl: language.isRtl, 'order-first': labelStart }"
+        :class="{
+          rtl: shared.isRtl,
+          'order-first': labelStart,
+        }"
       >
         {{ field.label }}
       </label>
@@ -39,12 +42,15 @@
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue';
 import { FieldSpec } from '../Shared/interfaces';
-import { useLanguageStore, useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 
 const props = defineProps({
   ...commonProps,
 });
+
+const model = useModelStore();
+const shared = useSharedStore();
 
 const field = computed(() => props.field as FieldSpec);
 const fieldPath = computed(() => {
@@ -52,13 +58,14 @@ const fieldPath = computed(() => {
   return `${props.rootPath}.${field.value.name}`;
 });
 
-const model = useModelStore();
 if (!model.isPopulated(fieldPath.value)) {
   model.setField(fieldPath.value, field.value.default);
 }
 
 // toggle
-const isOn = ref(Boolean(model.getField(fieldPath.value, field.value.default)));
+const isOn = props.isReadOnly
+  ? ref(Boolean(model.getSourceField(fieldPath.value, field.value.default)))
+  : ref(Boolean(model.getField(fieldPath.value, field.value.default)));
 
 const toggle = () => {
   if (props.isReadOnly) return;
@@ -67,6 +74,8 @@ const toggle = () => {
 };
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     isOn.value = Boolean(model.getField(fieldPath.value, field.value.default));
   });
@@ -74,7 +83,6 @@ model.$subscribe(() => {
 
 // tint
 const tintColor = computed(() => {
-  if (props.isReadOnly) return 'gray-200';
   return field.value.tintColor ? field.value.tintColor : 'indigo-600';
 });
 
@@ -82,20 +90,19 @@ const btnClass = computed((): string => {
   const classes = isOn.value
     ? [`bg-${tintColor.value} focus:ring-${tintColor.value}`]
     : ['bg-gray-200 focus:ring-gray-200'];
-  if (props.isReadOnly) classes.push('cursor-default');
+  const cursor = props.isReadOnly ? 'cursor-default' : 'cursor-pointer';
+  classes.push(cursor);
   return classes.join(' ');
 });
 
 // label order
 const labelStart = computed((): boolean => field.value.labelOrder === 'start');
 const spaceReverse = computed((): boolean => {
-  if (labelStart.value && !language.isRtl) return true;
-  if (!labelStart.value && language.isRtl) return true;
+  if (labelStart.value && !shared.isRtl) return true;
+  if (!labelStart.value && shared.isRtl) return true;
   return false;
 });
 
-const errors = computed(() => model.errorMessages(fieldPath.value));
+const errors = computed(() => shared.errorMessages(fieldPath.value));
 const hasError = computed(() => errors.value.length > 0);
-
-const language = useLanguageStore();
 </script>

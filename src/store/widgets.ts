@@ -1,14 +1,31 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type {
-  WidgetPicker,
-  S3Target,
-  Providers,
-  ImageProvider,
-} from '../Shared/interfaces';
+import type { WidgetPicker, Providers } from '../Shared/interfaces';
 import { widgetField } from '../Draft/widget-fields';
 
+const defaultProviders: Providers = {
+  s3: {
+    accessKeyId: '',
+    accessKey: '',
+    bucket: '',
+    region: '',
+    endpoint: '',
+    folder: '',
+  },
+  cloudinary: {
+    apiKey: '',
+    secret: '',
+    cloudName: '',
+    defaultPreset: '',
+  },
+  scripture: {
+    bibleApiKey: '',
+  },
+};
+
 export const useWidgetsStore = defineStore('widgets', () => {
+  // widget picker
+
   const standardPicker = (widget: string) => widgetField(widget);
   const picker = ref<WidgetPicker>(standardPicker); // eslint-disable-line
 
@@ -16,28 +33,21 @@ export const useWidgetsStore = defineStore('widgets', () => {
     picker.value = fresh;
   };
 
-  let providers: Providers = {
-    s3Target: {
-      bucket: '',
-      region: '',
-      endpoint: '',
-      folder: '',
-    },
-    imageProvider: {
-      cloudName: '',
-      defaultPreset: '',
-    },
-  };
+  // list toggles
 
-  const s3Target = (): S3Target => providers.s3Target as S3Target;
-  const imageProvider = (): ImageProvider => providers.imageProvider as ImageProvider;
+  const listToggles = ref<Record<string, boolean[]>>({});
+  const setListToggles = (path: string, value: boolean[]): void => {
+    const fresh = { ...listToggles.value };
+    fresh[path] = value;
+    listToggles.value = fresh;
+  };
+  const getListToggles = (path: string): boolean[] => listToggles.value[path] || [];
+
+  // providers
+
+  const providers = ref<Providers>(defaultProviders);
   const setProviders = (fresh: Providers) => {
-    providers = fresh;
-  };
-
-  const isDirty = ref(false);
-  const setIsDirty = (fresh: boolean) => {
-    isDirty.value = fresh;
+    providers.value = fresh;
   };
 
   return {
@@ -45,11 +55,10 @@ export const useWidgetsStore = defineStore('widgets', () => {
     setPicker,
     standardPicker,
 
-    setProviders,
-    s3Target,
-    imageProvider,
+    getListToggles,
+    setListToggles,
 
-    isDirty,
-    setIsDirty,
+    setProviders,
+    providers,
   };
 });

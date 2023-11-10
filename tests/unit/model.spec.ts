@@ -25,6 +25,13 @@ test.describe('Model Store', () => {
     expect(store.getField('address.zip')).toBe('12345');
   });
 
+  test.skip('get boolean values', () => {
+    const store = useModelStore();
+    store.model = fixture;
+    expect(store.getField('address.isFavourite', true)).toBe(false);
+    expect(store.getField('address.hasCredit', false)).toBe(true);
+  });
+
   test('isPopulated', () => {
     const store = useModelStore();
     store.model = fixture;

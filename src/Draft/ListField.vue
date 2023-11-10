@@ -5,6 +5,7 @@
       :field="field"
       :field-path="fieldPath"
       :list-items="listItems"
+      :is-read-only="props.isReadOnly"
       @add-set="addSet"
       @remove-set="removeSet"
     />
@@ -13,6 +14,7 @@
       :field="field"
       :field-path="fieldPath"
       :list-items="listItems"
+      :is-read-only="props.isReadOnly"
       @add-set="addSet"
       @remove-set="removeSet"
     />
@@ -47,9 +49,13 @@ const removeSet = (index: number) => {
   model.removeListItem(fieldPath.value, index);
 };
 
-const listItems = ref(model.getField(fieldPath.value, []) as any[]);
+const listItems = props.isReadOnly
+  ? ref(model.getSourceField(fieldPath.value, []) as any[])
+  : ref(model.getField(fieldPath.value, []) as any[]);
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   const fresh = model.getField(fieldPath.value, []) as any[];
   listItems.value = fresh;
 });

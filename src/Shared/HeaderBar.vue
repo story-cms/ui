@@ -1,36 +1,23 @@
 <template>
-  <div class="flex items-center justify-between bg-white px-6 py-3">
-    <div class="flex">
-      <div class="flex items-center space-x-6">
-        <Link href="/">
-          <img :src="shared.meta.logo" alt="Logo" class="h-12 w-auto" />
-        </Link>
-        <Link class="text-3xl font-extrabold leading-9" href="/">{{
-          shared.meta.name
-        }}</Link>
-        <!-- eslint-disable vue/valid-v-model -->
-        <DropDown
-          v-model="(form.language as string)"
-          :options="(shared.languages.map((l) => l.language) as string[])"
-          :is-read-only="!shared.user.isManager"
-          @change="onLanguage"
-        ></DropDown>
-      </div>
-      <div class="flex items-center space-x-6 md:ml-24">
+  <nav ref="navbar" class="flex h-24 items-center justify-between bg-white px-6">
+    <div class="flex items-center">
+      <Link href="/" class="mr-6">
+        <img :src="shared.meta.logo" alt="Logo" class="aspect-square h-16 w-auto" />
+      </Link>
+      <div class="flex items-center space-x-8 py-4">
         <ContextMenu
           :options="(shared.stories as string[])"
           :anchor="shared.meta.storyType"
           @select="onStory"
         ></ContextMenu>
         <Link
-          v-if="shared.user.isAdmin"
-          class="px-2 py-3 hover:text-gray-700"
+          class="px-3 py-2 text-sm/5 font-medium text-gray-600 hover:bg-gray-100"
           href="/page"
           >Pages</Link
         >
         <Link
           v-if="shared.user.isAdmin"
-          class="px-2 py-3 hover:text-gray-700"
+          class="px-3 py-2 text-sm/5 font-medium text-gray-600 hover:bg-gray-100"
           href="/user"
           >Users</Link
         >
@@ -44,16 +31,16 @@
         </a>
       </div>
     </div>
-    <div class="flex items-center">
-      <div class="ml-6 text-xl font-extrabold">{{ shared.user.name }}</div>
-      <Menu as="div" class="relative ml-3">
+    <div class="flex items-center space-x-6">
+      <p class="text-lg/5 font-extrabold text-gray-600">{{ shared.user.name }}</p>
+      <Menu as="div" class="relative">
         <div>
           <MenuButton
             class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
           >
             <span class="sr-only">Open user menu</span>
             <div
-              class="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-accent p-2.5 text-2xl font-extrabold leading-8 text-white"
+              class="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-accent p-2.5 text-2xl font-extrabold uppercase leading-8 text-white"
             >
               {{ shared.user.initials }}
             </div>
@@ -86,40 +73,45 @@
         </transition>
       </Menu>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import DropDown from './DropDown.vue';
+import { useSharedStore } from '../store';
+
 import ContextMenu from './ContextMenu.vue';
-import { pinia, useSharedStore } from '../store';
 
-const shared = useSharedStore(pinia);
+const navbar = ref<HTMLElement | null>(null);
 
+const shared = useSharedStore();
 interface Form {
   language: string | null;
   story: string | null;
 }
 
 const form = useForm({
-  language: shared.language.language,
+  language: null,
   story: null,
 } as Form);
 
-const onLanguage = async (lang: string) => {
-  if (lang === form.language) return;
-  form.language = lang;
-  form.story = null;
-  form.post(`/switch`);
-};
+// TODO
+// const onLanguage = async (lang: string) => {
+//   if (lang === form.language) return;
+//   form.language = lang;
+//   form.story = null;
+//   form.post(`/switch`);
+// };
 
 const onStory = async (story: string) => {
   form.story = story;
   form.language = null;
   form.post(`/switch`);
 };
+
+defineExpose({ navbar });
 
 const signOut = () => (window.location.href = '/logout');
 </script>

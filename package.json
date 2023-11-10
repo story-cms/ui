@@ -1,6 +1,6 @@
 {
   "name": "@story-cms/ui",
-  "version": "2.0.4",
+  "version": "3.0.0-9",
   "description": "Components for the StoryCMS user interface",
   "repository": "https://github.com/story-cms/ui",
   "bugs": "https://github.com/story-cms/ui/issues",
@@ -30,17 +30,17 @@
   ],
   "scripts": {
     "dev": "histoire dev",
-    "build": "histoire build",
+    "cat:build": "histoire build",
     "preview": "histoire preview",
     "lib:dev": "vite",
-    "lib:build": "vue-tsc && vite build",
+    "build": "vue-tsc && vite build",
     "lib:preview": "vite preview",
     "test:unit": "npx playwright test tests/unit/*.ts",
     "test:e2e": "npx playwright test tests/e2e/*.ts",
     "test": "npm run test:unit && npm run test:e2e",
     "lint": "eslint --ext .ts,vue --ignore-path .gitignore .",
     "format": "prettier --write .",
-    "prepare": "npm run lib:build"
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "@aws-sdk/client-s3": "^3.379.1",
@@ -50,7 +50,7 @@
     "easymde": "^2.18.0",
     "luxon": "^3.3.0",
     "pinia": "^2.0.27",
-    "vue": "^3.2.0"
+    "vue": "^3.3.8"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.379.1",
@@ -68,9 +68,10 @@
     "@playwright/test": "^1.36.0",
     "@tailwindcss/forms": "^0.5.3",
     "@types/luxon": "^3.3.0",
+    "@types/node": "^20.9.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue": "^4.4.0",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "autoprefixer": "^10.4.13",
@@ -79,14 +80,14 @@
     "eslint-plugin-vue": "^9.9.0",
     "histoire": "^0.16.1",
     "jest": "^29.3.1",
-    "postcss": "^8.4.19",
+    "postcss": "^8.4.31",
     "prettier": "^2.8.3",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4",
-    "vite": "^4.3.9",
-    "vite-plugin-dts": "^2.3.0",
-    "vue": "^3.2.41",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.6.3",
+    "vue": "^3.3.8",
     "vue-tsc": "^1.0.11"
   },
   "prettier": {

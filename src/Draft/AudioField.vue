@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { computed, ref, nextTick, watch } from 'vue';
 import { FieldSpec, Audio } from '../Shared/interfaces';
-import { useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 import { commonProps } from '../Shared/helpers';
 import AttachmentField from './Attachments/AttachmentField.vue';
 import S3Service from './Attachments/s3-service';
@@ -37,19 +37,25 @@ const fieldPath = computed(() => {
 });
 
 const model = useModelStore();
+const shared = useSharedStore();
 
 const emptyAudio = {
   url: null,
   length: null,
 };
 
-const startValue = model.getField(fieldPath.value, emptyAudio) as Audio;
+const startValue = props.isReadOnly
+  ? model.getSourceField(fieldPath.value, emptyAudio)
+  : (model.getField(fieldPath.value, emptyAudio) as Audio);
+
 const url = ref(startValue.url);
 const length = ref(startValue.length);
 const host = new S3Service(props.filePath);
 let durationReady = false;
 
 model.$subscribe(() => {
+  if (props.isReadOnly) return;
+
   nextTick().then(() => {
     const fresh = model.getField(fieldPath.value) as Audio;
     url.value = fresh.url;
@@ -57,7 +63,7 @@ model.$subscribe(() => {
   });
 });
 
-const errors = computed(() => model.errorMessages(fieldPath.value));
+const errors = computed(() => shared.errorMessages(fieldPath.value));
 
 const onDelete = () => {
   model.setField(fieldPath.value, emptyAudio);

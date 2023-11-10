@@ -98,7 +98,7 @@ test.describe('Markdown Field', () => {
 
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
-      .getByText('We went to the park at *09h00* on a **sunny** day.');
+      .getByText('# This is a readonly note');
     await expect(locator).toBeVisible();
     // TODO: check for readonly attribute in element
     // await expect(

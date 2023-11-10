@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm i --ignore-scripts
 COPY . .
-RUN npm run build
+RUN npm run cat:build
 
 FROM nginx:1.23.2 as server
 COPY ./ops/nginx/nginx.conf /etc/nginx/nginx.conf

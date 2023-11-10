@@ -62,6 +62,7 @@
           name: 'notes',
           label: 'Notes',
           widget: 'markdown',
+          toolbar: ['bold'],
         }"
         :is-read-only="true"
       />
@@ -76,14 +77,22 @@ import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import { objectErrors, objectModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { useModelStore } from '../store';
+import { useModelStore, useSharedStore } from '../store';
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();
-  store.model = objectModel;
+  const shared = useSharedStore();
+
   if (variant?.title == 'Error') {
-    store.errors = objectErrors;
+    shared.errors = objectErrors;
   }
+  if (variant?.title == 'Readonly') {
+    store.setSource({
+      ...objectModel,
+      notes: '# This is a readonly note',
+    });
+  }
+  store.model = objectModel;
 };
 
 const spec = {

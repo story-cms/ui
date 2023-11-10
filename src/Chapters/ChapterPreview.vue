@@ -14,16 +14,16 @@
             <div class="space-y-8 text-[18px] font-medium leading-7 text-gray-600">
               <div class="space-y-1 border-b border-gray-600">
                 <div class="grid grid-cols-2 font-bold">
-                  <p class="mr-2">{{ meta.storyType }}</p>
+                  <p class="mr-2">{{ shared.meta.storyType }}</p>
                   <span class="text-right">{{ chapter.number }}</span>
                 </div>
                 <div class="grid grid-cols-2">
                   <p class="mr-2">Created</p>
-                  <span class="text-right">{{ formatDate(chapter.created_at) }}</span>
+                  <span class="text-right">{{ formatDate(chapter.createdAt) }}</span>
                 </div>
                 <div class="grid grid-cols-2">
                   <p class="mr-2">Last Published</p>
-                  <span class="text-right">{{ formatDate(chapter.updated_at) }}</span>
+                  <span class="text-right">{{ formatDate(chapter.updatedAt) }}</span>
                 </div>
               </div>
             </div>
@@ -56,26 +56,14 @@
 
 <script setup lang="ts">
 import AppLayout from '../Shared/AppLayout.vue';
-import { PropType } from 'vue';
 import { formatDate } from '../Shared/helpers';
-import { Meta } from '../Shared/interfaces';
+import { PreviewProps, SharedPageProps } from '../Shared/interfaces';
+import { useSharedStore } from '../store';
 
-const props = defineProps({
-  chapter: {
-    type: Object,
-    required: true,
-  },
+const props = defineProps<PreviewProps & SharedPageProps>();
 
-  bundleView: {
-    type: String,
-    required: true,
-  },
-
-  meta: {
-    type: Object as PropType<Meta>,
-    required: true,
-  },
-});
+const shared = useSharedStore();
+shared.setFromProps(props);
 
 const close = () => {
   window.location.href = '/';

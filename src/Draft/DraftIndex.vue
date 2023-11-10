@@ -5,7 +5,7 @@
       <div class="flex justify-between space-x-8">
         <div class="w-max flex-grow overflow-hidden rounded-sm lg:max-w-[800px]">
           <form class="space-y-8">
-            <div v-for="(item, index) in fields" :key="index">
+            <div v-for="(item, index) in drafts.story.fields" :key="index">
               <component :is="widgetFor(index)" :field="item" :is-nested="false" />
             </div>
           </form>
@@ -18,7 +18,7 @@
               <div class="space-y-1 border-b border-gray-600">
                 <div class="grid grid-cols-2 font-bold">
                   <p class="mr-2">{{ meta.storyType }}</p>
-                  <span class="text-right">{{ story }}</span>
+                  <span class="text-right">{{ drafts.story.name }}</span>
                 </div>
                 <div class="grid grid-cols-2 font-bold">
                   <p class="mr-2">{{ meta.chapterType }}</p>
@@ -32,11 +32,11 @@
               <div>
                 <div class="grid grid-cols-2">
                   <p class="mr-2">Draft Created</p>
-                  <span class="text-right">{{ formatDate(draft['created_at']) }}</span>
+                  <span class="text-right">{{ formatDate(draft['createdAt']) }}</span>
                 </div>
                 <div class="grid grid-cols-2">
                   <p class="mr-2">Draft Saved</p>
-                  <span class="text-right">{{ formatDate(draft['updated_at']) }}</span>
+                  <span class="text-right">{{ formatDate(draft['updatedAt']) }}</span>
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@
               class="flex flex-col items-center justify-between space-y-4 xl:flex-row xl:space-y-0"
             >
               <button
-                v-if="spec.hasEditReview && draft.status == 'submitted'"
+                v-if="shared.meta.hasEditReview && draft.status == 'submitted'"
                 type="submit"
                 class="group relative flex justify-center rounded-md border border-transparent bg-red-500 text-sm font-medium text-white hover:bg-red-500/75 hover:opacity-80 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-500/60 focus:ring-offset-2 active:opacity-80"
                 @click.prevent="reject"
@@ -52,7 +52,7 @@
                 Request Change
               </button>
               <button
-                v-if="spec.hasEditReview && draft.status === 'started'"
+                v-if="shared.meta.hasEditReview && draft.status === 'started'"
                 type="submit"
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
                 @click.prevent="submit"
@@ -70,21 +70,24 @@
               </button>
 
               <button
-                v-if="showPublishButton"
-                :disabled="widgets.isDirty"
+                v-if="
+                  (!shared.meta.hasEditReview || draft.status === 'submitted') &&
+                  props.user.role === 'admin'
+                "
+                :disabled="isSaving"
                 type="submit"
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                :class="{
-                  'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
-                    widgets.isDirty,
-                }"
                 @click.prevent="publish"
               >
-                Publish
+                <Icon name="check-badge" class="mr-1" />Publish
               </button>
             </div>
           </div>
-          <FlutterPreview v-if="spec.hasAppPreview" :bundle="bundle" class="mt-2" />
+          <FlutterPreview
+            v-if="shared.meta.hasAppPreview"
+            :bundle="bundle"
+            class="mt-2"
+          />
           <div
             v-if="feedbackPanel.message"
             class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
@@ -111,71 +114,25 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, ref, onMounted, toRefs } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
-import { router, usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
-import { Meta, FieldSpec, StorySpec, Providers } from '../Shared/interfaces';
-import { useModelStore, useSecretStore, useWidgetsStore } from '../store';
+import { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
+import { useDraftsStore, useModelStore, useSharedStore, useWidgetsStore } from '../store';
 import FlutterPreview from './FlutterPreview.vue';
 
-interface Draft {
-  id: number;
-  number: number;
-  status: string;
-  updated_at: string;
-  created_at: string;
-}
+const props = defineProps<DraftEditProps & SharedPageProps>();
 
-const props = defineProps({
-  user: { type: Object, required: true },
-  draft: {
-    type: Object as PropType<Draft>,
-    required: true,
-  },
-
-  bundle: {
-    type: Object,
-    required: true,
-  },
-
-  spec: {
-    type: Object as PropType<StorySpec>,
-    required: true,
-  },
-
-  fields: {
-    type: Array as PropType<FieldSpec[]>,
-    required: true,
-  },
-
-  errors: {
-    type: Object,
-    default: () => ({}),
-  },
-
-  feedback: {
-    type: String,
-    required: false,
-    default: undefined,
-  },
-
-  lastPublished: {
-    type: String,
-    required: true,
-  },
-
-  meta: {
-    type: Object as PropType<Meta>,
-    required: true,
-  },
-
-  providers: {
-    type: Object as PropType<Providers>,
-    required: true,
-  },
-});
+const model = useModelStore();
+model.setFromProps(props);
+const shared = useSharedStore();
+shared.setFromProps(props);
+const drafts = useDraftsStore();
+drafts.setFromProps(props);
+const widgets = useWidgetsStore();
+widgets.setProviders(props.providers);
 
 interface FeedbackPanel {
   message: string;
@@ -183,34 +140,19 @@ interface FeedbackPanel {
 }
 
 let isSettingErrors = false;
-const secrets = useSecretStore();
-const store = useModelStore();
-const widgets = useWidgetsStore();
-
-const { bundle, errors } = toRefs(props);
-store.setModel(bundle.value);
-store.setErrors(errors.value);
-secrets.setSecrets(usePage().props.secrets);
+let isSaving = false;
 
 const feedbackPanel = ref<FeedbackPanel>({
   message: '',
   icon: null,
 });
 
-const showPublishButton = computed(() => {
-  if (props.user.role !== 'admin') return false;
-
-  return !props.spec.hasEditReview || props.draft.status === 'submitted';
-});
-
-const story = computed(() => usePage().props.storyName as string);
-
 type postType = { feedback: string | undefined; bundle: any };
 
 const getPayload = (): postType => {
   return {
-    feedback: props.feedback,
-    bundle: store.model,
+    feedback: '',
+    bundle: model.model,
   };
 };
 
@@ -219,20 +161,20 @@ const chapterTitle = computed(() =>
 );
 
 const save = debounce(2000, () => {
+  isSaving = true;
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
     onSuccess: () => {
-      widgets.setIsDirty(false);
       // feedbackPanel.value.message = `Episode saved!`;
       // feedbackPanel.value.icon = 'check';
     },
     onError: () => {
-      widgets.setIsDirty(false);
-      store.setErrors(props.errors);
+      shared.setErrors(props.errors);
       isSettingErrors = true;
       feedbackPanel.value.message = JSON.stringify(props.errors, null, 2);
     },
   });
+  isSaving = false;
 });
 
 const deleteDraft = () => {
@@ -251,21 +193,19 @@ const submit = () => {
 };
 
 const publish = () => {
-  if (props.user.role !== 'admin') return;
-  widgets.setIsDirty(true);
-  router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
-    onSuccess: () => {
-      widgets.setIsDirty(false);
-      feedbackPanel.value.message = `Successfully published.`;
-      feedbackPanel.value.icon = 'check-badge';
-    },
-    onError: () => {
-      widgets.setIsDirty(false);
-      store.setErrors(props.errors);
-      feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
-      feedbackPanel.value.icon = 'exclamation';
-    },
-  });
+  if (props.user.role === 'admin') {
+    router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
+      onSuccess: () => {
+        feedbackPanel.value.message = `Successfully published.`;
+        feedbackPanel.value.icon = 'check-badge';
+      },
+      onError: () => {
+        shared.setErrors(props.errors);
+        feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
+        feedbackPanel.value.icon = 'exclamation';
+      },
+    });
+  }
 };
 
 const reject = () => {
@@ -282,22 +222,17 @@ const metaChapter = computed(
 );
 
 onMounted(() => {
-  store.$subscribe(() => {
+  model.$subscribe(() => {
     if (isSettingErrors) {
       isSettingErrors = false;
       return;
     }
-    widgets.setIsDirty(true);
     save();
   });
 });
 
-if (props.providers) {
-  widgets.setProviders(props.providers);
-}
-
 const widgetFor = (key: number) => {
-  const widget = (props.fields as FieldSpec[])[key].widget;
+  const widget = (props.spec.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);
 };
 </script>
