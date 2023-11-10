@@ -70,19 +70,25 @@ test.describe('List Field', () => {
         name: `${listSpec.label} : ${listModel.sections[0].scripture.reference}`,
       })
       .click();
+    await listItemFrame
+      .getByRole('button', {
+        name: `${listSpec.label} : ${listModel.sections[0].scripture.reference}`,
+      })
+      .click();
 
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
-        .first()
-        .getByPlaceholder('John 1 or John 1:3-4'),
+        .locator('[id="sections\\.0\\.scripture"]'),
     ).toHaveValue(listModel.sections[0].scripture.reference);
 
     await expect(
-      listItemFrame.first().getByPlaceholder('John 1 or John 1:3-4'),
-    ).toHaveValue(listModel.sections[0].scripture.reference);
+      page
+        .frameLocator('[data-test-id="preview-iframe"]')
+        .locator('[id="sections\\.1\\.scripture"]'),
+    ).toHaveValue(listModel.sections[1].scripture.reference);
 
-    await expect(listItemFrame.first().getByPlaceholder('verse')).toHaveValue(
+    await expect(listItemFrame.getByPlaceholder('verse').first()).toHaveValue(
       listModel.sections[0].scripture.verse,
     );
 
@@ -96,16 +102,8 @@ test.describe('List Field', () => {
       })
       .click();
 
-    await expect(
-      listItemFrame.getByPlaceholder('John 1 or John 1:3-4').nth(1),
-    ).toHaveValue(listModel.sections[1].scripture.reference);
-
-    await expect(listItemFrame.getByPlaceholder('verse').nth(1)).toHaveValue(
-      listModel.sections[1].scripture.verse,
-    );
-
-    await expect(listItemFrame.locator('.CodeMirror').nth(1).first()).toContainText(
-      listModel.sections[1].commentary,
+    await expect(listItemFrame.locator('.CodeMirror').first()).toContainText(
+      listModel.sections[0].commentary,
     );
   });
 
@@ -120,33 +118,27 @@ test.describe('List Field', () => {
         name: `${listSpec.label} : ${listModel.sections[0].scripture.reference}`,
       })
       .click();
+    await frame
+      .getByRole('button', {
+        name: `${listSpec.label} : ${listModel.sections[0].scripture.reference}`,
+      })
+      .click();
 
     await expect(
       page
         .frameLocator('[data-test-id="preview-iframe"]')
-        .first()
-        .getByPlaceholder('John 1 or John 1:3-4'),
+        .locator('[id="sections\\.0\\.scripture"]'),
     ).toHaveValue(listModel.sections[0].scripture.reference);
 
-    await expect(frame.first().getByPlaceholder('John 1 or John 1:3-4')).toHaveValue(
-      listModel.sections[0].scripture.reference,
-    );
-
-    await expect(frame.first().getByPlaceholder('verse')).toHaveValue(
+    await expect(frame.getByPlaceholder('Verse').first()).toHaveValue(
       listModel.sections[0].scripture.verse,
     );
 
-    await expect(frame.first().locator('.CodeMirror').first()).toContainText(
+    await expect(frame.locator('.CodeMirror-scroll').first()).toContainText(
       listModel.sections[0].commentary,
     );
 
-    await frame
-      .getByRole('button', {
-        name: `${listSpec.label} : ${listModel.sections[1].scripture.reference}`,
-      })
-      .click();
-
-    await expect(frame.getByPlaceholder('John 1 or John 1:3-4').nth(1)).toHaveValue(
+    await expect(frame.locator('[id="sections\\.1\\.scripture"]')).toHaveValue(
       listModel.sections[1].scripture.reference,
     );
 
@@ -167,8 +159,12 @@ test.describe('List Field', () => {
         name: `${listInListSpec.label} : ${listInListModel.spreads[0].title}`,
       })
       .click();
-    const fields = listInListSpec.fields as FieldSpec[];
-    await expect(frame.locator(`input[name=${fields[0].label}]`)).toHaveValue(
+    await frame
+      .getByRole('button', {
+        name: `${listInListSpec.label} : ${listInListModel.spreads[0].title}`,
+      })
+      .click();
+    await expect(frame.locator('input[name="Title"]').first()).toHaveValue(
       listInListModel.spreads[0].title,
     );
   });
