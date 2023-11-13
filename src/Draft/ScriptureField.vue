@@ -36,20 +36,33 @@
       >
         {{ field.label + ' Passage' }}
       </label>
-      <button
-        type="button"
-        class="mr-1 rounded border border-gray-100 p-1"
-        @mousedown="superscript"
-      >
-        <Icon name="superscript" class="text-gray-500" />
-      </button>
-      <button
-        type="button"
-        class="rounded border border-gray-100 p-1"
-        @mousedown="nonBreakingSpace"
-      >
-        <Icon name="indent" class="text-gray-500" />
-      </button>
+
+      <div v-if="!isReadOnly">
+        <button
+          type="button"
+          class="mr-1 rounded border border-gray-100 p-1"
+          @mousedown="superscript"
+        >
+          <Icon name="superscript" class="text-gray-500" />
+        </button>
+        <button
+          type="button"
+          class="rounded border border-gray-100 p-1"
+          @mousedown="nonBreakingSpace"
+        >
+          <Icon name="indent" class="text-gray-500" />
+        </button>
+      </div>
+      <div v-if="isReadOnly">
+        <button
+          type="button"
+          class="mr-1  p-1"
+          disabled
+        >
+          <Icon name="indent" class="text-white" />
+        </button>
+        
+      </div>
       <textarea
         ref="thetextarea"
         v-model="verse"
