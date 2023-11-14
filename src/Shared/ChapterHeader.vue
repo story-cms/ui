@@ -22,7 +22,8 @@
             shared.user.role === 'admin'
           "
           type="submit"
-          class="w-32 rounded-[38px] border-gray-200 bg-green-500 px-[15px] py-[9px] text-sm/5 font-bold text-white shadow"
+          class="w-32 rounded-[38px] border border-gray-200 bg-green-500 px-[15px] py-[9px] text-sm/5 font-bold text-white shadow"
+          @click.prevent="emit('publish')"
         >
           Publish
         </button>
@@ -56,7 +57,7 @@ import Icon from './Icon.vue';
 import { computed } from 'vue';
 import { useSharedStore, useDraftsStore, useModelStore } from '../store';
 
-const emit = defineEmits(['delete']);
+const emit = defineEmits(['delete', 'publish']);
 
 const shared = useSharedStore();
 const drafts = useDraftsStore();

@@ -2,7 +2,7 @@
   <div class="bg-gray-50">
     <HeaderBar ref="translationNavigationComponent" />
     <div ref="translationHeader" class="w-full">
-      <ChapterHeader @delete="emit('delete')" />
+      <ChapterHeader @delete="emit('delete')" @publish="emit('publish')" />
     </div>
     <div class="mx-2 overflow-x-auto">
       <div
@@ -26,7 +26,7 @@ import HeaderBar from './HeaderBar.vue';
 import ChapterHeader from './ChapterHeader.vue';
 import { useDraftsStore } from '../store';
 
-const emit = defineEmits(['delete']);
+const emit = defineEmits(['delete', 'publish']);
 const drafts = useDraftsStore();
 
 const translationNavigationComponent = ref<typeof HeaderBar | null>(null);
