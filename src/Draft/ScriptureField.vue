@@ -164,9 +164,9 @@ model.$subscribe(() => {
 });
 
 const referenceHasError = computed(
-  () => `bundle.${fieldPath.value}.reference` in shared.errors,
+  () => `bundle.${fieldPath.value}.reference` in shared.errors && !props.isReadOnly,
 );
-const verseHasError = computed(() => `bundle.${fieldPath.value}.verse` in shared.errors);
+const verseHasError = computed(() => `bundle.${fieldPath.value}.verse` in shared.errors  && !props.isReadOnly);
 
 onMounted(async () => {
   if (!reference.value) {
