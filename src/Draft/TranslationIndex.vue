@@ -3,6 +3,7 @@
     @delete="deleteDraft"
     @submit="submitDraft"
     @publish="publishDraft"
+    @request-change="reject"
   >
     <section class="row-subgrid">
       <form class="row-subgrid gap-y-8">
@@ -115,6 +116,11 @@ const publishDraft = () => {
       },
     });
   }
+};
+
+const reject = () => {
+  // TODO: feedback
+  router.post(`/draft/${props.draft.id}/reject`, getPayload());
 };
 
 onMounted(() => {
