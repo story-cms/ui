@@ -81,7 +81,7 @@ const load = () => {
 model.$subscribe(load);
 
 const errors = computed(() => shared.errorMessages(fieldPath.value));
-const hasError = computed(() => errors.value.length > 0);
+const hasError = computed(() => errors.value.length > 0 && !props.isReadOnly);
 
 shared.$subscribe(() => {
   if (props.isReadOnly) return;
