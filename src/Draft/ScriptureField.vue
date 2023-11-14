@@ -94,7 +94,6 @@ const shared = useSharedStore();
 const provider = useWidgetsStore().providers.scripture;
 
 const thetextarea = ref(null);
-
 const field = computed(() => props.field as FieldSpec);
 const fieldPath = computed(() => {
   if (props.rootPath === undefined) return field.value.name;
@@ -116,7 +115,7 @@ const verse = ref(startValue.verse);
 const isBusy = ref(false);
 
 const lookup = () => {
-  if (verse.value) return;
+  if (verse.value && !shared.isTranslation) return;
   isBusy.value = true;
   setScripture(reference.value).then(() => {
     isBusy.value = false;
@@ -168,12 +167,28 @@ const referenceHasError = computed(
 );
 const verseHasError = computed(() => `bundle.${fieldPath.value}.verse` in shared.errors);
 
+const lookupTranslatedScripture = () => {
+  if (reference.value != '') return;
+  if(props.isReadOnly) return;
+  const sourceValue = model.getSourceField(fieldPath.value, {
+    reference: '',
+    verse: '',
+  }) as Scripture;
+  if (!sourceValue.reference) return;
+  if (sourceValue.reference == '') return;
+  reference.value = sourceValue.reference;
+  lookup();
+};
+
 onMounted(async () => {
   if (!reference.value) {
     model.updateReference(fieldPath.value, '');
   }
   if (!verse.value) {
     model.updateVerse(fieldPath.value, '');
+  }
+  if (shared.isTranslation) {
+    lookupTranslatedScripture();
   }
 });
 
