@@ -23,7 +23,7 @@
       </div>
     </li>
   </ul>
-  <div v-if="canMutate" class="ml-8">
+  <div v-if="canMutate" class="ml-8 mt-8">
     <AddItemButton :label="field.label" @add="emit('addSet')" />
   </div>
 </template>

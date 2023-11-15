@@ -1,5 +1,5 @@
 <template>
-  <ul v-for="(_listItem, index) in listItems" :key="index" class="mt-8">
+  <ul v-for="(_listItem, index) in listItems" :key="index" class="my-8">
     <li
       class="relative mb-8 ml-3 border-t border-gray-300 bg-transparent pl-3 pt-10"
       :class="{ 'border-l': isExpanded(index) }"
