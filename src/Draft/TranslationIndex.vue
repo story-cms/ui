@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
+import type { Errors } from '@inertiajs/core';
 import type { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
 import { useSharedStore, useModelStore, useWidgetsStore, useDraftsStore } from '../store';
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
@@ -70,57 +71,65 @@ const getPayload = () => {
 };
 
 // actions
+const onSuccess = (message?: string) => {
+  widgets.setIsDirty(false);
+  if (!message) return;
+
+  feedbackPanel.value.message = message;
+};
+
+const onError = (errors: Errors, message: string) => {
+  widgets.setIsDirty(false);
+  console.log(errors);
+  isSettingErrors = true;
+  shared.setErrors(props.errors);
+  feedbackPanel.value.message = message;
+};
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    onSuccess: () => {
-      console.log('draft deleted');
-    },
-    onError: (e) => {
-      console.log('error deleting draft', e);
-    },
+    onSuccess: () => onSuccess('Draft successfully deleted.'),
+    onError: (e) => onError(e, 'Error deleting draft.'),
   });
 };
 
 let isSettingErrors = false;
-const isSaving = ref(false);
 
 const saveDraft = debounce(2000, () => {
-  isSaving.value = true;
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
-    onError: () => {
-      shared.setErrors(props.errors);
-      isSettingErrors = true;
-      feedbackPanel.value.message = JSON.stringify(props.errors, null, 2);
-    },
+    onSuccess: () => onSuccess(),
+    onError: (e) => onError(e, 'Error saving draft.'),
   });
-  isSaving.value = false;
 });
 
 const submitDraft = () => {
-  router.post(`/draft/${props.draft.id}/submit`, getPayload());
+  router.post(`/draft/${props.draft.id}/submit`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess('Draft successfully submitted.'),
+    onError: (e) =>
+      onError(e, 'Draft not submitted. Please review and correct any errors.'),
+  });
 };
 
 const publishDraft = () => {
-  if (props.user.role === 'admin') {
-    router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
-      onSuccess: () => {
-        feedbackPanel.value.message = `Successfully published.`;
-        feedbackPanel.value.icon = 'check-badge';
-      },
-      onError: () => {
-        shared.setErrors(props.errors);
-        feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
-        feedbackPanel.value.icon = 'exclamation';
-      },
-    });
-  }
+  if (props.user.role !== 'admin') return;
+  widgets.setIsDirty(true);
+
+  router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess('Draft successfully submitted.'),
+    onError: (e) =>
+      onError(e, 'Draft not published. Please review and correct any errors.'),
+  });
 };
 
 const reject = () => {
-  // TODO: feedback
-  router.post(`/draft/${props.draft.id}/reject`, getPayload());
+  router.post(`/draft/${props.draft.id}/reject`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess('Draft sent back for fixing.'),
+    onError: (e) => onError(e, 'Draft could not be sent back.'),
+  });
 };
 
 onMounted(() => {
@@ -129,6 +138,7 @@ onMounted(() => {
       isSettingErrors = false;
       return;
     }
+    widgets.setIsDirty(true);
     saveDraft();
   });
 });

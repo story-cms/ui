@@ -33,12 +33,14 @@
           Delete Draft
         </button>
         <button
-          v-if="
-            (!shared.meta.hasEditReview || drafts.draft.status === 'submitted') &&
-            shared.user.role === 'admin'
-          "
+          v-if="showPublishButton"
           type="submit"
+          :disabled="widgets.isDirty"
           class="min-w-32 rounded-[38px] border border-gray-200 bg-green-500 px-[15px] py-[9px] text-sm/5 font-bold text-white shadow"
+          :class="{
+            'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
+              widgets.isDirty,
+          }"
           @click.prevent="emit('publish')"
         >
           Publish
@@ -71,17 +73,24 @@
 <script setup lang="ts">
 import Icon from './Icon.vue';
 import { computed } from 'vue';
-import { useSharedStore, useDraftsStore, useModelStore } from '../store';
+import { useSharedStore, useDraftsStore, useModelStore, useWidgetsStore } from '../store';
 
 const emit = defineEmits(['delete', 'publish', 'request-change', 'submit']);
 
 const shared = useSharedStore();
 const drafts = useDraftsStore();
 const model = useModelStore();
+const widgets = useWidgetsStore();
 
 const chapterTitle = computed(() => {
   const title = model.getField('title');
   return title ? title : `New ${shared.meta.chapterType}`;
+});
+
+const showPublishButton = computed(() => {
+  if (shared.user.role !== 'admin') return false;
+
+  return !shared.meta.hasEditReview || drafts.draft.status === 'submitted';
 });
 
 const toggle = () => {
