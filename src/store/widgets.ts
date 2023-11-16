@@ -50,6 +50,11 @@ export const useWidgetsStore = defineStore('widgets', () => {
     providers.value = fresh;
   };
 
+  const isDirty = ref(false);
+  const setIsDirty = (fresh: boolean) => {
+    isDirty.value = fresh;
+  };
+
   return {
     picker,
     setPicker,
@@ -60,5 +65,8 @@ export const useWidgetsStore = defineStore('widgets', () => {
 
     setProviders,
     providers,
+
+    isDirty,
+    setIsDirty,
   };
 });

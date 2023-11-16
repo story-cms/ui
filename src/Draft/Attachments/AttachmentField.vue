@@ -94,7 +94,7 @@ const onFile = async (file: File) => {
   uploading.value = false;
 };
 
-const hasError = computed(() => props.errors.length > 0);
+const hasError = computed(() => props.errors.length > 0 && !props.isReadOnly);
 
 const defaults = computed(() => {
   switch (props.field?.widget) {

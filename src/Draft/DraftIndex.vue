@@ -70,16 +70,17 @@
               </button>
 
               <button
-                v-if="
-                  (!shared.meta.hasEditReview || draft.status === 'submitted') &&
-                  props.user.role === 'admin'
-                "
-                :disabled="isSaving"
+                v-if="showPublishButton"
+                :disabled="widgets.isDirty"
                 type="submit"
                 class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
+                :class="{
+                  'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
+                    widgets.isDirty,
+                }"
                 @click.prevent="publish"
               >
-                <Icon name="check-badge" class="mr-1" />Publish
+                Publish
               </button>
             </div>
           </div>
@@ -140,11 +141,16 @@ interface FeedbackPanel {
 }
 
 let isSettingErrors = false;
-let isSaving = false;
 
 const feedbackPanel = ref<FeedbackPanel>({
   message: '',
   icon: null,
+});
+
+const showPublishButton = computed(() => {
+  if (props.user.role !== 'admin') return false;
+
+  return !shared.meta.hasEditReview || props.draft.status === 'submitted';
 });
 
 type postType = { feedback: string | undefined; bundle: any };
@@ -161,20 +167,20 @@ const chapterTitle = computed(() =>
 );
 
 const save = debounce(2000, () => {
-  isSaving = true;
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
     onSuccess: () => {
+      widgets.setIsDirty(false);
       // feedbackPanel.value.message = `Episode saved!`;
       // feedbackPanel.value.icon = 'check';
     },
     onError: () => {
+      widgets.setIsDirty(false);
       shared.setErrors(props.errors);
       isSettingErrors = true;
       feedbackPanel.value.message = JSON.stringify(props.errors, null, 2);
     },
   });
-  isSaving = false;
 });
 
 const deleteDraft = () => {
@@ -193,19 +199,21 @@ const submit = () => {
 };
 
 const publish = () => {
-  if (props.user.role === 'admin') {
-    router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
-      onSuccess: () => {
-        feedbackPanel.value.message = `Successfully published.`;
-        feedbackPanel.value.icon = 'check-badge';
-      },
-      onError: () => {
-        shared.setErrors(props.errors);
-        feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
-        feedbackPanel.value.icon = 'exclamation';
-      },
-    });
-  }
+  if (props.user.role !== 'admin') return;
+  widgets.setIsDirty(true);
+  router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
+    onSuccess: () => {
+      widgets.setIsDirty(false);
+      feedbackPanel.value.message = `Successfully published.`;
+      feedbackPanel.value.icon = 'check-badge';
+    },
+    onError: () => {
+      widgets.setIsDirty(false);
+      shared.setErrors(props.errors);
+      feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
+      feedbackPanel.value.icon = 'exclamation';
+    },
+  });
 };
 
 const reject = () => {
@@ -227,6 +235,7 @@ onMounted(() => {
       isSettingErrors = false;
       return;
     }
+    widgets.setIsDirty(true);
     save();
   });
 });
