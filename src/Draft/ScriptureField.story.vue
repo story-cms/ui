@@ -46,7 +46,6 @@ const scriptureError = {
 };
 
 const setGerman: Vue3StorySetupHandler = () => {
-  const store = useModelStore();
   const shared = useSharedStore();
   shared.setLanguage({
     locale: 'de',
@@ -54,8 +53,6 @@ const setGerman: Vue3StorySetupHandler = () => {
     languageDirection: 'ltr',
     bibleVersion: '926aa5efbc5e04e2-01',
   });
-  
-
 };
 
 const setPrepopulatedGerman: Vue3StorySetupHandler = () => {
@@ -69,12 +66,12 @@ const setPrepopulatedGerman: Vue3StorySetupHandler = () => {
   });
 
   store.setSource({
-      scripture: {
-        reference: 'Matthew 3:16',
-        verse:
-          '`16` And when Jesus was baptized, immediately he went up from the water, and behold, the heavens were opened to him, and he saw the Spirit of God descending like a dove and coming to rest on him',
-      },
-    });
+    scripture: {
+      reference: 'Matthew 3:16',
+      verse:
+        '`16` And when Jesus was baptized, immediately he went up from the water, and behold, the heavens were opened to him, and he saw the Spirit of God descending like a dove and coming to rest on him',
+    },
+  });
 };
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {

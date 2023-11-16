@@ -3,7 +3,7 @@ import { scriptureModel } from '../../src/helpers/mocks';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/src-draft-scripturefield-story-vue');
-  await page.getByRole('link', { name: 'Scripture Field 5' }).click();
+  await page.getByRole('link', { name: 'Scripture Field 6' }).click();
 });
 test.afterEach(async ({ page }) => {
   await page.close();
