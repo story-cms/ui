@@ -12,7 +12,23 @@
           class="block w-24 rounded-md border border-gray-300 px-3 py-1 text-sm font-normal leading-5 text-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           :placeholder="meta.chapterType"
         />
-        <AddItemButton v-if="!isComplete" :label="meta.chapterType" @add="addDraft" />
+        <AddItemButton v-if="!isComplete && newTranslationStatus == 'primary'" :label="meta.chapterType" @add="addDraft" />
+        <button
+          v-if="newTranslationStatus == 'no-source'"
+          type="button"
+          class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-indigo-700 shadow-sm"
+          disabled
+        >
+        No more days available to translate
+        </button>
+        <button
+          v-if="isComplete && newTranslationStatus !== 'primary'"
+          type="button"
+          class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-app_green shadow-sm"
+          disabled
+        >
+        All days translated
+        </button>
       </div>
       <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
     </div>

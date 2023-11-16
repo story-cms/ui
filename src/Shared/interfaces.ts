@@ -200,6 +200,7 @@ export interface PageEditProps {
 export interface DashboardProps {
   index: IndexReadyItem[];
   isComplete: boolean;
+  newTranslationStatus: string;
 }
 
 export interface ChapterMeta {
