@@ -1,13 +1,23 @@
 <template>
   <ul v-for="(_listItem, index) in listItems" :key="index" class="my-8">
     <li
-      class="relative mb-8 ml-3 border-t border-gray-300 bg-transparent pl-3 pt-10"
-      :class="{ 'border-l': isExpanded(index) }"
+      class="relative mb-8 ml-3 border-gray-300 bg-transparent pl-3 pt-10"
+      :class="{
+        'border-l': isExpanded(index) && !isReadOnly,
+        'border-t': !isReadOnly && (!shared.isTranslation || drafts.isSingleColumn),
+      }"
     >
-      <div class="absolute -left-5 -top-5 right-0 flex items-center justify-between">
+      <div
+        v-if="shared.isTranslation && !drafts.isSingleColumn"
+        class="absolute left-0 right-0 top-0 w-[calc(100vw_-_1.5rem)] border-t border-gray-300"
+      ></div>
+      <div
+        v-if="!isReadOnly"
+        class="absolute -left-5 -top-5 right-0 flex items-center justify-between"
+      >
         <button
           class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          @click="toggle(index)"
+          @click.prevent="toggle(index)"
         >
           <icon
             v-if="isExpanded(index)"
@@ -21,7 +31,7 @@
         <div
           v-if="itemHasError(index)"
           class="cursor-pointer text-accent-one"
-          @click="toggle(index)"
+          @click.prevent="toggle(index)"
         >
           <div class="rounded-full border bg-white p-2">
             <Icon name="exclamation" class="h-10 w-10 text-red-500" />
@@ -74,7 +84,12 @@
 import { computed, PropType } from 'vue';
 import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
-import { useModelStore, useWidgetsStore, useSharedStore } from '../../store';
+import {
+  useModelStore,
+  useWidgetsStore,
+  useSharedStore,
+  useDraftsStore,
+} from '../../store';
 import AddItemButton from '../../Shared/AddItemButton.vue';
 
 const props = defineProps({
@@ -103,6 +118,7 @@ const fields = field.value.fields as FieldSpec[];
 const model = useModelStore();
 const widgets = useWidgetsStore();
 const shared = useSharedStore();
+const drafts = useDraftsStore();
 
 const canMutate = computed(() => {
   if (props.isReadOnly) return false;
