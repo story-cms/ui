@@ -1,5 +1,10 @@
 <template>
-  <TranslationAppLayout @delete="deleteDraft">
+  <TranslationAppLayout
+    @delete="deleteDraft"
+    @submit="submitDraft"
+    @publish="publishDraft"
+    @request-change="reject"
+  >
     <section class="row-subgrid">
       <form class="row-subgrid gap-y-8">
         <div v-for="(item, index) in spec.fields" :key="index" class="grid">
@@ -23,10 +28,13 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
+import type { Errors } from '@inertiajs/core';
 import type { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
 import { useSharedStore, useModelStore, useWidgetsStore, useDraftsStore } from '../store';
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
+import { debounce } from '../Shared/helpers';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
 
@@ -37,22 +45,101 @@ const drafts = useDraftsStore();
 drafts.setFromProps(props);
 const widgets = useWidgetsStore();
 widgets.setProviders(props.providers);
+const shared = useSharedStore();
+const model = useModelStore();
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);
 };
 
+interface FeedbackPanel {
+  message: string;
+  icon: null | string;
+}
+
+const feedbackPanel = ref<FeedbackPanel>({
+  message: '',
+  icon: null,
+});
+
+const getPayload = () => {
+  return {
+    feedback: '',
+    bundle: model.model,
+  };
+};
+
 // actions
+const onSuccess = (message?: string) => {
+  widgets.setIsDirty(false);
+  if (!message) return;
+
+  feedbackPanel.value.message = message;
+};
+
+const onError = (errors: Errors, message: string) => {
+  widgets.setIsDirty(false);
+  console.log(errors);
+  isSettingErrors = true;
+  shared.setErrors(props.errors);
+  feedbackPanel.value.message = message;
+};
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    onSuccess: () => {
-      console.log('draft deleted');
-    },
-    onError: (e) => {
-      console.log('error deleting draft', e);
-    },
+    onSuccess: () => onSuccess('Draft successfully deleted.'),
+    onError: (e) => onError(e, 'Error deleting draft.'),
   });
 };
+
+let isSettingErrors = false;
+
+const saveDraft = debounce(2000, () => {
+  router.post(`/draft/${props.draft.id}/save`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess(),
+    onError: (e) => onError(e, 'Error saving draft.'),
+  });
+});
+
+const submitDraft = () => {
+  router.post(`/draft/${props.draft.id}/submit`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess('Draft successfully submitted.'),
+    onError: (e) =>
+      onError(e, 'Draft not submitted. Please review and correct any errors.'),
+  });
+};
+
+const publishDraft = () => {
+  if (props.user.role !== 'admin') return;
+  widgets.setIsDirty(true);
+
+  router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess('Draft successfully submitted.'),
+    onError: (e) =>
+      onError(e, 'Draft not published. Please review and correct any errors.'),
+  });
+};
+
+const reject = () => {
+  router.post(`/draft/${props.draft.id}/reject`, getPayload(), {
+    preserveScroll: true,
+    onSuccess: () => onSuccess('Draft sent back for fixing.'),
+    onError: (e) => onError(e, 'Draft could not be sent back.'),
+  });
+};
+
+onMounted(() => {
+  model.$subscribe(() => {
+    if (isSettingErrors) {
+      isSettingErrors = false;
+      return;
+    }
+    widgets.setIsDirty(true);
+    saveDraft();
+  });
+});
 </script>
