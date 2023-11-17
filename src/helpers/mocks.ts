@@ -410,6 +410,7 @@ export const user = {
   isManager: true,
   isAdmin: true,
   role: 'admin',
+  language: 'en',
 };
 
 export const stories = ['John', 'Acts'];
