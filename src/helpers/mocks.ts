@@ -386,15 +386,27 @@ export const scriptureInListError = {
   'bundle.scriptures.0.scripture': ['required validation failed'],
 };
 
-export const spanish: LanguageSpecification = {
-  locale: 'es',
-  language: 'Espanol',
-  languageDirection: 'ltr',
-};
-
 export const meta: Meta = {
   name: 'The Word One to One',
   storyType: 'Book',
+  chapterType: 'Episode',
+  logo: 'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg',
+  helpUrl: 'https://www.theword121.com/',
+  hasEditReview: true,
+  hasAppPreview: false,
+};
+export const bioyMeta: Meta = {
+  name: 'Bible in One Year',
+  storyType: 'Stories',
+  chapterType: 'Episode',
+  logo: 'https://res.cloudinary.com/onesheep/image/upload/v1686316788/cmsplayground/bsivel4ubfkzdep51psi.svg',
+  helpUrl: 'https://www.theword121.com/',
+  hasEditReview: true,
+  hasAppPreview: false,
+};
+export const alMassiraMeta: Meta = {
+  name: 'Al Massira',
+  storyType: 'Sessions',
   chapterType: 'Episode',
   logo: 'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg',
   helpUrl: 'https://www.theword121.com/',
@@ -474,21 +486,23 @@ export const story = {
     },
   ],
 };
-
-const languages: LanguageSpecification[] = [
-  {
-    locale: 'en',
-    language: 'English',
-    languageDirection: 'ltr',
-  },
-  spanish,
-];
+export const spanish: LanguageSpecification = {
+  locale: 'es',
+  language: 'Espanol',
+  languageDirection: 'ltr',
+};
+export const english: LanguageSpecification = {
+  locale: 'en',
+  language: 'English',
+  languageDirection: 'ltr',
+};
+const languages: LanguageSpecification[] = [english, spanish];
 
 export const sharedProps: SharedPageProps = {
   stories,
   meta,
   user,
-  language: spanish,
+  language: english,
   languages,
   errors: {},
 };
