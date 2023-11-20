@@ -1,15 +1,15 @@
 <template>
   <Story title="Navigation Bar" group="shared">
-    <Variant title="AM Editor English" :setup-app="loadData">
+    <Variant title="Editor English" :setup-app="loadData">
       <NavigationBar />
     </Variant>
-    <Variant title="W121 Editor English" :setup-app="loadData">
+    <Variant title="Admin English" :setup-app="loadData">
       <NavigationBar />
     </Variant>
-    <Variant title="Bioy Editor English" :setup-app="loadData">
+    <Variant title="Editor All" :setup-app="loadData">
       <NavigationBar />
     </Variant>
-    <Variant title="BiOY Admin English" :setup-app="loadData">
+    <Variant title="Admin All" :setup-app="loadData">
       <NavigationBar />
     </Variant>
   </Story>
@@ -32,27 +32,27 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   //   'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg';
   // shared.meta.name = 'CMS UI';
 
-  if (variant?.title == 'AM Editor English') {
+  if (variant?.title == 'Editor English') {
     shared.meta = alMassiraMeta;
     shared.user.isAdmin = false;
     shared.user.isManager = false;
     shared.user.role = 'editor';
     shared.user.language = 'en';
   }
-  if (variant?.title == 'W121 Editor English') {
+  if (variant?.title == 'Admin English') {
     shared.user.isAdmin = false;
-    shared.user.isManager = true;
-    shared.user.role = 'editor';
-    shared.user.language = '*';
-  }
-  if (variant?.title == 'Bioy Editor English') {
-    shared.meta = bioyMeta;
-    shared.user.isAdmin = true;
     shared.user.isManager = false;
     shared.user.role = 'admin';
     shared.user.language = 'en';
   }
-  if (variant?.title == 'BiOY Admin English') {
+  if (variant?.title == 'Editor All') {
+    shared.meta = bioyMeta;
+    shared.user.isAdmin = false;
+    shared.user.isManager = true;
+    shared.user.role = 'editor';
+    shared.user.language = 'en';
+  }
+  if (variant?.title == 'Admin All') {
     shared.meta = bioyMeta;
     shared.user.isAdmin = true;
     shared.user.isManager = true;

@@ -10,6 +10,7 @@
         }}</Link>
         <!-- eslint-disable vue/valid-v-model -->
         <DropDown
+          v-if="shared.user.isManager"
           v-model="(form.language as string)"
           :options="(shared.languages.map((l) => l.language) as string[])"
           :is-read-only="!shared.user.isManager"
