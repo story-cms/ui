@@ -23,7 +23,7 @@
           class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-indigo-700 shadow-sm"
           disabled
         >
-          No more days available to translate
+          {{ `No more ${meta.chapterType}s available to translate` }}
         </button>
         <button
           v-if="addStatus == AddStatus.Full"
@@ -31,7 +31,7 @@
           class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-app_green shadow-sm"
           disabled
         >
-          All days translated
+          {{ `All ${meta.chapterType}s translated` }}
         </button>
       </div>
       <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
