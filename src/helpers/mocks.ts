@@ -395,24 +395,6 @@ export const meta: Meta = {
   hasEditReview: true,
   hasAppPreview: false,
 };
-export const bioyMeta: Meta = {
-  name: 'Bible in One Year',
-  storyType: 'Stories',
-  chapterType: 'Episode',
-  logo: 'https://res.cloudinary.com/onesheep/image/upload/v1686316788/cmsplayground/bsivel4ubfkzdep51psi.svg',
-  helpUrl: 'https://www.theword121.com/',
-  hasEditReview: true,
-  hasAppPreview: false,
-};
-export const alMassiraMeta: Meta = {
-  name: 'Al Massira',
-  storyType: 'Sessions',
-  chapterType: 'Episode',
-  logo: 'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg',
-  helpUrl: 'https://www.theword121.com/',
-  hasEditReview: true,
-  hasAppPreview: false,
-};
 
 export const user = {
   id: 2,

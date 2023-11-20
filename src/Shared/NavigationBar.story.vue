@@ -1,15 +1,27 @@
 <template>
   <Story title="Navigation Bar" group="shared">
-    <Variant title="Editor English" :setup-app="loadData">
+    <Variant title="SingleStory SingleLanguage Editor" :setup-app="loadData">
       <NavigationBar />
     </Variant>
-    <Variant title="Admin English" :setup-app="loadData">
+    <Variant title="MultiStory SingleLanguage Editor" :setup-app="loadData">
       <NavigationBar />
     </Variant>
-    <Variant title="Editor All" :setup-app="loadData">
+    <Variant title="MultiStory MultiLanguage Editor" :setup-app="loadData">
       <NavigationBar />
     </Variant>
-    <Variant title="Admin All" :setup-app="loadData">
+    <Variant title="MultiStory MultiLanguage Admin" :setup-app="loadData">
+      <NavigationBar />
+    </Variant>
+    <Variant title="SingleStory MultiLanguage Editor" :setup-app="loadData">
+      <NavigationBar />
+    </Variant>
+    <Variant title="SingleStory MultiLanguage Admin" :setup-app="loadData">
+      <NavigationBar />
+    </Variant>
+    <Variant title="SingleStory SingleLanguage Admin" :setup-app="loadData">
+      <NavigationBar />
+    </Variant>
+    <Variant title="MultiStory SingleLanguage Admin" :setup-app="loadData">
       <NavigationBar />
     </Variant>
   </Story>
@@ -20,7 +32,7 @@ import NavigationBar from './NavigationBar.vue';
 import { LanguageSpecification } from 'src/Shared/interfaces';
 import { useSharedStore } from '../store';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
-import { sharedProps, meta, bioyMeta, alMassiraMeta } from '../helpers/mocks';
+import { sharedProps, meta } from '../helpers/mocks';
 
 import { useForm } from '@inertiajs/vue3';
 
@@ -32,25 +44,61 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   //   'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg';
   // shared.meta.name = 'CMS UI';
 
-  if (variant?.title == 'Editor English') {
-    shared.meta = alMassiraMeta;
-    shared.user.isAdmin = false;
-    shared.user.isManager = false;
-    shared.user.role = 'editor';
-    shared.user.language = 'en';
-  }
-  if (variant?.title == 'Admin English') {
-    shared.user.isAdmin = false;
-    shared.user.isManager = false;
-    shared.user.role = 'admin';
-    shared.user.language = 'en';
-  }
-  if (variant?.title == 'Editor All') {
-    shared.meta = bioyMeta;
-    shared.user.isAdmin = false;
+  if (variant?.title == 'SingleStory SingleLanguage Editor') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
     shared.user.isManager = true;
-    shared.user.role = 'editor';
-    shared.user.language = 'en';
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'MultiStory SingleLanguage Editor') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'MultiStory MultiLanguage Editor') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'MultiStory MultiLanguage Admin') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'SingleStory MultiLanguage Editor') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'SingleStory MultiLanguage Admin') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'SingleStory SingleLanguage Admin') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
+  }
+  if (variant?.title == 'MultiStory SingleLanguage Admin') {
+    shared.meta = meta;
+    shared.user.isAdmin = true;
+    shared.user.isManager = true;
+    shared.user.role = 'admin';
+    shared.user.language = '*';
   }
   if (variant?.title == 'Admin All') {
     shared.meta = bioyMeta;
