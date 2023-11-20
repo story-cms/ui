@@ -1,5 +1,5 @@
 <template>
-  <ul v-for="(_listItem, index) in listItems" :key="index" class="my-8">
+  <ul v-for="(_listItem, index) in listItems" :key="index">
     <li
       class="relative mb-8 ml-3 border-gray-300 bg-transparent pl-3 pt-10"
       :class="{
@@ -47,12 +47,12 @@
           </span>
         </button>
       </div>
-      <ul v-if="isExpanded(index)">
+      <ul v-if="isExpanded(index)" class="my-8">
         <li v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
           <component
             :is="widgets.picker(item.widget)"
             :class="{
-              'rounded border border-gray-200  bg-white drop-shadow-sm':
+              'rounded border border-gray-200 bg-white drop-shadow-sm':
                 item.widget != 'list',
               'mt-8 rounded border border-gray-200  bg-white p-8 shadow': isIsland(
                 item.widget,
@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
+import { computed, PropType, onMounted } from 'vue';
 import type { FieldSpec } from '../../Shared/interfaces';
 import Icon from '../../Shared/Icon.vue';
 import {
@@ -169,4 +169,10 @@ const itemHasError = (index: number): boolean => {
   }
   return false;
 };
+
+onMounted(() => {
+  if (props.isReadOnly) {
+    console.log('list items', props.listItems);
+  }
+});
 </script>
