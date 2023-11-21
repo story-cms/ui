@@ -2,7 +2,7 @@
   <ul
     v-for="(_listItem, index) in listItems"
     :key="index"
-    class="my-8 space-y-8 bg-transparent"
+    class="my-8 grid space-y-8 bg-transparent"
   >
     <li class="ml-8 space-y-6 rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow">
       <div

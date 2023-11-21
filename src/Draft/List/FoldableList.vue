@@ -1,12 +1,7 @@
 <template>
-  <ul
-    v-for="(_listItem, index) in listItems"
-    :key="index"
-    class="foldable-list grid grid-rows-[subgrid]"
-    :style="{ gridRow: `span ${getLength(index)}` }"
-  >
+  <ul v-for="(_listItem, index) in listItems" :key="index">
     <li
-      class="relative row-[span_100] mb-8 ml-3 grid grid-rows-[subgrid] border-gray-300 bg-transparent pl-3 pt-10"
+      class="relative mb-8 ml-3 border-gray-300 bg-transparent pl-3 pt-10"
       :class="{
         'border-l': isExpanded(index) && !isReadOnly,
         'border-t': !isReadOnly && (!shared.isTranslation || drafts.isSingleColumn),
@@ -54,7 +49,7 @@
           </span>
         </button>
       </div>
-      <ul v-if="isExpanded(index)" class="row-[span_100] grid grid-rows-[subgrid]">
+      <ul v-if="isExpanded(index)">
         <li v-for="(item, i) in fields" :key="item.name + `${i.toString()}`" class="grid">
           <component
             :is="widgets.picker(item.widget)"
@@ -175,14 +170,5 @@ const itemHasError = (index: number): boolean => {
     if (key.startsWith(needle)) return true;
   }
   return false;
-};
-
-interface Size {
-  index: number;
-  size: number;
-}
-const getLength = (index: number) => {
-  const item = widgets.sizeOfItems[index] as Size;
-  return item ? item['size'] : 0;
 };
 </script>

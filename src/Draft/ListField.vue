@@ -1,33 +1,31 @@
 <template>
-  <div>
-    <FoldableList
-      v-if="field.canFold"
-      :field="field"
-      :field-path="fieldPath"
-      :list-items="listItems"
-      :is-read-only="props.isReadOnly"
-      @add-set="addSet"
-      @remove-set="removeSet"
-    />
-    <FlatList
-      v-else
-      :field="field"
-      :field-path="fieldPath"
-      :list-items="listItems"
-      :is-read-only="props.isReadOnly"
-      @add-set="addSet"
-      @remove-set="removeSet"
-    />
-  </div>
+  <FoldableList
+    v-if="field.canFold"
+    :field="field"
+    :field-path="fieldPath"
+    :list-items="listItems"
+    :is-read-only="props.isReadOnly"
+    @add-set="addSet"
+    @remove-set="removeSet"
+  />
+  <FlatList
+    v-else
+    :field="field"
+    :field-path="fieldPath"
+    :list-items="listItems"
+    :is-read-only="props.isReadOnly"
+    @add-set="addSet"
+    @remove-set="removeSet"
+  />
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
 import { commonProps } from '../Shared/helpers';
 import type { FieldSpec } from '../Shared/interfaces';
 import FlatList from './List/FlatList.vue';
 import FoldableList from './List/FoldableList.vue';
-import { useModelStore } from '../store';
+import { useModelStore, useWidgetsStore, useSharedStore } from '../store';
 
 const props = defineProps({
   ...commonProps,
@@ -40,6 +38,8 @@ const fieldPath = computed((): string => {
 });
 
 const model = useModelStore();
+const widgets = useWidgetsStore();
+const shared = useSharedStore();
 
 const addSet = () => {
   model.addListItem(fieldPath.value);
@@ -58,5 +58,10 @@ model.$subscribe(() => {
 
   const fresh = model.getField(fieldPath.value, []) as any[];
   listItems.value = fresh;
+});
+onBeforeMount(() => {
+  if (props.isReadOnly && props.field?.canFold && shared.isTranslation) {
+    widgets.setSizeOfItems(listItems.value);
+  }
 });
 </script>
