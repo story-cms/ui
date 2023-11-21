@@ -10,7 +10,7 @@
         }}</Link>
         <!-- eslint-disable vue/valid-v-model -->
         <DropDown
-          v-if="shared.user.isManager"
+          v-if="isMultiLingual"
           v-model="(form.language as string)"
           :options="(shared.languages.map((l) => l.language) as string[])"
           :is-read-only="!shared.user.isManager"
@@ -23,12 +23,7 @@
           :anchor="shared.meta.storyType"
           @select="onStory"
         ></ContextMenu>
-        <Link
-          v-if="shared.user.isAdmin"
-          class="px-2 py-3 hover:text-gray-700"
-          href="/page"
-          >Pages</Link
-        >
+        <Link class="px-2 py-3 hover:text-gray-700" href="/page">Pages</Link>
         <Link
           v-if="shared.user.isAdmin"
           class="px-2 py-3 hover:text-gray-700"
@@ -92,6 +87,7 @@
 
 <script setup lang="ts">
 import { Link, useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
@@ -123,4 +119,6 @@ const onStory = async (story: string) => {
 };
 
 const signOut = () => (window.location.href = '/logout');
+const isMultiLingual = computed(() => shared.languages.length > 1);
+const isMultiStory = computed(() => shared.stories.length > 1);
 </script>

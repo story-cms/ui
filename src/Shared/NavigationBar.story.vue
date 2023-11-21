@@ -46,25 +46,41 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
 
   if (variant?.title == 'SingleStory SingleLanguage Editor') {
     shared.meta = meta;
-    shared.user.isAdmin = true;
-    shared.user.isManager = true;
+    shared.languages = [
+      {
+        locale: 'en',
+        language: 'English',
+        languageDirection: 'ltr',
+      },
+    ];
+    shared.stories = ['John'];
+    shared.user.isAdmin = false;
+    shared.user.isManager = false;
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
   if (variant?.title == 'MultiStory SingleLanguage Editor') {
     shared.meta = meta;
-    shared.user.isAdmin = true;
-    shared.user.isManager = true;
+    shared.languages = [
+      {
+        locale: 'en',
+        language: 'English',
+        languageDirection: 'ltr',
+      },
+    ];
+    shared.user.isAdmin = false;
+    shared.user.isManager = false;
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
   if (variant?.title == 'MultiStory MultiLanguage Editor') {
     shared.meta = meta;
-    shared.user.isAdmin = true;
-    shared.user.isManager = true;
+    shared.user.isAdmin = false;
+    shared.user.isManager = false;
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
+
   if (variant?.title == 'MultiStory MultiLanguage Admin') {
     shared.meta = meta;
     shared.user.isAdmin = true;
@@ -74,13 +90,16 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   }
   if (variant?.title == 'SingleStory MultiLanguage Editor') {
     shared.meta = meta;
-    shared.user.isAdmin = true;
-    shared.user.isManager = true;
-    shared.user.role = 'admin';
+    shared.stories = ['John'];
+    shared.user.isAdmin = false;
+    shared.user.isManager = false;
+    shared.user.role = 'editor';
     shared.user.language = '*';
   }
+
   if (variant?.title == 'SingleStory MultiLanguage Admin') {
     shared.meta = meta;
+    shared.stories = ['John'];
     shared.user.isAdmin = true;
     shared.user.isManager = true;
     shared.user.role = 'admin';
@@ -88,20 +107,37 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   }
   if (variant?.title == 'SingleStory SingleLanguage Admin') {
     shared.meta = meta;
+    shared.languages = [
+      {
+        locale: 'en',
+        language: 'English',
+        languageDirection: 'ltr',
+      },
+    ];
+    shared.stories = ['John'];
     shared.user.isAdmin = true;
-    shared.user.isManager = true;
+    shared.user.isManager = false;
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
+  // %%%%%%%%%%%%%%%%
+
   if (variant?.title == 'MultiStory SingleLanguage Admin') {
     shared.meta = meta;
+    shared.languages = [
+      {
+        locale: 'en',
+        language: 'English',
+        languageDirection: 'ltr',
+      },
+    ];
     shared.user.isAdmin = true;
     shared.user.isManager = true;
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
   if (variant?.title == 'Admin All') {
-    shared.meta = bioyMeta;
+    shared.meta = meta;
     shared.user.isAdmin = true;
     shared.user.isManager = true;
     shared.user.role = 'admin';

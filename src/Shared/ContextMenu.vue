@@ -62,5 +62,5 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['select']);
-const hasOptions = computed(() => props.options.length > 0);
+const hasOptions = computed(() => props.options.length > 1);
 </script>
