@@ -25,7 +25,7 @@ import { commonProps } from '../Shared/helpers';
 import type { FieldSpec } from '../Shared/interfaces';
 import FlatList from './List/FlatList.vue';
 import FoldableList from './List/FoldableList.vue';
-import { useModelStore, useWidgetsStore, useSharedStore } from '../store';
+import { useModelStore } from '../store';
 
 const props = defineProps({
   ...commonProps,
@@ -38,8 +38,6 @@ const fieldPath = computed((): string => {
 });
 
 const model = useModelStore();
-const widgets = useWidgetsStore();
-const shared = useSharedStore();
 
 const addSet = () => {
   model.addListItem(fieldPath.value);
