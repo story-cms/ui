@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeMount } from 'vue';
+import { ref, computed } from 'vue';
 import { commonProps } from '../Shared/helpers';
 import type { FieldSpec } from '../Shared/interfaces';
 import FlatList from './List/FlatList.vue';
@@ -58,10 +58,5 @@ model.$subscribe(() => {
 
   const fresh = model.getField(fieldPath.value, []) as any[];
   listItems.value = fresh;
-});
-onBeforeMount(() => {
-  if (props.isReadOnly && props.field?.canFold && shared.isTranslation) {
-    widgets.setSizeOfItems(listItems.value);
-  }
 });
 </script>
