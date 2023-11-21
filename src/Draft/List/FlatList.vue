@@ -12,7 +12,7 @@
       >
         <Icon name="trash" class="h-10 w-10" />
       </div>
-      <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
+      <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`" class="my-8">
         <component
           :is="store.picker(item.widget)"
           :field="item"
