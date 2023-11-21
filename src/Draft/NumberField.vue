@@ -70,5 +70,5 @@ const isWeird = computed((): boolean => {
 });
 
 const errors = computed(() => shared.errorMessages(fieldPath.value));
-const hasError = computed(() => errors.value.length > 0 || isWeird.value === true);
+const hasError = computed(() => (errors.value.length > 0 || isWeird.value === true)  && !props.isReadOnly);
 </script>

@@ -78,5 +78,5 @@ const update = () => {
 };
 
 const errors = computed(() => shared.errorMessages(fieldPath.value));
-const hasError = computed(() => errors.value.length > 0);
+const hasError = computed(() => errors.value.length > 0 && !props.isReadOnly);
 </script>

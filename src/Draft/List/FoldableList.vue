@@ -165,6 +165,7 @@ const title = (index: number): string => {
 };
 
 const itemHasError = (index: number): boolean => {
+  if (props.isReadOnly) return false;
   for (const key in shared.errors) {
     const needle = `bundle.${props.fieldPath}.${index}`;
     if (key.startsWith(needle)) return true;

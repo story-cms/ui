@@ -81,7 +81,7 @@ const load = () => {
 model.$subscribe(load);
 
 const errors = computed(() => shared.errorMessages(fieldPath.value));
-const hasError = computed(() => errors.value.length > 0);
+const hasError = computed(() => errors.value.length > 0 && !props.isReadOnly);
 
 shared.$subscribe(() => {
   if (props.isReadOnly) return;
@@ -95,6 +95,8 @@ let mde: EasyMDE | null = null;
 const textArea = ref(undefined);
 
 const toolbar = computed((): any[] => {
+  if (field.value.minimal) return [];
+
   if (props.isReadOnly)
     return [customToolbarButtons.find((obj) => obj.name === 'transparent')];
   // NOTE: make sure to clone the field before passing it to MDE where it is mutated

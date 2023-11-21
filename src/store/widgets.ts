@@ -58,20 +58,28 @@ export const useWidgetsStore = defineStore('widgets', () => {
       index: index,
       size: Object.keys(item).length,
     }));
-  };
 
-  return {
-    picker,
-    setPicker,
-    standardPicker,
+    const isDirty = ref(false);
+    const setIsDirty = (fresh: boolean) => {
+      isDirty.value = fresh;
+    };
 
-    getListToggles,
-    setListToggles,
+    return {
+      picker,
+      setPicker,
+      standardPicker,
 
-    setSizeOfItems,
-    sizeOfItems,
+      getListToggles,
+      setListToggles,
 
-    setProviders,
-    providers,
-  };
-});
+      setSizeOfItems,
+      sizeOfItems,
+
+      setProviders,
+      providers,
+
+      isDirty,
+      setIsDirty,
+    };
+  
+})
