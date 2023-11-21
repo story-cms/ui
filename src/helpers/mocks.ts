@@ -387,7 +387,7 @@ export const scriptureInListError = {
 };
 
 export const meta: Meta = {
-  name: 'The Word One to One',
+  name: 'W121',
   storyType: 'Book',
   chapterType: 'Episode',
   logo: 'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg',
