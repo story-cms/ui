@@ -30,6 +30,7 @@ module.exports = {
         yellow: colors.yellow,
         indigo: colors.indigo,
         app_gray: '#F9FAFB',
+        app_green: '#16A34A',
       },
     },
   },
