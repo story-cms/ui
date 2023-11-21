@@ -25,14 +25,6 @@
         >
           {{ `No more ${meta.chapterType}s available to translate` }}
         </button>
-        <button
-          v-if="addStatus == AddStatus.Full"
-          type="button"
-          class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-app_green shadow-sm"
-          disabled
-        >
-          {{ `All ${meta.chapterType}s translated` }}
-        </button>
       </div>
       <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
     </div>

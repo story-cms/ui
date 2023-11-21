@@ -201,6 +201,7 @@ export enum AddStatus {
   Add,
   Wait,
 }
+
 export interface DashboardProps {
   index: IndexReadyItem[];
   addStatus: AddStatus;
