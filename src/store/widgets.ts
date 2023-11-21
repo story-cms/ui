@@ -50,16 +50,6 @@ export const useWidgetsStore = defineStore('widgets', () => {
     providers.value = fresh;
   };
 
-  // length of items in list
-  const sizeOfItems = ref([{}]);
-
-  const setSizeOfItems = (fresh: object[]) => {
-    sizeOfItems.value = fresh.map((item, index) => ({
-      index: index,
-      size: Object.keys(item).length,
-    }));
-  };
-
   const isDirty = ref(false);
   const setIsDirty = (fresh: boolean) => {
     isDirty.value = fresh;
@@ -72,9 +62,6 @@ export const useWidgetsStore = defineStore('widgets', () => {
 
     getListToggles,
     setListToggles,
-
-    setSizeOfItems,
-    sizeOfItems,
 
     setProviders,
     providers,
