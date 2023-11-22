@@ -1,10 +1,10 @@
 <template>
-  <ul
+  <div
     v-for="(_listItem, index) in listItems"
     :key="index"
     class="my-8 grid space-y-8 bg-transparent"
   >
-    <li class="ml-8 space-y-6 rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow">
+    <div class="ml-8 space-y-6 rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow">
       <div
         v-if="canMutate"
         class="absolute right-0 mr-3 cursor-pointer text-gray-500"
@@ -21,8 +21,8 @@
           :is-nested="true"
         />
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
   <div v-if="canMutate" class="ml-8 mt-8">
     <AddItemButton :label="field.label" @add="emit('addSet')" />
   </div>
