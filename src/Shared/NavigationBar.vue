@@ -16,8 +16,6 @@
           :is-read-only="!shared.user.isManager"
           @change="onLanguage"
         ></DropDown>
-      </div>
-      <div class="flex items-center space-x-6 md:ml-24">
         <ContextMenu
           v-if="isMultiStory"
           :options="(shared.stories as string[])"
