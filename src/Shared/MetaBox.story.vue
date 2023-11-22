@@ -4,9 +4,9 @@
       <MetaBox
         :created-at="meta.createdAt"
         :updated-at="meta.updatedAt"
-        :number="1"
         :story-type="'Story'"
         :chapter-type="'01 of 42'"
+        :published-when="'2021-10-10T14:48:00.000000Z'"
       />
     </Variant>
   </Story>

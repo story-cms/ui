@@ -4,6 +4,7 @@
   >
     <button
       class="absolute -right-2 -top-2 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white"
+      @click.prevent="emit('close')"
     >
       <icon name="cross" class="h-6 w-6" />
     </button>
@@ -29,7 +30,7 @@
       </div>
       <div class="grid grid-cols-2">
         <p>Last Published</p>
-        <span class="place-self-end">{{ formatDate(props.updatedAt) }}</span>
+        <span class="place-self-end">{{ publishedWhen }}</span>
       </div>
     </section>
   </div>
@@ -41,7 +42,16 @@ import { ChapterMeta, Meta } from './interfaces';
 import { formatDate } from './helpers';
 import { useDraftsStore } from '../store';
 
-const props = defineProps<Pick<Meta, 'storyType' | 'chapterType'> & ChapterMeta>();
+interface Props {
+  storyType: Meta['storyType'];
+  chapterType: Meta['chapterType'];
+  createdAt: ChapterMeta['createdAt'];
+  updatedAt: ChapterMeta['updatedAt'];
+  publishedWhen: string;
+}
+
+const props = defineProps<Props>();
 
 const drafts = useDraftsStore();
+const emit = defineEmits(['close']);
 </script>
