@@ -2,61 +2,13 @@
   <div class="w-full bg-gray-50">
     <div class="flex items-center justify-between p-6">
       <h2 class="text-2xl/8 font-semibold">{{ chapterTitle }}</h2>
-      <div class="flex space-x-6">
-        <button
-          type="submit"
-          class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
-          @click.prevent="emit('info')"
-        >
-          <Icon name="info" class="h-auto w-6 cursor-pointer text-gray-500" />
-        </button>
-        <button
-          type="submit"
-          class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
-        >
-          <Icon name="mobile" class="h-auto w-6 cursor-pointer text-gray-500" />
-        </button>
-        <button
-          type="submit"
-          class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
-          @click="emit('delete')"
-        >
-          <Icon
-            name="trash"
-            class="flex h-auto w-6 cursor-pointer items-center justify-center text-gray-500"
-          />
-        </button>
-        <button
-          v-if="shared.meta.hasEditReview && drafts.draft.status == 'submitted'"
-          type="submit"
-          class="min-w-32 rounded-[38px] border border-red-500 bg-red-500 px-[15px] py-[9px] text-sm/5 font-medium text-white shadow"
-          @click.prevent="emit('request-change')"
-        >
-          Request Change
-        </button>
-        <button
-          v-if="shared.meta.hasEditReview && drafts.draft.status === 'started'"
-          type="submit"
-          class="min-w-32 rounded-[38px] border border-green-500 bg-green-500 px-[15px] py-[9px] text-sm/5 font-medium text-white shadow"
-          @click.prevent="emit('submit')"
-        >
-          Submit
-        </button>
-
-        <button
-          v-if="showPublishButton"
-          type="submit"
-          :disabled="widgets.isDirty"
-          class="min-w-32 rounded-[38px] border border-gray-200 bg-green-500 px-[15px] py-[9px] text-sm/5 font-bold text-white shadow"
-          :class="{
-            'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
-              widgets.isDirty,
-          }"
-          @click.prevent="emit('publish')"
-        >
-          Publish
-        </button>
-      </div>
+      <HeaderControls
+        @delete="emit('delete')"
+        @publish="emit('publish')"
+        @request-change="emit('request-change')"
+        @submit="emit('submit')"
+        @info="emit('info')"
+      />
     </div>
     <div
       class="grid max-w-5xl lg:place-content-center [&>h3]:pb-2 [&>h3]:pl-6 [&>h3]:text-lg/8 [&>h3]:font-semibold [&>h3]:text-gray-800"
@@ -70,7 +22,7 @@
       <h3 class="inline-flex items-center">
         English
         <span class="ml-2">
-          <icon
+          <Icon
             name="eyeoff"
             class="h-8 w-8 cursor-pointer text-black"
             @click.prevent="toggle"
@@ -82,26 +34,20 @@
   </div>
 </template>
 <script setup lang="ts">
+import HeaderControls from './HeaderControls.vue';
 import Icon from './Icon.vue';
 import { computed } from 'vue';
-import { useSharedStore, useDraftsStore, useModelStore, useWidgetsStore } from '../store';
-
-const emit = defineEmits(['delete', 'publish', 'request-change', 'submit', 'info']);
+import { useSharedStore, useDraftsStore, useModelStore } from '../store';
 
 const shared = useSharedStore();
 const drafts = useDraftsStore();
 const model = useModelStore();
-const widgets = useWidgetsStore();
+
+const emit = defineEmits(['delete', 'publish', 'request-change', 'submit', 'info']);
 
 const chapterTitle = computed(() => {
   const title = model.getField('title');
   return title ? title : `New ${shared.meta.chapterType}`;
-});
-
-const showPublishButton = computed(() => {
-  if (shared.user.role !== 'admin') return false;
-
-  return !shared.meta.hasEditReview || drafts.draft.status === 'submitted';
 });
 
 const toggle = () => {

@@ -1,8 +1,12 @@
 <template>
   <div
-    class="relative mt-12 max-w-[416px] bg-gray-200 p-9 font-['Inter'] text-gray-600 shadow-sm"
+    class="relative max-w-[416px] bg-gray-200 p-9 font-['Inter'] text-gray-600 shadow-sm"
+    :class="{
+      'mt-3': props.isFloating,
+    }"
   >
     <button
+      v-if="props.isFloating"
       class="absolute -right-2 -top-2 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white"
       @click.prevent="emit('close')"
     >
@@ -48,10 +52,12 @@ interface Props {
   createdAt: ChapterMeta['createdAt'];
   updatedAt: ChapterMeta['updatedAt'];
   publishedWhen: string;
+  isFloating?: boolean;
 }
 
 const props = defineProps<Props>();
 
 const drafts = useDraftsStore();
+
 const emit = defineEmits(['close']);
 </script>
