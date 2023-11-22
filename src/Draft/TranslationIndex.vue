@@ -13,6 +13,7 @@
         :story-type="meta.storyType"
         :chapter-type="metaChapter"
         :published-when="published_when"
+        :is-floating="true"
         @close="showMetaBox = false"
       />
     </div>
@@ -83,8 +84,6 @@ const metaChapter = computed(
 const published_when = computed(() => {
   return props.lastPublished == '' ? 'Unpublished' : formatDate(props.lastPublished);
 });
-
-console.log('Published', published_when.value);
 
 interface FeedbackPanel {
   message: string;

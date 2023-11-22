@@ -1,7 +1,19 @@
 <template>
   <AppLayout>
-    <div class="mb-32 p-4">
-      <h3 class="mb-[14px] text-lg font-bold leading-7 text-black">{{ chapterTitle }}</h3>
+    <div class="flex items-center justify-between p-6">
+      <h3 class="mb-[14px] text-lg font-bold leading-7 text-black">
+        {{ chapterTitle }}
+      </h3>
+      <HeaderControls
+        @delete="deleteDraft"
+        @submit="submit"
+        @publish="publish"
+        @request-change="reject"
+        @info="info"
+        @app-preview="appPreview"
+      />
+    </div>
+    <div class="mb-32 px-4 pb-4">
       <div class="flex justify-between space-x-8">
         <div class="w-max flex-grow overflow-hidden rounded-sm lg:max-w-[800px]">
           <form class="space-y-8">
@@ -11,84 +23,23 @@
           </form>
         </div>
         <div class="sticky top-0 h-full w-[416px]">
-          <div
-            class="space-y-5 rounded-md border border-accent-gray bg-accent-gray p-8 shadow-sm"
-          >
-            <div class="space-y-8 text-[18px] font-medium leading-7 text-gray-600">
-              <div class="space-y-1 border-b border-gray-600">
-                <div class="grid grid-cols-2 font-bold">
-                  <p class="mr-2">{{ meta.storyType }}</p>
-                  <span class="text-right">{{ drafts.story.name }}</span>
-                </div>
-                <div class="grid grid-cols-2 font-bold">
-                  <p class="mr-2">{{ meta.chapterType }}</p>
-                  <span class="text-right">{{ metaChapter }}</span>
-                </div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Last Published</p>
-                  <span class="text-right">{{ published_when }}</span>
-                </div>
-              </div>
-              <div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Draft Created</p>
-                  <span class="text-right">{{ formatDate(draft['createdAt']) }}</span>
-                </div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Draft Saved</p>
-                  <span class="text-right">{{ formatDate(draft['updatedAt']) }}</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="flex flex-col items-center justify-between space-y-4 xl:flex-row xl:space-y-0"
-            >
-              <button
-                v-if="shared.meta.hasEditReview && draft.status == 'submitted'"
-                type="submit"
-                class="group relative flex justify-center rounded-md border border-transparent bg-red-500 text-sm font-medium text-white hover:bg-red-500/75 hover:opacity-80 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-500/60 focus:ring-offset-2 active:opacity-80"
-                @click.prevent="reject"
-              >
-                Request Change
-              </button>
-              <button
-                v-if="shared.meta.hasEditReview && draft.status === 'started'"
-                type="submit"
-                class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                @click.prevent="submit"
-              >
-                Submit
-              </button>
-
-              <!-- class="inline-flex w-full items-center justify-center rounded-md border-2 border-accent-one bg-transparent px-3 py-2 text-sm font-medium leading-5 text-accent-one hover:opacity-80 hover:shadow-md active:opacity-80" -->
-              <button
-                type="submit"
-                class="inline-flex w-full items-center justify-center rounded-full border-2 border-accent-orange bg-transparent px-3 py-2 text-sm font-medium leading-5 text-accent-orange hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                @click.prevent="deleteDraft"
-              >
-                Delete Draft
-              </button>
-
-              <button
-                v-if="showPublishButton"
-                :disabled="widgets.isDirty"
-                type="submit"
-                class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                :class="{
-                  'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
-                    widgets.isDirty,
-                }"
-                @click.prevent="publish"
-              >
-                Publish
-              </button>
-            </div>
-          </div>
-          <FlutterPreview
-            v-if="shared.meta.hasAppPreview"
-            :bundle="bundle"
-            class="mt-2"
-          />
+          <section v-if="showMetaBox">
+            <MetaBox
+              :created-at="props.draft.createdAt"
+              :updated-at="props.draft.updatedAt"
+              :story-type="props.meta.storyType"
+              :chapter-type="metaChapter"
+              :published-when="published_when"
+              @close="showMetaBox = false"
+            />
+          </section>
+          <section v-if="showAppPreview">
+            <FlutterPreview
+              v-if="shared.meta.hasAppPreview"
+              :bundle="bundle"
+              class="mt-2"
+            />
+          </section>
           <div
             v-if="feedbackPanel.message"
             class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
@@ -117,6 +68,8 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
+import HeaderControls from '../Shared/HeaderControls.vue';
+import MetaBox from '../Shared/MetaBox.vue';
 import { router } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
@@ -145,12 +98,6 @@ let isSettingErrors = false;
 const feedbackPanel = ref<FeedbackPanel>({
   message: '',
   icon: null,
-});
-
-const showPublishButton = computed(() => {
-  if (props.user.role !== 'admin') return false;
-
-  return !shared.meta.hasEditReview || props.draft.status === 'submitted';
 });
 
 type postType = { feedback: string | undefined; bundle: any };
@@ -221,6 +168,16 @@ const reject = () => {
   router.post(`/draft/${props.draft.id}/reject`, getPayload());
 };
 
+const showMetaBox = ref(false);
+const showAppPreview = ref(false);
+
+const info = () => {
+  showMetaBox.value = !showMetaBox.value;
+};
+
+const appPreview = () => {
+  showAppPreview.value = !showAppPreview.value;
+};
 const published_when = computed(() => {
   return props.lastPublished == '' ? 'Unpublished' : formatDate(props.lastPublished);
 });
