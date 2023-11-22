@@ -5,9 +5,25 @@
       <div class="flex space-x-6">
         <button
           type="submit"
-          class="min-w-32 rounded-[38px] border-gray-200 bg-white px-[15px] py-[9px] text-sm/5 font-medium text-gray-600 shadow"
+          class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
         >
-          App Preview
+          <Icon name="info" class="h-auto w-6 text-gray-500" />
+        </button>
+        <button
+          type="submit"
+          class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
+        >
+          <Icon name="mobile" class="h-auto w-6 text-gray-500" />
+        </button>
+        <button
+          type="submit"
+          class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
+          @click="emit('delete')"
+        >
+          <Icon
+            name="trash"
+            class="flex h-auto w-6 items-center justify-center text-gray-500"
+          />
         </button>
         <button
           v-if="shared.meta.hasEditReview && drafts.draft.status == 'submitted'"
@@ -25,13 +41,7 @@
         >
           Submit
         </button>
-        <button
-          type="submit"
-          class="min-w-32 rounded-[38px] border border-yellow-500 bg-white px-[15px] py-[9px] text-sm/5 font-medium text-yellow-600 shadow"
-          @click="emit('delete')"
-        >
-          Delete Draft
-        </button>
+
         <button
           v-if="showPublishButton"
           type="submit"
