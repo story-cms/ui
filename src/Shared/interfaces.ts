@@ -197,10 +197,15 @@ export interface PageEditProps {
   bundle: any; // model
   providers: Providers; // widgets
 }
+export enum AddStatus {
+  Full,
+  Add,
+  Wait,
+}
 
 export interface DashboardProps {
   index: IndexReadyItem[];
-  isComplete: boolean;
+  addStatus: AddStatus;
 }
 
 export interface ChapterMeta {
