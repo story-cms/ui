@@ -6,6 +6,7 @@
         <button
           type="submit"
           class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
+          @click.prevent="emit('info')"
         >
           <Icon name="info" class="h-auto w-6 text-gray-500" />
         </button>
@@ -85,7 +86,7 @@ import Icon from './Icon.vue';
 import { computed } from 'vue';
 import { useSharedStore, useDraftsStore, useModelStore, useWidgetsStore } from '../store';
 
-const emit = defineEmits(['delete', 'publish', 'request-change', 'submit']);
+const emit = defineEmits(['delete', 'publish', 'request-change', 'submit', 'info']);
 
 const shared = useSharedStore();
 const drafts = useDraftsStore();

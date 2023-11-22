@@ -7,6 +7,7 @@
         @publish="emit('publish')"
         @request-change="emit('request-change')"
         @submit="emit('submit')"
+        @info="emit('info')"
       />
     </div>
     <div class="mx-2 overflow-x-auto">
@@ -31,7 +32,7 @@ import HeaderBar from './HeaderBar.vue';
 import ChapterHeader from './ChapterHeader.vue';
 import { useDraftsStore } from '../store';
 
-const emit = defineEmits(['delete', 'publish', 'request-change', 'submit']);
+const emit = defineEmits(['delete', 'publish', 'request-change', 'submit', 'info']);
 const drafts = useDraftsStore();
 
 const translationNavigationComponent = ref<typeof HeaderBar | null>(null);
