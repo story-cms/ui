@@ -1,33 +1,32 @@
 <template>
-  <ul class="my-8 space-y-8 bg-transparent">
-    <li v-for="(_listItem, index) in listItems" :key="index">
+  <div
+    v-for="(_listItem, index) in listItems"
+    :key="index"
+    class="my-8 grid space-y-8 bg-transparent"
+  >
+    <div class="ml-8 space-y-6 rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow">
       <div
-        class="relative ml-8 space-y-[24px] rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow"
+        v-if="canMutate"
+        class="absolute right-0 mr-3 cursor-pointer text-gray-500"
+        @click="emit('removeSet', index)"
       >
-        <div
-          v-if="canMutate"
-          class="absolute right-0 mr-3 cursor-pointer text-gray-500"
-          @click="emit('removeSet', index)"
-        >
-          <Icon name="trash" class="h-10 w-10" />
-        </div>
-        <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`">
-          <component
-            :is="store.picker(item.widget)"
-            :field="item"
-            :is-read-only="props.isReadOnly"
-            :root-path="`${fieldPath}.${index.toString()}`"
-            :is-nested="true"
-          />
-        </div>
+        <Icon name="trash" class="h-10 w-10" />
       </div>
-    </li>
-    <div v-if="canMutate" class="ml-8">
-      <AddItemButton :label="field.label" @add="emit('addSet')" />
+      <div v-for="(item, i) in fields" :key="item.name + `${i.toString()}`" class="my-8">
+        <component
+          :is="store.picker(item.widget)"
+          :field="item"
+          :is-read-only="props.isReadOnly"
+          :root-path="`${fieldPath}.${index.toString()}`"
+          :is-nested="true"
+        />
+      </div>
     </div>
-  </ul>
+  </div>
+  <div v-if="canMutate" class="ml-8 mt-8">
+    <AddItemButton :label="field.label" @add="emit('addSet')" />
+  </div>
 </template>
-
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
 import type { FieldSpec } from '../../Shared/interfaces';

@@ -7,14 +7,24 @@
   >
     <section class="row-subgrid">
       <form class="row-subgrid gap-y-8">
-        <div v-for="(item, index) in spec.fields" :key="index" class="grid">
+        <div
+          v-for="(item, index) in spec.fields"
+          :key="index"
+          class="grid grid-rows-[subgrid]"
+          :style="{ gridRow: `span ${spec.fields.length}` }"
+        >
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>
       </form>
     </section>
     <section class="row-subgrid" :class="drafts.isSingleColumn ? 'hidden' : ''">
       <div class="row-subgrid gap-y-8">
-        <div v-for="(item, index) in spec.fields" :key="index" class="grid">
+        <div
+          v-for="(item, index) in spec.fields"
+          :key="index"
+          class="grid grid-rows-[subgrid]"
+          :style="{ gridRow: `span ${spec.fields.length}` }"
+        >
           <component
             :is="widgetFor(index)"
             :field="item"

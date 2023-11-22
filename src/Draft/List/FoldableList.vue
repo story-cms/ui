@@ -1,103 +1,84 @@
 <template>
-  <div class="row-subgrid my-8 space-y-8 bg-transparent">
-    <div
-      v-for="(_listItem, index) in listItems"
-      :key="index"
-      class="row-subgrid relative"
+  <ul v-for="(_listItem, index) in listItems" :key="index">
+    <li
+      class="relative mb-8 ml-3 border-gray-300 bg-transparent pl-3 pt-10"
+      :class="{
+        'border-l': isExpanded(index) && !isReadOnly,
+        'border-t': !isReadOnly && (!shared.isTranslation || drafts.isSingleColumn),
+      }"
     >
       <div
-        v-if="!isReadOnly"
-        class="absolute left-4 top-0 -z-0 h-full border-l border-gray-300"
+        v-if="shared.isTranslation && !drafts.isSingleColumn"
+        class="absolute left-0 right-0 top-0 w-[calc(100vw_-_1.5rem)] border-t border-gray-300"
       ></div>
-      <div>
-        <div v-if="!isReadOnly" class="relative flex justify-between">
-          <div
-            class="absolute bottom-0 left-0 right-0 top-0 flex items-center"
-            :class="drafts.isSingleColumn ? 'w-full' : 'w-screen'"
-          >
-            <span
-              class="z-0 ml-1 max-w-full border-t border-gray-300"
-              :class="drafts.isSingleColumn ? 'w-full' : 'w-[calc(100%_-_1.5rem)]'"
-            ></span>
-          </div>
-          <button
-            type="button"
-            class="z-0 ml-1 inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-            @click="toggle(index)"
-          >
-            <icon
-              v-if="isExpanded(index)"
-              name="chevron-down"
-              class="icon mr-1"
-              aria-hidden="true"
-            />
-            <icon v-else name="chevron-right" class="icon mr-1" aria-hidden="true" />
-            <span>{{ String(sectionTitle(index)) }}</span>
-          </button>
-          <div
-            v-if="itemHasError(index)"
-            class="z-0 cursor-pointer text-accent-one"
-            @click="toggle(index)"
-          >
-            <div class="rounded-full border bg-white p-2">
-              <Icon name="exclamation" class="h-10 w-10 text-red-500" />
-            </div>
-          </div>
-          <div
-            v-if="canMutate"
-            class="z-10 cursor-pointer text-gray-500"
-            @click="emit('removeSet', index)"
-          >
-            <div v-if="!isReadOnly" class="rounded-full border bg-white p-2">
-              <Icon name="trash" class="h-10 w-10" />
-            </div>
-          </div>
-        </div>
-      </div>
       <div
-        class="row-subgrid relative"
-        :class="{
-          'mt-8': isReadOnly,
-        }"
+        v-if="!isReadOnly"
+        class="absolute -left-5 -top-5 right-0 flex items-center justify-between"
       >
-        <div v-if="isExpanded(index) && !isReadOnly" class="absolute bottom-0 left-1.5">
-          <button
-            type="button"
-            class="cursor-pointer rounded bg-white px-1.5 py-2 shadow-sm"
-            @click="toggle(index)"
-          >
-            <Icon name="chevron-up-down" class="h-3.5 w-3.5 text-gray-700" />
-          </button>
-        </div>
-
-        <div v-if="isExpanded(index)" class="row-subgrid relative ml-8">
-          <div
-            v-for="(item, i) in fields"
-            :key="item.name + `${i.toString()}`"
-            class="row-subgrid"
-          >
-            <component
-              :is="widgets.picker(item.widget)"
-              :class="{
-                'rounded border border-gray-200  bg-white drop-shadow-sm':
-                  item.widget != 'list',
-                'mt-8 rounded border border-gray-200  bg-white p-8 shadow': isIsland(
-                  item.widget,
-                ),
-              }"
-              :field="item"
-              :is-read-only="props.isReadOnly"
-              :root-path="`${fieldPath}.${index.toString()}`"
-              :is-nested="true"
-            />
+        <button
+          class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          @click.prevent="toggle(index)"
+        >
+          <icon
+            v-if="isExpanded(index)"
+            name="chevron-down"
+            class="icon mr-1"
+            aria-hidden="true"
+          />
+          <icon v-else name="chevron-right" class="icon mr-1" aria-hidden="true" />
+          <span>
+            {{ String(sectionTitle(index)) }}
+          </span>
+        </button>
+        <div
+          v-if="itemHasError(index)"
+          class="cursor-pointer text-accent-one"
+          @click.prevent="toggle(index)"
+        >
+          <div class="rounded-full border bg-white p-2">
+            <Icon name="exclamation" class="h-10 w-10 text-red-500" />
           </div>
         </div>
+        <button
+          v-if="canMutate"
+          class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-white text-gray-500"
+          @click="emit('removeSet', index)"
+        >
+          <span v-if="!isReadOnly" class="flex h-10 w-10 items-center justify-center">
+            <Icon name="trash" class="h-auto w-auto" />
+          </span>
+        </button>
       </div>
-    </div>
-
-    <div v-if="canMutate">
-      <AddItemButton :label="field.label" @add="emit('addSet')" />
-    </div>
+      <ul v-if="isExpanded(index)">
+        <li v-for="(item, i) in fields" :key="item.name + `${i.toString()}`" class="grid">
+          <component
+            :is="widgets.picker(item.widget)"
+            :class="{
+              'rounded border border-gray-200 bg-white drop-shadow-sm':
+                item.widget != 'list',
+              'mt-8 rounded border border-gray-200  bg-white p-8 shadow': isIsland(
+                item.widget,
+              ),
+            }"
+            :field="item"
+            :is-read-only="props.isReadOnly"
+            :root-path="`${fieldPath}.${index.toString()}`"
+            :is-nested="true"
+          />
+        </li>
+      </ul>
+      <button
+        v-if="isExpanded(index) && !isReadOnly"
+        type="button"
+        class="absolute -bottom-0 -left-3 cursor-pointer rounded bg-white px-1.5 py-2 shadow-sm"
+        @click="toggle(index)"
+      >
+        <Icon name="chevron-up-down" class="h-3.5 w-3.5 text-gray-700" />
+      </button>
+    </li>
+  </ul>
+  <div v-if="canMutate">
+    <AddItemButton :label="field.label" @add="emit('addSet')" />
   </div>
 </template>
 

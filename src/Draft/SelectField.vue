@@ -19,9 +19,14 @@
         :id="fieldPath"
         v-model="selection"
         name="select"
-        :disabled="props.isReadOnly"
+        :disabled="props.isReadOnly || shared.isTranslation"
         class="max-w-min rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        :class="{ 'border-red-500': hasError, 'text-gray-600': props.isReadOnly }"
+        :class="{
+          'border-red-500': hasError,
+          'text-gray-600': props.isReadOnly,
+          'appearance-none [-moz-appearance:none] [-webkit-appearance:none]':
+            props.isReadOnly || shared.isTranslation,
+        }"
         @change="update"
       >
         <option v-for="{ value, label } in field.options" :key="value" :value="value">
