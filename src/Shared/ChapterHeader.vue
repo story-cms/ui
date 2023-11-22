@@ -8,13 +8,13 @@
           class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
           @click.prevent="emit('info')"
         >
-          <Icon name="info" class="h-auto w-6 text-gray-500" />
+          <Icon name="info" class="h-auto w-6 cursor-pointer text-gray-500" />
         </button>
         <button
           type="submit"
           class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
         >
-          <Icon name="mobile" class="h-auto w-6 text-gray-500" />
+          <Icon name="mobile" class="h-auto w-6 cursor-pointer text-gray-500" />
         </button>
         <button
           type="submit"
@@ -23,7 +23,7 @@
         >
           <Icon
             name="trash"
-            class="flex h-auto w-6 items-center justify-center text-gray-500"
+            class="flex h-auto w-6 cursor-pointer items-center justify-center text-gray-500"
           />
         </button>
         <button

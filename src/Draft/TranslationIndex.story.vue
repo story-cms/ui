@@ -10,7 +10,7 @@
           chapterLimit: 21,
           fields: fields,
         }"
-        :last-published="'undefined'"
+        :last-published="'2021-10-10T14:48:00.000000Z'"
         :providers="{}"
         :errors="sharedProps.errors"
         :meta="sharedProps.meta"

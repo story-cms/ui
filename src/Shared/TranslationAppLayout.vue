@@ -12,7 +12,7 @@
     </div>
     <div class="mx-2 overflow-x-auto">
       <div
-        class="grid min-h-screen max-w-5xl gap-x-2 [&>section]:mt-2"
+        class="relative grid min-h-screen max-w-5xl gap-x-2 [&>section]:mt-2"
         :class="
           drafts.isSingleColumn
             ? 'grid-cols-1 lg:mx-auto'
