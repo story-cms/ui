@@ -1,9 +1,9 @@
 <template>
   <Listbox v-model="model" as="div">
-    <div class="relative mt-1 min-w-full">
+    <div class="relative min-w-full">
       <ListboxButton
         :disabled="isReadOnly"
-        class="relative w-32 cursor-default rounded-md border border-gray-300 py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
+        class="relative w-32 cursor-default rounded-md border border-gray-300 py-2 pl-3 pr-10 text-left text-sm text-gray-700 shadow-sm focus:outline-none focus:ring-1 sm:text-sm"
         :class="{ 'bg-gray-100': isReadOnly, 'bg-white': !isReadOnly }"
       >
         <span class="block truncate">{{ model }}</span>
@@ -12,7 +12,7 @@
         >
           <Icon
             v-if="!isReadOnly"
-            class="h-5 w-5 text-gray-400"
+            class="h-5 w-5 text-gray-700"
             aria-hidden="true"
             name="chevron-down"
           />
