@@ -157,6 +157,7 @@ export interface User {
   isManager: boolean;
   isAdmin: boolean;
   role: string;
+  language: string;
 }
 
 export interface DraftMeta {

@@ -14,6 +14,7 @@ module.exports = {
           green: '#34D399',
           orange: '#FB923C',
           gray: '#E2E8F0',
+          pink: '#EC4899'
         },
         error: colors.red['500'],
         red: colors.red,

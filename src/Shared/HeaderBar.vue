@@ -1,29 +1,43 @@
 <template>
-  <nav ref="navbar" class="flex h-24 items-center justify-between bg-white px-6">
-    <div class="flex items-center">
-      <Link href="/" class="mr-6">
-        <img :src="shared.meta.logo" alt="Logo" class="aspect-square h-16 w-auto" />
-      </Link>
-      <div class="flex items-center space-x-8 py-4">
+  <div class="flex items-center justify-between bg-white px-6 py-3">
+    <div class="flex">
+      <div class="flex items-center space-x-6">
+        <Link href="/">
+          <img :src="shared.meta.logo" alt="Logo" class="h-12 w-auto" />
+        </Link>
+        <!-- eslint-disable vue/valid-v-model -->
+        <DropDown
+          v-if="isMultiLingual"
+          v-model="(form.language as string)"
+          :options="(shared.languages.map((l) => l.language) as string[])"
+          :is-read-only="!shared.user.isManager"
+          @change="onLanguage"
+        ></DropDown>
         <ContextMenu
+          v-if="isMultiStory"
           :options="(shared.stories as string[])"
           :anchor="shared.meta.storyType"
           @select="onStory"
         ></ContextMenu>
+
         <Link
-          class="px-3 py-2 text-sm/5 font-medium text-gray-600 hover:bg-gray-100"
-          href="/page"
+          v-if="!isMultiStory"
+          class="px-2 py-3 text-sm text-gray-500 hover:text-gray-700"
+          href="/"
+          >{{ shared.meta.storyType }}s</Link
+        >
+        <Link class="px-2 py-3 text-sm text-gray-500 hover:text-gray-700" href="/page"
           >Pages</Link
         >
         <Link
           v-if="shared.user.isAdmin"
-          class="px-3 py-2 text-sm/5 font-medium text-gray-600 hover:bg-gray-100"
+          class="px-2 py-3 text-sm text-gray-500 hover:text-gray-700"
           href="/user"
           >Users</Link
         >
         <a
           v-if="shared.meta.helpUrl"
-          class="inline-block px-2 py-3 hover:text-gray-700"
+          class="inline-block px-2 py-3 text-sm text-gray-500 hover:text-gray-700"
           :href="shared.meta.helpUrl"
           target="_blank"
           rel="noopener noreferrer"
@@ -31,16 +45,16 @@
         </a>
       </div>
     </div>
-    <div class="flex items-center space-x-6">
-      <p class="text-lg/5 font-extrabold text-gray-600">{{ shared.user.name }}</p>
-      <Menu as="div" class="relative">
+    <div class="flex items-center">
+      <div class="ml-6 text-lg font-extrabold">{{ shared.user.name }}</div>
+      <Menu as="div" class="relative ml-3">
         <div>
           <MenuButton
             class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
           >
             <span class="sr-only">Open user menu</span>
             <div
-              class="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-accent p-2.5 text-2xl font-extrabold uppercase leading-8 text-white"
+              class="flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-accent-pink p-2.5 text-2xl font-extrabold leading-8 text-white"
             >
               {{ shared.user.initials }}
             </div>
@@ -73,37 +87,35 @@
         </transition>
       </Menu>
     </div>
-  </nav>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Link, useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { useSharedStore } from '../store';
-
+import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
+import { pinia, useSharedStore } from '../store';
 
-const navbar = ref<HTMLElement | null>(null);
+const shared = useSharedStore(pinia);
 
-const shared = useSharedStore();
 interface Form {
   language: string | null;
   story: string | null;
 }
 
 const form = useForm({
-  language: null,
+  language: shared.language.language,
   story: null,
 } as Form);
 
-// TODO
-// const onLanguage = async (lang: string) => {
-//   if (lang === form.language) return;
-//   form.language = lang;
-//   form.story = null;
-//   form.post(`/switch`);
-// };
+const onLanguage = async (lang: string) => {
+  if (lang === form.language) return;
+  form.language = lang;
+  form.story = null;
+  form.post(`/switch`);
+};
 
 const onStory = async (story: string) => {
   form.story = story;
@@ -111,7 +123,7 @@ const onStory = async (story: string) => {
   form.post(`/switch`);
 };
 
-defineExpose({ navbar });
-
 const signOut = () => (window.location.href = '/logout');
+const isMultiLingual = computed(() => shared.languages.length > 1);
+const isMultiStory = computed(() => shared.stories.length > 1);
 </script>
