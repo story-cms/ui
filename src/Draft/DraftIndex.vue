@@ -33,8 +33,9 @@
               @close="showMetaBox = false"
             />
           </section>
-          <section v-if="showAppPreview">
-            <FlutterPreview
+          <section v-if="showAppPreview" class="mt-6">
+            <p class="text-center font-['Inter'] text-lg/7 font-medium">Draft Preview</p>
+            <MobileAppPreview
               v-if="shared.meta.hasAppPreview"
               :bundle="bundle"
               class="mt-2"
@@ -75,7 +76,7 @@ import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
 import { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
 import { useDraftsStore, useModelStore, useSharedStore, useWidgetsStore } from '../store';
-import FlutterPreview from './FlutterPreview.vue';
+import MobileAppPreview from './MobileAppPreview.vue';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
 
