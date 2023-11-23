@@ -54,14 +54,9 @@
         </button>
       </div>
       <div v-if="isReadOnly">
-        <button
-          type="button"
-          class="mr-1  p-1"
-          disabled
-        >
+        <button type="button" class="mr-1 p-1" disabled>
           <Icon name="indent" class="text-white" />
         </button>
-        
       </div>
       <textarea
         ref="thetextarea"
@@ -128,7 +123,10 @@ const verse = ref(startValue.verse);
 const isBusy = ref(false);
 
 const lookup = () => {
-  if (verse.value && !shared.isTranslation) return;
+  // never overwrite any existing verse values
+  const notEmpty = !!verse.value?.trim().length;
+  if (notEmpty) return;
+
   isBusy.value = true;
   setScripture(reference.value).then(() => {
     isBusy.value = false;
@@ -178,11 +176,14 @@ model.$subscribe(() => {
 const referenceHasError = computed(
   () => `bundle.${fieldPath.value}.reference` in shared.errors && !props.isReadOnly,
 );
-const verseHasError = computed(() => `bundle.${fieldPath.value}.verse` in shared.errors  && !props.isReadOnly);
+
+const verseHasError = computed(
+  () => `bundle.${fieldPath.value}.verse` in shared.errors && !props.isReadOnly,
+);
 
 const lookupTranslatedScripture = () => {
   if (reference.value != '') return;
-  if(props.isReadOnly) return;
+  if (props.isReadOnly) return;
   const sourceValue = model.getSourceField(fieldPath.value, {
     reference: '',
     verse: '',
