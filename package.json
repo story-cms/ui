@@ -1,6 +1,6 @@
 {
   "name": "@story-cms/ui",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Components for the StoryCMS user interface",
   "repository": "https://github.com/story-cms/ui",
   "bugs": "https://github.com/story-cms/ui/issues",

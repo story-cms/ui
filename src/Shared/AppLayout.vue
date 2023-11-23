@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-app_gray min-h-screen">
-    <NavigationBar />
+  <div class="min-h-screen bg-app_gray">
+    <HeaderBar />
     <div class="container mx-auto p-3">
       <slot></slot>
     </div>
@@ -8,5 +8,5 @@
 </template>
 
 <script setup lang="ts">
-import NavigationBar from './NavigationBar.vue';
+import HeaderBar from './HeaderBar.vue';
 </script>

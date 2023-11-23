@@ -192,11 +192,16 @@ export interface PageMeta {
   updatedAt: string;
 }
 
+export interface PageIndexProps {
+  pages: PageItem[];
+}
+
 export interface PageEditProps {
   page: PageMeta;
   bundle: any; // model
   providers: Providers; // widgets
 }
+
 export enum AddStatus {
   Full,
   Add,

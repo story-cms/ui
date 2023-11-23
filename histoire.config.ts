@@ -28,6 +28,10 @@ export default defineConfig({
         title: 'Drafts',
       },
       {
+        id: 'users',
+        title: 'Users',
+      },
+      {
         id: 'shared',
         title: 'Shared Widgets',
       },
