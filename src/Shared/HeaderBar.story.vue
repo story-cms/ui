@@ -39,9 +39,6 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const shared = useSharedStore();
 
   shared.setFromProps(sharedProps);
-  // shared.meta.logo =
-  //   'https://res.cloudinary.com/theword121/image/upload/v1687245360/episodes/viseg2hegowcrapio6pt.svg';
-  // shared.meta.name = 'CMS UI';
 
   if (variant?.title == 'SingleStory SingleLanguage Editor') {
     shared.meta = meta;
@@ -119,7 +116,6 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
-  // %%%%%%%%%%%%%%%%
 
   if (variant?.title == 'MultiStory SingleLanguage Admin') {
     shared.meta = meta;
