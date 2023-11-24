@@ -1,7 +1,7 @@
 <template>
   <AppLayout class="bg-gray-50">
     <div class="flex max-w-[1068px] items-center justify-between p-6 lg:mx-auto">
-      <h2 class="text-2xl/8 font-semibold">Page Title {{ windowWidth }}</h2>
+      <h2 class="text-2xl/8 font-semibold">Page Title</h2>
       <div class="flex items-center justify-center space-x-6">
         <HeaderControls @delete="save" @info="info" />
         <BooleanField
