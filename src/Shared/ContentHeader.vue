@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto flex items-center justify-between py-6">
-    <h3 class="mb-[14px] text-lg font-bold leading-7 text-black">
+    <h3 class="font-['Inter'] text-lg font-bold leading-7 text-gray-800">
       {{ title }}
     </h3>
     <div class="flex items-center space-x-6">
