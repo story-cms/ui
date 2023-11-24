@@ -29,12 +29,10 @@
 
 <script setup lang="ts">
 import HeaderBar from './HeaderBar.vue';
-import { LanguageSpecification } from 'src/Shared/interfaces';
 import { useSharedStore } from '../store';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { sharedProps, meta } from '../helpers/mocks';
 
-import { useForm } from '@inertiajs/vue3';
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const shared = useSharedStore();
 
@@ -138,20 +136,5 @@ const loadData: Vue3StorySetupHandler = ({ variant }) => {
     shared.user.role = 'admin';
     shared.user.language = '*';
   }
-
-  interface Form {
-    language: string | null;
-    story: string | null;
-  }
-
-  const form = useForm({
-    language: shared.language.language,
-    story: null,
-  } as Form);
-};
-const language: LanguageSpecification = {
-  locale: 'es',
-  language: 'Espanol',
-  languageDirection: 'ltr',
 };
 </script>

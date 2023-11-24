@@ -1,5 +1,6 @@
 <template>
   <TranslationAppLayout
+    :chapter-title="chapterTitle"
     @delete="deleteDraft"
     @submit="submitDraft"
     @publish="publishDraft"
@@ -71,6 +72,11 @@ const widgets = useWidgetsStore();
 widgets.setProviders(props.providers);
 const shared = useSharedStore();
 const model = useModelStore();
+
+const defaultTitle = computed(() => {
+  return `New ${props.meta.chapterType}`;
+});
+const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
@@ -177,6 +183,7 @@ onMounted(() => {
       return;
     }
     widgets.setIsDirty(true);
+    chapterTitle.value = model.getField('title', '') || defaultTitle.value;
     saveDraft();
   });
 });

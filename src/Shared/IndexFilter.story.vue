@@ -75,7 +75,6 @@ const filteredItems = computed(() => {
 const currentTab = ref('All');
 
 const changeTab = (tab: string) => {
-  console.log(tab);
   currentTab.value = tab;
 };
 

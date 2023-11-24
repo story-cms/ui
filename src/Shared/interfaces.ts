@@ -192,6 +192,14 @@ export interface PageMeta {
   updatedAt: string;
 }
 
+export interface PageBundle {
+  group: number;
+  title: string;
+  icon: string;
+  description: string;
+  body: string;
+}
+
 export interface PageIndexProps {
   pages: PageItem[];
 }
@@ -203,8 +211,11 @@ export interface PageEditProps {
 }
 
 export enum AddStatus {
+  // eslint-disable-next-line
   Full,
+  // eslint-disable-next-line
   Add,
+  // eslint-disable-next-line
   Wait,
 }
 

@@ -1,9 +1,7 @@
 <template>
   <AppLayout class="bg-gray-50">
     <div class="flex max-w-[1068px] items-center justify-between p-6 lg:mx-auto">
-      <h2 class="text-2xl/8 font-semibold">Page Title</h2>
-      <div class="flex items-center justify-center space-x-6">
-        <HeaderControls @delete="save" @info="info" />
+      <ContentHeader :title="title" @delete="deletePage" @info="info">
         <BooleanField
           :field="{
             name: 'isPublished',
@@ -15,7 +13,7 @@
           }"
           :is-nested="true"
         />
-      </div>
+      </ContentHeader>
     </div>
     <div
       class="relative max-w-[1068px] px-6 pt-2 lg:mx-auto lg:grid lg:grid-cols-[1fr,_416px] lg:gap-x-6"
@@ -111,7 +109,7 @@
           :created-at="page.createdAt"
           :saved-at="savedAt"
           :updated-at="page.updatedAt"
-          :published-at="published"
+          :published-at="publishedAt"
         />
       </div>
     </div>
@@ -127,7 +125,7 @@ import { SharedPageProps, PageEditProps } from '../Shared/interfaces';
 import SelectField from '../Draft/SelectField.vue';
 import MarkdownField from '../Draft/MarkdownField.vue';
 import PageMetaBox from './PageMetaBox.vue';
-import HeaderControls from '../Shared/HeaderControls.vue';
+import ContentHeader from '../Shared/ContentHeader.vue';
 import BooleanField from '../Draft/BooleanField.vue';
 
 import { formatDate, debounce } from '../Shared/helpers';
@@ -136,7 +134,6 @@ import { router } from '@inertiajs/vue3';
 import { DateTime } from 'luxon';
 
 const props = defineProps<PageEditProps & SharedPageProps>();
-const published = 'unpublished';
 
 type RequestPayload = {
   title: string;
@@ -166,7 +163,13 @@ const getPayload = (): RequestPayload => {
 let isSettingErrors = false;
 
 const selection = ref(model.getField('type', 'comment'));
+const title = ref(model.getField('title', 'Page'));
+const isPublished = ref(Boolean(model.getField('isPublished', false)));
+
 const savedAt = ref(formatDate(page.value['updatedAt']));
+const publishedAt = computed(() =>
+  isPublished.value ? (page.value['updatedAt'] as string) : 'unpublished',
+);
 
 const isLink = computed((): boolean => selection.value === 'link');
 
@@ -191,9 +194,10 @@ const save = debounce(1000, () => {
   });
 });
 
-// const deletePage = () => {
-//   router.delete(`/page/${props.page.id}`, {});
-// };
+const deletePage = () => {
+  router.delete(`/page/${props.page.id}`, {});
+};
+
 const showMetaBox = ref(false);
 const isLargeScreen = ref(false);
 
@@ -220,6 +224,8 @@ onMounted(() => {
 
     save();
     selection.value = model.getField('type', 'comment');
+    title.value = model.getField('title', 'Page');
+    isPublished.value = Boolean(model.getField('isPublished', false));
   });
 
   window.addEventListener('resize', handleResize);

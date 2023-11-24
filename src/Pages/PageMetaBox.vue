@@ -10,11 +10,12 @@
     </section>
     <section class="grid grid-cols-2">
       <p>Published</p>
-      <span class="text-right font-bold uppercase">{{ props.publishedAt }}</span>
+      <span class="text-right font-bold">{{ publishedAtLabel }}</span>
     </section>
   </div>
 </template>
 <script setup lang="ts">
+import { computed } from 'vue';
 import { PageMeta } from '../Shared/interfaces';
 import { formatDate } from '../Shared/helpers';
 
@@ -24,4 +25,8 @@ const props = defineProps<
     publishedAt: string;
   }
 >();
+const publishedAtLabel = computed(() => {
+  if (props.publishedAt === 'unpublished') return 'UNPUBLISHED';
+  return formatDate(props.publishedAt);
+});
 </script>

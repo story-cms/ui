@@ -1,6 +1,6 @@
 <template>
   <Story title="Meta Box" group="shared">
-    <Variant title="Default" class="mt-4">
+    <Variant title="Default">
       <MetaBox
         :created-at="meta.createdAt"
         :updated-at="meta.updatedAt"

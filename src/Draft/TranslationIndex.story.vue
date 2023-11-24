@@ -62,7 +62,7 @@ const source = {
 const draft = {
   id: 1,
   number: 1,
-  status: 'draft',
+  status: 'submitted',
   updatedAt: '2021-08-10T14:48:00.000000Z',
   createdAt: '2021-08-10T14:48:00.000000Z',
 };

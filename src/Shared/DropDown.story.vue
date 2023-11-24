@@ -18,6 +18,5 @@ const model = ref('Edit');
 
 const onSet = async (val: string) => {
   model.value = val;
-  console.log(model.value);
 };
 </script>
