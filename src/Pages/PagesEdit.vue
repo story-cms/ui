@@ -211,6 +211,7 @@ const handleResize = () => {
 };
 
 const info = () => {
+  if (isLargeScreen.value) return;
   showMetaBox.value = !showMetaBox.value;
 };
 
