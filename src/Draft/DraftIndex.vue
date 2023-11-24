@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="container mx-auto flex items-center justify-between p-6">
+    <div class="container mx-auto flex items-center justify-between py-6">
       <h3 class="mb-[14px] text-lg font-bold leading-7 text-black">
         {{ chapterTitle }}
       </h3>
