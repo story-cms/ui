@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="flex items-center justify-between p-6">
+    <div class="container mx-auto flex items-center justify-between p-6">
       <h3 class="mb-[14px] text-lg font-bold leading-7 text-black">
         {{ chapterTitle }}
       </h3>
@@ -13,7 +13,7 @@
         @app-preview="appPreview"
       />
     </div>
-    <div class="mb-32 px-4 pb-4">
+    <div class="container mx-auto mb-32 pb-4">
       <div class="flex justify-between space-x-8">
         <div class="w-max flex-grow overflow-hidden rounded-sm lg:max-w-[800px]">
           <form class="space-y-8">

@@ -1,9 +1,8 @@
 <template>
-  <div class="bg-app_gray min-h-screen">
+  <div class="min-h-screen bg-app_gray">
     <NavigationBar />
-    <div class="container mx-auto p-3">
-      <slot></slot>
-    </div>
+
+    <slot></slot>
   </div>
 </template>
 
