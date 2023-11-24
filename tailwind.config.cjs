@@ -14,6 +14,7 @@ module.exports = {
           green: '#34D399',
           orange: '#FB923C',
           gray: '#E2E8F0',
+          pink: '#EC4899'
         },
         error: colors.red['500'],
         red: colors.red,
@@ -30,6 +31,7 @@ module.exports = {
         yellow: colors.yellow,
         indigo: colors.indigo,
         app_gray: '#F9FAFB',
+        app_green: '#16A34A',
       },
     },
   },

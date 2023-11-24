@@ -12,7 +12,19 @@
           class="block w-24 rounded-md border border-gray-300 px-3 py-1 text-sm font-normal leading-5 text-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           :placeholder="meta.chapterType"
         />
-        <AddItemButton v-if="!isComplete" :label="meta.chapterType" @add="addDraft" />
+        <AddItemButton
+          v-if="addStatus == AddStatus.Add"
+          :label="meta.chapterType"
+          @add="addDraft"
+        />
+        <button
+          v-if="addStatus == AddStatus.Wait"
+          type="button"
+          class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-indigo-700 shadow-sm"
+          disabled
+        >
+          {{ `No more ${meta.chapterType}s available to translate` }}
+        </button>
       </div>
       <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
     </div>
@@ -41,7 +53,12 @@ import Icon from '../Shared/Icon.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import IndexFilter from '../Shared/IndexFilter.vue';
 import IndexCard from '../Chapters/IndexCard.vue';
-import { IndexReadyItem, SharedPageProps, DashboardProps } from '../Shared/interfaces';
+import {
+  IndexReadyItem,
+  SharedPageProps,
+  DashboardProps,
+  AddStatus,
+} from '../Shared/interfaces';
 import { useSharedStore } from '../store';
 
 const props = defineProps<DashboardProps & SharedPageProps>();

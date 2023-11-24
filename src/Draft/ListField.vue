@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onBeforeMount } from 'vue';
+import { ref, computed } from 'vue';
 import { commonProps } from '../Shared/helpers';
 import type { FieldSpec } from '../Shared/interfaces';
 import FlatList from './List/FlatList.vue';
 import FoldableList from './List/FoldableList.vue';
-import { useModelStore, useWidgetsStore, useSharedStore } from '../store';
+import { useModelStore } from '../store';
 
 const props = defineProps({
   ...commonProps,
@@ -38,8 +38,6 @@ const fieldPath = computed((): string => {
 });
 
 const model = useModelStore();
-const widgets = useWidgetsStore();
-const shared = useSharedStore();
 
 const addSet = () => {
   model.addListItem(fieldPath.value);
@@ -58,10 +56,5 @@ model.$subscribe(() => {
 
   const fresh = model.getField(fieldPath.value, []) as any[];
   listItems.value = fresh;
-});
-onBeforeMount(() => {
-  if (props.isReadOnly && props.field?.canFold && shared.isTranslation) {
-    widgets.setSizeOfItems(listItems.value);
-  }
 });
 </script>

@@ -386,12 +386,6 @@ export const scriptureInListError = {
   'bundle.scriptures.0.scripture': ['required validation failed'],
 };
 
-export const spanish: LanguageSpecification = {
-  locale: 'es',
-  language: 'Espanol',
-  languageDirection: 'ltr',
-};
-
 export const meta: Meta = {
   name: 'The Word One to One',
   storyType: 'Book',
@@ -410,6 +404,7 @@ export const user = {
   isManager: true,
   isAdmin: true,
   role: 'admin',
+  language: 'en',
 };
 
 export const stories = ['John', 'Acts'];
@@ -473,21 +468,23 @@ export const story = {
     },
   ],
 };
-
-const languages: LanguageSpecification[] = [
-  {
-    locale: 'en',
-    language: 'English',
-    languageDirection: 'ltr',
-  },
-  spanish,
-];
+export const spanish: LanguageSpecification = {
+  locale: 'es',
+  language: 'Espanol',
+  languageDirection: 'ltr',
+};
+export const english: LanguageSpecification = {
+  locale: 'en',
+  language: 'English',
+  languageDirection: 'ltr',
+};
+const languages: LanguageSpecification[] = [english, spanish];
 
 export const sharedProps: SharedPageProps = {
   stories,
   meta,
   user,
-  language: spanish,
+  language: english,
   languages,
   errors: {},
 };

@@ -21,6 +21,7 @@
     </Variant>
   </Story>
 </template>
+
 <script setup lang="ts">
 import DraftIndex from './DraftIndex.vue';
 import { listInListSpec, sharedProps } from '../helpers/mocks';

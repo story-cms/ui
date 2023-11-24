@@ -157,6 +157,7 @@ export interface User {
   isManager: boolean;
   isAdmin: boolean;
   role: string;
+  language: string;
 }
 
 export interface DraftMeta {
@@ -191,15 +192,25 @@ export interface PageMeta {
   updatedAt: string;
 }
 
+export interface PageIndexProps {
+  pages: PageItem[];
+}
+
 export interface PageEditProps {
   page: PageMeta;
   bundle: any; // model
   providers: Providers; // widgets
 }
 
+export enum AddStatus {
+  Full,
+  Add,
+  Wait,
+}
+
 export interface DashboardProps {
   index: IndexReadyItem[];
-  isComplete: boolean;
+  addStatus: AddStatus;
 }
 
 export interface ChapterMeta {
