@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="mb-32 p-4">
+    <div class="container mx-auto mb-32 p-4">
       <div class="flex justify-between space-x-8">
         <!-- eslint-disable vue/no-v-html -->
         <div

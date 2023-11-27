@@ -1,145 +1,135 @@
 <template>
   <AppLayout>
-    <div class="p-4">
-      <div class="flex justify-between space-x-8">
-        <div class="w-max flex-grow overflow-hidden rounded-sm lg:max-w-[800px]">
-          <form class="space-y-8 bg-white py-4">
-            <StringField
-              :field="{
-                name: 'title',
-                label: 'Title',
-                widget: 'string',
-              }"
-              :is-nested="true"
-              class="px-8"
-            />
-            <ImageField
-              :field="{
-                label: 'Menu Icon',
-                name: 'icon',
-                widget: 'image',
-                uploadPreset: 'menuicon',
-                description: 'Square svg to 5MB',
-                extensions: ['.svg'],
-                maxSize: 5662310,
-              }"
-              :is-nested="true"
-              class="px-8"
-            />
-            <StringField
-              :field="{
-                name: 'description',
-                label: 'Short Description',
-                widget: 'string',
-              }"
-              :is-nested="true"
-              class="px-8"
-            />
-            <SelectField
-              :field="{
-                label: 'Page Type',
-                name: 'type',
-                widget: 'select',
-                options: [
-                  { label: 'Text', value: 'text' },
-                  { label: 'Link', value: 'link' },
-                ],
-                default: 'text',
-              }"
-              :is-nested="true"
-              class="px-8"
-            />
-            <StringField
-              v-if="isLink"
-              :field="{
-                name: 'body',
-                label: 'External Link',
-                widget: 'string',
-              }"
-              :is-nested="true"
-              class="px-8"
-            />
-            <MarkdownField
-              v-else
-              :field="{
-                name: 'body',
-                label: 'Body',
-                widget: 'markdown',
-                toolbar: [
-                  'heading',
-                  'bold',
-                  'italic',
-                  'link',
-                  'ordered-list',
-                  'unordered-list',
-                  'quote',
-                  'link',
-                  '|',
-                  'undo',
-                  'redo',
-                ],
-              }"
-              :is-nested="true"
-              class="px-8"
-            />
-          </form>
-        </div>
-        <div class="sticky top-0 h-full w-[416px]">
-          <div
-            class="space-y-5 rounded-md border border-gray-200 bg-slate-200 p-8 shadow-sm"
-          >
-            <div class="space-y-8 text-[18px] font-medium leading-7 text-gray-600">
-              <div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Created</p>
-                  <span class="text-right">{{
-                    formatDate(props.page['createdAt'])
-                  }}</span>
-                </div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Auto-saved</p>
-                  <span class="text-right">{{ savedAt }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="flex items-center justify-between">
-              <button
-                type="submit"
-                class="inline-flex w-1/3 items-center justify-center rounded-full border-2 border-accent-one bg-transparent px-3 py-2 text-sm font-medium leading-5 text-accent-one shadow hover:opacity-80 hover:shadow-md active:opacity-80"
-                @click.prevent="deletePage"
-              >
-                Delete
-              </button>
-              <div>
-                <BooleanField
-                  :field="{
-                    name: 'isPublished',
-                    label: 'Published',
-                    widget: 'boolean',
-                    default: false,
-                    tintColor: 'green-400',
-                    labelOrder: 'start',
-                  }"
-                  :is-nested="true"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+    <div
+      class="container mx-auto flex max-w-[1068px] items-center justify-between p-6 lg:mx-auto"
+    >
+      <ContentHeader :title="title" @delete="deletePage" @info="info">
+        <BooleanField
+          :field="{
+            name: 'isPublished',
+            label: 'Published',
+            widget: 'boolean',
+            default: false,
+            tintColor: 'green-400',
+            labelOrder: 'start',
+          }"
+          :is-nested="true"
+        />
+      </ContentHeader>
+    </div>
+    <div
+      class="relative max-w-[1068px] px-6 pt-2 lg:mx-auto lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-6"
+    >
+      <form class="space-y-8 bg-white py-4">
+        <StringField
+          :field="{
+            name: 'title',
+            label: 'Title',
+            widget: 'string',
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
+        <ImageField
+          :field="{
+            label: 'Menu Icon',
+            name: 'icon',
+            widget: 'image',
+            uploadPreset: 'menuicon',
+            description: 'Square svg to 5MB',
+            extensions: ['.svg'],
+            maxSize: 5662310,
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
+        <StringField
+          :field="{
+            name: 'description',
+            label: 'Short Description',
+            widget: 'string',
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
+        <SelectField
+          :field="{
+            label: 'Page Type',
+            name: 'type',
+            widget: 'select',
+            options: [
+              { label: 'Text', value: 'text' },
+              { label: 'Link', value: 'link' },
+            ],
+            default: 'text',
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
+        <StringField
+          v-if="isLink"
+          :field="{
+            name: 'body',
+            label: 'External Link',
+            widget: 'string',
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
+        <MarkdownField
+          v-else
+          :field="{
+            name: 'body',
+            label: 'Body',
+            widget: 'markdown',
+            toolbar: [
+              'heading',
+              'bold',
+              'italic',
+              'link',
+              'ordered-list',
+              'unordered-list',
+              'quote',
+              'link',
+              '|',
+              'undo',
+              'redo',
+            ],
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
+      </form>
+
+      <div
+        :class="{
+          'absolute right-2 top-2': showMetaBox,
+          'sticky top-0 hidden h-full lg:block': isLargeScreen,
+        }"
+      >
+        <PageMetaBox
+          :created-at="page.createdAt"
+          :saved-at="savedAt"
+          :updated-at="page.updatedAt"
+          :published-at="publishedAt"
+        />
       </div>
     </div>
   </AppLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, toRefs } from 'vue';
+import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
 import { SharedPageProps, PageEditProps } from '../Shared/interfaces';
 import SelectField from '../Draft/SelectField.vue';
 import MarkdownField from '../Draft/MarkdownField.vue';
+import PageMetaBox from './PageMetaBox.vue';
+import ContentHeader from '../Shared/ContentHeader.vue';
 import BooleanField from '../Draft/BooleanField.vue';
+
 import { formatDate, debounce } from '../Shared/helpers';
 import { useModelStore, useSharedStore, useWidgetsStore } from '../store';
 import { router } from '@inertiajs/vue3';
@@ -175,7 +165,13 @@ const getPayload = (): RequestPayload => {
 let isSettingErrors = false;
 
 const selection = ref(model.getField('type', 'comment'));
+const title = ref(model.getField('title', 'Page'));
+const isPublished = ref(Boolean(model.getField('isPublished', false)));
+
 const savedAt = ref(formatDate(page.value['updatedAt']));
+const publishedAt = computed(() =>
+  isPublished.value ? (page.value['updatedAt'] as string) : 'unpublished',
+);
 
 const isLink = computed((): boolean => selection.value === 'link');
 
@@ -204,6 +200,23 @@ const deletePage = () => {
   router.delete(`/page/${props.page.id}`, {});
 };
 
+const showMetaBox = ref(false);
+const isLargeScreen = ref(false);
+
+const windowWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+  windowWidth.value = window.innerWidth;
+  windowWidth.value >= 1024
+    ? (isLargeScreen.value = true)
+    : (isLargeScreen.value = false);
+};
+
+const info = () => {
+  if (isLargeScreen.value) return;
+  showMetaBox.value = !showMetaBox.value;
+};
+
 onMounted(() => {
   model.$subscribe(() => {
     // prevent infinite loop
@@ -214,6 +227,14 @@ onMounted(() => {
 
     save();
     selection.value = model.getField('type', 'comment');
+    title.value = model.getField('title', 'Page');
+    isPublished.value = Boolean(model.getField('isPublished', false));
   });
+
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
 });
 </script>

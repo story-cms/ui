@@ -1,9 +1,7 @@
 <template>
   <div class="min-h-screen bg-app_gray">
     <HeaderBar />
-    <div class="container mx-auto p-3">
-      <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 

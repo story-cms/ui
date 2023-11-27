@@ -1,47 +1,64 @@
 <template>
-  <div class="sticky top-0 h-full w-[416px]">
-    <div
-      class="space-y-5 rounded-md border border-accent-gray bg-accent-gray p-8 shadow-sm"
+  <div
+    class="relative max-w-[416px] bg-gray-200 p-9 font-['Inter'] text-gray-600 shadow-sm"
+    :class="{
+      'mt-3': props.isFloating,
+    }"
+  >
+    <button
+      v-if="props.isFloating"
+      type="button"
+      class="absolute -right-2 -top-2 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full bg-white"
+      @click.prevent="emit('close')"
     >
-      <div class="space-y-8 text-[18px] font-medium leading-7 text-gray-600">
-        <div class="space-y-1 border-b border-gray-600">
-          <div class="grid grid-cols-2 font-bold">
-            <p class="mr-2">Devotion</p>
-            <span class="text-right">{{ chapter.number }}</span>
-          </div>
-          <div class="grid grid-cols-2">
-            <p class="mr-2">Created</p>
-            <span class="text-right">{{ formatDate(chapter.created_at) }}</span>
-          </div>
-          <div class="grid grid-cols-2">
-            <p class="mr-2">Last Published</p>
-            <span class="text-right">{{ formatDate(chapter.updated_at) }}</span>
-          </div>
-        </div>
+      <icon name="cross" class="h-6 w-6" />
+    </button>
+    <section class="space-y-2 font-['Inter'] text-lg/7 font-bold">
+      <div class="grid grid-cols-2">
+        <p>{{ props.storyType }}</p>
+        <span class="place-self-end">{{ drafts.story.name }}</span>
       </div>
-      <div
-        class="flex flex-col items-center justify-between space-y-4 xl:flex-row xl:space-y-0"
-      >
-        <!-- class="inline-flex w-full items-center justify-center rounded-md border-2 border-accent-one bg-transparent px-3 py-2 text-sm font-medium leading-5 text-accent-one hover:opacity-80 hover:shadow-md active:opacity-80" -->
-        <slot></slot>
+      <div class="grid grid-cols-2">
+        <p>Chapter</p>
+        <span class="place-self-end">{{ props.chapterType }}</span>
       </div>
-    </div>
+    </section>
+    <div class="my-2 border-t border-gray-600"></div>
+    <section class="space-y-2 font-['Inter'] text-lg/7 font-medium">
+      <div class="grid grid-cols-2">
+        <p>Created</p>
+        <span class="place-self-end">{{ formatDate(props.createdAt) }}</span>
+      </div>
+      <div class="grid grid-cols-2">
+        <p>Auto-saved</p>
+        <span class="place-self-end">{{ formatDate(props.updatedAt) }}</span>
+      </div>
+      <div class="grid grid-cols-2">
+        <p>Last Published</p>
+        <span class="place-self-end">{{ publishedWhen }}</span>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import Icon from './Icon.vue';
+import { ChapterMeta, Meta } from './interfaces';
 import { formatDate } from './helpers';
-import { PropType } from 'vue';
-defineProps({
-  chapter: {
-    type: Object as PropType<Chapter>,
-    required: true,
-  },
-});
+import { useDraftsStore } from '../store';
 
-type Chapter = {
-  number: number;
-  created_at: string;
-  updated_at: string;
-};
+interface Props {
+  storyType: Meta['storyType'];
+  chapterType: Meta['chapterType'];
+  createdAt: ChapterMeta['createdAt'];
+  updatedAt: ChapterMeta['updatedAt'];
+  publishedWhen: string;
+  isFloating?: boolean;
+}
+
+const props = defineProps<Props>();
+
+const drafts = useDraftsStore();
+
+const emit = defineEmits(['close']);
 </script>

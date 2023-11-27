@@ -1,112 +1,61 @@
 <template>
   <AppLayout>
-    <div class="mb-32 p-4">
-      <h3 class="mb-[14px] text-lg font-bold leading-7 text-black">{{ chapterTitle }}</h3>
-      <div class="flex justify-between space-x-8">
-        <div class="w-max flex-grow overflow-hidden rounded-sm lg:max-w-[800px]">
-          <form class="space-y-8">
-            <div v-for="(item, index) in drafts.story.fields" :key="index">
-              <component :is="widgetFor(index)" :field="item" :is-nested="false" />
-            </div>
-          </form>
+    <ContentHeader
+      :title="chapterTitle"
+      @delete="deleteDraft"
+      @info="info"
+      @app-preview="appPreview"
+    >
+      <WorkflowButtons @request-change="reject" @publish="publish" @submit="submit" />
+    </ContentHeader>
+
+    <div
+      class="container relative mx-auto p-3 lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-9"
+    >
+      <form class="space-y-8">
+        <div v-for="(item, index) in drafts.story.fields" :key="index">
+          <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>
-        <div class="sticky top-0 h-full w-[416px]">
-          <div
-            class="space-y-5 rounded-md border border-accent-gray bg-accent-gray p-8 shadow-sm"
-          >
-            <div class="space-y-8 text-[18px] font-medium leading-7 text-gray-600">
-              <div class="space-y-1 border-b border-gray-600">
-                <div class="grid grid-cols-2 font-bold">
-                  <p class="mr-2">{{ meta.storyType }}</p>
-                  <span class="text-right">{{ drafts.story.name }}</span>
-                </div>
-                <div class="grid grid-cols-2 font-bold">
-                  <p class="mr-2">{{ meta.chapterType }}</p>
-                  <span class="text-right">{{ metaChapter }}</span>
-                </div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Last Published</p>
-                  <span class="text-right">{{ published_when }}</span>
-                </div>
-              </div>
-              <div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Draft Created</p>
-                  <span class="text-right">{{ formatDate(draft['createdAt']) }}</span>
-                </div>
-                <div class="grid grid-cols-2">
-                  <p class="mr-2">Draft Saved</p>
-                  <span class="text-right">{{ formatDate(draft['updatedAt']) }}</span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="flex flex-col items-center justify-between space-y-4 xl:flex-row xl:space-y-0"
-            >
-              <button
-                v-if="shared.meta.hasEditReview && draft.status == 'submitted'"
-                type="submit"
-                class="group relative flex justify-center rounded-md border border-transparent bg-red-500 text-sm font-medium text-white hover:bg-red-500/75 hover:opacity-80 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-red-500/60 focus:ring-offset-2 active:opacity-80"
-                @click.prevent="reject"
-              >
-                Request Change
-              </button>
-              <button
-                v-if="shared.meta.hasEditReview && draft.status === 'started'"
-                type="submit"
-                class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                @click.prevent="submit"
-              >
-                Submit
-              </button>
+      </form>
 
-              <!-- class="inline-flex w-full items-center justify-center rounded-md border-2 border-accent-one bg-transparent px-3 py-2 text-sm font-medium leading-5 text-accent-one hover:opacity-80 hover:shadow-md active:opacity-80" -->
-              <button
-                type="submit"
-                class="inline-flex w-full items-center justify-center rounded-full border-2 border-accent-orange bg-transparent px-3 py-2 text-sm font-medium leading-5 text-accent-orange hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                @click.prevent="deleteDraft"
-              >
-                Delete Draft
-              </button>
+      <div class="absolute right-2 top-2">
+        <section v-if="showMetaBox">
+          <MetaBox
+            :created-at="props.draft.createdAt"
+            :updated-at="props.draft.updatedAt"
+            :story-type="props.meta.storyType"
+            :chapter-type="metaChapter"
+            :published-when="published_when"
+            :is-floating="!isLargeScreen"
+            @close="showMetaBox = false"
+          />
+        </section>
 
-              <button
-                v-if="showPublishButton"
-                :disabled="widgets.isDirty"
-                type="submit"
-                class="inline-flex w-full items-center justify-center rounded-full border border-transparent bg-accent-green px-3 py-2 text-sm font-medium leading-5 text-white hover:opacity-80 hover:shadow-md active:opacity-80 xl:w-1/3"
-                :class="{
-                  'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80':
-                    widgets.isDirty,
-                }"
-                @click.prevent="publish"
-              >
-                Publish
-              </button>
-            </div>
-          </div>
-          <FlutterPreview
-            v-if="shared.meta.hasAppPreview"
+        <section v-if="showAppPreview" class="mt-6">
+          <MobileAppPreview
+            :is-floating="!isLargeScreen"
             :bundle="bundle"
             class="mt-2"
+            @close="closeS"
           />
-          <div
-            v-if="feedbackPanel.message"
-            class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
-          >
-            <div class="flex items-center px-5 py-6">
-              <Icon
-                v-if="feedbackPanel.icon"
-                :name="feedbackPanel.icon"
-                class="mr-[18px]"
-                :class="{
-                  'text-red-500': feedbackPanel.icon == 'exclamation',
-                  'text-blue-500': feedbackPanel.icon == 'check',
-                  'text-green-500': feedbackPanel.icon == 'check-badge',
-                  'text-yellow-500': feedbackPanel.icon == 'exclamation-circle',
-                }"
-              />
-              <p class="text-sm font-medium leading-4">{{ feedbackPanel.message }}</p>
-            </div>
+        </section>
+        <div
+          v-if="feedbackPanel.message"
+          class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
+        >
+          <div class="flex items-center px-5 py-6">
+            <Icon
+              v-if="feedbackPanel.icon"
+              :name="feedbackPanel.icon"
+              class="mr-[18px]"
+              :class="{
+                'text-red-500': feedbackPanel.icon == 'exclamation',
+                'text-blue-500': feedbackPanel.icon == 'check',
+                'text-green-500': feedbackPanel.icon == 'check-badge',
+                'text-yellow-500': feedbackPanel.icon == 'exclamation-circle',
+              }"
+            />
+            <p class="text-sm font-medium leading-4">{{ feedbackPanel.message }}</p>
           </div>
         </div>
       </div>
@@ -115,16 +64,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
+import ContentHeader from '../Shared/ContentHeader.vue';
+import MetaBox from '../Shared/MetaBox.vue';
 import { router } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
 import { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
 import { useDraftsStore, useModelStore, useSharedStore, useWidgetsStore } from '../store';
-import FlutterPreview from './FlutterPreview.vue';
+import MobileAppPreview from './MobileAppPreview.vue';
+import WorkflowButtons from '../Draft/WorkflowButtons.vue';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
+
+const closeS = () => {
+  showAppPreview.value = false;
+};
 
 const model = useModelStore();
 model.setFromProps(props);
@@ -147,12 +103,6 @@ const feedbackPanel = ref<FeedbackPanel>({
   icon: null,
 });
 
-const showPublishButton = computed(() => {
-  if (props.user.role !== 'admin') return false;
-
-  return !shared.meta.hasEditReview || props.draft.status === 'submitted';
-});
-
 type postType = { feedback: string | undefined; bundle: any };
 
 const getPayload = (): postType => {
@@ -162,9 +112,11 @@ const getPayload = (): postType => {
   };
 };
 
-const chapterTitle = computed(() =>
-  props.bundle.title ? props.bundle.title : `New ${props.meta.chapterType}`,
-);
+const defaultTitle = computed(() => {
+  return `New ${props.meta.chapterType}`;
+});
+
+const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
 
 const save = debounce(2000, () => {
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
@@ -221,6 +173,27 @@ const reject = () => {
   router.post(`/draft/${props.draft.id}/reject`, getPayload());
 };
 
+const showMetaBox = ref(false);
+const showAppPreview = ref(false);
+const isLargeScreen = ref(false);
+const windowWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+  windowWidth.value = window.innerWidth;
+  windowWidth.value >= 1024
+    ? (isLargeScreen.value = true)
+    : (isLargeScreen.value = false);
+};
+
+const info = () => {
+  if (isLargeScreen.value) return;
+  showMetaBox.value = !showMetaBox.value;
+};
+
+const appPreview = () => {
+  if (isLargeScreen.value) return;
+  showAppPreview.value = !showAppPreview.value;
+};
 const published_when = computed(() => {
   return props.lastPublished == '' ? 'Unpublished' : formatDate(props.lastPublished);
 });
@@ -237,11 +210,17 @@ onMounted(() => {
     }
     widgets.setIsDirty(true);
     save();
+    chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
+  window.addEventListener('resize', handleResize);
 });
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);
 };
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between bg-white px-6 py-3">
+  <nav ref="navbar" class="flex items-center justify-between bg-white px-6 py-3">
     <div class="flex">
       <div class="flex items-center space-x-6">
         <Link href="/">
@@ -87,18 +87,21 @@
         </transition>
       </Menu>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
 import { Link, useForm } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
 import { pinia, useSharedStore } from '../store';
 
 const shared = useSharedStore(pinia);
+
+const navbar = ref<HTMLElement | null>(null);
+defineExpose({ navbar });
 
 interface Form {
   language: string | null;
