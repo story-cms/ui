@@ -20,7 +20,7 @@
     v-if="showPublishButton"
     type="submit"
     :disabled="widgets.isDirty"
-    class="min-w-32 rounded-[38px] border border-gray-200 bg-green-500 px-[15px] py-[9px] text-sm/5 font-bold text-white shadow"
+    class="w-32 rounded-[38px] border border-gray-200 bg-green-500 px-[15px] py-[9px] text-sm/5 font-bold text-white shadow"
     :class="{
       'opacity-80 hover:opacity-80 hover:shadow-none active:opacity-80': widgets.isDirty,
     }"

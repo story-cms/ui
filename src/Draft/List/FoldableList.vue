@@ -21,6 +21,7 @@
         }"
       >
         <button
+          type="button"
           class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           @click.prevent="toggle(index)"
         >
@@ -46,6 +47,7 @@
         </div>
         <button
           v-if="canMutate"
+          type="button"
           class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border bg-white text-gray-500"
           @click="emit('removeSet', index)"
         >
