@@ -33,11 +33,11 @@
     </div>
     <div class="mx-2 overflow-x-auto">
       <div
-        class="relative grid min-h-screen max-w-5xl gap-x-2 [&>section]:mt-2"
+        class="relative grid min-h-screen max-w-7xl gap-x-2 [&>section]:mt-2 [&>section]:px-3"
         :class="
           drafts.isSingleColumn
             ? 'grid-cols-1 lg:mx-auto'
-            : 'mx-auto grid-flow-col-dense grid-cols-[repeat(2,_minmax(calc(64rem/2),_1fr))] overflow-x-auto lg:place-content-center'
+            : 'mx-auto grid-flow-col-dense grid-cols-[repeat(2,_minmax(39rem,_1fr))] overflow-x-auto lg:place-content-center'
         "
       >
         <slot></slot>
