@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <div class="px-6 lg:w-2/3">
+    <div class="container mx-auto px-6 py-3 lg:w-2/3">
       <div class="flex items-center justify-between">
         <div class="space-x-6">
           <AddItemButton label="Page" @add="addPage" />

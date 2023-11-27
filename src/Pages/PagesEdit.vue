@@ -1,6 +1,8 @@
 <template>
-  <AppLayout class="bg-gray-50">
-    <div class="flex max-w-[1068px] items-center justify-between p-6 lg:mx-auto">
+  <AppLayout>
+    <div
+      class="container mx-auto flex max-w-[1068px] items-center justify-between p-6 lg:mx-auto"
+    >
       <ContentHeader :title="title" @delete="deletePage" @info="info">
         <BooleanField
           :field="{
@@ -16,7 +18,7 @@
       </ContentHeader>
     </div>
     <div
-      class="relative max-w-[1068px] px-6 pt-2 lg:mx-auto lg:grid lg:grid-cols-[1fr,_416px] lg:gap-x-6"
+      class="relative max-w-[1068px] px-6 pt-2 lg:mx-auto lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-6"
     >
       <form class="space-y-8 bg-white py-4">
         <StringField
