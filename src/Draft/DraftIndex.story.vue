@@ -3,7 +3,13 @@
     <Variant title="Index">
       <DraftIndex
         :draft="draft"
-        :bundle="{}"
+        :bundle="{
+          id: 1,
+          number: 1,
+          status: 'submitted',
+          updatedAt: '2021-08-10T14:48:00.000000Z',
+          createdAt: '2021-08-10T14:48:00.000000Z',
+        }"
         :spec="{
           name: 'John',
           chapterLimit: 21,
