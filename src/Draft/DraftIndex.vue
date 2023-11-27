@@ -9,7 +9,9 @@
       <WorkflowButtons @request-change="reject" @publish="publish" @submit="submit" />
     </ContentHeader>
 
-    <div class="container relative mx-auto lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-9">
+    <div
+      class="container relative mx-auto p-3 lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-9"
+    >
       <form class="space-y-8">
         <div v-for="(item, index) in drafts.story.fields" :key="index">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
