@@ -1,46 +1,50 @@
 <template>
   <AppLayout>
-    <div class="my-4 flex items-center justify-between">
-      <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ story }}</h3>
-      <icon :name="iconName" class="h-8 w-8 text-black" @click.prevent="toggle" />
-    </div>
-
-    <div class="mb-4 flex items-center justify-between">
-      <div class="flex space-x-6">
-        <input
-          v-model="filterNumber"
-          class="block w-24 rounded-md border border-gray-300 px-3 py-1 text-sm font-normal leading-5 text-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          :placeholder="meta.chapterType"
-        />
-        <AddItemButton
-          v-if="addStatus == AddStatus.Add"
-          :label="meta.chapterType"
-          @add="addDraft"
-        />
-        <button
-          v-if="addStatus == AddStatus.Wait"
-          type="button"
-          class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-indigo-700 shadow-sm"
-          disabled
-        >
-          {{ `No more ${meta.chapterType}s available to translate` }}
-        </button>
+    <div class="container mx-auto p-3">
+      <div class="my-4 flex items-center justify-between">
+        <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ story }}</h3>
+        <icon :name="iconName" class="h-8 w-8 text-black" @click.prevent="toggle" />
       </div>
-      <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
-    </div>
-    <div
-      class="grid grid-cols-1 gap-4"
-      :class="{ ' sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5': !isList }"
-    >
-      <index-card
-        v-for="item in filteredIndex"
-        :key="item.number"
-        :item="item"
-        :is-list="isList"
-        :scope="currentTab"
-        :chapter-name="meta.chapterType"
-        @tap="onTap"
-      />
+
+      <div class="mb-4 flex items-center justify-between">
+        <div class="flex space-x-6">
+          <input
+            v-model="filterNumber"
+            class="block w-24 rounded-md border border-gray-300 px-3 py-1 text-sm font-normal leading-5 text-gray-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            :placeholder="meta.chapterType"
+          />
+          <AddItemButton
+            v-if="addStatus == AddStatus.Add"
+            :label="meta.chapterType"
+            @add="addDraft"
+          />
+          <button
+            v-if="addStatus == AddStatus.Wait"
+            type="button"
+            class="inline-flex items-center rounded-xl bg-indigo-50 px-3 py-[9px] text-sm font-medium leading-4 text-indigo-700 shadow-sm"
+            disabled
+          >
+            {{ `No more ${meta.chapterType}s available to translate` }}
+          </button>
+        </div>
+        <IndexFilter :tabs="tabs" :current-tab="currentTab" @change="onFilter" />
+      </div>
+      <div
+        class="grid grid-cols-1 gap-4"
+        :class="{
+          ' sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5': !isList,
+        }"
+      >
+        <index-card
+          v-for="item in filteredIndex"
+          :key="item.number"
+          :item="item"
+          :is-list="isList"
+          :scope="currentTab"
+          :chapter-name="meta.chapterType"
+          @tap="onTap"
+        />
+      </div>
     </div>
   </AppLayout>
 </template>
