@@ -13,7 +13,7 @@
       ></div>
       <div
         v-if="!isReadOnly"
-        class="absolute -left-5 -top-5 right-0 flex items-center justify-between"
+        class="absolute -left-5 -top-[17.6px] right-0 flex items-center justify-between"
       >
         <button
           class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
