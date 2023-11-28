@@ -1,7 +1,11 @@
 <template>
   <AppLayout>
+    <template #header>
+      <HeaderBar ref="headerBarComponent" />
+    </template>
     <div
-      class="container mx-auto flex max-w-[1068px] items-center justify-between p-6 lg:mx-auto"
+      ref="contentHeaderEl"
+      class="container mx-auto flex max-w-[1068px] items-center justify-between bg-gray-50 p-6 lg:mx-auto"
     >
       <ContentHeader :title="title" @delete="deletePage" @info="info">
         <BooleanField
@@ -121,6 +125,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
+import HeaderBar from '../Shared/HeaderBar.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
 import { SharedPageProps, PageEditProps } from '../Shared/interfaces';
@@ -134,6 +139,7 @@ import { formatDate, debounce } from '../Shared/helpers';
 import { useModelStore, useSharedStore, useWidgetsStore } from '../store';
 import { router } from '@inertiajs/vue3';
 import { DateTime } from 'luxon';
+import { createIntersectionObserver } from '../Shared/helpers';
 
 const props = defineProps<PageEditProps & SharedPageProps>();
 
@@ -217,6 +223,12 @@ const info = () => {
   showMetaBox.value = !showMetaBox.value;
 };
 
+const headerBarComponent = ref<typeof HeaderBar | null>(null);
+
+const contentHeaderEl = ref<HTMLElement | null>(null);
+
+const observer = createIntersectionObserver(contentHeaderEl);
+
 onMounted(() => {
   model.$subscribe(() => {
     // prevent infinite loop
@@ -232,6 +244,7 @@ onMounted(() => {
   });
 
   window.addEventListener('resize', handleResize);
+  observer.observe(headerBarComponent.value?.navbar as HTMLElement);
 });
 
 onUnmounted(() => {
