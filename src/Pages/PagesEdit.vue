@@ -168,7 +168,7 @@ const selection = ref(model.getField('type', 'comment'));
 const title = ref(model.getField('title', 'Page'));
 const isPublished = ref(Boolean(model.getField('isPublished', false)));
 
-const savedAt = ref(formatDate(page.value['updatedAt']));
+const savedAt = ref(page.value['updatedAt']);
 const publishedAt = computed(() =>
   isPublished.value ? (page.value['updatedAt'] as string) : 'unpublished',
 );
@@ -184,8 +184,7 @@ const save = debounce(1000, () => {
     preserveScroll: true,
 
     onSuccess: () => {
-      console.log('! saved');
-      savedAt.value = formatDate(DateTime.now().toISO() ?? '');
+      savedAt.value = DateTime.now().toISO() ?? '';
     },
 
     onError: (errors) => {
