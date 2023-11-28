@@ -3,11 +3,13 @@
     <template #header>
       <HeaderBar ref="headerBarComponent" />
     </template>
-    <div
-      ref="contentHeaderEl"
-      class="container mx-auto flex max-w-[1068px] items-center justify-between bg-gray-50 p-6 lg:mx-auto"
-    >
-      <ContentHeader :title="title" @delete="deletePage" @info="info">
+    <div ref="contentHeaderEl" class="w-full bg-gray-50">
+      <ContentHeader
+        class="container mx-auto max-w-[1068px] px-6"
+        :title="title"
+        @delete="deletePage"
+        @info="info"
+      >
         <BooleanField
           :field="{
             name: 'isPublished',
@@ -105,12 +107,7 @@
         />
       </form>
 
-      <div
-        :class="{
-          'absolute right-2 top-2': showMetaBox,
-          'sticky top-0 hidden h-full lg:block': isLargeScreen,
-        }"
-      >
+      <div v-if="showMetaBox" :class="isLargeScreen ? 'block' : 'absolute right-2 top-2'">
         <PageMetaBox
           :created-at="page.createdAt"
           :saved-at="savedAt"
@@ -123,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue';
+import { ref, computed, onMounted, onUnmounted, toRefs, watch } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import HeaderBar from '../Shared/HeaderBar.vue';
 import StringField from '../Draft/StringField.vue';
@@ -222,6 +219,10 @@ const info = () => {
   if (isLargeScreen.value) return;
   showMetaBox.value = !showMetaBox.value;
 };
+
+watch(isLargeScreen, (newValue) => {
+  newValue ? (showMetaBox.value = true) : (showMetaBox.value = false);
+});
 
 const headerBarComponent = ref<typeof HeaderBar | null>(null);
 
