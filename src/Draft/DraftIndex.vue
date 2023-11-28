@@ -1,14 +1,18 @@
 <template>
   <AppLayout>
-    <ContentHeader
-      :title="chapterTitle"
-      @delete="deleteDraft"
-      @info="info"
-      @app-preview="appPreview"
-    >
-      <WorkflowButtons @request-change="reject" @publish="publish" @submit="submit" />
-    </ContentHeader>
-
+    <template #header>
+      <HeaderBar ref="headerBarComponent" />
+    </template>
+    <div ref="contentHeaderEl" class="w-full bg-gray-50">
+      <ContentHeader
+        :title="chapterTitle"
+        @delete="deleteDraft"
+        @info="info"
+        @app-preview="appPreview"
+      >
+        <WorkflowButtons @request-change="reject" @publish="publish" @submit="submit" />
+      </ContentHeader>
+    </div>
     <div
       class="container relative mx-auto p-3 lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-9"
     >
@@ -66,6 +70,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
+import HeaderBar from '../Shared/HeaderBar.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
 import MetaBox from '../Shared/MetaBox.vue';
 import { router } from '@inertiajs/vue3';
@@ -73,6 +78,8 @@ import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
 import { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
 import { useDraftsStore, useModelStore, useSharedStore, useWidgetsStore } from '../store';
+import { createIntersectionObserver } from '../Shared/helpers';
+
 import MobileAppPreview from './MobileAppPreview.vue';
 import WorkflowButtons from '../Draft/WorkflowButtons.vue';
 
@@ -202,6 +209,12 @@ const metaChapter = computed(
   () => `${padZero(props.draft.number)} of ${padZero(props.spec.chapterLimit)}`,
 );
 
+const headerBarComponent = ref<typeof HeaderBar | null>(null);
+
+const contentHeaderEl = ref<HTMLElement | null>(null);
+
+const observer = createIntersectionObserver(contentHeaderEl);
+
 onMounted(() => {
   model.$subscribe(() => {
     if (isSettingErrors) {
@@ -213,6 +226,7 @@ onMounted(() => {
     chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
   window.addEventListener('resize', handleResize);
+  observer.observe(headerBarComponent.value?.navbar as HTMLElement);
 });
 
 const widgetFor = (key: number) => {
