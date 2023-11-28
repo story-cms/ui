@@ -244,6 +244,9 @@ onMounted(() => {
     isPublished.value = Boolean(model.getField('isPublished', false));
   });
 
+  if (window.innerWidth >= 1024) {
+    showMetaBox.value = true;
+  }
   window.addEventListener('resize', handleResize);
   observer.observe(headerBarComponent.value?.navbar as HTMLElement);
 });
