@@ -132,7 +132,7 @@ import PageMetaBox from './PageMetaBox.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
 import BooleanField from '../Draft/BooleanField.vue';
 
-import { formatDate, debounce } from '../Shared/helpers';
+import { debounce } from '../Shared/helpers';
 import { useModelStore, useSharedStore, useWidgetsStore } from '../store';
 import { router } from '@inertiajs/vue3';
 import { DateTime } from 'luxon';
