@@ -5,6 +5,7 @@
     </template>
     <div ref="contentHeaderEl" class="w-full bg-gray-50">
       <ContentHeader
+        class="px-3"
         :title="chapterTitle"
         @delete="deleteDraft"
         @info="info"
@@ -14,7 +15,10 @@
       </ContentHeader>
     </div>
     <div
-      class="container relative mx-auto p-3 lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-9"
+      class="container relative mx-auto px-3"
+      :class="{
+        'grid grid-cols-[1fr,_416px] gap-x-8 ': shared.isLargeScreen,
+      }"
     >
       <form class="space-y-8">
         <div v-for="(item, index) in drafts.story.fields" :key="index">
@@ -22,8 +26,8 @@
         </div>
       </form>
 
-      <div class="absolute right-2 top-2">
-        <section v-if="showMetaBox">
+      <div :class="shared.isLargeScreen ? 'block' : 'hidden'">
+        <section>
           <MetaBox
             :created-at="props.draft.createdAt"
             :updated-at="props.draft.updatedAt"
