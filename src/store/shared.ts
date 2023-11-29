@@ -1,7 +1,13 @@
 import { defineStore } from 'pinia';
 import type { Ref } from 'vue';
-import { computed, ref, toRefs } from 'vue';
-import { SharedPageProps, Meta, LanguageSpecification, User } from '../Shared/interfaces';
+import { computed, ref, reactive, toRefs } from 'vue';
+import {
+  SharedPageProps,
+  Meta,
+  LanguageSpecification,
+  User,
+  ResponseStatus,
+} from '../Shared/interfaces';
 
 const defaultLanguage: LanguageSpecification = {
   locale: 'en',
@@ -42,6 +48,22 @@ export const useSharedStore = defineStore('shared', () => {
     return messages;
   };
 
+  // Message Centre
+  const messageCentre = reactive({
+    response: ResponseStatus.None as ResponseStatus,
+    message: '' as string,
+  });
+
+  const addMessage = (response: ResponseStatus, message: string) => {
+    messageCentre.response = response;
+    messageCentre.message = message;
+    setTimeout(() => {
+      messageCentre.response = ResponseStatus.None;
+      messageCentre.message = '';
+    }, 2500);
+  };
+  const hasFeedback = computed(() => messageCentre.response !== ResponseStatus.None);
+
   // language
 
   const KingJamesVersion = 'de4e12af7f28f599-01';
@@ -65,6 +87,8 @@ export const useSharedStore = defineStore('shared', () => {
     languages,
     errors,
     user,
+    messageCentre,
+    hasFeedback,
 
     language,
     languageDirection,
@@ -78,5 +102,6 @@ export const useSharedStore = defineStore('shared', () => {
     clearErrors,
     errorMessages,
     setFromProps,
+    addMessage,
   };
 });

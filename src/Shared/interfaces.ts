@@ -246,3 +246,16 @@ export interface UserMeta {
 export interface UsersProps {
   users: UserMeta[];
 }
+
+export enum ResponseStatus {
+  // eslint-disable-next-line
+  Failure,
+  // eslint-disable-next-line
+  Confirmation,
+  // eslint-disable-next-line
+  Accomplishment,
+  // eslint-disable-next-line
+  Neutral,
+  // eslint-disable-next-line
+  None,
+}
