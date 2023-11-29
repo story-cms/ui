@@ -143,7 +143,7 @@ const publish = () => {
     onSuccess: () => {
       widgets.setIsDirty(false);
       shared.addMessage(
-        ResponseStatus.Accomplishment,
+        ResponseStatus.Confirmation,
         `${props.meta.chapterType} published successfully.`,
       );
     },

@@ -55,6 +55,7 @@ import { ref, onMounted, computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 import type { Errors } from '@inertiajs/core';
 import type { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
+import { ResponseStatus } from '../Shared/interfaces';
 import { useSharedStore, useModelStore, useWidgetsStore, useDraftsStore } from '../store';
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 import MetaBox from '../Shared/MetaBox.vue';
@@ -91,16 +92,6 @@ const published_when = computed(() => {
   return props.lastPublished == '' ? 'Unpublished' : formatDate(props.lastPublished);
 });
 
-interface FeedbackPanel {
-  message: string;
-  icon: null | string;
-}
-
-const feedbackPanel = ref<FeedbackPanel>({
-  message: '',
-  icon: null,
-});
-
 const getPayload = () => {
   return {
     feedback: '',
@@ -113,7 +104,7 @@ const onSuccess = (message?: string) => {
   widgets.setIsDirty(false);
   if (!message) return;
 
-  feedbackPanel.value.message = message;
+  shared.addMessage(ResponseStatus.Confirmation, message);
 };
 
 const onError = (errors: Errors, message: string) => {
@@ -121,7 +112,7 @@ const onError = (errors: Errors, message: string) => {
   console.log(errors);
   isSettingErrors = true;
   shared.setErrors(props.errors);
-  feedbackPanel.value.message = message;
+  shared.addMessage(ResponseStatus.Failure, message);
 };
 
 const deleteDraft = () => {
@@ -156,7 +147,7 @@ const publishDraft = () => {
 
   router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
     preserveScroll: true,
-    onSuccess: () => onSuccess('Draft successfully submitted.'),
+    onSuccess: () => onSuccess('Draft successfully published.'),
     onError: (e) =>
       onError(e, 'Draft not published. Please review and correct any errors.'),
   });
