@@ -60,8 +60,9 @@ export const useSharedStore = defineStore('shared', () => {
     setTimeout(() => {
       messageCentre.response = ResponseStatus.None;
       messageCentre.message = '';
-    }, 4000);
+    }, 2500);
   };
+  const hasFeedback = computed(() => messageCentre.response !== ResponseStatus.None);
 
   // language
 
@@ -87,6 +88,7 @@ export const useSharedStore = defineStore('shared', () => {
     errors,
     user,
     messageCentre,
+    hasFeedback,
 
     language,
     languageDirection,

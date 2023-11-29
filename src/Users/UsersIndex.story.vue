@@ -11,13 +11,26 @@
         :stories="['John', 'Acts']"
       />
     </Variant>
+    <Variant title="With feedback" :setup-app="loadData">
+      <UsersIndex
+        :users="users"
+        :errors="sharedProps.errors"
+        :meta="sharedProps.meta"
+        :user="sharedProps.user"
+        :language="sharedProps.language"
+        :languages="sharedProps.languages"
+        :stories="['John', 'Acts']"
+      />
+    </Variant>
   </Story>
 </template>
 
 <script setup lang="ts">
 import UsersIndex from './UsersIndex.vue';
 import { sharedProps } from '../helpers/mocks';
-import { UserMeta } from 'src/Shared/interfaces';
+import { UserMeta, ResponseStatus } from '../Shared/interfaces';
+import { useSharedStore } from '../store';
+import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 
 const users: UserMeta[] = [
   {
@@ -35,4 +48,10 @@ const users: UserMeta[] = [
     role: 'editor',
   },
 ];
+
+const loadData: Vue3StorySetupHandler = () => {
+  const shared = useSharedStore();
+
+  shared.addMessage(ResponseStatus.Accomplishment, 'User updated successfully');
+};
 </script>
