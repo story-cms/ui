@@ -88,6 +88,11 @@
       </Menu>
     </div>
   </nav>
+  <MessageCentre
+    v-if="shared.messageCentre.response !== ResponseStatus.None"
+    :response="shared.messageCentre.response"
+    :message="shared.messageCentre.message"
+  />
 </template>
 
 <script setup lang="ts">
@@ -96,9 +101,11 @@ import { computed, ref } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
-import { pinia, useSharedStore } from '../store';
+import MessageCentre from './MessageCentre.vue';
+import { useSharedStore } from '../store';
+import { ResponseStatus } from './interfaces';
 
-const shared = useSharedStore(pinia);
+const shared = useSharedStore();
 
 const navbar = ref<HTMLElement | null>(null);
 defineExpose({ navbar });

@@ -43,25 +43,6 @@
             @close="closeS"
           />
         </section>
-        <div
-          v-if="feedbackPanel.message"
-          class="mt-[24px] overflow-hidden rounded-sm bg-white shadow"
-        >
-          <div class="flex items-center px-5 py-6">
-            <Icon
-              v-if="feedbackPanel.icon"
-              :name="feedbackPanel.icon"
-              class="mr-[18px]"
-              :class="{
-                'text-red-500': feedbackPanel.icon == 'exclamation',
-                'text-blue-500': feedbackPanel.icon == 'check',
-                'text-green-500': feedbackPanel.icon == 'check-badge',
-                'text-yellow-500': feedbackPanel.icon == 'exclamation-circle',
-              }"
-            />
-            <p class="text-sm font-medium leading-4">{{ feedbackPanel.message }}</p>
-          </div>
-        </div>
       </div>
     </div>
   </AppLayout>
@@ -74,9 +55,13 @@ import HeaderBar from '../Shared/HeaderBar.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
 import MetaBox from '../Shared/MetaBox.vue';
 import { router } from '@inertiajs/vue3';
-import Icon from '../Shared/Icon.vue';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
-import { FieldSpec, DraftEditProps, SharedPageProps } from '../Shared/interfaces';
+import {
+  FieldSpec,
+  DraftEditProps,
+  SharedPageProps,
+  ResponseStatus,
+} from '../Shared/interfaces';
 import { useDraftsStore, useModelStore, useSharedStore, useWidgetsStore } from '../store';
 import { createIntersectionObserver } from '../Shared/helpers';
 
@@ -98,17 +83,7 @@ drafts.setFromProps(props);
 const widgets = useWidgetsStore();
 widgets.setProviders(props.providers);
 
-interface FeedbackPanel {
-  message: string;
-  icon: null | string;
-}
-
 let isSettingErrors = false;
-
-const feedbackPanel = ref<FeedbackPanel>({
-  message: '',
-  icon: null,
-});
 
 type postType = { feedback: string | undefined; bundle: any };
 
@@ -130,14 +105,15 @@ const save = debounce(2000, () => {
     preserveScroll: true,
     onSuccess: () => {
       widgets.setIsDirty(false);
-      // feedbackPanel.value.message = `Episode saved!`;
-      // feedbackPanel.value.icon = 'check';
     },
     onError: () => {
       widgets.setIsDirty(false);
       shared.setErrors(props.errors);
       isSettingErrors = true;
-      feedbackPanel.value.message = JSON.stringify(props.errors, null, 2);
+      shared.addMessage(
+        ResponseStatus.Failure,
+        `${props.meta.chapterType} not saved. Please review and correct any errors.`,
+      );
     },
   });
 });
@@ -145,10 +121,13 @@ const save = debounce(2000, () => {
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
     onSuccess: () => {
-      feedbackPanel.value.message = `Successfully deleted.`;
+      shared.addMessage(ResponseStatus.Accomplishment, 'Successfully deleted.');
     },
     onError: () => {
-      feedbackPanel.value.message = `There are errors deleting this chapter.`;
+      shared.addMessage(
+        ResponseStatus.Failure,
+        'There are errors deleting this chapter.',
+      );
     },
   });
 };
@@ -163,14 +142,18 @@ const publish = () => {
   router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
     onSuccess: () => {
       widgets.setIsDirty(false);
-      feedbackPanel.value.message = `Successfully published.`;
-      feedbackPanel.value.icon = 'check-badge';
+      shared.addMessage(
+        ResponseStatus.Accomplishment,
+        `${props.meta.chapterType} published successfully.`,
+      );
     },
     onError: () => {
       widgets.setIsDirty(false);
       shared.setErrors(props.errors);
-      feedbackPanel.value.message = `${props.meta.chapterType} not published. Please review and correct any errors.`;
-      feedbackPanel.value.icon = 'exclamation';
+      shared.addMessage(
+        ResponseStatus.Failure,
+        `${props.meta.chapterType} not published. Please review and correct any errors.`,
+      );
     },
   });
 };

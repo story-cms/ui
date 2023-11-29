@@ -256,4 +256,6 @@ export enum ResponseStatus {
   Accomplishment,
   // eslint-disable-next-line
   Neutral,
+  // eslint-disable-next-line
+  None,
 }
