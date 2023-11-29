@@ -48,6 +48,13 @@ export const useSharedStore = defineStore('shared', () => {
     return messages;
   };
 
+  // Window size
+  const isLargeScreen = ref(false);
+
+  const setLargeScreen = (fresh: boolean) => {
+    isLargeScreen.value = fresh;
+  };
+
   // Message Centre
   const messageCentre = reactive({
     response: ResponseStatus.None as ResponseStatus,
@@ -87,8 +94,12 @@ export const useSharedStore = defineStore('shared', () => {
     languages,
     errors,
     user,
+
     messageCentre,
     hasFeedback,
+
+    isLargeScreen,
+    setLargeScreen,
 
     language,
     languageDirection,
