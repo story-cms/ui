@@ -29,7 +29,7 @@
             :updated-at="props.draft.updatedAt"
             :story-type="props.meta.storyType"
             :chapter-type="metaChapter"
-            :published-when="published_when"
+            :published-when="publishedWhen"
             :is-floating="!isLargeScreen"
             @close="showMetaBox = false"
           />
@@ -55,6 +55,7 @@ import HeaderBar from '../Shared/HeaderBar.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
 import MetaBox from '../Shared/MetaBox.vue';
 import { router } from '@inertiajs/vue3';
+import type { Errors } from '@inertiajs/core';
 import { padZero, debounce, formatDate } from '../Shared/helpers';
 import {
   FieldSpec,
@@ -100,67 +101,63 @@ const defaultTitle = computed(() => {
 
 const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
 
+// actions
+const onSuccess = (message?: string) => {
+  widgets.setIsDirty(false);
+  if (!message) return;
+
+  shared.addMessage(ResponseStatus.Confirmation, message);
+};
+
+const onError = (errors: Errors, message: string) => {
+  widgets.setIsDirty(false);
+  console.log(errors);
+  isSettingErrors = true;
+  shared.setErrors(props.errors);
+  shared.addMessage(ResponseStatus.Failure, message);
+};
+
 const save = debounce(2000, () => {
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
-    onSuccess: () => {
-      widgets.setIsDirty(false);
-    },
-    onError: () => {
-      widgets.setIsDirty(false);
-      shared.setErrors(props.errors);
-      isSettingErrors = true;
-      shared.addMessage(
-        ResponseStatus.Failure,
-        `${props.meta.chapterType} not saved. Please review and correct any errors.`,
-      );
-    },
+    onSuccess: () => onSuccess(),
+    onError: (e) => onError(e, `${props.meta.chapterType} not saved`),
   });
 });
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    onSuccess: () => {
-      shared.addMessage(ResponseStatus.Accomplishment, 'Successfully deleted.');
-    },
-    onError: () => {
-      shared.addMessage(
-        ResponseStatus.Failure,
-        'There are errors deleting this chapter.',
-      );
-    },
+    onSuccess: () => onSuccess('Draft successfully deleted'),
+    onError: (e) => onError(e, 'Error deleting draft'),
   });
 };
 
 const submit = () => {
-  router.post(`/draft/${props.draft.id}/submit`, getPayload());
+  router.post(`/draft/${props.draft.id}/submit`, getPayload(), {
+    onSuccess: () => onSuccess(`${props.meta.chapterType} submitted for review`),
+    onError: (e) =>
+      onError(e, 'Draft not submitted. Please review and correct any errors.'),
+  });
 };
 
 const publish = () => {
   if (props.user.role !== 'admin') return;
   widgets.setIsDirty(true);
   router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
-    onSuccess: () => {
-      widgets.setIsDirty(false);
-      shared.addMessage(
-        ResponseStatus.Confirmation,
-        `${props.meta.chapterType} published successfully.`,
-      );
-    },
-    onError: () => {
-      widgets.setIsDirty(false);
-      shared.setErrors(props.errors);
-      shared.addMessage(
-        ResponseStatus.Failure,
+    onSuccess: () => onSuccess(`${props.meta.chapterType} published successfully`),
+    onError: (e) =>
+      onError(
+        e,
         `${props.meta.chapterType} not published. Please review and correct any errors.`,
-      );
-    },
+      ),
   });
 };
 
 const reject = () => {
-  // TODO: feedback
-  router.post(`/draft/${props.draft.id}/reject`, getPayload());
+  router.post(`/draft/${props.draft.id}/reject`, getPayload(), {
+    onSuccess: () => onSuccess('Draft sent back for fixing'),
+    onError: (e) => onError(e, 'Error sending draft back'),
+  });
 };
 
 const showMetaBox = ref(false);
@@ -184,7 +181,8 @@ const appPreview = () => {
   if (isLargeScreen.value) return;
   showAppPreview.value = !showAppPreview.value;
 };
-const published_when = computed(() => {
+
+const publishedWhen = computed(() => {
   return props.lastPublished == '' ? 'Unpublished' : formatDate(props.lastPublished);
 });
 

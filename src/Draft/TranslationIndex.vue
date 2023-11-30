@@ -117,8 +117,8 @@ const onError = (errors: Errors, message: string) => {
 
 const deleteDraft = () => {
   router.delete(`/draft/${props.draft.id}`, {
-    onSuccess: () => onSuccess('Draft successfully deleted.'),
-    onError: (e) => onError(e, 'Error deleting draft.'),
+    onSuccess: () => onSuccess('Draft successfully deleted'),
+    onError: (e) => onError(e, 'Error deleting draft'),
   });
 };
 
@@ -135,7 +135,7 @@ const saveDraft = debounce(2000, () => {
 const submitDraft = () => {
   router.post(`/draft/${props.draft.id}/submit`, getPayload(), {
     preserveScroll: true,
-    onSuccess: () => onSuccess('Draft successfully submitted.'),
+    onSuccess: () => onSuccess(`${props.meta.chapterType} submitted for review`),
     onError: (e) =>
       onError(e, 'Draft not submitted. Please review and correct any errors.'),
   });
