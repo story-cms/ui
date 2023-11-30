@@ -163,8 +163,8 @@ const reject = () => {
   router.post(`/draft/${props.draft.id}/reject`, getPayload());
 };
 
-const showMetaBox = ref(false);
-const showAppPreview = ref(false);
+const showMetaBox = ref(true);
+const showAppPreview = ref(true);
 
 const isLargeScreen = computed(() => {
   return shared.isLargeScreen;
@@ -209,6 +209,8 @@ onMounted(() => {
     chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
   observer.observe(headerBarComponent.value?.navbar as HTMLElement);
+  shared.isLargeScreen ? (showMetaBox.value = true) : (showMetaBox.value = false);
+  shared.isLargeScreen ? (showAppPreview.value = true) : (showAppPreview.value = false);
 });
 
 onBeforeMount(() => {
