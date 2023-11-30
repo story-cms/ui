@@ -10,7 +10,7 @@
   <button
     v-if="showSubmitButton"
     type="submit"
-    class="min-w-32 rounded-[38px] border border-green-500 bg-green-500 px-[15px] py-[9px] text-sm/5 font-medium text-white shadow"
+    class="min-w-32 rounded-[38px] border border-blue-500 bg-blue-500 px-[15px] py-[9px] text-sm/5 font-medium text-white shadow"
     @click.prevent="emit('submit')"
   >
     Submit
