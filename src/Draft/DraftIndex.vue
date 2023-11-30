@@ -18,7 +18,8 @@
       class="container relative mx-auto px-3"
       :class="{
         'grid grid-cols-[1fr,_416px] gap-x-8 ': isLargeScreen,
-        'grid grid-cols-[1fr]': !isLargeScreen || (!showMetaBox && !showAppPreview),
+        'mx-auto grid max-w-[1080px] grid-cols-[1fr] ':
+          !isLargeScreen || (!showMetaBox && !showAppPreview),
       }"
     >
       <form class="space-y-8">
