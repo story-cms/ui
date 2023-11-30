@@ -94,9 +94,9 @@ import { Link, useForm } from '@inertiajs/vue3';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import DropDown from './DropDown.vue';
 import ContextMenu from './ContextMenu.vue';
-import { pinia, useSharedStore } from '../store';
+import { useSharedStore } from '../store';
 
-const shared = useSharedStore(pinia);
+const shared = useSharedStore();
 
 interface Form {
   language: string | null;
