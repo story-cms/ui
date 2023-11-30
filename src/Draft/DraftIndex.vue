@@ -106,7 +106,9 @@ const defaultTitle = computed(() => {
 
 const chapterTitle = ref(
   props.bundle.title
-    ? `${props.storyName} . ${padZero(props.draft.number)} . ${props.bundle.title}`
+    ? `${props.storyName} <span>.</span> ${padZero(
+        props.draft.number,
+      )} <span>.</span> ${props.bundle.title.replace(/</g, '&lt;')}`
     : defaultTitle.value,
 );
 
