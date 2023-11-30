@@ -9,7 +9,7 @@
     >
       <div
         v-if="shared.isTranslation && !drafts.isSingleColumn && !isReadOnly"
-        class="absolute left-0 right-0 top-0 w-[calc(39rem_*_2)] border-t border-gray-300"
+        class="absolute left-0 right-0 top-0 w-[calc(47rem_*_2)] border-t border-gray-300"
       ></div>
 
       <div
