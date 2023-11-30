@@ -32,7 +32,12 @@
         @close="showAppPreview = false"
       />
     </div>
-    <section class="row-subgrid">
+    <section
+      class="row-subgrid"
+      :class="{
+        'mx-auto w-full max-w-[1080px]': drafts.isSingleColumn,
+      }"
+    >
       <form class="row-subgrid gap-y-8">
         <div
           v-for="(item, index) in spec.fields"
