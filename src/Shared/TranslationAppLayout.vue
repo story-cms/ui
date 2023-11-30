@@ -2,7 +2,12 @@
   <div class="bg-gray-50">
     <HeaderBar ref="translationNavigationComponent" />
     <div ref="translationHeader" class="w-full bg-gray-50">
-      <ContentHeader :title="chapterTitle" @delete="emit('delete')" @info="emit('info')">
+      <ContentHeader
+        :title="chapterTitle"
+        @delete="emit('delete')"
+        @info="emit('info')"
+        @app-preview="emit('app-preview')"
+      >
         <WorkflowButtons
           @submit="emit('submit')"
           @publish="emit('publish')"
@@ -55,7 +60,14 @@ defineProps<{
   chapterTitle: string;
 }>();
 
-const emit = defineEmits(['delete', 'publish', 'request-change', 'submit', 'info']);
+const emit = defineEmits([
+  'delete',
+  'publish',
+  'request-change',
+  'submit',
+  'info',
+  'app-preview',
+]);
 
 const shared = useSharedStore();
 const drafts = useDraftsStore();

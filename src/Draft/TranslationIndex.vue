@@ -6,6 +6,7 @@
     @publish="publishDraft"
     @request-change="reject"
     @info="info"
+    @app-preview="appPreview"
   >
     <div v-if="showMetaBox" class="absolute right-2 z-10">
       <MetaBox
@@ -16,6 +17,19 @@
         :published-when="published_when"
         :is-floating="true"
         @close="showMetaBox = false"
+      />
+    </div>
+    <div
+      v-if="showAppPreview"
+      class="absolute right-2 z-10"
+      :class="{
+        'top-80': showMetaBox,
+      }"
+    >
+      <MobileAppPreview
+        :is-floating="true"
+        :bundle="bundle"
+        @close="showAppPreview = false"
       />
     </div>
     <section class="row-subgrid">
@@ -59,6 +73,7 @@ import { ResponseStatus } from '../Shared/interfaces';
 import { useSharedStore, useModelStore, useWidgetsStore, useDraftsStore } from '../store';
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 import MetaBox from '../Shared/MetaBox.vue';
+import MobileAppPreview from './MobileAppPreview.vue';
 import { debounce, padZero, formatDate } from '../Shared/helpers';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
@@ -77,7 +92,12 @@ const model = useModelStore();
 const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
-const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
+
+const chapterTitle = ref(
+  props.bundle.title
+    ? `${props.storyName} . ${padZero(props.draft.number)} . ${props.bundle.title}`
+    : defaultTitle.value,
+);
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
@@ -162,9 +182,14 @@ const reject = () => {
 };
 
 const showMetaBox = ref(false);
+const showAppPreview = ref(false);
 
 const info = () => {
   showMetaBox.value = !showMetaBox.value;
+};
+
+const appPreview = () => {
+  showAppPreview.value = !showAppPreview.value;
 };
 
 onMounted(() => {
