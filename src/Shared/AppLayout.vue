@@ -1,6 +1,5 @@
 <template>
   <div ref="app_layout" class="min-h-screen bg-app_gray">
-    <h3>{{ shared.isLargeScreen }}</h3>
     <slot name="header"></slot>
     <slot></slot>
   </div>
