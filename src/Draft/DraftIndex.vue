@@ -17,7 +17,8 @@
     <div
       class="container relative mx-auto px-3"
       :class="{
-        'grid grid-cols-[1fr,_416px] gap-x-8 ': shared.isLargeScreen,
+        'grid grid-cols-[1fr,_416px] gap-x-8 ': isLargeScreen,
+        'grid grid-cols-[1fr]': !isLargeScreen || (!showMetaBox && !showAppPreview),
       }"
     >
       <form class="space-y-8">
@@ -26,25 +27,24 @@
         </div>
       </form>
 
-      <div :class="shared.isLargeScreen ? 'block' : 'hidden'">
-        <section>
+      <div :class="{ 'absolute right-0 top-0': !isLargeScreen }">
+        <section v-if="showMetaBox">
           <MetaBox
             :created-at="props.draft.createdAt"
             :updated-at="props.draft.updatedAt"
             :story-type="props.meta.storyType"
             :chapter-type="metaChapter"
             :published-when="published_when"
-            :is-floating="!shared.isLargeScreen"
+            :is-floating="!isLargeScreen"
             @close="showMetaBox = false"
           />
         </section>
-
         <section v-if="showAppPreview" class="mt-6">
           <MobileAppPreview
-            :is-floating="!shared.isLargeScreen"
+            :is-floating="!isLargeScreen"
             :bundle="bundle"
             class="mt-2"
-            @close="closeS"
+            @close="showAppPreview = false"
           />
         </section>
       </div>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, watch, onBeforeMount } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import HeaderBar from '../Shared/HeaderBar.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
@@ -73,10 +73,6 @@ import MobileAppPreview from './MobileAppPreview.vue';
 import WorkflowButtons from '../Draft/WorkflowButtons.vue';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
-
-const closeS = () => {
-  showAppPreview.value = false;
-};
 
 const model = useModelStore();
 model.setFromProps(props);
@@ -170,6 +166,17 @@ const reject = () => {
 const showMetaBox = ref(false);
 const showAppPreview = ref(false);
 
+const isLargeScreen = computed(() => {
+  return shared.isLargeScreen;
+});
+
+watch([showMetaBox, showAppPreview, isLargeScreen], ([a, b, c]) => {
+  if (c) {
+    showMetaBox.value = a;
+    showAppPreview.value = b;
+  }
+});
+
 const info = () => {
   showMetaBox.value = !showMetaBox.value;
 };
@@ -202,6 +209,11 @@ onMounted(() => {
     chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
   observer.observe(headerBarComponent.value?.navbar as HTMLElement);
+});
+
+onBeforeMount(() => {
+  shared.isLargeScreen ? (showMetaBox.value = true) : (showMetaBox.value = false);
+  shared.isLargeScreen ? (showAppPreview.value = true) : (showAppPreview.value = false);
 });
 
 const widgetFor = (key: number) => {
