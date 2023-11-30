@@ -27,15 +27,6 @@ export const commonProps = {
 
 export const padZero = (value: number): string => (value > 9 ? `${value}` : `0${value}`);
 
-export const validateFile = (file: File) => {
-  const allowedExtensions = ['.jpeg', '.jpg', '.png', '.svg'];
-
-  if (!allowedExtensions.some((extension) => file['name'].endsWith(extension)))
-    throw new Error(`Invalid file! Use an image instead.`);
-
-  if (file['size'] > 5662310) throw new Error(`File size is too large.`);
-};
-
 export const formatDate = (value: string): string => {
   const d = new Date(value);
   return `${padZero(d.getDate())}/${padZero(d.getMonth() + 1)}/${padZero(
