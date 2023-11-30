@@ -46,6 +46,7 @@
         </section>
         <section v-if="showAppPreview" class="mt-6">
           <MobileAppPreview
+            v-if="bundle"
             :is-floating="!isLargeScreen"
             :bundle="bundle"
             class="mt-2"
@@ -58,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, watch, onBeforeMount } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import HeaderBar from '../Shared/HeaderBar.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
@@ -218,13 +219,6 @@ onMounted(() => {
     chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
   observer.observe(headerBarComponent.value?.navbar as HTMLElement);
-  shared.isLargeScreen ? (showMetaBox.value = true) : (showMetaBox.value = false);
-  shared.isLargeScreen ? (showAppPreview.value = true) : (showAppPreview.value = false);
-});
-
-onBeforeMount(() => {
-  shared.isLargeScreen ? (showMetaBox.value = true) : (showMetaBox.value = false);
-  shared.isLargeScreen ? (showAppPreview.value = true) : (showAppPreview.value = false);
 });
 
 const widgetFor = (key: number) => {

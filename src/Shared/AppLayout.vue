@@ -1,13 +1,16 @@
 <template>
-  <div class="min-h-screen bg-app_gray">
+  <div ref="app_layout" class="min-h-screen bg-app_gray">
+    <h3>{{ shared.isLargeScreen }}</h3>
     <slot name="header"></slot>
     <slot></slot>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useSharedStore } from '../store';
 const shared = useSharedStore();
+
+const app_layout = ref<HTMLElement | null>(null);
 
 const resizeObserver = (element: HTMLElement) => {
   const instance = new ResizeObserver((entries) => {
@@ -20,6 +23,6 @@ const resizeObserver = (element: HTMLElement) => {
 };
 
 onMounted(() => {
-  resizeObserver(document.body);
+  resizeObserver(app_layout.value as HTMLElement);
 });
 </script>
