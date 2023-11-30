@@ -34,14 +34,14 @@
             :story-type="props.meta.storyType"
             :chapter-type="metaChapter"
             :published-when="published_when"
-            :is-floating="!isLargeScreen"
+            :is-floating="!shared.isLargeScreen"
             @close="showMetaBox = false"
           />
         </section>
 
         <section v-if="showAppPreview" class="mt-6">
           <MobileAppPreview
-            :is-floating="!isLargeScreen"
+            :is-floating="!shared.isLargeScreen"
             :bundle="bundle"
             class="mt-2"
             @close="closeS"
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import HeaderBar from '../Shared/HeaderBar.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
@@ -169,23 +169,12 @@ const reject = () => {
 
 const showMetaBox = ref(false);
 const showAppPreview = ref(false);
-const isLargeScreen = ref(false);
-const windowWidth = ref(window.innerWidth);
-
-const handleResize = () => {
-  windowWidth.value = window.innerWidth;
-  windowWidth.value >= 1024
-    ? (isLargeScreen.value = true)
-    : (isLargeScreen.value = false);
-};
 
 const info = () => {
-  if (isLargeScreen.value) return;
   showMetaBox.value = !showMetaBox.value;
 };
 
 const appPreview = () => {
-  if (isLargeScreen.value) return;
   showAppPreview.value = !showAppPreview.value;
 };
 const published_when = computed(() => {
@@ -212,7 +201,6 @@ onMounted(() => {
     save();
     chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
-  window.addEventListener('resize', handleResize);
   observer.observe(headerBarComponent.value?.navbar as HTMLElement);
 });
 
@@ -220,8 +208,4 @@ const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);
 };
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
-});
 </script>

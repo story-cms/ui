@@ -13,7 +13,7 @@ const resizeObserver = (element: HTMLElement) => {
   const instance = new ResizeObserver((entries) => {
     for (const entry of entries) {
       const { width } = entry.contentRect;
-      shared.setLargeScreen(width > 1280);
+      shared.setLargeScreen(width >= 1280);
     }
   });
   instance.observe(element);
