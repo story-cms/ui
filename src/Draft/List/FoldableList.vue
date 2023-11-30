@@ -14,7 +14,7 @@
 
       <div
         v-if="!isReadOnly"
-        class="absolute -left-5 right-0 flex items-center justify-between"
+        class="absolute -left-5 right-0 ml-2 flex items-center justify-between"
         :class="{
           '-top-[17.6px]': shared.isTranslation,
           '-top-5': !shared.isTranslation,
