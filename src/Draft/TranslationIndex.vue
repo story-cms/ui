@@ -1,6 +1,7 @@
 <template>
   <TranslationAppLayout
     :chapter-title="chapterTitle"
+    :show-side-bar="showSideBar"
     @delete="deleteDraft"
     @submit="submitDraft"
     @publish="publishDraft"
@@ -8,37 +9,19 @@
     @info="info"
     @app-preview="appPreview"
   >
-    <div v-if="showMetaBox" class="absolute right-2 z-10">
-      <MetaBox
-        :created-at="draft.createdAt"
-        :updated-at="draft.updatedAt"
-        :story-type="meta.storyType"
-        :chapter-type="metaChapter"
-        :published-when="published_when"
-        :is-floating="true"
-        @close="showMetaBox = false"
-      />
-    </div>
-    <div
-      v-if="showAppPreview"
-      class="absolute right-2 z-10"
-      :class="{
-        'top-80': showMetaBox,
-      }"
-    >
-      <MobileAppPreview
-        :is-floating="true"
-        :bundle="bundle"
-        @close="showAppPreview = false"
-      />
-    </div>
     <section
       class="row-subgrid"
       :class="{
         'mx-auto w-full max-w-[1080px]': drafts.isSingleColumn,
+        'row-subgrid': !drafts.isSingleColumn,
       }"
     >
-      <form class="row-subgrid gap-y-8">
+      <form
+        :class="{
+          'row-subgrid gap-y-8': !drafts.isSingleColumn,
+          'grid grid-cols-1 gap-y-2': drafts.isSingleColumn,
+        }"
+      >
         <div
           v-for="(item, index) in spec.fields"
           :key="index"
@@ -66,6 +49,33 @@
         </div>
       </div>
     </section>
+    <div
+      :class="{
+        'absolute right-0 top-0': !isLargeScreen || !showSideBar,
+        'sticky top-24  grid [align-self:start]': isLargeScreen && drafts.isSingleColumn,
+      }"
+    >
+      <section v-if="showMetaBox">
+        <MetaBox
+          :created-at="props.draft.createdAt"
+          :updated-at="props.draft.updatedAt"
+          :story-type="props.meta.storyType"
+          :chapter-type="metaChapter"
+          :published-when="published_when"
+          :is-floating="!isLargeScreen || !drafts.isSingleColumn"
+          @close="showMetaBox = false"
+        />
+      </section>
+      <section v-if="showAppPreview" class="mt-6">
+        <MobileAppPreview
+          v-if="bundle"
+          :is-floating="!isLargeScreen || !drafts.isSingleColumn"
+          :bundle="bundle"
+          class="mt-2"
+          @close="showAppPreview = false"
+        />
+      </section>
+    </div>
   </TranslationAppLayout>
 </template>
 
@@ -188,6 +198,17 @@ const reject = () => {
 
 const showMetaBox = ref(false);
 const showAppPreview = ref(false);
+const isLargeScreen = computed(() => {
+  return shared.isLargeScreen;
+});
+
+const showSideBar = computed(() => {
+  return (
+    shared.isLargeScreen &&
+    (showMetaBox.value || showAppPreview.value) &&
+    drafts.isSingleColumn
+  );
+});
 
 const info = () => {
   showMetaBox.value = !showMetaBox.value;

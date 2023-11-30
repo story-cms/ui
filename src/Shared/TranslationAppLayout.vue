@@ -1,6 +1,8 @@
 <template>
-  <div class="bg-gray-50">
-    <HeaderBar ref="translationNavigationComponent" />
+  <AppLayout>
+    <template #header>
+      <HeaderBar ref="translationNavigationComponent" />
+    </template>
     <div ref="translationHeader" class="w-full bg-gray-50">
       <ContentHeader
         :title="chapterTitle"
@@ -36,20 +38,21 @@
 
     <div
       class="container relative mx-auto grid min-h-screen gap-x-2 [&>section]:mt-2"
-      :class="
-        drafts.isSingleColumn
-          ? 'grid-cols-1 '
-          : 'grid-flow-col-dense grid-cols-[repeat(2,_minmax(40rem,_1fr))] overflow-x-auto lg:place-content-center'
-      "
+      :class="{
+        'grid-flow-col-dense grid-cols-[repeat(2,_minmax(40rem,_1fr))] overflow-x-auto lg:place-content-center':
+          !drafts.isSingleColumn,
+        'grid-cols-1': drafts.isSingleColumn,
+        'grid-cols-[1fr,_416px]': showSideBar,
+      }"
     >
       <slot></slot>
     </div>
-  </div>
+  </AppLayout>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-
+import AppLayout from './AppLayout.vue';
 import HeaderBar from './HeaderBar.vue';
 import { useDraftsStore, useSharedStore } from '../store';
 import ContentHeader from './ContentHeader.vue';
@@ -58,6 +61,7 @@ import Icon from './Icon.vue';
 
 defineProps<{
   chapterTitle: string;
+  showSideBar: boolean;
 }>();
 
 const emit = defineEmits([
