@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto">
     <div class="flex items-center justify-between py-6">
-      <h3 class="font-['Inter'] text-lg font-bold leading-7 text-gray-800">
+      <h3 class="font-['Inter'] text-2xl font-semibold text-gray-800">
         {{ title }}
       </h3>
       <div class="flex items-center space-x-6">
