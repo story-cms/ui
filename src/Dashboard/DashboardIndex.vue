@@ -1,8 +1,5 @@
 <template>
   <AppLayout>
-    <template #header>
-      <HeaderBar />
-    </template>
     <div class="container mx-auto p-3">
       <div class="my-4 flex items-center justify-between">
         <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ story }}</h3>
@@ -55,7 +52,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
-import HeaderBar from '../Shared/HeaderBar.vue';
 import { usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';

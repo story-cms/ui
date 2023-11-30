@@ -1,28 +1,24 @@
 <template>
   <AppLayout>
-    <template #header>
-      <HeaderBar ref="headerBarComponent" />
-    </template>
-    <div ref="contentHeaderEl" class="w-full bg-gray-50">
-      <ContentHeader
-        class="container mx-auto max-w-[1068px] px-6"
-        :title="title"
-        @delete="deletePage"
-        @info="info"
-      >
-        <BooleanField
-          :field="{
-            name: 'isPublished',
-            label: 'Published',
-            widget: 'boolean',
-            default: false,
-            tintColor: 'green-400',
-            labelOrder: 'start',
-          }"
-          :is-nested="true"
-        />
-      </ContentHeader>
-    </div>
+    <ContentHeader
+      class="container mx-auto max-w-[1068px] px-6"
+      :title="title"
+      @delete="deletePage"
+      @info="info"
+    >
+      <BooleanField
+        :field="{
+          name: 'isPublished',
+          label: 'Published',
+          widget: 'boolean',
+          default: false,
+          tintColor: 'green-400',
+          labelOrder: 'start',
+        }"
+        :is-nested="true"
+      />
+    </ContentHeader>
+
     <div
       class="relative max-w-[1068px] px-6 pt-2 lg:mx-auto lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-6"
     >
@@ -122,10 +118,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, toRefs, watch } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
-import HeaderBar from '../Shared/HeaderBar.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
-import { SharedPageProps, PageEditProps } from '../Shared/interfaces';
+import { SharedPageProps, PageEditProps, ResponseStatus } from '../Shared/interfaces';
 import SelectField from '../Draft/SelectField.vue';
 import MarkdownField from '../Draft/MarkdownField.vue';
 import PageMetaBox from './PageMetaBox.vue';
@@ -136,7 +131,6 @@ import { debounce } from '../Shared/helpers';
 import { useModelStore, useSharedStore, useWidgetsStore } from '../store';
 import { router } from '@inertiajs/vue3';
 import { DateTime } from 'luxon';
-import { createIntersectionObserver } from '../Shared/helpers';
 
 const props = defineProps<PageEditProps & SharedPageProps>();
 
@@ -194,12 +188,16 @@ const save = debounce(1000, () => {
       console.log('! error on save', errors);
       isSettingErrors = true;
       shared.setErrors(errors);
+      shared.addMessage(ResponseStatus.Failure, 'Error saving page');
     },
   });
 });
 
 const deletePage = () => {
-  router.delete(`/page/${props.page.id}`, {});
+  router.delete(`/page/${props.page.id}`, {
+    onSuccess: () => shared.addMessage(ResponseStatus.Confirmation, 'Page deleted'),
+    onError: () => shared.addMessage(ResponseStatus.Failure, 'Error deleting page'),
+  });
 };
 
 const showMetaBox = ref(false);
@@ -223,12 +221,6 @@ watch(isLargeScreen, (newValue) => {
   newValue ? (showMetaBox.value = true) : (showMetaBox.value = false);
 });
 
-const headerBarComponent = ref<typeof HeaderBar | null>(null);
-
-const contentHeaderEl = ref<HTMLElement | null>(null);
-
-const observer = createIntersectionObserver(contentHeaderEl);
-
 onMounted(() => {
   model.$subscribe(() => {
     // prevent infinite loop
@@ -247,7 +239,6 @@ onMounted(() => {
     showMetaBox.value = true;
   }
   window.addEventListener('resize', handleResize);
-  observer.observe(headerBarComponent.value?.navbar as HTMLElement);
 });
 
 onUnmounted(() => {

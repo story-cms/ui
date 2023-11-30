@@ -111,20 +111,3 @@ function getAbbreviation(inputBook: string): string {
 
   return '';
 }
-
-export const createIntersectionObserver = (element: any) => {
-  return new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        !entry.isIntersecting
-          ? element.value?.classList.add(...['fixed', 'top-0', 'z-10'])
-          : element.value?.classList.remove(...['fixed', 'top-0', 'z-10']);
-      });
-    },
-    {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1.0,
-    },
-  );
-};

@@ -1,8 +1,5 @@
 <template>
   <AppLayout>
-    <template #header>
-      <HeaderBar />
-    </template>
     <div class="container mx-auto mb-32 p-4">
       <div class="flex justify-between space-x-8">
         <!-- eslint-disable vue/no-v-html -->
@@ -59,7 +56,6 @@
 
 <script setup lang="ts">
 import AppLayout from '../Shared/AppLayout.vue';
-import HeaderBar from '../Shared/HeaderBar.vue';
 import { formatDate } from '../Shared/helpers';
 import { PreviewProps, SharedPageProps } from '../Shared/interfaces';
 import { useSharedStore } from '../store';

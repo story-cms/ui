@@ -1,8 +1,5 @@
 <template>
   <AppLayout>
-    <template #header>
-      <HeaderBar />
-    </template>
     <div class="container mx-auto p-3">
       <h2 class="mb-4 text-2xl font-bold leading-7 text-black">Manage Users</h2>
       <div v-if="otherError" class="py-4 text-error">
@@ -106,7 +103,6 @@
 import { computed, ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AppLayout from '../Shared/AppLayout.vue';
-import HeaderBar from '../Shared/HeaderBar.vue';
 import Icon from '../Shared/Icon.vue';
 import { SharedPageProps, UsersProps, UserMeta } from 'src/Shared/interfaces';
 import { useSharedStore } from '../store';
