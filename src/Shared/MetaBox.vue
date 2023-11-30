@@ -30,12 +30,12 @@
         <span class="place-self-end">{{ formatDate(props.createdAt) }}</span>
       </div>
       <div class="grid grid-cols-2">
-        <p>Auto-saved</p>
+        <p>Auto-Saved</p>
         <span class="place-self-end">{{ formatDate(props.updatedAt) }}</span>
       </div>
       <div class="grid grid-cols-2">
         <p>Last Published</p>
-        <span class="place-self-end">{{ publishedWhen }}</span>
+        <span class="place-self-end font-bold uppercase">{{ publishedWhen }}</span>
       </div>
     </section>
   </div>
