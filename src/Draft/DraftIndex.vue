@@ -27,7 +27,12 @@
         </div>
       </form>
 
-      <div :class="{ 'absolute right-0 top-0': !isLargeScreen }">
+      <div
+        :class="{
+          'absolute right-0 top-0': !isLargeScreen,
+          'sticky top-24  [align-self:start]': isLargeScreen,
+        }"
+      >
         <section v-if="showMetaBox">
           <MetaBox
             :created-at="props.draft.createdAt"
