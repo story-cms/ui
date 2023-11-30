@@ -98,7 +98,11 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
+const chapterTitle = ref(
+  props.bundle.title
+    ? `${props.storyName} . ${padZero(props.draft.number)} . ${props.bundle.title}`
+    : defaultTitle.value,
+);
 
 const save = debounce(2000, () => {
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
