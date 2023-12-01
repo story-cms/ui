@@ -22,6 +22,7 @@
         :user="sharedProps.user"
         :language="sharedProps.language"
         :languages="sharedProps.languages"
+        :story-name="'John'"
         :stories="['John', 'Acts']"
       />
     </Variant>

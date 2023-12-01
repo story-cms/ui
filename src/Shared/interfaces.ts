@@ -175,6 +175,7 @@ export interface DraftEditProps {
   spec: StorySpec; // drafts
   lastPublished: string; // drafts
   providers: Providers; // widgets
+  storyName: string;
 }
 
 export interface SharedPageProps {
@@ -222,6 +223,7 @@ export enum AddStatus {
 export interface DashboardProps {
   index: IndexReadyItem[];
   addStatus: AddStatus;
+  storyName: string;
 }
 
 export interface ChapterMeta {

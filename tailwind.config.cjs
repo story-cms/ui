@@ -33,6 +33,9 @@ module.exports = {
         app_gray: '#F9FAFB',
         app_green: '#16A34A',
       },
+      backgroundImage: {
+        'mobile-preview': "url('/src/assets/mobile.svg')"
+      }
     },
   },
   plugins: [require('@tailwindcss/forms')],
