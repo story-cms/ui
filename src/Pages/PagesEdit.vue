@@ -107,7 +107,7 @@
       </form>
       <div
         :class="{
-          'right-0 ': !isLargeScreen,
+          'right-4 ': !isLargeScreen,
           'absolute block': shared.isIntersecting,
           'fixed right-4 top-24': !shared.isIntersecting && !isLargeScreen,
           'sticky top-24  [align-self:start]': isLargeScreen,

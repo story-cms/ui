@@ -51,7 +51,7 @@
     </section>
     <div
       :class="{
-        'right-0': !isLargeScreen || !showSideBar,
+        'right-4': !isLargeScreen || !showSideBar,
         'absolute block': shared.isIntersecting,
         'fixed right-4 top-32': !shared.isIntersecting,
         '!left-2/4 !translate-x-2/4':
