@@ -40,6 +40,7 @@
           :key="item.number"
           :item="item"
           :is-list="isList"
+          placeholder-image="https://res.cloudinary.com/onesheep/image/upload/v1684754051/Screenshot_2023-05-22_at_13.12.03_pnamdt.png"
           :scope="currentTab"
           :chapter-name="meta.chapterType"
           @tap="onTap"
