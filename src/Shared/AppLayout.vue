@@ -28,6 +28,7 @@ const resizeHook = () => {
 
 onMounted(() => {
   window.addEventListener('resize', resizeHook);
+  resizeHook();
 });
 
 onUnmounted(() => {

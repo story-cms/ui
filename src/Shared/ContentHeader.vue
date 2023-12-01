@@ -1,6 +1,9 @@
 <template>
-  <div ref="contentHeaderEl" class="w-full bg-gray-50">
-    <div class="container mx-auto">
+  <div
+    class="w-full bg-gray-50"
+    :class="{ 'fixed inset-x-0 top-0 z-10': !shared.isIntersecting }"
+  >
+    <div class="container mx-auto px-3">
       <div class="flex items-center justify-between py-6">
         <h3
           class="font-['Inter'] text-2xl font-semibold text-gray-800 [&>span]:text-gray-400"
@@ -43,21 +46,21 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import Icon from './Icon.vue';
+import { useSharedStore } from '../store';
 
 defineProps<{
   title: string;
 }>();
 const emit = defineEmits(['delete', 'info', 'app-preview']);
 
-const contentHeaderEl = ref<HTMLElement | null>(null);
+const shared = useSharedStore();
+
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      !entry.isIntersecting
-        ? contentHeaderEl.value?.classList.add(...['fixed', 'top-0', 'z-10'])
-        : contentHeaderEl.value?.classList.remove(...['fixed', 'top-0', 'z-10']);
+      shared.setIsIntersecting(entry.isIntersecting);
     });
   },
   {
@@ -69,7 +72,6 @@ const observer = new IntersectionObserver(
 
 onMounted(() => {
   const navbar = document.getElementById('navbar') as HTMLElement;
-  // if(navbar ) navbar.reset();
   observer.observe(navbar);
 });
 </script>

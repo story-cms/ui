@@ -1,11 +1,6 @@
 <template>
   <AppLayout>
-    <ContentHeader
-      class="container mx-auto max-w-[1068px] px-3"
-      :title="title"
-      @delete="deletePage"
-      @info="info"
-    >
+    <ContentHeader :title="title" @delete="deletePage" @info="info">
       <BooleanField
         :field="{
           name: 'isPublished',

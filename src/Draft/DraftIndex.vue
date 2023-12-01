@@ -1,7 +1,6 @@
 <template>
   <AppLayout>
     <ContentHeader
-      class="px-3"
       :title="chapterTitle"
       @delete="deleteDraft"
       @info="info"
