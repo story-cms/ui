@@ -73,7 +73,7 @@ export const safeChapterTitle = (
 
   const safe = title.replace(/</g, '&lt;');
 
-  return `${storyName} <span>.</span> ${padZero(number)} <span>.</span> ${safe}}`;
+  return `${storyName} <span>.</span> ${padZero(number)} <span>.</span> ${safe}`;
 };
 
 export const parseReference = (reference: string): string => {

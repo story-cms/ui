@@ -234,8 +234,11 @@ export interface ChapterMeta {
 
 export interface PreviewProps {
   chapter: ChapterMeta;
+  bundle: any;
   bundleView: string;
   storyName: string;
+  title: string;
+  chapterLimit: number;
 }
 
 export interface UserMeta {

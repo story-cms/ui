@@ -5,6 +5,7 @@
   >
     <div class="container mx-auto px-3">
       <div class="flex items-center justify-between py-6">
+        <!-- eslint-disable vue/no-v-html -->
         <h3
           class="font-['Inter'] text-2xl font-semibold text-gray-800 [&>span]:text-gray-400"
           v-html="title"

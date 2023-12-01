@@ -100,11 +100,15 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const chapterTitle = computed(
-  () =>
-    safeChapterTitle(props.bundle.title, props.storyName, props.draft.number) ??
-    defaultTitle.value,
-);
+const title = ref(defaultTitle.value);
+
+const chapterTitle = computed(() => {
+  if (title.value === defaultTitle.value) return defaultTitle.value;
+  return (
+    safeChapterTitle(title.value, props.storyName, props.draft.number) ??
+    defaultTitle.value
+  );
+});
 
 // actions
 const onSuccess = (message?: string) => {
@@ -203,7 +207,8 @@ onMounted(() => {
     }
     widgets.setIsDirty(true);
     save();
-    chapterTitle.value = model.getField('title', '') || defaultTitle.value;
+    title.value = model.getField('title', defaultTitle.value);
+    console.info('title', title.value);
   });
 });
 
