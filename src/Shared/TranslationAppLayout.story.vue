@@ -10,6 +10,7 @@
         :chapter-title="'John . 01 . God Came to Earth'"
         :has-edit-review="true"
         :draft-status="'submitted'"
+        :show-side-bar="false"
       />
     </Variant>
     <Variant title="Role Editor">
@@ -29,6 +30,7 @@
         :chapter-title="'John . 01 . God Came to Earth'"
         :has-edit-review="true"
         :draft-status="'submitted'"
+        :show-side-bar="false"
       />
     </Variant>
   </Story>

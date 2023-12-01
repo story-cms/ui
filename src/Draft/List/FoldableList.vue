@@ -9,12 +9,12 @@
     >
       <div
         v-if="shared.isTranslation && !drafts.isSingleColumn && !isReadOnly"
-        class="absolute left-0 right-0 top-0 w-[calc(39rem_*_2)] border-t border-gray-300"
+        class="absolute left-0 right-0 top-0 w-[calc(47rem_*_2)] border-t border-gray-300"
       ></div>
 
       <div
         v-if="!isReadOnly"
-        class="absolute -left-5 right-0 flex items-center justify-between"
+        class="absolute -left-5 right-0 ml-2 flex items-center justify-between"
         :class="{
           '-top-[17.6px]': shared.isTranslation,
           '-top-5': !shared.isTranslation,

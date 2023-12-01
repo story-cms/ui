@@ -2,7 +2,7 @@
   <AppLayout>
     <div class="container mx-auto p-3">
       <div class="my-4 flex items-center justify-between">
-        <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ story }}</h3>
+        <h3 class="text-xl font-semibold">{{ meta.storyType }}: {{ props.storyName }}</h3>
         <icon :name="iconName" class="h-8 w-8 text-black" @click.prevent="toggle" />
       </div>
 
@@ -52,7 +52,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
 import Icon from '../Shared/Icon.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import IndexFilter from '../Shared/IndexFilter.vue';
@@ -83,7 +82,6 @@ const onFilter = (tab: string) => {
   currentTab.value = tab;
 };
 
-const story = computed(() => usePage().props.storyName as string);
 const iconName = computed(() => {
   return isList.value ? 'list' : 'grid';
 });

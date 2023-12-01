@@ -1,6 +1,7 @@
 <template>
   <AppLayout>
     <ContentHeader
+      class="px-3"
       :title="chapterTitle"
       @delete="deleteDraft"
       @info="info"
@@ -10,7 +11,12 @@
     </ContentHeader>
 
     <div
-      class="container relative mx-auto p-3 lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-9"
+      class="container relative mx-auto px-3"
+      :class="{
+        'grid grid-cols-[1fr,_416px] gap-x-8 ': isLargeScreen,
+        'mx-auto grid max-w-[1080px] grid-cols-[1fr] ':
+          !isLargeScreen || (!showMetaBox && !showAppPreview),
+      }"
     >
       <form class="space-y-8">
         <div v-for="(item, index) in drafts.story.fields" :key="index">
@@ -18,7 +24,14 @@
         </div>
       </form>
 
-      <div class="absolute right-2 top-2">
+      <div
+        :class="{
+          'right-4': !isLargeScreen,
+          'absolute block': shared.isIntersecting,
+          'fixed right-4 top-24': !shared.isIntersecting && !isLargeScreen,
+          'sticky top-24  [align-self:start]': isLargeScreen,
+        }"
+      >
         <section v-if="showMetaBox">
           <MetaBox
             :created-at="props.draft.createdAt"
@@ -30,13 +43,13 @@
             @close="showMetaBox = false"
           />
         </section>
-
         <section v-if="showAppPreview" class="mt-6">
           <MobileAppPreview
+            v-if="bundle"
             :is-floating="!isLargeScreen"
             :bundle="bundle"
             class="mt-2"
-            @close="closeS"
+            @close="showAppPreview = false"
           />
         </section>
       </div>
@@ -45,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onUnmounted } from 'vue';
+import { computed, ref, onMounted, watch } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
 import MetaBox from '../Shared/MetaBox.vue';
@@ -63,10 +76,6 @@ import MobileAppPreview from './MobileAppPreview.vue';
 import WorkflowButtons from '../Draft/WorkflowButtons.vue';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
-
-const closeS = () => {
-  showAppPreview.value = false;
-};
 
 const model = useModelStore();
 model.setFromProps(props);
@@ -92,7 +101,13 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
+const chapterTitle = ref(
+  props.bundle.title
+    ? `${props.storyName} <span>.</span> ${padZero(
+        props.draft.number,
+      )} <span>.</span> ${props.bundle.title.replace(/</g, '&lt;')}`
+    : defaultTitle.value,
+);
 
 // actions
 const onSuccess = (message?: string) => {
@@ -153,25 +168,25 @@ const reject = () => {
   });
 };
 
-const showMetaBox = ref(false);
-const showAppPreview = ref(false);
-const isLargeScreen = ref(false);
-const windowWidth = ref(window.innerWidth);
+const showMetaBox = ref(true);
+const showAppPreview = ref(true);
 
-const handleResize = () => {
-  windowWidth.value = window.innerWidth;
-  windowWidth.value >= 1024
-    ? (isLargeScreen.value = true)
-    : (isLargeScreen.value = false);
-};
+const isLargeScreen = computed(() => {
+  return shared.isLargeScreen;
+});
+
+watch([showMetaBox, showAppPreview, isLargeScreen], ([a, b, c]) => {
+  if (c) {
+    showMetaBox.value = a;
+    showAppPreview.value = b;
+  }
+});
 
 const info = () => {
-  if (isLargeScreen.value) return;
   showMetaBox.value = !showMetaBox.value;
 };
 
 const appPreview = () => {
-  if (isLargeScreen.value) return;
   showAppPreview.value = !showAppPreview.value;
 };
 
@@ -193,15 +208,10 @@ onMounted(() => {
     save();
     chapterTitle.value = model.getField('title', '') || defaultTitle.value;
   });
-  window.addEventListener('resize', handleResize);
 });
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
   return widgets.picker(widget);
 };
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
-});
 </script>

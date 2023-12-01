@@ -1,7 +1,11 @@
 <template>
-  <div class="bg-gray-50">
-    <HeaderBar />
-    <ContentHeader :title="chapterTitle" @delete="emit('delete')" @info="emit('info')">
+  <AppLayout>
+    <ContentHeader
+      :title="chapterTitle"
+      @delete="emit('delete')"
+      @info="emit('info')"
+      @app-preview="emit('app-preview')"
+    >
       <WorkflowButtons
         @submit="emit('submit')"
         @publish="emit('publish')"
@@ -25,23 +29,23 @@
         </div>
       </template>
     </ContentHeader>
-    <div class="mx-2 overflow-x-auto">
-      <div
-        class="relative grid min-h-screen max-w-7xl gap-x-2 [&>section]:mt-2 [&>section]:px-3"
-        :class="
-          drafts.isSingleColumn
-            ? 'grid-cols-1 lg:mx-auto'
-            : 'mx-auto grid-flow-col-dense grid-cols-[repeat(2,_minmax(39rem,_1fr))] overflow-x-auto lg:place-content-center'
-        "
-      >
-        <slot></slot>
-      </div>
+
+    <div
+      class="container relative mx-auto grid min-h-screen gap-x-2 [&>section]:mt-2"
+      :class="{
+        'grid-flow-col-dense grid-cols-[repeat(2,_minmax(40rem,_1fr))] overflow-x-auto lg:place-content-center':
+          !drafts.isSingleColumn,
+        'grid-cols-1': drafts.isSingleColumn,
+        'grid-cols-[1fr,_416px]': showSideBar,
+      }"
+    >
+      <slot></slot>
     </div>
-  </div>
+  </AppLayout>
 </template>
 
 <script setup lang="ts">
-import HeaderBar from './HeaderBar.vue';
+import AppLayout from './AppLayout.vue';
 import { useDraftsStore, useSharedStore } from '../store';
 import ContentHeader from './ContentHeader.vue';
 import WorkflowButtons from '../Draft/WorkflowButtons.vue';
@@ -49,9 +53,17 @@ import Icon from './Icon.vue';
 
 defineProps<{
   chapterTitle: string;
+  showSideBar: boolean;
 }>();
 
-const emit = defineEmits(['delete', 'publish', 'request-change', 'submit', 'info']);
+const emit = defineEmits([
+  'delete',
+  'publish',
+  'request-change',
+  'submit',
+  'info',
+  'app-preview',
+]);
 
 const shared = useSharedStore();
 const drafts = useDraftsStore();

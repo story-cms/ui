@@ -1,25 +1,27 @@
 <template>
   <TranslationAppLayout
     :chapter-title="chapterTitle"
+    :show-side-bar="showSideBar"
     @delete="deleteDraft"
     @submit="submitDraft"
     @publish="publishDraft"
     @request-change="reject"
     @info="info"
+    @app-preview="appPreview"
   >
-    <div v-if="showMetaBox" class="absolute right-2 z-10">
-      <MetaBox
-        :created-at="draft.createdAt"
-        :updated-at="draft.updatedAt"
-        :story-type="meta.storyType"
-        :chapter-type="metaChapter"
-        :published-when="published_when"
-        :is-floating="true"
-        @close="showMetaBox = false"
-      />
-    </div>
-    <section class="row-subgrid">
-      <form class="row-subgrid gap-y-8">
+    <section
+      class="row-subgrid"
+      :class="{
+        'mx-auto w-full max-w-[1080px]': drafts.isSingleColumn,
+        'row-subgrid': !drafts.isSingleColumn,
+      }"
+    >
+      <form
+        :class="{
+          'row-subgrid gap-y-8': !drafts.isSingleColumn,
+          'grid grid-cols-1 gap-y-2': drafts.isSingleColumn,
+        }"
+      >
         <div
           v-for="(item, index) in spec.fields"
           :key="index"
@@ -47,6 +49,37 @@
         </div>
       </div>
     </section>
+    <div
+      :class="{
+        'right-4': !isLargeScreen || !showSideBar,
+        'absolute block': shared.isIntersecting,
+        'fixed right-4 top-32': !shared.isIntersecting,
+        '!left-2/4 !translate-x-2/4':
+          !shared.isIntersecting && isLargeScreen && !showSideBar,
+        'sticky top-24  grid [align-self:start]': isLargeScreen && drafts.isSingleColumn,
+      }"
+    >
+      <section v-if="showMetaBox">
+        <MetaBox
+          :created-at="props.draft.createdAt"
+          :updated-at="props.draft.updatedAt"
+          :story-type="props.meta.storyType"
+          :chapter-type="metaChapter"
+          :published-when="published_when"
+          :is-floating="!isLargeScreen || !drafts.isSingleColumn"
+          @close="showMetaBox = false"
+        />
+      </section>
+      <section v-if="showAppPreview" class="mt-6">
+        <MobileAppPreview
+          v-if="bundle"
+          :is-floating="!isLargeScreen || !drafts.isSingleColumn"
+          :bundle="bundle"
+          class="mt-2"
+          @close="showAppPreview = false"
+        />
+      </section>
+    </div>
   </TranslationAppLayout>
 </template>
 
@@ -59,6 +92,7 @@ import { ResponseStatus } from '../Shared/interfaces';
 import { useSharedStore, useModelStore, useWidgetsStore, useDraftsStore } from '../store';
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 import MetaBox from '../Shared/MetaBox.vue';
+import MobileAppPreview from './MobileAppPreview.vue';
 import { debounce, padZero, formatDate } from '../Shared/helpers';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
@@ -77,7 +111,12 @@ const model = useModelStore();
 const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
-const chapterTitle = ref(props.bundle.title ? props.bundle.title : defaultTitle.value);
+
+const chapterTitle = ref(
+  props.bundle.title
+    ? `${props.storyName} . ${padZero(props.draft.number)} . ${props.bundle.title}`
+    : defaultTitle.value,
+);
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
@@ -162,9 +201,26 @@ const reject = () => {
 };
 
 const showMetaBox = ref(false);
+const showAppPreview = ref(false);
+
+const isLargeScreen = computed(() => {
+  return shared.isLargeScreen;
+});
+
+const showSideBar = computed(() => {
+  return (
+    shared.isLargeScreen &&
+    (showMetaBox.value || showAppPreview.value) &&
+    drafts.isSingleColumn
+  );
+});
 
 const info = () => {
   showMetaBox.value = !showMetaBox.value;
+};
+
+const appPreview = () => {
+  showAppPreview.value = !showAppPreview.value;
 };
 
 onMounted(() => {

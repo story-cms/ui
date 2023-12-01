@@ -1,7 +1,7 @@
 <template>
   <AppLayout>
     <ContentHeader
-      class="container mx-auto max-w-[1068px] px-6"
+      class="container mx-auto max-w-[1068px] px-3"
       :title="title"
       @delete="deletePage"
       @info="info"
@@ -20,7 +20,11 @@
     </ContentHeader>
 
     <div
-      class="relative max-w-[1068px] px-6 pt-2 lg:mx-auto lg:grid lg:grid-cols-[1fr_416px] lg:gap-x-6"
+      class="container relative mx-auto px-3"
+      :class="{
+        'grid grid-cols-[1fr,_416px] gap-x-8 ': isLargeScreen,
+        'mx-auto grid max-w-[1080px] grid-cols-[1fr] ': !isLargeScreen || !showMetaBox,
+      }"
     >
       <form class="space-y-8 bg-white py-4">
         <StringField
@@ -102,21 +106,31 @@
           class="px-8"
         />
       </form>
-
-      <div v-if="showMetaBox" :class="isLargeScreen ? 'block' : 'absolute right-2 top-2'">
-        <PageMetaBox
-          :created-at="page.createdAt"
-          :saved-at="savedAt"
-          :updated-at="page.updatedAt"
-          :published-at="publishedAt"
-        />
+      <div
+        :class="{
+          'right-4 ': !isLargeScreen,
+          'absolute block': shared.isIntersecting,
+          'fixed right-4 top-24': !shared.isIntersecting && !isLargeScreen,
+          'sticky top-24  [align-self:start]': isLargeScreen,
+        }"
+      >
+        <section v-if="showMetaBox">
+          <PageMetaBox
+            :is-floating="!isLargeScreen"
+            :created-at="page.createdAt"
+            :saved-at="savedAt"
+            :updated-at="page.updatedAt"
+            :published-at="publishedAt"
+            @close="showMetaBox = false"
+          />
+        </section>
       </div>
     </div>
   </AppLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, toRefs, watch } from 'vue';
+import { ref, computed, onMounted, toRefs, watch } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
@@ -200,20 +214,19 @@ const deletePage = () => {
   });
 };
 
-const showMetaBox = ref(false);
-const isLargeScreen = ref(false);
+const showMetaBox = ref(true);
 
-const windowWidth = ref(window.innerWidth);
+const isLargeScreen = computed(() => {
+  return shared.isLargeScreen;
+});
 
-const handleResize = () => {
-  windowWidth.value = window.innerWidth;
-  windowWidth.value >= 1024
-    ? (isLargeScreen.value = true)
-    : (isLargeScreen.value = false);
-};
+watch([showMetaBox, isLargeScreen], ([a, c]) => {
+  if (c) {
+    showMetaBox.value = a;
+  }
+});
 
 const info = () => {
-  if (isLargeScreen.value) return;
   showMetaBox.value = !showMetaBox.value;
 };
 
@@ -234,14 +247,5 @@ onMounted(() => {
     title.value = model.getField('title', 'Page');
     isPublished.value = Boolean(model.getField('isPublished', false));
   });
-
-  if (window.innerWidth >= 1024) {
-    showMetaBox.value = true;
-  }
-  window.addEventListener('resize', handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
 });
 </script>
