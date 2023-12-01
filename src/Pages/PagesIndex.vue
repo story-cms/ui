@@ -1,8 +1,5 @@
 <template>
   <AppLayout>
-    <template #header>
-      <HeaderBar />
-    </template>
     <div class="container mx-auto px-6 py-3 lg:w-2/3">
       <div class="flex items-center justify-between">
         <div class="space-x-6">
@@ -30,7 +27,6 @@
 import { ref, computed, toRefs } from 'vue';
 import { usePagesStore } from '../store';
 import AppLayout from '../Shared/AppLayout.vue';
-import HeaderBar from '../Shared/HeaderBar.vue';
 import AddItemButton from '../Shared/AddItemButton.vue';
 import PageIndexItem from './PageIndexItem.vue';
 import { router } from '@inertiajs/vue3';

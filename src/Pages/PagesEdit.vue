@@ -1,23 +1,19 @@
 <template>
   <AppLayout>
-    <template #header>
-      <HeaderBar ref="headerBarComponent" />
-    </template>
-    <div ref="contentHeaderEl" class="w-full bg-gray-50">
-      <ContentHeader class="px-3" :title="title" @delete="deletePage" @info="info">
-        <BooleanField
-          :field="{
-            name: 'isPublished',
-            label: 'Published',
-            widget: 'boolean',
-            default: false,
-            tintColor: 'green-400',
-            labelOrder: 'start',
-          }"
-          :is-nested="true"
-        />
-      </ContentHeader>
-    </div>
+    <ContentHeader :title="title" @delete="deletePage" @info="info">
+      <BooleanField
+        :field="{
+          name: 'isPublished',
+          label: 'Published',
+          widget: 'boolean',
+          default: false,
+          tintColor: 'green-400',
+          labelOrder: 'start',
+        }"
+        :is-nested="true"
+      />
+    </ContentHeader>
+
     <div
       class="container relative mx-auto px-3"
       :class="{
@@ -131,10 +127,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, toRefs, watch } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
-import HeaderBar from '../Shared/HeaderBar.vue';
 import StringField from '../Draft/StringField.vue';
 import ImageField from '../Draft/ImageField.vue';
-import { SharedPageProps, PageEditProps } from '../Shared/interfaces';
+import { SharedPageProps, PageEditProps, ResponseStatus } from '../Shared/interfaces';
 import SelectField from '../Draft/SelectField.vue';
 import MarkdownField from '../Draft/MarkdownField.vue';
 import PageMetaBox from './PageMetaBox.vue';
@@ -202,12 +197,16 @@ const save = debounce(1000, () => {
       console.log('! error on save', errors);
       isSettingErrors = true;
       shared.setErrors(errors);
+      shared.addMessage(ResponseStatus.Failure, 'Error saving page');
     },
   });
 });
 
 const deletePage = () => {
-  router.delete(`/page/${props.page.id}`, {});
+  router.delete(`/page/${props.page.id}`, {
+    onSuccess: () => shared.addMessage(ResponseStatus.Confirmation, 'Page deleted'),
+    onError: () => shared.addMessage(ResponseStatus.Failure, 'Error deleting page'),
+  });
 };
 
 const showMetaBox = ref(true);
@@ -226,11 +225,9 @@ const info = () => {
   showMetaBox.value = !showMetaBox.value;
 };
 
-const headerBarComponent = ref<typeof HeaderBar | null>(null);
-
-const contentHeaderEl = ref<HTMLElement | null>(null);
-
-const observer = shared.createIntersectionObserver(contentHeaderEl);
+watch(isLargeScreen, (newValue) => {
+  newValue ? (showMetaBox.value = true) : (showMetaBox.value = false);
+});
 
 onMounted(() => {
   model.$subscribe(() => {
@@ -245,7 +242,5 @@ onMounted(() => {
     title.value = model.getField('title', 'Page');
     isPublished.value = Boolean(model.getField('isPublished', false));
   });
-
-  observer.observe(headerBarComponent.value?.navbar as HTMLElement);
 });
 </script>
