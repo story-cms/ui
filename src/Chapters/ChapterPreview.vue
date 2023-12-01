@@ -1,5 +1,7 @@
 <template>
   <AppLayout>
+    <!-- <ContentHeader :title="title" @delete="deletePage" @info="info"> </ContentHeader> -->
+
     <div class="container mx-auto mb-32 p-4">
       <div class="flex justify-between space-x-8">
         <!-- eslint-disable vue/no-v-html -->

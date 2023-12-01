@@ -235,6 +235,7 @@ export interface ChapterMeta {
 export interface PreviewProps {
   chapter: ChapterMeta;
   bundleView: string;
+  storyName: string;
 }
 
 export interface UserMeta {

@@ -64,6 +64,18 @@ export const debounce = <T extends (...args: any[]) => void>( // eslint-disable-
   };
 };
 
+export const safeChapterTitle = (
+  title: string | null,
+  storyName: string,
+  number: number,
+): string | null => {
+  if (!title) return null;
+
+  const safe = title.replace(/</g, '&lt;');
+
+  return `${storyName} <span>.</span> ${padZero(number)} <span>.</span> ${safe}}`;
+};
+
 export const parseReference = (reference: string): string => {
   const match = reference
     .trim()

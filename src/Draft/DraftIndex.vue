@@ -63,7 +63,7 @@ import ContentHeader from '../Shared/ContentHeader.vue';
 import MetaBox from '../Shared/MetaBox.vue';
 import { router } from '@inertiajs/vue3';
 import type { Errors } from '@inertiajs/core';
-import { padZero, debounce, formatDate } from '../Shared/helpers';
+import { padZero, debounce, formatDate, safeChapterTitle } from '../Shared/helpers';
 import {
   FieldSpec,
   DraftEditProps,
@@ -100,12 +100,10 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const chapterTitle = ref(
-  props.bundle.title
-    ? `${props.storyName} <span>.</span> ${padZero(
-        props.draft.number,
-      )} <span>.</span> ${props.bundle.title.replace(/</g, '&lt;')}`
-    : defaultTitle.value,
+const chapterTitle = computed(
+  () =>
+    safeChapterTitle(props.bundle.title, props.storyName, props.draft.number) ??
+    defaultTitle.value,
 );
 
 // actions
