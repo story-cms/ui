@@ -93,7 +93,7 @@ import { useSharedStore, useModelStore, useWidgetsStore, useDraftsStore } from '
 import TranslationAppLayout from '../Shared/TranslationAppLayout.vue';
 import MetaBox from '../Shared/MetaBox.vue';
 import MobileAppPreview from './MobileAppPreview.vue';
-import { debounce, padZero, formatDate } from '../Shared/helpers';
+import { debounce, padZero, formatDate, safeChapterTitle } from '../Shared/helpers';
 
 const props = defineProps<DraftEditProps & SharedPageProps>();
 
@@ -112,11 +112,15 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const chapterTitle = ref(
-  props.bundle.title
-    ? `${props.storyName} . ${padZero(props.draft.number)} . ${props.bundle.title}`
-    : defaultTitle.value,
-);
+const title = ref(defaultTitle.value);
+
+const chapterTitle = computed(() => {
+  if (title.value === defaultTitle.value) return defaultTitle.value;
+  return (
+    safeChapterTitle(title.value, props.storyName, props.draft.number) ??
+    defaultTitle.value
+  );
+});
 
 const widgetFor = (key: number) => {
   const widget = (props.spec.fields as FieldSpec[])[key].widget;
@@ -230,7 +234,7 @@ onMounted(() => {
       return;
     }
     widgets.setIsDirty(true);
-    chapterTitle.value = model.getField('title', '') || defaultTitle.value;
+    title.value = model.getField('title', defaultTitle.value);
     saveDraft();
   });
 });

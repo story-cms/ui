@@ -16,7 +16,7 @@
     <section class="space-y-2 font-['Inter'] text-lg/7 font-bold">
       <div class="grid grid-cols-2">
         <p>{{ props.storyType }}</p>
-        <span class="place-self-end">{{ drafts.story.name }}</span>
+        <span class="place-self-end">{{ story }}</span>
       </div>
       <div class="grid grid-cols-2">
         <p>Chapter</p>
@@ -42,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import Icon from './Icon.vue';
 import { ChapterMeta, Meta } from './interfaces';
 import { formatDate } from './helpers';
@@ -54,11 +55,13 @@ interface Props {
   updatedAt: ChapterMeta['updatedAt'];
   publishedWhen: string;
   isFloating?: boolean;
+  storyName?: string;
 }
 
 const props = defineProps<Props>();
-
 const drafts = useDraftsStore();
+
+const story = computed(() => props.storyName ?? drafts.story.name);
 
 const emit = defineEmits(['close']);
 </script>
