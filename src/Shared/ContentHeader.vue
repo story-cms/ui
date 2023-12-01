@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full bg-gray-50"
+    class="mb-2 w-full bg-gray-50"
     :class="{ 'fixed inset-x-0 top-0 z-10': !shared.isIntersecting }"
   >
     <div class="container mx-auto px-3">
@@ -41,7 +41,11 @@
         <slot name="labels"></slot>
       </div>
     </div>
-    <hr class="col-span-full" />
+    <hr
+      :class="{
+        'container mx-auto px-3': shared.isIntersecting,
+      }"
+    />
   </div>
 </template>
 
