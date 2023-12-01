@@ -1,33 +1,47 @@
 <template>
   <button
-    class="rounded-lg bg-white text-left shadow"
-    :class="{ 'flex w-full': isList }"
     type="button"
+    class="grid overflow-hidden rounded-lg bg-white shadow [grid-template-areas:'image'_'content']"
+    :class="{
+      'grid-cols-1 grid-rows-[186px_1fr]': showImage,
+      'w-full grid-cols-2': isList,
+    }"
     @click="emit('tap', item)"
   >
-    <div v-if="showImage" class="h-52">
-      <div
-        class="h-full rounded-t-lg bg-cover bg-center"
-        :style="`background-image: url(${imgUrl});`"
+    <div v-if="showImage" class="overflow-hidden [grid-area:image]">
+      <img
+        class="h-[186px] w-full object-cover object-center"
+        :src="imgUrl"
+        :alt="title"
       />
     </div>
     <div
-      class="flex justify-between"
+      class="p-6"
       :class="{
-        'min-w-full px-4 py-4': isList,
-        'flex-col items-start px-8 py-5': !isList,
+        '[grid-area:content]': !isList,
+        'col-span-full grid grid-cols-[subgrid]': isList,
       }"
     >
-      <div class="grow">
+      <div
+        class="grid grid-rows-[min-content_min-content] place-content-start text-left"
+        :class="{
+          'mb-3': !isList,
+        }"
+      >
         <h4 class="mb-1 font-bold text-gray-900">
           {{ chapterName }} {{ chapterNumber }}
         </h4>
-        <p class="mb-3 text-gray-500" :class="{ 'text-sm': isList, 'text-xs': !isList }">
+        <p class="text-gray-500" :class="{ 'text-sm': isList, 'text-xs': !isList }">
           {{ title }}
         </p>
       </div>
-
-      <div v-if="tags.length > 0" class="flex items-center space-x-4">
+      <div
+        v-if="tags.length > 0"
+        :class="{
+          'col-start-2 self-center justify-self-end': isList,
+          'flex items-center space-x-4': !isList,
+        }"
+      >
         <StatusTag v-for="tag in tags" :key="tag" :tag="tag" />
       </div>
     </div>
