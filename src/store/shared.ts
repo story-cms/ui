@@ -88,6 +88,27 @@ export const useSharedStore = defineStore('shared', () => {
     language.value = fresh;
   };
 
+  const isIntersecting = ref(false);
+
+  const createIntersectionObserver = (element: any) => {
+    return new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          !entry.isIntersecting
+            ? element.value?.classList.add(...['fixed', 'top-0', 'z-10'])
+            : element.value?.classList.remove(...['fixed', 'top-0', 'z-10']);
+
+          isIntersecting.value = entry.isIntersecting;
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
+      },
+    );
+  };
+
   return {
     stories,
     meta,
@@ -99,6 +120,7 @@ export const useSharedStore = defineStore('shared', () => {
     hasFeedback,
 
     isLargeScreen,
+    isIntersecting,
     setLargeScreen,
 
     language,
@@ -114,5 +136,6 @@ export const useSharedStore = defineStore('shared', () => {
     errorMessages,
     setFromProps,
     addMessage,
+    createIntersectionObserver,
   };
 });
