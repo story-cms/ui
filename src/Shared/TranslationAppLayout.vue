@@ -33,7 +33,7 @@
     <div
       class="container relative mx-auto grid min-h-screen gap-x-2 [&>section]:mt-2"
       :class="{
-        'grid-flow-col-dense grid-cols-[repeat(2,_minmax(40rem,_1fr))] overflow-x-auto lg:place-content-center':
+        'grid-flow-col-dense grid-cols-[repeat(2,_minmax(40rem,_1fr))] overflow-x-auto':
           !drafts.isSingleColumn,
         'grid-cols-1': drafts.isSingleColumn,
         'grid-cols-[1fr,_416px]': showSideBar,
