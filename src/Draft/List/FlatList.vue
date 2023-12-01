@@ -5,7 +5,7 @@
     role="listitem"
     class="my-8 grid space-y-8 bg-transparent"
   >
-    <div class="ml-8 space-y-6 rounded bg-gray-100 px-8 pb-8 pt-3 drop-shadow">
+    <div class="ml-8 space-y-6 bg-gray-100 px-8 pb-8 pt-3 drop-shadow">
       <div
         v-if="canMutate"
         class="absolute right-0 mr-3 cursor-pointer text-gray-500"
