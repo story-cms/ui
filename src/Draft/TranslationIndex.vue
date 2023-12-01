@@ -8,7 +8,6 @@
     @request-change="reject"
     @info="info"
     @app-preview="appPreview"
-    @is-intersecting="checkIntersection"
   >
     <section
       class="row-subgrid"
@@ -53,8 +52,9 @@
     <div
       :class="{
         'right-0': !isLargeScreen || !showSideBar,
-        'absolute block': isIntersecting,
-        'fixed right-4 top-32': !isIntersecting,
+        'absolute block': shared.isIntersecting,
+        'fixed right-4 top-32': !shared.isIntersecting,
+        '!right-32': !shared.isIntersecting && isLargeScreen,
         'sticky top-24  grid [align-self:start]': isLargeScreen && drafts.isSingleColumn,
       }"
     >
@@ -201,12 +201,6 @@ const reject = () => {
 
 const showMetaBox = ref(false);
 const showAppPreview = ref(false);
-
-const isIntersecting = ref(true);
-
-const checkIntersection = (value: boolean) => {
-  isIntersecting.value = value;
-};
 
 const isLargeScreen = computed(() => {
   return shared.isLargeScreen;

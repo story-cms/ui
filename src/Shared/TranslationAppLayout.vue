@@ -71,7 +71,6 @@ const emit = defineEmits([
   'submit',
   'info',
   'app-preview',
-  'is-intersecting',
 ]);
 
 const shared = useSharedStore();
@@ -84,21 +83,7 @@ const toggle = () => {
 const translationNavigationComponent = ref<typeof HeaderBar | null>(null);
 const translationHeader = ref<HTMLElement | null>(null);
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    !entry.isIntersecting
-      ? translationHeader.value?.classList.add(...['fixed', 'top-0', 'z-10'])
-      : translationHeader.value?.classList.remove(...['fixed', 'top-0', 'z-10']);
-    !entry.isIntersecting
-      ? emit('is-intersecting', false)
-      : emit('is-intersecting', true);
-  }),
-    {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1.0,
-    };
-});
+const observer = shared.createIntersectionObserver(translationHeader);
 
 onMounted(() => {
   observer.observe(translationNavigationComponent.value?.navbar as HTMLElement);
