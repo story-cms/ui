@@ -19,6 +19,10 @@ export const useDraftsStore = defineStore('drafts', () => {
     isSingleColumn.value = value;
   };
 
+  const setStatus = (status: string) => {
+    draft.value.status = status;
+  };
+
   return {
     story,
     lastPublished,
@@ -26,5 +30,6 @@ export const useDraftsStore = defineStore('drafts', () => {
     setFromProps,
     isSingleColumn,
     setSingleColumn,
+    setStatus,
   };
 });

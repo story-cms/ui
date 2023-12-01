@@ -100,7 +100,7 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const title = ref(defaultTitle.value);
+const title = ref(props.bundle.title);
 
 const chapterTitle = computed(() => {
   if (title.value === defaultTitle.value) return defaultTitle.value;
@@ -129,7 +129,11 @@ const onError = (errors: Errors, message: string) => {
 const save = debounce(2000, () => {
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
-    onSuccess: () => onSuccess(),
+    onSuccess: () => {
+      onSuccess();
+      if (props.user.role === 'admin') return;
+      drafts.setStatus('started');
+    },
     onError: (e) => onError(e, `${props.meta.chapterType} not saved`),
   });
 });

@@ -112,7 +112,7 @@ const defaultTitle = computed(() => {
   return `New ${props.meta.chapterType}`;
 });
 
-const title = ref(defaultTitle.value);
+const title = ref(props.bundle.title);
 
 const chapterTitle = computed(() => {
   if (title.value === defaultTitle.value) return defaultTitle.value;
