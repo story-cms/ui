@@ -54,7 +54,8 @@
         'right-0': !isLargeScreen || !showSideBar,
         'absolute block': shared.isIntersecting,
         'fixed right-4 top-32': !shared.isIntersecting,
-        '!right-32': !shared.isIntersecting && isLargeScreen,
+        '!left-2/4 !translate-x-2/4':
+          !shared.isIntersecting && isLargeScreen && !showSideBar,
         'sticky top-24  grid [align-self:start]': isLargeScreen && drafts.isSingleColumn,
       }"
     >

@@ -32,8 +32,7 @@
         :class="{
           'right-0 ': !isLargeScreen,
           'absolute block': shared.isIntersecting,
-          'fixed right-4 top-24': !shared.isIntersecting,
-          '!right-32': !shared.isIntersecting && isLargeScreen,
+          'fixed right-4 top-24': !shared.isIntersecting && !isLargeScreen,
           'sticky top-24  [align-self:start]': isLargeScreen,
         }"
       >
