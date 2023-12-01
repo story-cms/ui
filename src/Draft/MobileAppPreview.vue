@@ -7,7 +7,10 @@
     >
       <icon name="cross" class="h-6 w-6" />
     </button>
-    <div ref="flutterTarget" class="h-[812px] w-[375px] border transition-all"></div>
+    <div
+      ref="flutterTarget"
+      class="h-[812px] w-[375px] transition-all [&>flutter-view]:rounded-[3.25rem]"
+    ></div>
   </div>
 </template>
 <script setup lang="ts">
