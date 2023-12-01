@@ -30,7 +30,9 @@
 
       <div
         :class="{
-          'absolute right-0 top-0': !isLargeScreen,
+          'right-0 ': !isLargeScreen,
+          'absolute block': shared.isIntersecting,
+          'fixed right-4 top-24': !shared.isIntersecting,
           'sticky top-24  [align-self:start]': isLargeScreen,
         }"
       >
@@ -74,7 +76,6 @@ import {
   ResponseStatus,
 } from '../Shared/interfaces';
 import { useDraftsStore, useModelStore, useSharedStore, useWidgetsStore } from '../store';
-import { createIntersectionObserver } from '../Shared/helpers';
 
 import MobileAppPreview from './MobileAppPreview.vue';
 import WorkflowButtons from '../Draft/WorkflowButtons.vue';
@@ -209,7 +210,7 @@ const headerBarComponent = ref<typeof HeaderBar | null>(null);
 
 const contentHeaderEl = ref<HTMLElement | null>(null);
 
-const observer = createIntersectionObserver(contentHeaderEl);
+const observer = shared.createIntersectionObserver(contentHeaderEl);
 
 onMounted(() => {
   model.$subscribe(() => {
