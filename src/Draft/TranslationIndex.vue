@@ -53,32 +53,42 @@
       :class="{
         'right-4': !isLargeScreen || !showSideBar,
         'absolute block': shared.isIntersecting,
-        'fixed right-4 top-32': !shared.isIntersecting,
-        '!left-2/4 !translate-x-2/4':
-          !shared.isIntersecting && isLargeScreen && !showSideBar,
+        'container fixed inset-x-0 mx-auto': !shared.isIntersecting && !showSideBar,
         'sticky top-24  grid [align-self:start]': isLargeScreen && drafts.isSingleColumn,
       }"
     >
-      <section v-if="showMetaBox">
-        <MetaBox
-          :created-at="props.draft.createdAt"
-          :updated-at="props.draft.updatedAt"
-          :story-type="props.meta.storyType"
-          :chapter-type="metaChapter"
-          :published-when="published_when"
-          :is-floating="!isLargeScreen || !drafts.isSingleColumn"
-          @close="showMetaBox = false"
-        />
-      </section>
-      <section v-if="showAppPreview" class="mt-6">
-        <MobileAppPreview
-          v-if="bundle"
-          :is-floating="!isLargeScreen || !drafts.isSingleColumn"
-          :bundle="bundle"
-          class="mt-2"
-          @close="showAppPreview = false"
-        />
-      </section>
+      <div
+        :class="{
+          'absolute right-4 top-10': !shared.isIntersecting && !showSideBar,
+          'mt-11': !shared.isIntersecting && showSideBar,
+        }"
+      >
+        <section v-if="showMetaBox">
+          <MetaBox
+            :class="{ 'w-[407px]': !showSideBar }"
+            :created-at="props.draft.createdAt"
+            :updated-at="props.draft.updatedAt"
+            :story-type="props.meta.storyType"
+            :chapter-type="metaChapter"
+            :published-when="published_when"
+            :is-floating="!isLargeScreen || !drafts.isSingleColumn"
+            @close="showMetaBox = false"
+          />
+        </section>
+        <section
+          v-if="showAppPreview"
+          class="mt-6"
+          :class="{ 'mt-14': showSideBar && !showMetaBox }"
+        >
+          <MobileAppPreview
+            v-if="bundle"
+            :is-floating="!isLargeScreen || !drafts.isSingleColumn"
+            :bundle="bundle"
+            class="mt-2"
+            @close="showAppPreview = false"
+          />
+        </section>
+      </div>
     </div>
   </TranslationAppLayout>
 </template>
