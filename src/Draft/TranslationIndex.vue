@@ -180,7 +180,11 @@ let isSettingErrors = false;
 const saveDraft = debounce(2000, () => {
   router.post(`/draft/${props.draft.id}/save`, getPayload(), {
     preserveScroll: true,
-    onSuccess: () => onSuccess(),
+    onSuccess: () => {
+      onSuccess();
+      if (props.user.role === 'admin') return;
+      drafts.setStatus('started');
+    },
     onError: (e) => onError(e, 'Error saving draft.'),
   });
 });
