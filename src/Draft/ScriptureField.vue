@@ -233,7 +233,9 @@ const setScripture = async (reference: string) => {
     .trim()
     .replace(/\[(\d+)\]/g, '\n`$1`')
     .replace(/¶\s/g, '')
-    .replace(/^\n/, '');
+    .replace(/^\n/, '')
+    .replace(/\n\s+\n/g, '\n\n')
+    .replace(/\n+/g, '\n');
 
   model.setField(fieldPath.value, {
     reference,
