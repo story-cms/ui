@@ -42,7 +42,7 @@
             @close="showMetaBox = false"
           />
         </section>
-        <section v-if="showAppPreview" class="mt-6">
+        <section v-if="meta.hasAppPreview && showAppPreview" class="mt-6">
           <MobileAppPreview
             v-if="bundle"
             :is-floating="!isLargeScreen"
