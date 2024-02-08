@@ -21,6 +21,7 @@ import DropDown from './Shared/DropDown.vue';
 import AddItemButton from './Shared/AddItemButton.vue';
 import Icon from './Shared/Icon.vue';
 import PublicLayout from './Shared/PublicLayout.vue';
+import AppLayout from './Shared/AppLayout.vue';
 
 import PageIndexItem from './Pages/PageIndexItem.vue';
 
@@ -77,6 +78,7 @@ export {
   AddItemButton,
   Icon,
   PublicLayout,
+  AppLayout,
   // auth
   Login,
   ForgotPassword,
