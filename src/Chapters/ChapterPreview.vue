@@ -41,7 +41,7 @@
             @close="showMetaBox = false"
           />
         </section>
-        <section v-if="showAppPreview" class="mt-6">
+        <section v-if="meta.hasAppPreview && showAppPreview" class="mt-6">
           <MobileAppPreview
             v-if="bundle"
             :is-floating="!isLargeScreen"
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import AppLayout from '../Shared/AppLayout.vue';
 import ContentHeader from '../Shared/ContentHeader.vue';
 import MetaBox from '../Shared/MetaBox.vue';
@@ -115,4 +115,10 @@ const appPreview = () => {
 const edit = () => {
   window.location.href = `/draft/${props.chapter.number}/edit`;
 };
+
+onMounted(() => {
+  shared.meta.hasAppPreview
+    ? (showAppPreview.value = true)
+    : (showAppPreview.value = false);
+});
 </script>
