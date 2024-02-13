@@ -76,7 +76,7 @@
           />
         </section>
         <section
-          v-if="showAppPreview"
+          v-if="meta.hasAppPreview && showAppPreview"
           class="mt-6"
           :class="{ 'mt-14': showSideBar && !showMetaBox }"
         >
