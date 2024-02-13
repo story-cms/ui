@@ -19,6 +19,7 @@
             <Icon name="info" class="h-auto w-6 cursor-pointer text-gray-500" />
           </button>
           <button
+            v-if="shared.meta.hasAppPreview"
             type="button"
             class="grid h-[42px] w-[42px] cursor-pointer place-content-center rounded-full border border-gray-300 bg-white"
             @click.prevent="emit('app-preview')"
