@@ -22,6 +22,7 @@ import AddItemButton from './Shared/AddItemButton.vue';
 import Icon from './Shared/Icon.vue';
 import PublicLayout from './Shared/PublicLayout.vue';
 import AppLayout from './Shared/AppLayout.vue';
+import StickyHeader from './Shared/StickyHeader.vue';
 
 import PageIndexItem from './Pages/PageIndexItem.vue';
 
@@ -45,12 +46,13 @@ export * from './Draft/Attachments/types';
 export * from './Draft/Attachments/cloudinary-service';
 export * from './Draft/Attachments/s3-service';
 
-import { createInertiaApp, usePage } from '@inertiajs/vue3';
+import { createInertiaApp, usePage, router } from '@inertiajs/vue3';
 
 export {
   version,
   createInertiaApp,
   usePage,
+  router,
   // chapters
   IndexCard,
   StatusTag,
@@ -79,6 +81,7 @@ export {
   Icon,
   PublicLayout,
   AppLayout,
+  StickyHeader,
   // auth
   Login,
   ForgotPassword,

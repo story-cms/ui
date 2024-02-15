@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="mb-2 w-full bg-gray-50"
-    :class="{ 'fixed inset-x-0 top-0 z-10': !shared.isIntersecting }"
-  >
+  <StickyHeader>
     <div class="container mx-auto px-3">
       <div class="flex items-center justify-between py-6">
         <!-- eslint-disable vue/no-v-html -->
@@ -43,17 +40,12 @@
         <slot name="labels"></slot>
       </div>
     </div>
-    <hr
-      :class="{
-        'container mx-auto px-3': shared.isIntersecting,
-      }"
-    />
-  </div>
+  </StickyHeader>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import Icon from './Icon.vue';
+import StickyHeader from './StickyHeader.vue';
 import { useSharedStore } from '../store';
 
 defineProps<{
@@ -62,22 +54,4 @@ defineProps<{
 const emit = defineEmits(['delete', 'info', 'app-preview']);
 
 const shared = useSharedStore();
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      shared.setIsIntersecting(entry.isIntersecting);
-    });
-  },
-  {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0,
-  },
-);
-
-onMounted(() => {
-  const navbar = document.getElementById('navbar') as HTMLElement;
-  observer.observe(navbar);
-});
 </script>

@@ -1,4 +1,4 @@
-import './style.css'; // Import global CSS
+import './style.css'; // This causes a lot of lines to be echoed to the terminal on npm run dev
 
 import { defineSetupVue3 } from '@histoire/plugin-vue';
 import { pinia, useWidgetsStore } from './store';
