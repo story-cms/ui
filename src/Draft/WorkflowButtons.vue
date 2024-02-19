@@ -63,7 +63,6 @@ const showRequestChangeButton = computed(() => {
 });
 
 const showPublishButton = computed(() => {
-  if (shared.user.role !== 'admin') return false;
-  return !showSubmitButton.value;
+  return true;
 });
 </script>

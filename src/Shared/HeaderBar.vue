@@ -29,7 +29,10 @@
         <Link class="px-2 py-3 text-sm text-gray-500 hover:text-gray-700" href="/ui"
           >Phrases</Link
         >
-        <Link class="px-2 py-3 text-sm text-gray-500 hover:text-gray-700" href="/page"
+        <Link
+          v-if="isMultiLingualAdmin"
+          class="px-2 py-3 text-sm text-gray-500 hover:text-gray-700"
+          href="/page"
           >Pages</Link
         >
         <Link
@@ -132,4 +135,8 @@ const onStory = async (story: string) => {
 const signOut = () => (window.location.href = '/logout');
 const isMultiLingual = computed(() => shared.languages.length > 1);
 const isMultiStory = computed(() => shared.stories.length > 1);
+// a computed prop that returns a bool if user is admin and multi lingual
+const isMultiLingualAdmin = computed(
+  () => shared.user.isAdmin && shared.user.language === '*',
+);
 </script>

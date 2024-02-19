@@ -199,7 +199,6 @@ const submitDraft = () => {
 };
 
 const publishDraft = () => {
-  if (props.user.role !== 'admin') return;
   widgets.setIsDirty(true);
 
   router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
