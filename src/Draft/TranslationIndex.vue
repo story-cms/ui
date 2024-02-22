@@ -276,6 +276,8 @@ const getSourceItemsLength = (
   return result;
 };
 
+sourceItemsLength = getSourceItemsLength(model.source);
+
 onMounted(() => {
   model.$subscribe(() => {
     if (isSettingErrors) {
@@ -286,7 +288,5 @@ onMounted(() => {
     title.value = model.getField('title', defaultTitle.value);
     saveDraft();
   });
-
-  sourceItemsLength = getSourceItemsLength(model.source);
 });
 </script>
