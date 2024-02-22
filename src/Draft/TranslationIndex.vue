@@ -10,7 +10,6 @@
     @app-preview="appPreview"
   >
     <section
-      class="row-subgrid"
       :class="{
         'mx-auto w-full max-w-[1080px]': drafts.isSingleColumn,
         'row-subgrid': !drafts.isSingleColumn,
@@ -26,7 +25,11 @@
           v-for="(item, index) in spec.fields"
           :key="index"
           class="grid grid-rows-[subgrid]"
-          :style="{ gridRow: `span ${spec.fields.length}` }"
+          :style="{
+            gridRow: `span ${
+              sourceItemsLength.find((obj) => obj.key === `${(item as FieldSpec).name}`)?.length
+            }`,
+          }"
         >
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>
@@ -38,7 +41,11 @@
           v-for="(item, index) in spec.fields"
           :key="index"
           class="grid grid-rows-[subgrid]"
-          :style="{ gridRow: `span ${spec.fields.length}` }"
+          :style="{
+            gridRow: `span ${
+              sourceItemsLength.find((obj) => obj.key === `${(item as FieldSpec).name}`)?.length
+            }`,
+          }"
         >
           <component
             :is="widgetFor(index)"
@@ -240,6 +247,36 @@ const info = () => {
 const appPreview = () => {
   showAppPreview.value = !showAppPreview.value;
 };
+
+let sourceItemsLength: Array<{ key: string; length: number }> = [];
+
+interface NestedObject {
+  [key: string]: string | string[] | NestedObject;
+}
+
+const getSourceItemsLength = (
+  obj: NestedObject,
+): Array<{ key: string; length: number }> => {
+  const result: Array<{ key: string; length: number }> = [];
+
+  function calculateLength(value: string | string[] | NestedObject): number {
+    if (Array.isArray(value)) {
+      return value.length;
+    } else if (typeof value === 'object' && value !== null) {
+      return Object.keys(value).length;
+    } else {
+      return 1;
+    }
+  }
+  for (const key in obj) {
+    const value = obj[key];
+    const length = calculateLength(value);
+    result.push({ key, length });
+  }
+  return result;
+};
+
+sourceItemsLength = getSourceItemsLength(model.source);
 
 onMounted(() => {
   model.$subscribe(() => {
