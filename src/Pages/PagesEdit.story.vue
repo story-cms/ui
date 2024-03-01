@@ -33,5 +33,7 @@ const page: PageMeta = {
   id: 1,
   createdAt: '2021-10-10T14:48:00.000000Z',
   updatedAt: '2021-10-10T14:48:00.000000Z',
+  hasEditReview: false,
+  hasAppPreview: true,
 };
 </script>
