@@ -191,8 +191,6 @@ export interface PageMeta {
   id: number;
   createdAt: string;
   updatedAt: string;
-  hasEditReview: false;
-  hasAppPreview: true;
 }
 
 export interface PageBundle {
