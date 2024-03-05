@@ -403,7 +403,7 @@ export const user = {
   email: 'john@example.com',
   isManager: true,
   isAdmin: true,
-  role: 'admin',
+  role: 'editor',
   language: 'en',
 };
 

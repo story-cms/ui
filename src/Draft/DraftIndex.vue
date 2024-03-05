@@ -154,7 +154,6 @@ const submit = () => {
 };
 
 const publish = () => {
-  if (props.user.role !== 'admin') return;
   widgets.setIsDirty(true);
   router.post(`/draft/${props.draft.id}/publish`, getPayload(), {
     onSuccess: () => onSuccess(`${props.meta.chapterType} published successfully`),
