@@ -1,6 +1,6 @@
 {
   "name": "@story-cms/ui",
-  "version": "3.0.23",
+  "version": "3.0.24",
   "description": "Components for the StoryCMS user interface",
   "repository": "https://github.com/story-cms/ui",
   "bugs": "https://github.com/story-cms/ui/issues",
@@ -64,7 +64,7 @@
     "pinia": "^2.0.27"
   },
   "devDependencies": {
-    "@histoire/plugin-vue": "^0.17.12",
+    "@histoire/plugin-vue": "^0.16.5",
     "@playwright/test": "^1.36.0",
     "@tailwindcss/forms": "^0.5.3",
     "@types/luxon": "^3.3.0",
@@ -78,7 +78,7 @@
     "eslint": "^8.32.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.9.0",
-    "histoire": "^0.17.9",
+    "histoire": "^0.16.5",
     "jest": "^29.3.1",
     "postcss": "^8.4.31",
     "prettier": "^2.8.3",
