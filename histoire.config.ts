@@ -16,16 +16,20 @@ export default defineConfig({
         title: 'Field Widgets',
       },
       {
-        id: 'pages',
-        title: 'Pages',
-      },
-      {
         id: 'chapter',
         title: 'Chapter Index',
       },
       {
         id: 'draft',
         title: 'Drafts',
+      },
+      {
+        id: 'pages',
+        title: 'Pages',
+      },
+      {
+        id: 'interface',
+        title: 'Interface',
       },
       {
         id: 'users',
