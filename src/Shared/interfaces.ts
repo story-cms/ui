@@ -265,3 +265,27 @@ export enum ResponseStatus {
   // eslint-disable-next-line
   None,
 }
+
+export interface UiItem {
+  key: string;
+  source: string;
+  translation?: string;
+  description?: string;
+  placeholders?: string[];
+}
+
+export interface UiProgress {
+  locale: string;
+  language: string;
+  translatedCount: number;
+  totalCount: number;
+  updatedAt: string;
+}
+
+export interface UiPageProps {
+  items: UiItem[];
+}
+
+export interface UiIndexProps {
+  progress: UiProgress[];
+}
