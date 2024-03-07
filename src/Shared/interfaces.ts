@@ -95,6 +95,7 @@ export interface Meta {
   storyType: string;
   chapterType: string;
   helpUrl?: string;
+  microCopySource?: string;
   hasEditReview: boolean;
   hasAppPreview: boolean;
 }
