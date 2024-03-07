@@ -37,6 +37,9 @@ import PagesEdit from './Pages/PagesEdit.vue';
 import UsersIndex from './Users/UsersIndex.vue';
 import ChapterPreview from './Chapters/ChapterPreview.vue';
 
+import UiIndex from './Interface/UiIndex.vue';
+import UiPage from './Interface/UiPage.vue';
+
 import { version } from '../package.json';
 
 export * from './store/index';
@@ -93,4 +96,6 @@ export {
   PagesEdit,
   UsersIndex,
   ChapterPreview,
+  UiIndex,
+  UiPage,
 };
