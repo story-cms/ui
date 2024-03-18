@@ -10,6 +10,7 @@
     </ContentHeader>
 
     <div
+      :dir="shared.isRtl ? 'rtl' : 'ltr'"
       class="container relative mx-auto px-3"
       :class="{
         'grid grid-cols-[1fr,_416px] gap-x-8 ': isLargeScreen,

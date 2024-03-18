@@ -20,6 +20,7 @@
           'row-subgrid gap-y-8': !drafts.isSingleColumn,
           'grid grid-cols-1 gap-y-2': drafts.isSingleColumn,
         }"
+        :dir="shared.isRtl ? 'rtl' : 'ltr'"
       >
         <div
           v-for="(item, index) in spec.fields"
