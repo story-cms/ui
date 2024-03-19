@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <ContentHeader :title="title" @delete="deletePage" @info="info">
+    <ContentHeader dir="ltr" :title="title" @delete="deletePage" @info="info">
       <BooleanField
         :field="{
           name: 'isPublished',
@@ -21,7 +21,7 @@
         'mx-auto grid max-w-[1080px] grid-cols-[1fr] ': !isLargeScreen || !showMetaBox,
       }"
     >
-      <form class="space-y-8 bg-white py-4">
+      <form :dir="shared.isRtl ? 'rtl' : 'ltr'" class="space-y-8 bg-white py-4">
         <StringField
           :field="{
             name: 'title',

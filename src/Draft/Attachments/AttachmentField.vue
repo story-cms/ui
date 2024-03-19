@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="bg-white"
-    :class="{ 'p-8': !isNested, 'mt-4': isNested, rtl: shared.isRtl }"
-  >
+  <div class="bg-white" :class="{ 'p-8': !isNested, 'mt-4': isNested }">
     <div class="relative">
       <div class="relative">
         <label
@@ -12,7 +9,7 @@
         >
         <button
           v-if="!!url && !props.isReadOnly"
-          class="absolute right-0 top-2"
+          class="absolute top-2 ltr:right-0 rtl:left-0"
           type="button"
           @click.prevent="emit('delete')"
         >
@@ -52,7 +49,6 @@
 import { computed, ref, PropType } from 'vue';
 import { FieldSpec } from '../../Shared/interfaces';
 import { HostService } from './types';
-import { useSharedStore } from '../../store';
 import { commonProps } from '../../Shared/helpers';
 import FileUpload from './FileUpload.vue';
 import Icon from '../../Shared/Icon.vue';
@@ -79,7 +75,6 @@ const props = defineProps({
 const emit = defineEmits(['delete', 'attached']);
 
 const field = computed(() => props.field as FieldSpec);
-const shared = useSharedStore();
 const progress = ref('width:0.9%');
 const uploading = ref(false);
 

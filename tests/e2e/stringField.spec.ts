@@ -52,21 +52,19 @@ test.describe('String Field', () => {
       .locator('div')
       .filter({ hasText: /^Name$/ });
 
-    await expect(locator).not.toHaveClass(/rtl/);
-
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('button', { name: 'Set RTL' })
       .click();
 
-    await expect(locator).toHaveClass(/rtl/);
+    await expect(locator).toHaveAttribute('dir', 'rtl');
 
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('button', { name: 'Set LTR' })
       .click();
 
-    await expect(locator).not.toHaveClass(/rtl/);
+    await expect(locator).toHaveAttribute('dir', 'ltr');
   });
 
   test('should make a field readonly', async ({ page }) => {

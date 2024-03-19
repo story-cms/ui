@@ -73,32 +73,25 @@ test.describe('Boolean Field', () => {
     await locator.click();
     await expect(locator).toHaveClass(/bg-indigo-600/);
 
-    await expect(locator).not.toHaveClass(/rtl/);
+    const parent = page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .locator('div')
+      .filter({ hasText: 'Is Favourite' })
+      .nth(3);
+    await expect(parent).toHaveAttribute('dir', 'ltr');
 
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('button', { name: 'Set RTL' })
       .click();
-    await expect(
-      page
-        .frameLocator('[data-test-id="preview-iframe"]')
-        .locator('div')
-        .filter({ hasText: 'Is FavouriteIs Favourite' })
-        .nth(3),
-    ).toHaveClass(/rtl/);
+    await expect(parent).toHaveAttribute('dir', 'rtl');
 
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('button', { name: 'Set LTR' })
       .click();
 
-    await expect(
-      page
-        .frameLocator('[data-test-id="preview-iframe"]')
-        .locator('div')
-        .filter({ hasText: 'Is FavouriteIs Favourite' })
-        .nth(3),
-    ).not.toHaveClass(/rtl/);
+    await expect(parent).toHaveAttribute('dir', 'ltr');
   });
 
   test('should set switch to readonly', async ({ page }) => {

@@ -47,7 +47,3 @@
   font-family: var(--arabic-font-family);
   font-size: var(--rtl-font-size);
 }
-
-.rtl {
-  direction: rtl;
-}
