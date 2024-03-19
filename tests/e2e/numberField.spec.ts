@@ -78,7 +78,7 @@ test.describe('Number Field', () => {
         .frameLocator('[data-test-id="preview-iframe"]')
         .locator('div')
         .filter({ hasText: /^Age$/ }),
-    ).toHaveClass(/rtl/);
+    ).toHaveAttribute('dir', 'rtl');
   });
   test('should not be able to edit readonly value', async ({ page }) => {
     await page.getByRole('link', { name: 'Readonly' }).click();

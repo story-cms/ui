@@ -15,7 +15,7 @@
     </Variant>
 
     <Variant title="RTL">
-      <SelectField :field="spec" />
+      <SelectField :dir="isRtl ? 'rtl' : 'ltr'" :field="spec" />
       <LanguageControl />
     </Variant>
 
@@ -29,12 +29,17 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import SelectField from './SelectField.vue';
 import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
+
+const isRtl = computed(() => {
+  return useSharedStore().isRtl;
+});
 
 const objectModel = {
   name: 'Neil Shenvi',

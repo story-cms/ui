@@ -45,7 +45,7 @@ test.describe('Select Field', () => {
       .getByRole('button', { name: 'Set RTL' })
       .click();
 
-    await expect(locator).toHaveClass(/rtl/);
+    await expect(locator).toHaveAttribute('dir', 'rtl');
   });
   test('should show error message', async ({ page }) => {
     await page.getByRole('link', { name: 'Error' }).click();

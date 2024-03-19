@@ -83,14 +83,19 @@ test.describe('Markdown Field', () => {
 
     const locator = page
       .frameLocator('[data-test-id="preview-iframe"]')
-      .getByText('Notes');
+      .getByText('Notes|xxxxxxxxxx # The');
 
     await page
       .frameLocator('[data-test-id="preview-iframe"]')
       .getByRole('button', { name: 'Set RTL' })
       .click();
 
-    await expect(locator).toHaveClass(/rtl/);
+    await expect(locator).toHaveAttribute('dir', 'rtl');
+    await page
+      .frameLocator('[data-test-id="preview-iframe"]')
+      .getByRole('button', { name: 'Set LTR' })
+      .click();
+    await expect(locator).toHaveAttribute('dir', 'ltr');
   });
 
   test('should be readonly @test', async ({ page }) => {
