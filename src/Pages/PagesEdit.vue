@@ -1,6 +1,6 @@
 <template>
   <AppLayout>
-    <ContentHeader :title="title" @delete="deletePage" @info="info">
+    <ContentHeader dir="ltr" :title="title" @delete="deletePage" @info="info">
       <BooleanField
         :field="{
           name: 'isPublished',
