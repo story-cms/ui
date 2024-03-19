@@ -10,7 +10,6 @@
     </ContentHeader>
 
     <div
-      :dir="shared.isRtl ? 'rtl' : 'ltr'"
       class="container relative mx-auto px-3"
       :class="{
         'grid grid-cols-[1fr,_416px] gap-x-8 ': isLargeScreen,
@@ -18,7 +17,7 @@
           !isLargeScreen || (!showMetaBox && !showAppPreview),
       }"
     >
-      <form class="space-y-8">
+      <form :dir="shared.isRtl ? 'rtl' : 'ltr'" class="space-y-8">
         <div v-for="(item, index) in drafts.story.fields" :key="index">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>

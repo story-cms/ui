@@ -16,11 +16,11 @@
       }"
     >
       <form
+        :dir="shared.isRtl ? 'rtl' : 'ltr'"
         :class="{
           'row-subgrid gap-y-8': !drafts.isSingleColumn,
           'grid grid-cols-1 gap-y-2': drafts.isSingleColumn,
         }"
-        :dir="shared.isRtl ? 'rtl' : 'ltr'"
       >
         <div
           v-for="(item, index) in spec.fields"
@@ -37,7 +37,7 @@
       </form>
     </section>
     <section class="row-subgrid" :class="drafts.isSingleColumn ? 'hidden' : ''">
-      <div class="row-subgrid gap-y-8">
+      <div dir="ltr" class="row-subgrid gap-y-8">
         <div
           v-for="(item, index) in spec.fields"
           :key="index"
