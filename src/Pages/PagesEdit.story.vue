@@ -5,7 +5,7 @@
         :bundle="pageBundle"
         :page="page"
         :errors="sharedProps.errors"
-        language="spanish"
+        :language="sharedProps.language"
         :languages="sharedProps.languages"
         :meta="sharedProps.meta"
         :providers="{}"
