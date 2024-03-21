@@ -2,39 +2,35 @@
   <div
     :class="{
       'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
-      rtl: shared.isRtl,
     }"
   >
-    <div class="flex items-center space-x-2" :class="{ 'space-x-reverse': spaceReverse }">
-      <button
-        type="button"
-        :class="btnClass"
+    <SwitchGroup as="div" class="flex items-center">
+      <Switch
+        :class="[btnClass]"
         class="relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
-        role="switch"
-        aria-checked="false"
         :disabled="props.isReadOnly"
         @click="toggle"
       >
-        <span class="sr-only">{{ field.label }}</span>
         <span
           aria-hidden="true"
-          :class="{ 'translate-x-5': isOn, 'translate-x-0': !isOn }"
-          class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-        ></span>
-      </button>
-
-      <label
-        :for="field.label"
-        class="input-label mt-1"
-        :class="{
-          rtl: shared.isRtl,
-          'order-first': labelStart,
-        }"
+          :class="[
+            isOn
+              ? 'ltr:translate-x-5 rtl:-translate-x-5'
+              : 'ltr:translate-x-0 rtl:-translate-x-0',
+            'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
+          ]"
+        />
+      </Switch>
+      <SwitchLabel
+        as="span"
+        :class="[
+          labelStart ? 'order-first ltr:mr-3 rtl:ml-3' : 'order-last ltr:ml-3 rtl:mr-3',
+        ]"
+        class="text-sm"
       >
-        {{ field.label }}
-      </label>
-    </div>
-
+        <span class="font-medium text-gray-900">{{ field.label }}</span>
+      </SwitchLabel>
+    </SwitchGroup>
     <p v-if="hasError" class="mt-1 text-sm text-error">{{ errors[0] }}</p>
   </div>
 </template>
@@ -44,6 +40,8 @@ import { computed, ref, nextTick } from 'vue';
 import { FieldSpec } from '../Shared/interfaces';
 import { useModelStore, useSharedStore } from '../store';
 import { commonProps } from '../Shared/helpers';
+
+import { Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue';
 
 const props = defineProps({
   ...commonProps,
@@ -97,11 +95,6 @@ const btnClass = computed((): string => {
 
 // label order
 const labelStart = computed((): boolean => field.value.labelOrder === 'start');
-const spaceReverse = computed((): boolean => {
-  if (labelStart.value && !shared.isRtl) return true;
-  if (!labelStart.value && shared.isRtl) return true;
-  return false;
-});
 
 const errors = computed(() => shared.errorMessages(fieldPath.value));
 const hasError = computed(() => errors.value.length > 0 && !props.isReadOnly);

@@ -8,7 +8,7 @@
     <label
       for="first-name"
       class="block text-sm font-medium text-gray-700"
-      :class="{ rtl: shared.isRtl, 'text-gray-600': props.isReadOnly }"
+      :class="{ 'text-gray-600': props.isReadOnly }"
       >{{ field.label }}</label
     >
     <div

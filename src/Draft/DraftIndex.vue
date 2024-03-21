@@ -17,7 +17,7 @@
           !isLargeScreen || (!showMetaBox && !showAppPreview),
       }"
     >
-      <form class="space-y-8">
+      <form :dir="shared.isRtl ? 'rtl' : 'ltr'" class="space-y-8">
         <div v-for="(item, index) in drafts.story.fields" :key="index">
           <component :is="widgetFor(index)" :field="item" :is-nested="false" />
         </div>

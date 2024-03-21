@@ -3,7 +3,6 @@
     :class="{
       'box-shadow-sm rounded border border-gray-200 bg-white p-8': !isNested,
       'mt-4': isNested,
-      rtl: shared.isRtl,
     }"
   >
     <label

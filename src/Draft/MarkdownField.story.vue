@@ -52,7 +52,7 @@
     </Variant>
 
     <Variant title="RTL" :setup-app="loadData">
-      <MarkdownField :field="spec" />
+      <MarkdownField :dir="isRtl ? 'rtl' : 'ltr'" :field="spec" />
       <LanguageControl />
     </Variant>
 
@@ -71,6 +71,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import MarkdownField from './MarkdownField.vue';
 import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
@@ -78,6 +79,10 @@ import ModelControl from '../helpers/ModelControl.vue';
 import { objectErrors, objectModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
+
+const isRtl = computed(() => {
+  return useSharedStore().isRtl;
+});
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();

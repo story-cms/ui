@@ -23,7 +23,7 @@
     </Variant>
 
     <Variant title="RTL">
-      <NumberField :field="spec" />
+      <NumberField :dir="isRtl ? 'rtl' : 'ltr'" :field="spec" />
       <LanguageControl />
     </Variant>
 
@@ -34,12 +34,17 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import NumberField from './NumberField.vue';
 import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
+
+const isRtl = computed(() => {
+  return useSharedStore().isRtl;
+});
 
 const loadData: Vue3StorySetupHandler = ({ variant }) => {
   const store = useModelStore();

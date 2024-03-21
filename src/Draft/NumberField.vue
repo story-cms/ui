@@ -2,7 +2,6 @@
   <div
     :class="{
       'rounded-bl-lg rounded-br-lg bg-white px-8 py-6 shadow-sm': !isNested,
-      rtl: shared.isRtl,
     }"
   >
     <label
@@ -70,5 +69,7 @@ const isWeird = computed((): boolean => {
 });
 
 const errors = computed(() => shared.errorMessages(fieldPath.value));
-const hasError = computed(() => (errors.value.length > 0 || isWeird.value === true)  && !props.isReadOnly);
+const hasError = computed(
+  () => (errors.value.length > 0 || isWeird.value === true) && !props.isReadOnly,
+);
 </script>

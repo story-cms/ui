@@ -3,14 +3,13 @@
     :class="{
       'rounded border border-gray-200 bg-white p-8 shadow': !isNested,
       'mt-4': isNested,
-      rtl: shared.isRtl,
     }"
   >
     <div class="flex flex-col">
       <label
         :for="fieldPath"
         class="input-label mr-2 mt-1"
-        :class="{ rtl: shared.isRtl, 'text-gray-600': isReadOnly }"
+        :class="{ 'text-gray-600': isReadOnly }"
       >
         {{ field.label }}
       </label>
