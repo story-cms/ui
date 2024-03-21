@@ -14,18 +14,16 @@
       >
         {{ field.label }}
       </label>
-      <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
       <select
         :id="fieldPath"
         v-model="selection"
         name="select"
-        :disabled="props.isReadOnly || shared.isTranslation"
+        :disabled="isDisabled"
         class="max-w-min rounded-lg border border-gray-300 py-2 pl-3 pr-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         :class="{
           'border-red-500': hasError,
           'text-gray-600': props.isReadOnly,
-          'appearance-none [-moz-appearance:none] [-webkit-appearance:none]':
-            props.isReadOnly || shared.isTranslation,
+          'appearance-none [-moz-appearance:none] [-webkit-appearance:none]': isDisabled,
         }"
         @change="update"
       >
@@ -47,12 +45,23 @@ import { commonProps } from '../Shared/helpers';
 
 const props = defineProps({
   ...commonProps,
+  // in a side-by-side translation form this field needs to be readonly
+  // set :is-free="true" when using this component outside of story draft form
+  isFree: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const model = useModelStore();
 const shared = useSharedStore();
 
 const field = computed(() => props.field as FieldSpec);
+const isDisabled = computed(() => {
+  if (props.isFree) return false;
+  return props.isReadOnly || shared.isTranslation;
+});
 const fieldPath = computed(() => {
   if (props.rootPath === undefined) return field.value.name;
   return `${props.rootPath}.${field.value.name}`;

@@ -64,6 +64,7 @@
             ],
             default: 'text',
           }"
+          :is-free="true"
           :is-nested="true"
           class="px-8"
         />
