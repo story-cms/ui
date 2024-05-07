@@ -16,26 +16,28 @@
     <section class="space-y-2 font-['Inter'] text-lg/7 font-bold">
       <div class="grid grid-cols-2">
         <p>{{ props.storyType }}</p>
-        <span class="place-self-end">{{ story }}</span>
+        <span class="place-self-end text-right">{{ story }}</span>
       </div>
       <div class="grid grid-cols-2">
         <p>Chapter</p>
-        <span class="place-self-end">{{ props.chapterType }}</span>
+        <span class="place-self-end text-right">{{ props.chapterType }}</span>
       </div>
     </section>
     <div class="my-2 border-t border-gray-600"></div>
     <section class="space-y-2 font-['Inter'] text-lg/7 font-medium">
       <div class="grid grid-cols-2">
         <p>Created</p>
-        <span class="place-self-end">{{ formatDate(props.createdAt) }}</span>
+        <span class="place-self-end text-right">{{ formatDate(props.createdAt) }}</span>
       </div>
       <div class="grid grid-cols-2">
         <p>Auto-Saved</p>
-        <span class="place-self-end">{{ formatDate(props.updatedAt) }}</span>
+        <span class="place-self-end text-right">{{ formatDate(props.updatedAt) }}</span>
       </div>
       <div class="grid grid-cols-2">
         <p>Last Published</p>
-        <span class="place-self-end font-bold uppercase">{{ publishedWhen }}</span>
+        <span class="place-self-end text-right font-bold uppercase">{{
+          publishedWhen
+        }}</span>
       </div>
     </section>
   </div>

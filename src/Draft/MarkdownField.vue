@@ -84,7 +84,10 @@ const errors = computed(() => shared.errorMessages(fieldPath.value));
 const hasError = computed(() => errors.value.length > 0 && !props.isReadOnly);
 
 shared.$subscribe(() => {
-  if (props.isReadOnly) return;
+  if (props.isReadOnly) {
+    mde?.codemirror.setOption('theme', 'en');
+    return;
+  }
 
   mde?.codemirror.setOption('direction', shared.languageDirection);
   mde?.codemirror.setOption('rtlMoveVisually', shared.isRtl);
