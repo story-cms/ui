@@ -35,11 +35,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  number: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const loadEpisode = (bundle: any) => {
   const data = bundle;
-  data['number'] = 1;
+  data['number'] = props.number;
   window._appState.setEpisode(JSON.stringify(data));
 };
 

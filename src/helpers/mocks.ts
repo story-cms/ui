@@ -440,6 +440,7 @@ export const story = {
   parts: [
     {
       id: 1,
+      number: 1,
       title: 'Part 1',
       subtitle: 'God among us',
       description:
@@ -447,6 +448,7 @@ export const story = {
     },
     {
       id: 2,
+      number: 2,
       title: 'Part 2',
       subtitle: 'God at work',
       description:
@@ -454,6 +456,7 @@ export const story = {
     },
     {
       id: 3,
+      number: 3,
       title: 'Part 3',
       subtitle: 'Matters of life and death',
       description:
@@ -461,6 +464,7 @@ export const story = {
     },
     {
       id: 4,
+      number: 4,
       title: 'Part 4',
       subtitle: 'Mission accomplished!',
       description:

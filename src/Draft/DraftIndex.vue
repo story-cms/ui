@@ -47,6 +47,7 @@
             v-if="bundle"
             :is-floating="!isLargeScreen"
             :bundle="bundle"
+            :number="props.draft.number"
             class="mt-2"
             @close="showAppPreview = false"
           />
