@@ -1,6 +1,7 @@
-import { PropType } from 'vue';
+import { App, PropType } from 'vue';
 import { FieldSpec } from '../Shared/interfaces';
 import { BibleBooksMap } from './bibleBooks';
+import { Variant, Story } from 'histoire';
 
 export const commonProps = {
   field: {
@@ -123,3 +124,9 @@ function getAbbreviation(inputBook: string): string {
 
   return '';
 }
+
+export type StoryHandler = (payload: {
+  app: App<any>;
+  story: Story;
+  variant: Variant;
+}) => void | Promise<void>;

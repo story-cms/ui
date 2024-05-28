@@ -34,8 +34,8 @@ import SelectField from './SelectField.vue';
 import LanguageControl from '../helpers/LanguageControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
 import ModelControl from '../helpers/ModelControl.vue';
-import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
+import { StoryHandler } from 'src/Shared/helpers';
 
 const isRtl = computed(() => {
   return useSharedStore().isRtl;
@@ -50,7 +50,7 @@ const objectErrors = {
   'bundle.airport': ['required validation failed'],
 };
 
-const loadData: Vue3StorySetupHandler = ({ variant }) => {
+const loadData: StoryHandler = ({ variant }): void => {
   const store = useModelStore();
   const shared = useSharedStore();
 

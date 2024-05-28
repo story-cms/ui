@@ -30,10 +30,10 @@
 <script setup lang="ts">
 import HeaderBar from './HeaderBar.vue';
 import { useSharedStore } from '../store';
-import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { sharedProps, meta } from '../helpers/mocks';
+import { StoryHandler } from 'src/Shared/helpers';
 
-const loadData: Vue3StorySetupHandler = ({ variant }) => {
+const loadData: StoryHandler = ({ variant }): void => {
   const shared = useSharedStore();
 
   shared.setFromProps(sharedProps);

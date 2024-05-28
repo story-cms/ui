@@ -24,6 +24,7 @@ export default defineConfig({
   },
   build: {
     sourcemap: 'inline',
+    cssCodeSplit: true,
     lib: {
       entry: {
         main: path.resolve(__dirname, 'src/index.ts'),

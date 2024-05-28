@@ -32,10 +32,11 @@
 import PanelField from './PanelField.vue';
 import ModelControl from '../helpers/ModelControl.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
-import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
 
-const loadData: Vue3StorySetupHandler = ({ variant }) => {
+import { StoryHandler } from 'src/Shared/helpers';
+
+const loadData: StoryHandler = ({ variant }): void => {
   const store = useModelStore();
   const shared = useSharedStore();
 
