@@ -55,7 +55,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
 
 import ListField from './ListField.vue';
@@ -70,7 +69,9 @@ import {
   listInListErrors,
 } from '../helpers/mocks';
 
-const loadData: Vue3StorySetupHandler = ({ variant }) => {
+import { StoryHandler } from 'src/Shared/helpers';
+
+const loadData: StoryHandler = ({ variant }): void => {
   const store = useModelStore();
   const shared = useSharedStore();
 

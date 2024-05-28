@@ -49,7 +49,7 @@ const users: UserMeta[] = [
   },
 ];
 
-const loadData: Vue3StorySetupHandler = () => {
+const loadData = () => {
   const shared = useSharedStore();
 
   shared.addMessage(ResponseStatus.Accomplishment, 'User updated successfully');

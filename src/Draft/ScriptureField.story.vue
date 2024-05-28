@@ -40,12 +40,13 @@ import ModelControl from '../helpers/ModelControl.vue';
 import { scriptureSpec, scriptureModel } from '../helpers/mocks';
 import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
+import { StoryHandler } from 'src/Shared/helpers';
 
 const scriptureError = {
   'bundle.scripture.verse': ['required validation failed'],
 };
 
-const setGerman: Vue3StorySetupHandler = () => {
+const setGerman: StoryHandler = () => {
   const shared = useSharedStore();
   shared.setLanguage({
     locale: 'de',
@@ -55,7 +56,7 @@ const setGerman: Vue3StorySetupHandler = () => {
   });
 };
 
-const setPrepopulatedGerman: Vue3StorySetupHandler = () => {
+const setPrepopulatedGerman: StoryHandler = () => {
   const store = useModelStore();
   const shared = useSharedStore();
   shared.setLanguage({
@@ -74,7 +75,7 @@ const setPrepopulatedGerman: Vue3StorySetupHandler = () => {
   });
 };
 
-const loadData: Vue3StorySetupHandler = ({ variant }) => {
+const loadData: StoryHandler = ({ variant }): void => {
   const store = useModelStore();
   const shared = useSharedStore();
 

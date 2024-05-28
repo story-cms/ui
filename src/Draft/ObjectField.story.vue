@@ -53,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Vue3StorySetupHandler } from '@histoire/plugin-vue';
 import { useModelStore, useSharedStore } from '../store';
 import ObjectField from './ObjectField.vue';
 import ErrorControl from '../helpers/ErrorControl.vue';
@@ -71,7 +70,9 @@ import {
   objectInListInObjectErrors,
 } from '../helpers/mocks';
 
-const loadData: Vue3StorySetupHandler = ({ variant }) => {
+import { StoryHandler } from 'src/Shared/helpers';
+
+const loadData: StoryHandler = ({ variant }): void => {
   const store = useModelStore();
   const shared = useSharedStore();
 
