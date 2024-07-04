@@ -16,6 +16,12 @@ test.describe('Parse exactly spelled and punctuated references', () => {
     expect(parseReference(' john 1     ')).toBe('JHN.1');
   });
 
+  test('Range spanning chapter', () => {
+    expect(parseReference('John 2:1-7')).toBe('JHN.2.1-JHN.2.7');
+    expect(parseReference('John 2:1-3:7')).toBe('JHN.2.1-JHN.3.7');
+    expect(parseReference('John 2:7-3:1')).toBe('JHN.2.7-JHN.3.1');
+  });
+
   test('Exact references to other books', () => {
     expect(parseReference('Matthew 2:3-7')).toBe('MAT.2.3-MAT.2.7');
     expect(parseReference('Psalm 1')).toBe('PSA.1');

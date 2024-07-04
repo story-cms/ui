@@ -77,18 +77,42 @@ export const safeChapterTitle = (
   return `${storyName} <span>.</span> ${padZero(number)} <span>.</span> ${safe}`;
 };
 
-export const parseReference = (reference: string): string => {
-  const match = reference
-    .trim()
-    .toLocaleLowerCase()
-    .match(/(\d+)?\s*(\w+)\s*(\d+)(?:\s*[:.]\s*(\d+))?(?:\s*-\s*(\d+))?/);
+export const parseReference = (raw: string): string => {
+  const haystack = raw.trim().toLocaleLowerCase().replace('song of solomon', 'sng');
+
+  const [start, end] = haystack.split('-');
+  if (end !== undefined) {
+    const startRef = parseReference(start);
+    if (startRef === '') return '';
+    if (end.match(/([a-zA-Z]+)/)) return `${startRef}-${parseReference(end)}`;
+
+    const book = startRef.split('.')[0];
+    const parts = end.match(/(\d+)\D*(\d*)/);
+    if (!parts || parts.length < 2) return startRef;
+    if (startRef.split('.').length < 3) {
+      // chapter range
+      const address = `${book}.${parts[1]}`;
+      return `${startRef}-${parseReference(address)}`;
+    }
+    if (parts[2]) {
+      const address = `${book}.${parts[1]}.${parts[2]}`;
+      return `${startRef}-${parseReference(address)}`;
+    }
+
+    const address = `${book}.${startRef.split('.')[1]}.${parts[1]}`;
+    return `${startRef}-${parseReference(address)}`;
+  }
+
+  const pattern = /(\d+)?\s*(\w+)\.*\s*(\d+)(?:\s*[:.]\s*(\d+))?(?:\s*-\s*(\d+))?/;
+
+  const match = haystack.match(pattern);
 
   if (!match) {
     return '';
   }
 
   const bookNum = match[1];
-  let book = match[2];
+  let book = match[2].trim();
   const chapter = match[3];
   const verse = match[4];
   const endVerse = match[5];
