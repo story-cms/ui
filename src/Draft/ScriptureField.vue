@@ -69,7 +69,9 @@
         }"
         @input="updateVerse"
       ></textarea>
-      <p v-if="verseHasError" class="text-sm text-error">This field cannot be empty</p>
+      <p v-if="verseHasError" class="text-sm text-error">
+        {{ verseErrorMessage }}
+      </p>
     </div>
   </div>
 </template>
@@ -178,6 +180,10 @@ const referenceHasError = computed(
 
 const verseHasError = computed(
   () => `bundle.${fieldPath.value}.verse` in shared.errors && !props.isReadOnly,
+);
+
+const verseErrorMessage = computed(
+  () => shared.errors[`bundle.${fieldPath.value}.verse`][0],
 );
 
 const lookupTranslatedScripture = () => {
