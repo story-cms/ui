@@ -182,9 +182,10 @@ const verseHasError = computed(
   () => `bundle.${fieldPath.value}.verse` in shared.errors && !props.isReadOnly,
 );
 
-const verseErrorMessage = computed(
-  () => shared.errors[`bundle.${fieldPath.value}.verse`][0],
-);
+const verseErrorMessage = computed(() => {
+  const messages = shared.errors[`bundle.${fieldPath.value}.verse`];
+  return messages.length > 0 ? messages[0] : '';
+});
 
 const lookupTranslatedScripture = () => {
   if (reference.value != '') return;
