@@ -200,6 +200,7 @@ export interface PageBundle {
   icon: string;
   description: string;
   body: string;
+  category?: string;
 }
 
 export interface PageIndexProps {
