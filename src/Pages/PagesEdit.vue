@@ -53,6 +53,15 @@
           :is-nested="true"
           class="px-8"
         />
+        <StringField
+          :field="{
+            name: 'category',
+            label: 'Category',
+            widget: 'string',
+          }"
+          :is-nested="true"
+          class="px-8"
+        />
         <SelectField
           :field="{
             label: 'Page Type',
@@ -62,7 +71,7 @@
               { label: 'Text', value: 'text' },
               { label: 'Link', value: 'link' },
             ],
-            default: 'text',
+            default: defaultType,
           }"
           :is-free="true"
           :is-nested="true"
@@ -169,9 +178,9 @@ const getPayload = (): RequestPayload => {
   return payload as RequestPayload;
 };
 
-let isSettingErrors = false;
+const defaultType = ref(model.getField('body', '').startsWith('http') ? 'link' : 'text');
 
-const selection = ref(model.getField('type', 'comment'));
+const selection = ref(model.getField('type', defaultType));
 const title = ref(model.getField('title', 'Page'));
 const isPublished = ref(Boolean(model.getField('isPublished', false)));
 
@@ -184,7 +193,6 @@ const isLink = computed((): boolean => selection.value === 'link');
 
 const save = debounce(1000, () => {
   // clear errors
-  isSettingErrors = true;
   shared.clearErrors();
 
   router.post(`/page/${props.page.id}`, getPayload(), {
@@ -196,7 +204,6 @@ const save = debounce(1000, () => {
 
     onError: (errors) => {
       console.log('! error on save', errors);
-      isSettingErrors = true;
       shared.setErrors(errors);
       shared.addMessage(ResponseStatus.Failure, 'Error saving page');
     },
@@ -232,14 +239,8 @@ watch(isLargeScreen, (newValue) => {
 
 onMounted(() => {
   model.$subscribe(() => {
-    // prevent infinite loop
-    if (isSettingErrors) {
-      isSettingErrors = false;
-      return;
-    }
-
     save();
-    selection.value = model.getField('type', 'comment');
+    selection.value = model.getField('type', defaultType);
     title.value = model.getField('title', 'Page');
     isPublished.value = Boolean(model.getField('isPublished', false));
   });

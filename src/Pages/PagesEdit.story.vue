@@ -27,6 +27,7 @@ const pageBundle: PageBundle = {
   description: 'About us page',
   body: '## Welcome!\nWe hope you enjoy this site.',
   icon: 'https://res.cloudinary.com/onesheep/image/upload/v1684417825/cmsplayground/aatrg9bikextwwun4vb2.svg',
+  category: 'admin',
 };
 
 const page: PageMeta = {
